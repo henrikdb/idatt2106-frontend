@@ -12,16 +12,16 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 ui-menu">
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Saving goals</a>
+                        <a class="nav-link text-white" href="/news" @click="toSavingGoals">Saving goals</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Leaderboard</a>
+                        <a class="nav-link text-white" href="/news" @click="toLeaderboard">Leaderboard</a>
                     </li>
                   <li class="nav-item">
-                    <a class="nav-link text-white" href="#">News</a>
+                    <a class="nav-link text-white" href="/news" @click="toNews">News</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link text-white" href="#">Store</a>
+                    <a class="nav-link text-white" href="/news" @click="toStore">Store</a>
                   </li>
                 </ul>
               <nav class="navbar bg-success">
@@ -31,8 +31,9 @@
                   Username
                 </a>
                 <ul class="dropdown-menu bg-success dropdown-username-content">
-                <li><a class="dropdown-item text-white dropdown-username-link" href="#">User Profile</a></li>
-                <li><a class="dropdown-item text-white dropdown-username-link" href="#">Setting</a></li>
+                  <li><a class="dropdown-item text-white dropdown-username-link" href="/news" @click="toUserProfile">User Profile</a></li>
+                  <li><a class="dropdown-item text-white dropdown-username-link" href="/news" @click="toSetting">Setting</a></li>
+                  <li><a class="dropdown-item text-white dropdown-username-link" href="/news" @click="toFeedback">Feedback</a></li>
                 </ul>
               </div>
               </nav>
@@ -41,6 +42,40 @@
     </nav>
 </template>
 <script setup lang="ts">
+
+import {useRouter} from "vue-router";
+
+const router = useRouter();
+
+function toSavingGoals(){
+  router.push('/news')
+}
+
+function toLeaderboard(){
+  router.push('/news')
+}
+
+function toNews(){
+  router.push('/news')
+}
+
+function toStore(){
+  router.push('/news')
+}
+
+function toSetting(){
+  router.push('/news')
+}
+
+function toFeedback(){
+  router.push('/news')
+}
+
+function toUserProfile(){
+  router.push('/news')
+}
+
+
 </script>
 <style scoped>
 .ui-menu{
