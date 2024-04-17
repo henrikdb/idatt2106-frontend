@@ -1,5 +1,6 @@
 <script setup lang="ts">
 
+const emit = defineEmits(['inputChangeEvent']);
 const props = defineProps({
   label: {
     type: String,
@@ -16,19 +17,33 @@ const props = defineProps({
   inputId: {
     type: String,
     required: true
+  },
+  modelValue: {
+    type: String,
+    default: ""
+  },
+  isValid: {
+    type: Boolean,
+    default: false
   }
 });
+
+const onInputEvent = (event: any) => {
+  emit('inputChangeEvent', event.target.value)
+}
 </script>
 
 <template>
   <div>
     <label :for="inputId">{{ label }}</label>
-    <input :type="props.type"
+    <input :value="props.modelValue"
+           @input="onInputEvent"
+           :type="props.type"
            class="form-control"
            :placeholder="props.placeholder"
            :id="inputId" required />
-    <div class="invalid-feedback">Invalid {{ label }}</div>
-    <div class="valid-feedback">Correct {{ label }}</div>
+    <div v-if="props.isValid" class="invalid-feedback">Invalid {{ label }}</div>
+    <div v-else class="valid-feedback">Valid {{ label }}</div>
   </div>
 </template>
 

@@ -1,26 +1,46 @@
 <script setup lang="ts">
 import BaseInput from '@/components/InputFields/BaseInput.vue'
 import Button1 from '@/components/Buttons/Button1.vue'
+import { ref } from 'vue'
+
+const emailRef = ref()
+const passwordRef = ref()
+const formRef = ref()
+
+const handleEmailInputEvent = (newValue: any) => {
+  emailRef.value = newValue
+  console.log(emailRef.value)
+}
+
+const handlePasswordInputEvent = (newValue: any) => {
+  passwordRef.value = newValue
+}
 
 const handleSubmit = () => {
+  formRef.value.classList.add("was-validated")
   alert("Expected to be logged in when backend are finished") // Todo remove this line
 }
+
 </script>
 
 <template>
   <div class="container-fluid">
-    <form id="loginForm" @submit.prevent="handleSubmit">
-      <BaseInput id="emailInput"
+    <form ref="formRef" id="loginForm" @submit.prevent="handleSubmit">
+      <BaseInput :model-value="emailRef"
+                 @input-change-event="handleEmailInputEvent"
+                 id="emailInput"
                  input-id="email"
-                 type="text"
+                 type="email"
                  label="Email"
                  placeholder="Enter your email"/>
-      <BaseInput id="passwordInput"
+      <BaseInput :model-value="passwordRef"
+                 @input-change-event="handlePasswordInputEvent"
+                 id="passwordInput"
                  input-id="password"
                  type="password"
                  label="Password"
                  placeholder="Enter password"/>
-      <button1 id="confirmButton" @click="handleSubmit" button-text="Login"></button1>
+      <button1 id="confirmButton" type="submit" @click="handleSubmit" button-text="Login"></button1>
     </form>
   </div>
 </template>
