@@ -1,7 +1,7 @@
 <template>
     <nav class="navbar navbar-expand-lg bg-success">
         <div class="container-fluid" >
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="/" @click="toHome">
               <img src="/src/assets/Sparesti-logo.png" alt="Sparesti-logo" width="60">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -51,6 +51,10 @@
 import {useRouter} from "vue-router";
 
 const router = useRouter();
+
+function toHome(){
+  router.push('/')
+}
 
 function toSavingGoals(){
   router.push('/news')
