@@ -1,6 +1,7 @@
 // Import necessary dependencies from Vue Router and your views
 import { createRouter, createWebHistory } from 'vue-router';
 import LoginView from '../views/Authentication/LoginView.vue';
+import { useUserInfoStore } from '@/stores/UserStore';
 
 const routes = [
   {
@@ -29,6 +30,17 @@ const routes = [
         name: 'test',
         component: () => import('@/views/TestView.vue'),
       },
+      {
+        path: 'admin',
+        name: 'admin',
+        component: () => import('@/views/TestView.vue'),
+        meta: { requiresAdmin: true }
+      },
+      {
+        path: 'unauthorized',
+        name: 'unauthorized',
+        component: () => import('@/views/TestView.vue'),
+      },
     ]
   },
   {
@@ -51,7 +63,15 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+  const requiresAdmin = to.matched.some(record => record.meta.requiresAdmin);
+  const userRole = useUserInfoStore().role;
+
+  if (requiresAdmin && userRole !== 'admin') {
+    next({ name: 'unauthorized' });
+  } else {
     next();
+  }
 });
 
 export default router;
