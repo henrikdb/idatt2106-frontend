@@ -10,11 +10,11 @@ const handleSubmit = () => {
 <template>
   <div class="container-fluid">
     <form id="loginForm" @submit.prevent="handleSubmit">
-      <BaseInput id="usernameInput"
-                 input-id="username"
+      <BaseInput id="emailInput"
+                 input-id="email"
                  type="text"
-                 label="Username"
-                 placeholder="Enter username"/>
+                 label="Email"
+                 placeholder="Enter your email"/>
       <BaseInput id="passwordInput"
                  input-id="password"
                  type="password"
@@ -27,24 +27,16 @@ const handleSubmit = () => {
 
 <style scoped>
 .container-fluid {
-  height: 91vh;
-  display: grid;
-  justify-items: center;
-  align-items: center;
-}
-
-#usernameInput, #passwordInput, #confirmButton {
-  margin: 15px 0;
-}
-
-#confirmButton {
-  justify-content: center;
+    max-width: 450px;
 }
 
 #loginForm {
   display: flex;
   flex-direction: column;
-  min-width: 280px;
-  width: 40%;
+  justify-items: center;
+}
+
+#emailInput, #passwordInput, #confirmButton {
+  margin: 1rem 0;
 }
 </style>
