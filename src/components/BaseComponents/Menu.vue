@@ -43,6 +43,11 @@
 </template>
 <script setup lang="ts">
 
+
+/**
+ * May need to change from a-links to routerlinks to avoid complications with href.
+ */
+
 import {useRouter} from "vue-router";
 
 const router = useRouter();
