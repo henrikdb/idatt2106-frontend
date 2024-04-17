@@ -39,7 +39,7 @@ const routes = [
       {
         path: 'unauthorized',
         name: 'unauthorized',
-        component: () => import('@/views/TestView.vue'),
+        component: () => import('@/views/UnauthorizedView.vue'),
       },
     ]
   },
