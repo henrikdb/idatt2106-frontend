@@ -31,6 +31,11 @@ const routes = [
         component: () => import('@/views/TestView.vue'),
       },
       {
+        path: 'roadmap',
+        name: 'roadmap',
+        component: () => import('@/views/SavingGoalView/RoadmapView.vue'),
+      },
+      {
         path: 'admin',
         name: 'admin',
         component: () => import('@/views/TestView.vue'),
