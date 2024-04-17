@@ -1,0 +1,12 @@
+<script setup lang="ts">
+
+import SignUpForm from '@/components/SignUp/SignUpForm.vue'
+</script>
+
+<template>
+  <SignUpForm/>
+</template>
+
+<style scoped>
+
+</style>

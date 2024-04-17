@@ -1,6 +1,7 @@
 // Import necessary dependencies from Vue Router and your views
 import { createRouter, createWebHistory } from 'vue-router';
 import LoginView from '../views/Authentication/LoginView.vue';
+import SignUp from '@/components/SignUp/SignUp.vue'
 
 const routes = [
   {
@@ -35,6 +36,11 @@ const routes = [
     path: '/login',
     name: 'login',
     component: LoginView,
+  },
+  {
+    path: '/sign-up',
+    name: 'sign up',
+    component: () => import('@/views/Authentication/SignUpView.vue'),
   },
   {
     path: '/:pathMatch(.*)*',
