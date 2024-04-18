@@ -3,6 +3,9 @@
 /* tslint:disable */
 /* eslint-disable */
 export type AuthenticationResponse = {
+    firstName?: string;
+    lastName?: string;
+    role?: string;
     token?: string;
 };
 
