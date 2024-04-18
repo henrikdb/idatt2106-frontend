@@ -25,3 +25,4 @@ build_project:
   stage: build_project
   script:
     - npm run build
+
