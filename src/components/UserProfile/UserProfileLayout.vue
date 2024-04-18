@@ -16,18 +16,20 @@ let streak = 0;
         <p class="h2">Username</p>
         <p><a class="link-dark" href="#">Edit profile</a></p>
       </div>
-      <div class="row">
-      <div class="col">
-        Streak
-      </div>
-      </div>
-      <div class="row">
-      <div class="col">
-        <img src="/src/assets/icons/dollar.png" class=" w-10" alt="dollar">
-        <p>Points: + </p>
-      </div>
-      </div>
     </div>
+      <div class="row">
+        <div class="col">
+          <img src="/src/assets/icons/fire.png" class="img-fluid" style="width: 30px; height: 30px" alt="dollar">
+          <p>Streak: 10</p>
+        </div>
+      </div>
+      <div class="row">
+      <div class="col-12">
+        <img src="/src/assets/icons/dollar.png" class="img-fluid" style="width: 30px; height: 30px" alt="dollar">
+        <p class="">Points: 2000 </p>
+      </div>
+      </div>
+
     <div class="row">
       <div class="col">
         total points earned
