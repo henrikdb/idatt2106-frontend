@@ -82,6 +82,38 @@ const routes = [
     component: () => import('@/views/Authentication/SignUpView.vue'),
   },
   {
+    path: '/configuration',
+    name: 'configuration',
+    component: () => import('@/views/ConfigurationView.vue'),
+    children: [
+      {
+        path: '/bank-id',
+        name: 'bankId',
+        component: () => import('@/components/Configuration/ConfigurationSteps/BankId.vue'),
+      },
+      {
+        path: '/commitment',
+        name: 'commitment',
+        component: () => import('@/components/Configuration/ConfigurationSteps/Commitment.vue'),
+      },
+      {
+        path: '/experience',
+        name: 'experience',
+        component: () => import('@/components/Configuration/ConfigurationSteps/Experience.vue'),
+      },
+      {
+        path: '/suitable-challenges',
+        name: 'suitable challenges',
+        component: () => import('@/components/Configuration/ConfigurationSteps/SuitableChallenges.vue'),
+      },
+      {
+        path: '/first-saving-goal',
+        name: 'first saving goal',
+        component: () => import('@/components/Configuration/ConfigurationSteps/FirstSavingGoal.vue'),
+      }
+    ]
+  },
+  {
     path: '/:pathMatch(.*)*',
     redirect: { name: 'not-found' },
   },

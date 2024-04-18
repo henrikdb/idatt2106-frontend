@@ -9,7 +9,6 @@ const formRef = ref()
 
 const handleEmailInputEvent = (newValue: any) => {
   emailRef.value = newValue
-  console.log(emailRef.value)
 }
 
 const handlePasswordInputEvent = (newValue: any) => {
