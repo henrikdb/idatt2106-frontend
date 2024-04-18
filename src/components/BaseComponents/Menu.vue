@@ -1,8 +1,9 @@
 <template>
-    <nav class="navbar navbar-expand-lg bg-success">
-        <div class="container-fluid" >
+    <nav id="navBar" class="navbar navbar-expand-xl">
+        <div class="container-fluid">
             <a class="navbar-brand" href="/" @click="toHome">
-              <img src="/src/assets/Sparesti-logo.png" alt="Sparesti-logo" width="60">
+                <img id="logoImg" src="/src/assets/Sparesti-logo.png" alt="Sparesti-logo" width="60">
+                <span id="logo" class="text-white">Sparesti</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -12,73 +13,75 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 ui-menu">
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="/news" @click="toSavingGoals">Saving goals</a>
+                        <a class="nav-link text-white" href="#" @click="toSavingGoals"><img
+                                src="@/assets/icons/saving.svg">Saving goals</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="/news" @click="toLeaderboard">Leaderboard</a>
+                        <a class="nav-link text-white" href="#" @click="toLeaderboard"><img
+                                src="@/assets/icons/leaderboard.svg">Leaderboard</a>
                     </li>
-                  <li class="nav-item">
-                    <a class="nav-link text-white" href="/news" @click="toNews">News</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link text-white" href="/news" @click="toStore">Store</a>
-                  </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#" @click="toNews"><img
+                                src="@/assets/icons/newsletter.svg">News</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#" @click="toStore"><img
+                                src="@/assets/icons/storefront.svg">Store</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle username-text text-white " href="#" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="@/assets/icons/person.svg">Username
+                        </a>
+                        <ul class="dropdown-menu dropdown-username-content">
+                            <li><a class="dropdown-item text-white dropdown-username-link" href="#"
+                                    @click="toUserProfile"><img src="@/assets/icons/person.svg">User Profile</a></li>
+                            <li><a class="dropdown-item text-white dropdown-username-link" href="#"
+                                    @click="toSetting"><img src="@/assets/icons/settings.svg">Setting</a></li>
+                            <li><a class="dropdown-item text-white dropdown-username-link" href="#"
+                                    @click="toFeedback"><img src="@/assets/icons/feedback.svg">Feedback</a></li>
+                            <li><a class="dropdown-item text-white dropdown-username-link" href="#"
+                                    @click="toFeedback"><img src="@/assets/icons/logout.svg">Log out</a></li>
+                        </ul>
+                    </li>
                 </ul>
-              <nav class="navbar bg-success">
-              <div class="container-fluid">
-                <a class="nav-link dropdown-toggle username-text text-white " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  <img src="/src/assets/userprofile.png" alt="Userprofile" width="30" height="30" class="d-inline-block align-text-top">
-                  Username
-                </a>
-                <ul class="dropdown-menu bg-success dropdown-username-content">
-                  <li><router-link class="dropdown-item text-white dropdown-username-link"  to="/profile">User Profile</router-link></li>
-                  <li><a class="dropdown-item text-white dropdown-username-link" href="/news" @click="toSetting">Setting</a></li>
-                  <li><a class="dropdown-item text-white dropdown-username-link" href="/news" @click="toFeedback">Feedback</a></li>
-                </ul>
-              </div>
-              </nav>
             </div>
         </div>
     </nav>
 </template>
 <script setup lang="ts">
-
-
-/**
- * May need to change from a-links to routerlinks to avoid complications with href.
- */
-
-import {useRouter} from "vue-router";
+import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-function toHome(){
-  router.push('/')
+function toHome() {
+    router.push('/')
 }
 
-function toSavingGoals(){
-  router.push('/news')
+function toSavingGoals() {
+    router.push('/news')
 }
 
-function toLeaderboard(){
-  router.push('/news')
+function toLeaderboard() {
+    router.push('/news')
 }
 
-function toNews(){
-  router.push('/news')
+function toNews() {
+    router.push('/news')
 }
 
-function toStore(){
-  router.push('/news')
+function toStore() {
+    router.push('/news')
 }
 
-function toSetting(){
-  router.push('/news')
+function toSetting() {
+    router.push('/news')
 }
 
-function toFeedback(){
-  router.push('/news')
+function toFeedback() {
+    router.push('/news')
 }
+
 
 function toUserProfile(){
   router.push('/profile')
@@ -87,20 +90,81 @@ function toUserProfile(){
 
 </script>
 <style scoped>
-.ui-menu{
-  font-size: 150%;
+.navbar-brand {
+    display: flex;
+    align-items: center;
 }
 
-.username-text{
-  font-size: 150%;
-
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba(255, 255, 255)' stroke-width='2' stroke-linecap='round' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }
 
-.dropdown-username-content{
-  font-size: 150%;
+.nav-item {
+    padding: 0.3rem 0.6rem;
+    font-size: 1.7rem;
 }
 
-.dropdown-username-link:hover{
-  background-color: #538d53
+.nav-item:hover {
+    background-color: #2b6ac7;
+}
+
+.nav-item .dropdown {
+    display: flex;
+    justify-content: center;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dropdown-item {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.dropdown-menu {
+    background-color: #0A58CA;
+}
+
+.dropdown-username-link {
+    font-size: 1.7rem;
+    display: flex;
+    justify-self: center;
+}
+
+.dropdown-username-link:hover {
+    background-color: #2b6ac7;
+}
+
+#navBar {
+    background-color: #0A58CA;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+}
+
+.container-fluid {
+    font-size: 1.7rem;
+}
+
+#logo {
+    font-size: 2.5rem;
+    height: 100%;
+}
+
+.nav-link img {
+    margin-right: 5px;
+}
+
+#logoImg {
+    margin-right: 0.3rem;
+    width: 75px;
+    height: auto;
+    aspect-ratio: 1.3/1;
 }
 </style>

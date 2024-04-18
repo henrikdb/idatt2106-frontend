@@ -3,6 +3,8 @@ import { createRouter, createWebHistory } from 'vue-router';
 import LoginView from '../views/Authentication/LoginView.vue';
 import { useUserInfoStore } from '@/stores/UserStore';
 import UserProfileView from "@/views/User/UserProfileView.vue";
+import SignUp from '@/components/SignUp/SignUp.vue'
+
 
 const routes = [
   {
@@ -32,6 +34,11 @@ const routes = [
         component: () => import('@/views/TestView.vue'),
       },
       {
+        path: 'roadmap',
+        name: 'roadmap',
+        component: () => import('@/views/SavingGoalView/RoadmapView.vue'),
+      },
+      {
         path: 'admin',
         name: 'admin',
         component: () => import('@/views/TestView.vue'),
@@ -53,6 +60,11 @@ const routes = [
     path: '/profile',
     name: 'profile',
     component: UserProfileView
+  },
+  {
+    path: '/sign-up',
+    name: 'sign up',
+    component: () => import('@/views/Authentication/SignUpView.vue'),
   },
   {
     path: '/:pathMatch(.*)*',
