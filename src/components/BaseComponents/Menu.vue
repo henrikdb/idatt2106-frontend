@@ -60,11 +60,11 @@ function toHome() {
 }
 
 function toSavingGoals() {
-    router.push('/news')
+    router.push('/roadmap')
 }
 
 function toLeaderboard() {
-    router.push('/news')
+    router.push('/leaderboard')
 }
 
 function toNews() {
@@ -72,7 +72,7 @@ function toNews() {
 }
 
 function toStore() {
-    router.push('/news')
+    router.push('/shop')
 }
 
 function toSetting() {
@@ -80,7 +80,7 @@ function toSetting() {
 }
 
 function toFeedback() {
-    router.push('/news')
+    router.push('/feedback')
 }
 
 function toUserProfile() {
