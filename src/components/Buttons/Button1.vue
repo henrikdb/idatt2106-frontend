@@ -1,5 +1,5 @@
 <template>
-    <button type="button" class="btn btn-success" id="buttonStyle">{{ buttonText }}</button>
+    <button type="button" class="btn btn-primary" id="buttonStyle">{{ buttonText }}</button>
 </template>
 
 <script>
