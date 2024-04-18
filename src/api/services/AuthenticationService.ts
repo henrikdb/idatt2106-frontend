@@ -10,6 +10,28 @@ import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class AuthenticationService {
     /**
+     * Validate email
+     * Check that the given email is valid
+     * @returns any Email is valid
+     * @throws ApiError
+     */
+    public static validateEmail({
+        email,
+    }: {
+        email: string,
+    }): CancelablePromise<Record<string, any>> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/auth/valid-email/{email}',
+            path: {
+                'email': email,
+            },
+            errors: {
+                409: `Email already exists`,
+            },
+        });
+    }
+    /**
      * User Signup
      * Sign up a new user
      * @returns AuthenticationResponse Successfully signed up
