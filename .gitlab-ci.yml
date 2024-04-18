@@ -11,12 +11,10 @@ cache:
 
 install_dependencies:
   stage: install
-  image: node:latest
   script:
     - npm install
 
 build_project:
   stage: build
-  image: node:latest
   script:
     - npm run build
