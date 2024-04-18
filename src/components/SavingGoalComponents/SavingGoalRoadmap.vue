@@ -45,10 +45,12 @@ export default {
     <div class="SavingGoalTitle text-center">{{title}}</div>
     <ul class="timeline">
       <li v-for="(step, index) in steps" :key="index" :class="{ 'timeline-inverted': index % 2 !== 0 }">
-        <div class="timeline-image z-1" @click="togglePanel(step)">
-          <img class="circular-image" :src="step.showPanel ? altImage : image" alt="">
-        </div>
-        <div class="timeline-panel z-3" v-show="step.showPanel">
+        <a :href="'#panel-' + index">
+          <div class="timeline-image z-1" @click="togglePanel(step)">
+            <img class="circular-image" :src="step.showPanel ? altImage : image" alt="">
+          </div>
+        </a>
+        <div class="timeline-panel z-3" :id="'panel-' + index" v-show="step.showPanel">
           <div class="timeline-heading">
             <h4>{{ step.title }}</h4>
             <h4 class="subheading">{{step.description}}</h4>
@@ -88,10 +90,11 @@ export default {
 .SavingGoalTitle {
   font-weight: 600;
   font-size: 45px;
+  margin-top: 20px;
   margin-bottom:40px;
   padding-bottom: 10px;
   color: white;
-  border-radius: 0 0 1em 1em;
+  border-radius: 1em;
   background-color: #0A58CA;
 }
 
