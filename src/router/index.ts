@@ -17,14 +17,14 @@ const routes = [
         meta: { requiresAuth: true },
       },
       {
-        path: '/:pathMatch(.*)*',
-        name: 'not-found',
-        component: () => import('@/views/NotFoundView.vue'),
-      },
-      {
         path: '/news',
         name: 'news',
         component: () => import('@/views/NewsView.vue'),
+      },
+      {
+        path: 'leaderboard',
+        name: 'leaderboard',
+        component: () => import('@/views/LeaderboardView.vue'),
       },
       {
         path: 'test',
@@ -37,6 +37,16 @@ const routes = [
         component: () => import('@/views/SavingGoalView/RoadmapView.vue'),
       },
       {
+        path: 'feedback',
+        name: 'feedback',
+        component: () => import('@/views/FeedbackView.vue'),
+      },
+      {
+        path: 'shop',
+        name: 'shop',
+        component: () => import('@/views/ShopView.vue'),
+      },
+      {
         path: 'admin',
         name: 'admin',
         component: () => import('@/views/TestView.vue'),
@@ -46,6 +56,11 @@ const routes = [
         path: 'unauthorized',
         name: 'unauthorized',
         component: () => import('@/views/UnauthorizedView.vue'),
+      },
+      {
+        path: '/:pathMatch(.*)*',
+        name: 'not-found',
+        component: () => import('@/views/NotFoundView.vue'),
       },
     ]
   },
