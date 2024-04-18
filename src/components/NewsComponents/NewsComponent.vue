@@ -1,8 +1,14 @@
 <script lang="ts">
+interface news {
+  urlToImage: string;
+  title: string;
+  description: string;
+  url: string;
+}
 export default {
   data() {
     return {
-      articles: []
+      articles: [] as news[]
     };
   },
   mounted() {
