@@ -1,9 +1,5 @@
 image: node:alpine # Much smaller than other variants, faster and more resource effective
 
-variables:
-  NPM_CONFIG_PROGRESS: 'false' # Make npm less verbose
-
-
 stages:
   - install_dependencies
   - lint
