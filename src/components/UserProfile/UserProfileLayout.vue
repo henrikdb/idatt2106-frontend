@@ -3,6 +3,8 @@
 import Menu from "@/components/BaseComponents/Menu.vue";
 import Footer from "@/components/BaseComponents/Footer.vue";
 
+let numberOfHistory = 6;
+
 let points = 0;
 let streak = 0;
 </script>
@@ -85,22 +87,7 @@ let streak = 0;
         <div class="container-fluid mb-5">
           <h1 class="mt-5 text-start history-text">History</h1>
           <div class="row scrolling-wrapper-history">
-            <div class="col-4">
-            <div class="card history-block" style="background-color: black"></div>
-            </div>
-            <div class="col-4">
-              <div class="card history-block" style="background-color: black"></div>
-            </div>
-            <div class="col-4">
-              <div class="card history-block" style="background-color: black"></div>
-            </div>
-            <div class="col-4">
-              <div class="card history-block" style="background-color: black"></div>
-            </div>
-            <div class="col-4">
-              <div class="card history-block" style="background-color: black"></div>
-            </div>
-            <div class="col-4">
+            <div v-for="index in numberOfHistory" :key="index" class="col-md-4 col-sm-4 col-lg-4 col-xs-4 col-xl-4 control-label">
               <div class="card history-block" style="background-color: black"></div>
             </div>
           </div>
@@ -118,7 +105,8 @@ let streak = 0;
 }
 
 .scrolling-wrapper-history{
-  overflow-y: auto;
+  max-height: 300px;
+  overflow: auto;
 }
 
 
@@ -150,8 +138,14 @@ let streak = 0;
 
 .history-block{
   height: 200px;
+
+  background-color: #fff;
+  border: none;
+  background-position: center;
   background-size: cover;
   transition: all 0.2s ease-in-out !important;
+  border-radius: 24px;
+  margin: 20px;
   &:hover{
     transform: translateY(-5px);
     box-shadow: none;
@@ -209,6 +203,4 @@ let streak = 0;
   background-image: linear-gradient(225deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);
 
 }
-
-
 </style>
