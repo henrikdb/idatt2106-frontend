@@ -2,7 +2,9 @@
 import BaseInput from '@/components/InputFields/BaseInput.vue'
 import Button1 from '@/components/Buttons/Button1.vue'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
+const router = useRouter();
 const firstNameRef = ref('')
 const surnameRef = ref('')
 const emailRef = ref('')
@@ -34,6 +36,7 @@ const handleConfirmPasswordInputEvent = (newValue: any) => {
 const handleSubmit = () => {
   formRef.value.classList.add("was-validated")
   alert("Expected to be transferred to initial configuration") // Todo remove this line
+  router.push("/configuration")
 }
 
 </script>

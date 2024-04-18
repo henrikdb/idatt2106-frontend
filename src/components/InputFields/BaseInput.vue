@@ -25,6 +25,10 @@ const props = defineProps({
   isValid: {
     type: Boolean,
     default: false
+  },
+  min: {
+    type: String,
+    required: false
   }
 });
 
@@ -41,7 +45,9 @@ const onInputEvent = (event: any) => {
            :type="props.type"
            class="form-control"
            :placeholder="props.placeholder"
-           :id="inputId" required />
+           :id="inputId" required
+           :min="min"
+    />
     <div v-if="props.isValid" class="invalid-feedback">Invalid {{ label }}</div>
     <div v-else class="valid-feedback">Valid {{ label }}</div>
   </div>
