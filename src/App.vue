@@ -14,5 +14,7 @@ import ErrorBoundaryCatcher from '@/components/Exceptions/ErrorBoundaryCatcher.v
 <style>
   main {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 600;
+
   }
 </style>
