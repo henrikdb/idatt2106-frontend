@@ -2,6 +2,7 @@ image: node:alpine # Much smaller than other variants, faster and more resource 
 
 stages:
   - install_dependencies
+  - lint
   - build_project
 
 cache:
@@ -12,7 +13,12 @@ cache:
 install_dependencies:
   stage: install_dependencies
   script:
-    - npm ci
+    - npm install
+
+lint:
+  stage: lint
+  script:
+    - npm run lint
 
 build_project:
   stage: build_project
