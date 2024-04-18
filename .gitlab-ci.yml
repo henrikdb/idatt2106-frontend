@@ -6,26 +6,24 @@ stages:
   - build_project
 
 cache:
-  key: "node repository" # Static Cache Key to keep cache across branches 
-  paths:
+    key: "${CI_COMMIT_REF_SLUG}" # Branch-specific cache keys to have separate caches across branches.
+    paths:
     - node_modules/
 
 install_dependencies:
   stage: install_dependencies
-  image: node:latest
   script:
-    - npm install
+    - apk add --no-cache git # For instances where installations require git
+    - npm ci --prefer-offline  # --prefer-offline to make it prefer using locally cached packages rather than downloading
 
 lint:
   stage: lint
-  image: node:latest
   script:
     - npm run lint    
   allow_failure: true  
 
 build_project:
   stage: build_project
-  image: node:latest
   script:
     - npm run build
 
