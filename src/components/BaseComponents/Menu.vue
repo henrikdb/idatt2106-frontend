@@ -31,7 +31,7 @@
                   Username
                 </a>
                 <ul class="dropdown-menu bg-success dropdown-username-content">
-                  <li><a class="dropdown-item text-white dropdown-username-link" href="/news" @click="toUserProfile">User Profile</a></li>
+                  <li><router-link class="dropdown-item text-white dropdown-username-link"  to="/profile">User Profile</router-link></li>
                   <li><a class="dropdown-item text-white dropdown-username-link" href="/news" @click="toSetting">Setting</a></li>
                   <li><a class="dropdown-item text-white dropdown-username-link" href="/news" @click="toFeedback">Feedback</a></li>
                 </ul>
@@ -81,7 +81,7 @@ function toFeedback(){
 }
 
 function toUserProfile(){
-  router.push('/news')
+  router.push('/profile')
 }
 
 
