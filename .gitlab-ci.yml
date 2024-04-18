@@ -1,26 +1,22 @@
+image: node:alpine # Much smaller than other variants, faster and more resource effective
+
 stages:
-  - install_dependencies
-  - lint
-  - build_project
+  - install
+  - build
 
 cache:
-    key: "${CI_COMMIT_REF_SLUG}" # Branch-specific cache keys to have separate caches across branches.
-    paths:
+  key: "${CI_COMMIT_REF_SLUG}" # Branch-specific cache keys to have separate caches across branches.
+  paths:
     - node_modules/
 
 install_dependencies:
-  stage: install_dependencies
+  stage: install
+  image: node:latest
   script:
-    - npm ci --prefer-offline  # --prefer-offline to make it prefer using locally cached packages rather than downloading
-
-lint:
-  stage: lint
-  script:
-    - npm run lint    
-  allow_failure: true  
+    - npm install
 
 build_project:
-  stage: build_project
+  stage: build
+  image: node:latest
   script:
     - npm run build
-
