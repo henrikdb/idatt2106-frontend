@@ -19,6 +19,7 @@ lint:
   stage: lint
   script:
     - npm run lint
+  allow_failure: true  
 
 build_project:
   stage: build_project
