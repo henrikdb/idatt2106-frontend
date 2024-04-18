@@ -25,7 +25,16 @@ export default {
   },
   methods: {
     togglePanel(step: Step) {
-      step.showPanel = !step.showPanel;
+      if (step.showPanel) {
+        // If the clicked panel is already open, close it
+        step.showPanel = false;
+      } else {
+        //Close all panels before opening new one
+        //Ensure only one panel open at a time
+        this.steps.forEach((s) => (s.showPanel = false));
+        //Open clicked on panel
+        step.showPanel = true;
+      }
     },
   },
 };
@@ -96,14 +105,14 @@ export default {
 .timeline>li:nth-child(even) {
   position: relative;
   margin-bottom: 50px;
-  height: 180px;
+  height: 100px;
   right:-100px;
 }
 
 .timeline>li:nth-child(odd) {
   position: relative;
   margin-bottom: 50px;
-  height: 180px;
+  height: 100px;
   left:-100px;
 }
 
