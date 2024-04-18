@@ -1,20 +1,35 @@
+image: node:alpine # Much smaller than other variants, faster and more resource effective
+
+variables:
+  NPM_CONFIG_PROGRESS: 'false' # Make npm less verbose
+
+
 stages:
-  - install
-  - build
+  - install_dependencies
+  - lint
+  - build_project
 
 cache:
+  key: "node repository" # Static Cache Key to keep cache across branches 
   paths:
     - node_modules/
-  key: "$CI_BUILD_REF_NAME" # Separate cache for each branch
 
 install_dependencies:
-  stage: install
+  stage: install_dependencies
   image: node:latest
   script:
     - npm install
 
+lint:
+  stage: lint
+  image: node:latest
+  script:
+    - npm run lint    
+  allow_failure: true  
+
 build_project:
-  stage: build
+  stage: build_project
   image: node:latest
   script:
     - npm run build
+
