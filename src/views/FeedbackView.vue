@@ -77,7 +77,6 @@ textarea {
   transition: background-color 0.2s ease 0s;
 }
 
-
 textarea:focus {
   background: none repeat scroll 0 0 #FFFFFF;
   outline-width: 0;
