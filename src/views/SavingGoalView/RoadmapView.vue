@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import SavingGoalRoadmap2 from "@/components/SavingGoalComponents/SavingGoalRoadmap.vue";
+import SavingGoal from "@/components/SavingGoalComponents/SavingGoal.vue";
 </script>
 
 <template>
-<saving-goal-roadmap2></saving-goal-roadmap2>
+<saving-goal></saving-goal>
 </template>

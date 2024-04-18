@@ -1,6 +1,5 @@
 <script lang="ts">
 interface Step {
-  image: string;
   title: string;
   showPanel: boolean;
   description: string;
@@ -9,69 +8,91 @@ interface Step {
 export default {
   data() {
     return {
+      image: 'https://th.bing.com/th/id/OIG3.NMbdxmKYKVnxYGLOa0Z0?w=1024&h=1024&rs=1&pid=ImgDetMain' as string,
+      altImage: 'https://th.bing.com/th/id/OIG4.gVWUC.rwCb8faTNx31yU?w=1024&h=1024&rs=1&pid=ImgDetMain' as string,
+      title: 'Spain trip' as string,
       //This will be changed to info gathered from backend
       steps: [
-        { image: 'https://th.bing.com/th/id/OIG4.GHQvXMljb6YONcnYvfuE?pid=ImgGn', altImage: 'https://th.bing.com/th/id/OIG2.dzSCGYTFEglaUPj1maja?pid=ImgGn', title: 'Challenge 1', showPanel: false, description: 'Save 50kr on coffee in 3 days', percentFinished: 22 },
-        { image: 'https://th.bing.com/th/id/OIG4.GHQvXMljb6YONcnYvfuE?pid=ImgGn', altImage: 'https://th.bing.com/th/id/OIG2.dzSCGYTFEglaUPj1maja?pid=ImgGn', title: 'Challenge 2', showPanel: false, description: 'Save 500kr on food in 7 days', percentFinished: 73 },
-        { image: 'https://th.bing.com/th/id/OIG4.GHQvXMljb6YONcnYvfuE?pid=ImgGn', altImage: 'https://th.bing.com/th/id/OIG2.dzSCGYTFEglaUPj1maja?pid=ImgGn', title: 'Challenge 3', showPanel: false, description: 'Save 350kr on clothes in 5 days', percentFinished: 50 },
-        { image: 'https://th.bing.com/th/id/OIG4.GHQvXMljb6YONcnYvfuE?pid=ImgGn', altImage: 'https://th.bing.com/th/id/OIG2.dzSCGYTFEglaUPj1maja?pid=ImgGn', title: 'Challenge 4', showPanel: false, description: 'Save 150kr on coffee in 4 days', percentFinished: 10 },
-        { image: 'https://th.bing.com/th/id/OIG4.GHQvXMljb6YONcnYvfuE?pid=ImgGn', altImage: 'https://th.bing.com/th/id/OIG2.dzSCGYTFEglaUPj1maja?pid=ImgGn', title: 'Challenge 5', showPanel: false, description: 'Save 50kr on coffee in 3 days', percentFinished: 90 }
+        { title: 'Challenge 1', showPanel: false, description: 'Save 50kr on coffee in 3 days', percentFinished: 22 },
+        { title: 'Challenge 2', showPanel: false, description: 'Save 500kr on food in 7 days', percentFinished: 73 },
+        { title: 'Challenge 3', showPanel: false, description: 'Save 350kr on clothes in 5 days', percentFinished: 50 },
+        { title: 'Challenge 4', showPanel: false, description: 'Save 150kr on coffee in 4 days', percentFinished: 10 },
+        { title: 'Challenge 5', showPanel: false, description: 'Save 50kr on coffee in 3 days', percentFinished: 90 }
       ]
+      ,
+      bluePanelMaxHeight: 'auto' as string
     };
   },
   methods: {
     togglePanel(step: Step) {
-      step.showPanel = !step.showPanel;
-    }
-  }
+      if (step.showPanel) {
+        // If the clicked panel is already open, close it
+        step.showPanel = false;
+      } else {
+        //Close all panels before opening new one
+        //Ensure only one panel open at a time
+        this.steps.forEach((s) => (s.showPanel = false));
+        //Open clicked on panel
+        step.showPanel = true;
+      }
+    },
+  },
 };
 </script>
 
 <template>
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-12">
-        <ul class="timeline">
-          <li v-for="(step, index) in steps" :key="index" :class="{ 'timeline-inverted': index % 2 !== 0 }">
-            <div class="timeline-image" @click="togglePanel(step)">
-              <img class="circular-image" :src="step.showPanel ? step.altImage : step.image" alt="">
+  <div class="col-lg-8">
+    <div class="SavingGoalTitle text-center">{{title}}</div>
+    <ul class="timeline">
+      <li v-for="(step, index) in steps" :key="index" :class="{ 'timeline-inverted': index % 2 !== 0 }">
+        <div class="timeline-image z-1" @click="togglePanel(step)">
+          <img class="circular-image" :src="step.showPanel ? altImage : image" alt="">
+        </div>
+        <div class="timeline-panel z-3" v-show="step.showPanel">
+          <div class="timeline-heading">
+            <h4>{{ step.title }}</h4>
+            <h4 class="subheading">{{step.description}}</h4>
+          </div>
+          <div class="timeline-body">
+            <br>
+            <p class="">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+            <br>
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" :style="{ width: step.percentFinished + '%' }" :aria-valuenow="step.percentFinished" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
-            <div class="timeline-panel" v-show="step.showPanel">
-              <div class="timeline-heading">
-                <h4>{{ step.title }}</h4>
-                <h4 class="subheading">{{step.description}}</h4>
-              </div>
-              <div class="timeline-body">
-                <br>
-                <p class="">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-                <br>
-                <div class="progress">
-                  <div class="progress-bar bg-success" role="progressbar" :style="{ width: step.percentFinished + '%' }" :aria-valuenow="step.percentFinished" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <br>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                  <label class="form-check-label" style="color:white;" for="inlineCheckbox1">Day 1</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-                  <label class="form-check-label" style="color:white;" for="inlineCheckbox1">Day 2</label>
-                </div>
-              </div>
+            <br>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+              <label class="form-check-label" style="color:white;" for="inlineCheckbox1">Day 1</label>
             </div>
-            <div class="line" v-if="index < steps.length - 1"></div>
-          </li>
-        </ul>
-      </div>
-    </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+              <label class="form-check-label" style="color:white;" for="inlineCheckbox1">Day 2</label>
+            </div>
+          </div>
+        </div>
+        <div class="line" v-if="index < steps.length - 1"></div>
+      </li>
+    </ul>
   </div>
 </template>
 
 <style scoped>
-.container {
-  margin-bottom:20px;
+.col-lg-8 {
+  width: 63%;
+  margin-bottom: 20px;
+}
+
+.SavingGoalTitle {
+  font-weight: 600;
+  font-size: 45px;
+  margin-bottom:40px;
+  padding-bottom: 10px;
+  color: white;
+  border-radius: 0 0 1em 1em;
+  background-color: #0A58CA;
 }
 
 .timeline {
@@ -84,14 +105,14 @@ export default {
 .timeline>li:nth-child(even) {
   position: relative;
   margin-bottom: 50px;
-  height: 180px;
+  height: 100px;
   right:-100px;
 }
 
 .timeline>li:nth-child(odd) {
   position: relative;
   margin-bottom: 50px;
-  height: 180px;
+  height: 100px;
   left:-100px;
 }
 
@@ -112,7 +133,7 @@ export default {
   width: 41%;
   padding: 0 20px 20px 30px;
   text-align: right;
-  background-color: #32CD32;
+  background-color: #0A58CA;
   border-radius: 1em;
 }
 
@@ -134,13 +155,13 @@ export default {
   z-index: 100;
   position: absolute;
   left: 50%;
-  border: 7px solid #006400;
+  border: 7px solid #001664;
   border-radius: 100%;
-  background-color: #00FF7F;
-  box-shadow: 0 0 5px #00FF00;
-  width: 200px;
-  height: 200px;
-  margin-left: -100px;
+  background-color: #00ffff;
+  box-shadow: 0 0 5px #00e1ff;
+  width: 100px;
+  height: 100px;
+  margin-left: -50px;
   cursor:pointer;
 }
 
@@ -199,36 +220,42 @@ export default {
 .timeline>li:nth-child(odd) .line:before {
   content: "";
   position: absolute;
-  top: 60px;
+  top: 30px;
   bottom: 0;
-  left: 730px;
-  width: 45px;
-  height:340px;
+  left: 700px;
+  width: 30px;
+  height:320px;
   background-color: grey;
   -ms-transform: rotate(-44deg); /* IE 9 */
   -webkit-transform: rotate(-44deg); /* Safari */
   transform: rotate(-44deg);
   border: dotted white 3px;
   /**box-shadow: 0 0 5px #00FF00;**/
+  display:none;
 }
 /*Style for odd div.line*/
 .timeline>li:nth-child(even) .line:before  {
   content: "";
   position: absolute;
-  top: 60px;
+  top: 30px;
   bottom: 0;
-  left: 520px;
-  width: 45px;
-  height:340px;
+  left: 480px;
+  width: 30px;
+  height:320px;
   background-color: grey;
   -ms-transform: rotate(44deg); /* IE 9 */
   -webkit-transform: rotate(44deg); /* Safari */
   transform: rotate(44deg);
   border: dotted white 3px;
   /*box-shadow: 0 0 5px #00FF00;*/
+  display:none;
 }
 /* Medium Devices, .visible-md-* */
 @media (min-width: 992px) and (max-width: 1199px) {
+  .col-lg-8 {
+    width: 100%;
+  }
+
   .timeline > li:nth-child(even) {
     margin-bottom: 0;
     min-height: 0;
