@@ -131,7 +131,7 @@
     top: -0.5rem;
     background-color: #0A58CA;
     position: absolute;
-    left: -1rem;
+    /**left: -1rem;*/
     box-shadow: 0px 15px 11px -6px #7a7a7d;
   }
   
