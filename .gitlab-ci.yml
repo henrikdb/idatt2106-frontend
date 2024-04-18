@@ -13,7 +13,6 @@ cache:
 install_dependencies:
   stage: install_dependencies
   script:
-    - apk add --no-cache git # For instances where installations require git
     - npm ci --prefer-offline  # --prefer-offline to make it prefer using locally cached packages rather than downloading
 
 lint:
