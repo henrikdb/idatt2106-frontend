@@ -2,11 +2,19 @@
 
 import Menu from "@/components/BaseComponents/Menu.vue";
 import Footer from "@/components/BaseComponents/Footer.vue";
+import {useRouter} from "vue-router";
 
 let numberOfHistory = 6;
 
+let cardTitles = ["Spain tour", "Food waste", "Coffee", "Concert", "New book", "Pretty clothes"]
+
 let points = 0;
 let streak = 0;
+
+let route = useRouter()
+function toRoadmap(){
+  route.push('/roadmap')
+}
 </script>
 
 <template>
@@ -88,7 +96,23 @@ let streak = 0;
           <h1 class="mt-5 text-start history-text">History</h1>
           <div class="row scrolling-wrapper-history">
             <div v-for="index in numberOfHistory" :key="index" class="col-md-4 col-sm-4 col-lg-4 col-xs-4 col-xl-4 control-label">
-              <div class="card history-block" style="background-color: black"></div>
+              <div class="card history-block" >
+                <div class="card mb-3" style="max-width: 540px;">
+                  <div class="row g-0">
+                    <div class="col-md-4">
+                      <img src="/src/assets/icons/piggybank.svg" class="img-fluid rounded-start h-40 mx-auto d-none d-md-block" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body">
+                        <h5 class="card-title">{{cardTitles[index-1]}}</h5>
+                        <p class="card-text">Money saved: 200 <br/>You are one challenge: 21</p>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                        <a href="#" class="btn  stretched-link" @click="toRoadmap"></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
