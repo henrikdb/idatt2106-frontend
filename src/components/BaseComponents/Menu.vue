@@ -45,7 +45,6 @@
                         </ul>
                     </li>
                 </ul>
-
             </div>
         </div>
     </nav>
@@ -83,8 +82,9 @@ function toFeedback() {
     router.push('/news')
 }
 
-function toUserProfile() {
-    router.push('/news')
+
+function toUserProfile(){
+  router.push('/profile')
 }
 
 
