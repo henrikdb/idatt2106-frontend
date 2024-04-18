@@ -2,7 +2,9 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import LoginView from '../views/Authentication/LoginView.vue';
 import { useUserInfoStore } from '@/stores/UserStore';
+import UserProfileView from "@/views/User/UserProfileView.vue";
 import SignUp from '@/components/SignUp/SignUp.vue'
+
 
 const routes = [
   {
@@ -68,6 +70,11 @@ const routes = [
     path: '/login',
     name: 'login',
     component: LoginView,
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: UserProfileView
   },
   {
     path: '/sign-up',
