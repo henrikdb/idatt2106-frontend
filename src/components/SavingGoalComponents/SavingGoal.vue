@@ -20,7 +20,7 @@ export default {
       if (timelineElement instanceof HTMLElement) {
         // Calculate the max-height based on the height of the timeline
         const timelineHeight = timelineElement.offsetHeight;
-        this.bluePanelMaxHeight = `${timelineHeight*1.25}px`;
+        this.bluePanelMaxHeight = `${timelineHeight*1.55}px`;
       } else {
         this.bluePanelMaxHeight = '700px';
       }
@@ -41,7 +41,7 @@ export default {
       <div class="col-lg-4 blue-background overflow-auto" :style="{ 'max-height': bluePanelMaxHeight }">
         <h3 style="color: white; margin-bottom: 16px">Your saving goals</h3>
         <div>
-          <button class="btn btn-light" style="font-weight: 600; margin-bottom: 20px" @click="createGoal">Create new saving goal</button>
+          <button class="btn btn-success btn-lg" style="font-weight: 600; margin-bottom: 20px" @click="createGoal">Create new saving goal</button>
         </div>
         <saving-goal-list @goToSavingGoal="goToSavingGoal"></saving-goal-list>
       </div>

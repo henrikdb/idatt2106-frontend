@@ -2,7 +2,7 @@
 import {ref} from "vue";
 
 const savingGoalList = ref([
-  { title: 'Spain trip', MoneyTarget: '200kr', description: 'You wanted to save 200kr on a spain trip' },
+  { title: 'Spain trip', MoneyTarget: '200kr', description: 'You wanted to save 200kr for a spain trip' },
   { title: 'Italy Escapade', MoneyTarget: '200kr', description: 'Experience the magic of Italy with us! Our goal is to save 200kr for an amazing trip to Italy.' },
   { title: 'French Getaway', MoneyTarget: '200kr', description: 'Join us as we plan to save 200kr for a delightful trip to France!' },
   { title: 'Exploring Greece', MoneyTarget: '200kr', description: 'Dreaming of Greece? Lets work together to save 200kr for that unforgettable trip!' },
@@ -17,6 +17,10 @@ const emits = defineEmits(['goToSavingGoal']);
 const goToSavingGoal = () => {
   emits('goToSavingGoal');
 };
+
+const deleteSavingGoal = () => {
+
+};
 </script>
 
 <template>
@@ -28,6 +32,7 @@ const goToSavingGoal = () => {
       <h5 class="card-title">{{ savingGoal.title }}</h5>
       <p class="card-text">{{ savingGoal.description }}</p>
       <a href="#" class="btn btn-light" @click="goToSavingGoal">Go to saving goal</a>
+      <a href="#" class="btn btn-danger" @click="deleteSavingGoal" style="margin-left: 8px">Delete</a>
     </div>
   </div>
 </template>
