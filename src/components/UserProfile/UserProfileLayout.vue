@@ -15,16 +15,19 @@ let route = useRouter()
 function toRoadmap(){
   route.push('/roadmap')
 }
+
+function toUpdateUserSettings(){
+  route.push('/update-user')
+}
 </script>
 
 <template>
-  <Menu></Menu>
     <div class="container text-center">
     <div class="row">
       <div class="col">
         <img src="/src/assets/userprofile.png" class="img-fluid">
         <p class="h2">Username</p>
-        <p><a class="link-dark" href="#">Edit profile</a></p>
+        <p><a class="link-dark" @click="toUpdateUserSettings" href="#">Edit profile</a></p>
       </div>
     </div>
       <div class="row">
@@ -120,7 +123,6 @@ function toRoadmap(){
       </div>
     </div>
   </div>
-  <Footer></Footer>
 </template>
 
 <style scoped>
