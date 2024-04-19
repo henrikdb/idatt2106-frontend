@@ -16,7 +16,7 @@ const routes = [
       {
         path: '',
         name: 'home',
-        component: () => import('../views/HomeView.vue'),
+        component: () => import('../views/SavingGoalView/RoadmapView.vue'),
       },
       {
         path: 'news',
@@ -137,7 +137,7 @@ router.beforeEach((to, from, next) => {
   if (requiresAuth && !isAuthenticated) {
     next({ name: 'login', query: { redirect: to.fullPath } });
   } else if (requiresAdmin && userRole !== 'admin') {
-    next({ name: 'home' });
+    next({ name: 'unauthorized' });
   } else {
     next();
   }
