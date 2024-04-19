@@ -4,8 +4,13 @@ import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 
 const formRef = ref()
+const bankIDRef = ref(false)
+const minIdRef = ref(false)
+const vippsRef = ref(false)
+
+
 const router = useRouter();
-const emit = defineEmits(['changeRouterEvent']);
+const emit = defineEmits(['changeRouterEvent', 'bankIdSelectedEvent']);
 emit('changeRouterEvent', '/bank-id');
 
 const onClick = () => {
@@ -17,6 +22,12 @@ const onClick = () => {
     return;
   }
 
+  let choice = ''
+  if (bankIDRef.value.checked) choice = 'BankId på mobil'
+  else if (minIdRef.value.checked) choice = 'MinId'
+  else if (vippsRef.value.checked) choice = 'Vipps'
+
+  emit('bankIdSelectedEvent', choice)
   router.push('/commitment')
 }
 
@@ -32,13 +43,13 @@ const onClick = () => {
 
     <form class="btn-group-vertical" ref="formRef" @submit.prevent="onClick">
 
-      <input type="radio" class="btn-check" name="bank-id" id="btn-check-outlined" autocomplete="off">
+      <input ref="bankIDRef" type="radio" class="btn-check" name="bank-id" id="btn-check-outlined" autocomplete="off">
       <label class="btn btn-outline-primary d-flex align-items-center justify-content-center" for="btn-check-outlined">BankID på mobil</label>
 
-      <input type="radio" class="btn-check" name="bank-id" id="btn-check2-outlined" autocomplete="off">
+      <input ref="minIdRef" type="radio" class="btn-check" name="bank-id" id="btn-check2-outlined" autocomplete="off">
       <label class="btn btn-outline-primary d-flex align-items-center justify-content-center" for="btn-check2-outlined">MinID</label>
 
-      <input type="radio" class="btn-check" name="bank-id" id="btn-check3-outlined" autocomplete="off">
+      <input ref="vippsRef" type="radio" class="btn-check" name="bank-id" id="btn-check3-outlined" autocomplete="off">
       <label class="btn btn-outline-primary d-flex align-items-center justify-content-center" for="btn-check3-outlined">Vipps</label>
 
     </form>

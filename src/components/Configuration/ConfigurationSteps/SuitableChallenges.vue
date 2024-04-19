@@ -1,21 +1,33 @@
 <script setup lang="ts">
-
 import { useRouter } from 'vue-router'
-
-const router = useRouter();
-const onClick = () => {
-  router.push('/first-saving-goal')
-}
-
 import ChallangeCheckBox from '@/components/Configuration/ChallangeCheckBox.vue'
 import Button1 from '@/components/Buttons/Button1.vue'
+import { ref } from 'vue'
 
-const emit = defineEmits(['changeRouterEvent'])
+const emit = defineEmits(['changeRouterEvent', 'challengesSelectedEvent'])
 emit('changeRouterEvent', '/suitable-challenges')
+const router = useRouter();
 
+let chosenChallenges = ref([])
 const challenges = ['Make packed lunch', 'Stop shopping', 'Drop coffee',
-  'Quit subscription', 'Drop car', 'Short showers', 'Exercise outside', 'Make budget', 'Others'
-]
+  'Quit subscription', 'Drop car', 'Short showers', 'Exercise outside', 'Make budget']
+
+const onChangedChallengeEvent = (value) => {
+  // if challenge is checked then add it to the chosenChallenges variable
+  if (value[1]) {
+    chosenChallenges.value.push(value[0])
+  }
+  // if challenge is unchecked then remove it from the chosenChallenges variable
+  else {
+    console.log('Reached')
+    chosenChallenges.value = chosenChallenges.value.filter(item => item !== value[0]);
+  }
+}
+
+const onClick = () => {
+  emit('challengesSelectedEvent', chosenChallenges.value)
+  router.push('/first-saving-goal')
+}
 
 </script>
 
@@ -28,7 +40,9 @@ const challenges = ['Make packed lunch', 'Stop shopping', 'Drop coffee',
     </div>
 
     <div class="challenge-container">
-      <ChallangeCheckBox v-for="(item, index) in challenges" :id="index" :text="item"/>
+      <ChallangeCheckBox v-for="(item, index) in challenges" :id="index" :text="item"
+                         @challengeChangedEvent="onChangedChallengeEvent"
+      />
     </div>
 
     <div class="confirm-button-container">

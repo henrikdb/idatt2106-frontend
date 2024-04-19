@@ -26,6 +26,7 @@ const handlePasswordInputEvent = (newValue: any) => {
 }
 
 const handleSubmit = async () => {
+  formRef.value.classList.add("was-validated")
   const loginUserPayload: LoginRequest = {
     email: emailRef.value,
     password: passwordRef.value

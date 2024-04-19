@@ -14,7 +14,6 @@ const formRef = ref()
 
 const handleFirstNameInputEvent = (newValue: any) => {
   firstNameRef.value = newValue
-  console.log(firstNameRef.value)
 }
 
 const handleSurnameInputEvent = (newValue: any) => {
@@ -35,8 +34,6 @@ const handleConfirmPasswordInputEvent = (newValue: any) => {
 
 const handleSubmit = () => {
   formRef.value.classList.add("was-validated")
-  alert("Expected to be transferred to initial configuration") // Todo remove this line
-  router.push("/configuration")
 }
 
 </script>
