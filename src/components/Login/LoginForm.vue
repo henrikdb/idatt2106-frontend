@@ -51,7 +51,7 @@ const handleSubmit = async () => {
     });
     router.push({ name: 'home' });
   } catch (error: any) {
-     errorMsg.value = handleUnknownError(error);
+    errorMsg.value = handleUnknownError(error);
   }
 }
 
@@ -59,11 +59,16 @@ const handleSubmit = async () => {
 
 <template>
   <div class="container-fluid">
+    <div class="container-fluid d-flex justify-content-center align-items-center flex-column mt-5">
+      <img src="@/assets/Sparesti-logo.png" style="width: 300px">
+      <h1>Sparesti.no</h1>
+    </div>
     <form ref="formRef" id="loginForm" @submit.prevent="handleSubmit" novalidate>
       <BaseInput :model-value="emailRef" @input-change-event="handleEmailInputEvent" id="emailInput" input-id="email"
         type="email" label="Email" placeholder="Enter your email" />
-      <BaseInput pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,16}" :model-value="passwordRef" @input-change-event="handlePasswordInputEvent" id="passwordInput"
-        input-id="password" type="password" label="Password" placeholder="Enter password" />
+      <BaseInput pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,16}" :model-value="passwordRef"
+        @input-change-event="handlePasswordInputEvent" id="passwordInput" input-id="password" type="password"
+        label="Password" placeholder="Enter password" />
       <p class="text-danger">{{ errorMsg }}</p>
       <button1 id="confirmButton" type="submit" @click="handleSubmit" button-text="Login"></button1>
     </form>
@@ -85,5 +90,9 @@ const handleSubmit = async () => {
 #passwordInput,
 #confirmButton {
   margin: 1rem 0;
+}
+
+h1 {
+  font-size: 4rem;
 }
 </style>
