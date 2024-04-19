@@ -198,39 +198,6 @@
         }
       }
     },
-    "/api/users/{userId}": {
-      "get": {
-        "tags": [
-          "user-controller"
-        ],
-        "summary": "Get user",
-        "description": "Get user information",
-        "operationId": "getUser",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully got user",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserDTO"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/users/{userId}/profile": {
       "get": {
         "tags": [
@@ -257,6 +224,28 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProfileDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/me": {
+      "get": {
+        "tags": [
+          "user-controller"
+        ],
+        "summary": "Get user",
+        "description": "Get user information",
+        "operationId": "getUser",
+        "responses": {
+          "200": {
+            "description": "Successfully got user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDTO"
                 }
               }
             }

@@ -28,25 +28,6 @@ export class UserControllerService {
         });
     }
     /**
-     * Get user
-     * Get user information
-     * @returns UserDTO Successfully got user
-     * @throws ApiError
-     */
-    public static getUser({
-        userId,
-    }: {
-        userId: number,
-    }): CancelablePromise<UserDTO> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/users/{userId}',
-            path: {
-                'userId': userId,
-            },
-        });
-    }
-    /**
      * Get profile
      * Get user profile
      * @returns ProfileDTO Successfully got profile
@@ -63,6 +44,18 @@ export class UserControllerService {
             path: {
                 'userId': userId,
             },
+        });
+    }
+    /**
+     * Get user
+     * Get user information
+     * @returns UserDTO Successfully got user
+     * @throws ApiError
+     */
+    public static getUser(): CancelablePromise<UserDTO> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/users/me',
         });
     }
 }
