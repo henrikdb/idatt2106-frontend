@@ -19,10 +19,9 @@
     </div>
 
     <!--Change this to date picker?-->
-    <p>How long should this saving goal last: </p>
+    <p>When should this saving goal end?:</p>
     <div class="input-group mb-3">
-      <input type="text" class="form-control" aria-label="Amount of days" placeholder="Amount of days (as number)">
-      <span class="input-group-text">Days</span>
+      <input type="date" class="form-control" aria-label="Amount of days" placeholder="Amount of days (as number)">
     </div>
 
     <p>How much do you want to save during this saving goal: </p>
