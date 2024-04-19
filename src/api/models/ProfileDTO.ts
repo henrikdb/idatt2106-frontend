@@ -2,13 +2,10 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type SignUpRequest = {
+export type ProfileDTO = {
+    id?: number;
     firstName?: string;
     lastName?: string;
-    email?: string;
-    password?: string;
-    commitment?: string;
-    experience?: string;
-    challengeTypes?: Array<string>;
+    createdAt?: string;
 };
 
