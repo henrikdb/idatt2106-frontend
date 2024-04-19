@@ -12,15 +12,15 @@ const routes = [
     path: '/',
     name: 'base',
     component: () => import('@/views/BasePageView.vue'),
+    meta: { requiresAuth: true },
     children: [
       {
         path: '',
         name: 'home',
-        component: () => import('../views/HomeView.vue'),
-        meta: { requiresAuth: true },
+        component: () => import('../views/SavingGoalView/RoadmapView.vue'),
       },
       {
-        path: '/news',
+        path: 'news',
         name: 'news',
         component: () => import('@/views/NewsView.vue'),
       },
@@ -60,10 +60,15 @@ const routes = [
         component: () => import('@/views/ShopView.vue'),
       },
       {
+        path: '/profile',
+        name: 'profile',
+        component: UserProfileView
+      },
+      {
         path: 'admin',
         name: 'admin',
         component: () => import('@/views/TestView.vue'),
-        meta: { requiresAdmin: true }
+        meta: { requiresAdmin: true },
       },
       {
         path: 'unauthorized',
@@ -136,9 +141,13 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
   const requiresAdmin = to.matched.some(record => record.meta.requiresAdmin);
-  const userRole = useUserInfoStore().role;
+  let user = useUserInfoStore();
+  const userRole = user.role;
+  const isAuthenticated = user.isLoggedIn;
 
-  if (requiresAdmin && userRole !== 'admin') {
+  if (requiresAuth && !isAuthenticated) {
+    next({ name: 'login', query: { redirect: to.fullPath } });
+  } else if (requiresAdmin && userRole !== 'admin') {
     next({ name: 'unauthorized' });
   } else {
     next();

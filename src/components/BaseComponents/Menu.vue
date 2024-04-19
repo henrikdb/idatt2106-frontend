@@ -28,10 +28,10 @@
                         <a class="nav-link text-white" href="#" @click="toStore"><img
                                 src="@/assets/icons/storefront.svg">Store</a>
                     </li>
-                    <li class="nav-item dropdown">
+                    <li v-if="userStore.isLoggedIn" class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle username-text text-white " href="#" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="@/assets/icons/person.svg">Username
+                            <img src="@/assets/icons/person.svg">{{ userStore.firstname }}
                         </a>
                         <ul class="dropdown-menu dropdown-username-content">
                             <li><a class="dropdown-item text-white dropdown-username-link" href="#"
@@ -41,8 +41,11 @@
                             <li><a class="dropdown-item text-white dropdown-username-link" href="#"
                                     @click="toFeedback"><img src="@/assets/icons/feedback.svg">Feedback</a></li>
                             <li><a class="dropdown-item text-white dropdown-username-link" href="#"
-                                    @click="toFeedback"><img src="@/assets/icons/logout.svg">Log out</a></li>
+                                    @click="toLogout"><img src="@/assets/icons/logout.svg">Log out</a></li>
                         </ul>
+                    </li>
+                    <li v-else class="nav-item">
+                        <a class="nav-link text-white" href="#" @click="toLogout">Login</a>
                     </li>
                 </ul>
             </div>
@@ -51,8 +54,11 @@
 </template>
 <script setup lang="ts">
 import { useRouter } from "vue-router";
+import { useUserInfoStore } from '@/stores/UserStore';
 
 const router = useRouter();
+
+const userStore = useUserInfoStore();
 
 function toHome() {
     router.push('/')
@@ -83,8 +89,13 @@ function toFeedback() {
 }
 
 
-function toUserProfile(){
-  router.push('/profile')
+function toUserProfile() {
+    router.push('/profile')
+}
+
+function toLogout() {
+    userStore.clearUserInfo();
+    router.push('/login')
 }
 
 
@@ -127,6 +138,11 @@ function toUserProfile(){
 
 .dropdown-menu {
     background-color: #0A58CA;
+    right: -0.5rem;
+}
+
+.dropdown-menu[data-bs-popper] {
+    left: auto;
 }
 
 .dropdown-username-link {

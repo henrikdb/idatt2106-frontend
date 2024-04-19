@@ -11,6 +11,7 @@ import { useErrorStore } from '@/stores/ErrorStore';
 const emailRef = ref()
 const passwordRef = ref()
 const formRef = ref()
+let errorMsg = ref('');
 
 const errorStore = useErrorStore();
 const router = useRouter();
@@ -25,6 +26,7 @@ const handlePasswordInputEvent = (newValue: any) => {
 }
 
 const handleSubmit = async () => {
+  formRef.value.classList.add("was-validated")
   const loginUserPayload: LoginRequest = {
     email: emailRef.value,
     password: passwordRef.value
@@ -34,7 +36,7 @@ const handleSubmit = async () => {
     let response = await AuthenticationService.login({ requestBody: loginUserPayload });
 
     if (response.token == null || response.token == undefined) {
-      //errorBoxMsg.value = 'A valid token could not be created';
+      errorMsg.value = 'A valid token could not be created';
       return;
     }
 
@@ -49,7 +51,7 @@ const handleSubmit = async () => {
     });
     router.push({ name: 'home' });
   } catch (error: any) {
-    console.log(error);
+    errorMsg.value = handleUnknownError(error);
   }
 }
 
@@ -57,11 +59,17 @@ const handleSubmit = async () => {
 
 <template>
   <div class="container-fluid">
-    <form ref="formRef" id="loginForm" @submit.prevent="handleSubmit">
+    <div class="container-fluid d-flex justify-content-center align-items-center flex-column mt-5">
+      <img src="@/assets/Sparesti-logo.png" style="width: 300px">
+      <h1>Sparesti.no</h1>
+    </div>
+    <form ref="formRef" id="loginForm" @submit.prevent="handleSubmit" novalidate>
       <BaseInput :model-value="emailRef" @input-change-event="handleEmailInputEvent" id="emailInput" input-id="email"
         type="email" label="Email" placeholder="Enter your email" />
-      <BaseInput :model-value="passwordRef" @input-change-event="handlePasswordInputEvent" id="passwordInput"
-        input-id="password" type="password" label="Password" placeholder="Enter password" />
+      <BaseInput pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,16}" :model-value="passwordRef"
+        @input-change-event="handlePasswordInputEvent" id="passwordInput" input-id="password" type="password"
+        label="Password" placeholder="Enter password" />
+      <p class="text-danger">{{ errorMsg }}</p>
       <button1 id="confirmButton" type="submit" @click="handleSubmit" button-text="Login"></button1>
     </form>
   </div>
@@ -82,5 +90,9 @@ const handleSubmit = async () => {
 #passwordInput,
 #confirmButton {
   margin: 1rem 0;
+}
+
+h1 {
+  font-size: 4rem;
 }
 </style>

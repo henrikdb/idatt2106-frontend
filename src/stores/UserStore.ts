@@ -33,6 +33,7 @@ export type UserStoreInfo = {
   email?: string;
   firstname?: string;
   lastname?: string;
+  password?: string;
   accessToken?: string;
   role?: string;
 };
@@ -42,10 +43,17 @@ export const useUserInfoStore = defineStore('UserInfoStore', {
     email: '',
     firstname: '',
     lastname: '',
+    password: '',
     accessToken: '',
     role: '',
   }),
   actions: {
+    setPassword(password: string) {
+      this.password = password
+    },
+    resetPassword() {
+      this.password = ''
+    },
     setUserInfo(userinfo: UserStoreInfo) {
       userinfo.email && (this.$state.email = userinfo.email);
       userinfo.firstname && (this.$state.firstname = userinfo.firstname);
@@ -64,6 +72,9 @@ export const useUserInfoStore = defineStore('UserInfoStore', {
     },
   },
   getters: {
+    getPassword(): string {
+      return this.password
+    },
     isLoggedIn(): boolean {
       return this.accessToken !== '';
     },
