@@ -2,6 +2,7 @@ import { OpenAPI } from '@/api';
 import Cookies from 'js-cookie';
 import { defineStore } from 'pinia';
 
+
 const cookiesStorage: Storage = {
   setItem(key, state) {
     return Cookies.set(key, state, { expires: 3 });
@@ -29,7 +30,7 @@ const cookiesStorage: Storage = {
 };
 
 export type UserStoreInfo = {
-  username?: string;
+  email?: string;
   firstname?: string;
   lastname?: string;
   accessToken?: string;
@@ -38,7 +39,7 @@ export type UserStoreInfo = {
 
 export const useUserInfoStore = defineStore('UserInfoStore', {
   state: () => ({
-    username: '',
+    email: '',
     firstname: '',
     lastname: '',
     accessToken: '',
@@ -46,7 +47,7 @@ export const useUserInfoStore = defineStore('UserInfoStore', {
   }),
   actions: {
     setUserInfo(userinfo: UserStoreInfo) {
-      userinfo.username && (this.$state.username = userinfo.username);
+      userinfo.email && (this.$state.email = userinfo.email);
       userinfo.firstname && (this.$state.firstname = userinfo.firstname);
       userinfo.lastname && (this.$state.lastname = userinfo.lastname);
       userinfo.accessToken && (this.$state.accessToken = userinfo.accessToken);
@@ -54,7 +55,7 @@ export const useUserInfoStore = defineStore('UserInfoStore', {
       userinfo.role && (this.$state.role = userinfo.role);
     },
     clearUserInfo() {
-      this.$state.username = '';
+      this.$state.email = '';
       this.$state.firstname = '';
       this.$state.lastname = '';
       this.$state.accessToken = '';
@@ -69,6 +70,6 @@ export const useUserInfoStore = defineStore('UserInfoStore', {
   },
   persist: {
     enabled: true,
-    strategies: [{ key: 'userInfo', storage: cookiesStorage }],
+    strategies: [{ key: 'userInfo', storage: cookiesStorage }]
   },
 });
