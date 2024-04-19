@@ -17,10 +17,9 @@ const routes = [
         path: '',
         name: 'home',
         component: () => import('../views/HomeView.vue'),
-        meta: { requiresAuth: true },
       },
       {
-        path: '/news',
+        path: 'news',
         name: 'news',
         component: () => import('@/views/NewsView.vue'),
       },
@@ -50,10 +49,15 @@ const routes = [
         component: () => import('@/views/ShopView.vue'),
       },
       {
+        path: '/profile',
+        name: 'profile',
+        component: UserProfileView
+      },
+      {
         path: 'admin',
         name: 'admin',
         component: () => import('@/views/TestView.vue'),
-        meta: { requiresAdmin: true }
+        meta: { requiresAdmin: true },
       },
       {
         path: 'unauthorized',
@@ -71,11 +75,6 @@ const routes = [
     path: '/login',
     name: 'login',
     component: LoginView,
-  },
-  {
-    path: '/profile',
-    name: 'profile',
-    component: UserProfileView
   },
   {
     path: '/sign-up',
@@ -135,18 +134,13 @@ router.beforeEach((to, from, next) => {
   const userRole = user.role;
   const isAuthenticated = user.isLoggedIn;
 
-  /*if (requiresAuth && !isAuthenticated) {
-    next({ name: 'login' });
+  if (requiresAuth && !isAuthenticated) {
+    next({ name: 'login', query: { redirect: to.fullPath } });
+  } else if (requiresAdmin && userRole !== 'admin') {
+    next({ name: 'home' });
   } else {
-    if (requiresAdmin && userRole !== 'admin') {
-      next({ name: 'unauthorized' });
-    } else {
-      next();
-    }
-  }*/
-
-  next();
-
+    next();
+  }
 });
 
 export default router;

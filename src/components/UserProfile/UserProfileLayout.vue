@@ -18,7 +18,6 @@ function toRoadmap(){
 </script>
 
 <template>
-  <Menu></Menu>
     <div class="container text-center">
     <div class="row">
       <div class="col">
@@ -120,7 +119,6 @@ function toRoadmap(){
       </div>
     </div>
   </div>
-  <Footer></Footer>
 </template>
 
 <style scoped>
