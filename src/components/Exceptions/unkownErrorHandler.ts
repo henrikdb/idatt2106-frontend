@@ -11,9 +11,9 @@ const handleUnknownError = (error: any): string => {
   if (error instanceof AxiosError) {
     return error.code!!;
   } else if (error instanceof BackendApiError) {
-    return error.body.detail ?? error.body;
+    return error.body.message ?? error.body;
   }
-  return 'ContextErrorMessage';
+  return error;
 };
 
 export default handleUnknownError;

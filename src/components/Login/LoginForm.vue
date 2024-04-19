@@ -11,6 +11,7 @@ import { useErrorStore } from '@/stores/ErrorStore';
 const emailRef = ref()
 const passwordRef = ref()
 const formRef = ref()
+let errorMsg = ref('');
 
 const errorStore = useErrorStore();
 const router = useRouter();
@@ -49,7 +50,7 @@ const handleSubmit = async () => {
     });
     router.push({ name: 'home' });
   } catch (error: any) {
-    console.log(error);
+     errorMsg.value = handleUnknownError(error);
   }
 }
 
@@ -57,11 +58,12 @@ const handleSubmit = async () => {
 
 <template>
   <div class="container-fluid">
-    <form ref="formRef" id="loginForm" @submit.prevent="handleSubmit">
+    <form ref="formRef" id="loginForm" @submit.prevent="handleSubmit" novalidate>
       <BaseInput :model-value="emailRef" @input-change-event="handleEmailInputEvent" id="emailInput" input-id="email"
         type="email" label="Email" placeholder="Enter your email" />
       <BaseInput :model-value="passwordRef" @input-change-event="handlePasswordInputEvent" id="passwordInput"
         input-id="password" type="password" label="Password" placeholder="Enter password" />
+      <p class="text-danger">{{ errorMsg }}</p>
       <button1 id="confirmButton" type="submit" @click="handleSubmit" button-text="Login"></button1>
     </form>
   </div>

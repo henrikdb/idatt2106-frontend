@@ -5,9 +5,7 @@ import Login from '@/components/Login/Login.vue'
 </script>
 
 <template>
-  <Menu/>
   <Login/>
-  <Footer/>
 </template>
 
 <style scoped>
