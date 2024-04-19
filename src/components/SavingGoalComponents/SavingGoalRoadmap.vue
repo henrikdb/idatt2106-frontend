@@ -23,17 +23,31 @@ export default {
       bluePanelMaxHeight: 'auto' as string
     };
   },
+  mounted() {
+    this.togglePanel(this.steps[2]);
+  },
   methods: {
     togglePanel(step: Step) {
       if (step.showPanel) {
-        // If the clicked panel is already open, close it
         step.showPanel = false;
       } else {
-        //Close all panels before opening new one
-        //Ensure only one panel open at a time
         this.steps.forEach((s) => (s.showPanel = false));
-        //Open clicked on panel
         step.showPanel = true;
+        this.scrollToPanel(step);
+      }
+    },
+    scrollToPanel(step: Step) {
+      if (step.showPanel) {
+        this.$nextTick(() => {
+          const panel = document.getElementById(`panel-${this.steps.indexOf(step)}`);
+          console.log(panel);
+          if (panel) {
+            setTimeout(() => {
+              panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              console.log('I should have scrolled');
+            }, 100); // Wait for 1 second before scrolling
+          }
+        });
       }
     },
   },
@@ -45,11 +59,9 @@ export default {
     <div class="SavingGoalTitle text-center">{{title}}</div>
     <ul class="timeline">
       <li v-for="(step, index) in steps" :key="index" :class="{ 'timeline-inverted': index % 2 !== 0 }">
-        <a :href="'#panel-' + index">
           <div class="timeline-image z-1" @click="togglePanel(step)">
             <img class="circular-image" :src="step.showPanel ? altImage : image" alt="">
           </div>
-        </a>
         <div class="timeline-panel z-3" :id="'panel-' + index" v-show="step.showPanel">
           <div class="timeline-heading">
             <h4>{{ step.title }}</h4>
@@ -85,6 +97,7 @@ export default {
 .col-lg-8 {
   width: 63%;
   margin-bottom: 20px;
+  max-height: 1000px;
 }
 
 .SavingGoalTitle {
