@@ -11,6 +11,7 @@ const routes = [
     path: '/',
     name: 'base',
     component: () => import('@/views/BasePageView.vue'),
+    meta: { requiresAuth: true },
     children: [
       {
         path: '',
@@ -130,13 +131,22 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
   const requiresAdmin = to.matched.some(record => record.meta.requiresAdmin);
-  const userRole = useUserInfoStore().role;
+  let user = useUserInfoStore();
+  const userRole = user.role;
+  const isAuthenticated = user.isLoggedIn;
 
-  if (requiresAdmin && userRole !== 'admin') {
-    next({ name: 'unauthorized' });
+  /*if (requiresAuth && !isAuthenticated) {
+    next({ name: 'login' });
   } else {
-    next();
-  }
+    if (requiresAdmin && userRole !== 'admin') {
+      next({ name: 'unauthorized' });
+    } else {
+      next();
+    }
+  }*/
+
+  next();
+
 });
 
 export default router;

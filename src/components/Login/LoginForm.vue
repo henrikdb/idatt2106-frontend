@@ -35,7 +35,7 @@ const handleSubmit = async () => {
     let response = await AuthenticationService.login({ requestBody: loginUserPayload });
 
     if (response.token == null || response.token == undefined) {
-      //errorBoxMsg.value = 'A valid token could not be created';
+      errorMsg.value = 'A valid token could not be created';
       return;
     }
 
