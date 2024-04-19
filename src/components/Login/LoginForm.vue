@@ -8,8 +8,8 @@ import { useRouter, useRoute } from 'vue-router';
 import handleUnknownError from '@/components/Exceptions/unkownErrorHandler';
 import { useErrorStore } from '@/stores/ErrorStore';
 
-const emailRef = ref()
-const passwordRef = ref()
+const emailRef = ref('')
+const passwordRef = ref('')
 const formRef = ref()
 let errorMsg = ref('');
 
@@ -19,13 +19,18 @@ const userStore = useUserInfoStore();
 
 const handleEmailInputEvent = (newValue: any) => {
   emailRef.value = newValue
+  console.log(emailRef.value)
 }
 
 const handlePasswordInputEvent = (newValue: any) => {
   passwordRef.value = newValue
+  console.log(passwordRef.value)
 }
 
 const handleSubmit = async () => {
+  console.log(emailRef.value)
+  console.log(passwordRef.value)
+
   formRef.value.classList.add("was-validated")
   const loginUserPayload: LoginRequest = {
     email: emailRef.value,
@@ -60,10 +65,30 @@ const handleSubmit = async () => {
 <template>
   <div class="container-fluid">
     <form ref="formRef" id="loginForm" @submit.prevent="handleSubmit" novalidate>
-      <BaseInput :model-value="emailRef" @input-change-event="handleEmailInputEvent" id="emailInput" input-id="email"
-        type="email" label="Email" placeholder="Enter your email" />
-      <BaseInput pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,16}" :model-value="passwordRef" @input-change-event="handlePasswordInputEvent" id="passwordInput"
-        input-id="password" type="password" label="Password" placeholder="Enter password" />
+
+      <BaseInput :model-value="emailRef"
+                 @input-change-event="handleEmailInputEvent"
+                 id="emailInput"
+                 input-id="email"
+                 type="email"
+                 label="Email"
+                 placeholder="Enter your email"
+                 valid-message="Valid email"
+                 invalid-message="Invalid email"
+      />
+
+      <BaseInput :model-value="passwordRef"
+                 @input-change-event="handlePasswordInputEvent"
+                 id="passwordInput"
+                 input-id="password"
+                 type="password"
+                 pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,16}"
+                 label="Password"
+                 placeholder="Enter password"
+                 valid-message="Valid password"
+                 invalid-message="Password must be between 4 and 16 characters and contain one capital letter, small letter and a number"
+      />
+
       <p class="text-danger">{{ errorMsg }}</p>
       <button1 id="confirmButton" type="submit" @click="handleSubmit" button-text="Login"></button1>
     </form>
