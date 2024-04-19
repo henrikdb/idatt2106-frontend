@@ -29,6 +29,10 @@ const props = defineProps({
   min: {
     type: String,
     required: false
+  },
+  pattern: {
+    type: String,
+    default: null
   }
 });
 
@@ -47,6 +51,7 @@ const onInputEvent = (event: any) => {
            :placeholder="props.placeholder"
            :id="inputId" required
            :min="min"
+           :pattern="pattern"
     />
     <div v-if="props.isValid" class="invalid-feedback">Invalid {{ label }}</div>
     <div v-else class="valid-feedback">Valid {{ label }}</div>
