@@ -33,6 +33,14 @@ const handleConfirmPasswordInputEvent = (newValue: any) => {
 }
 
 const handleSubmit = () => {
+  const form = formRef.value;
+
+  // Check if the form is valid
+  if (form.checkValidity()) {
+    // Form is valid, submit the form or perform other actions
+    console.log('Form is valid');
+  }
+
   formRef.value.classList.add("was-validated")
 }
 
