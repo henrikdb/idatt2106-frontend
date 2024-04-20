@@ -54,7 +54,7 @@ const handleSubmit = async () => {
       email: emailRef.value,
       role: response.role,
     });
-    router.push({ name: 'home' });
+    await router.push({ name: 'home' });
   } catch (error: any) {
      errorMsg.value = handleUnknownError(error);
   }

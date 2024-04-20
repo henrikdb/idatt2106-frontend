@@ -5,7 +5,5 @@ import Footer from '@/components/BaseComponents/Footer.vue'
 </script>
 
 <template>
-  <Menu/>
   <Configuration/>
-  <Footer/>
 </template>

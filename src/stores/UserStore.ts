@@ -75,6 +75,15 @@ export const useUserInfoStore = defineStore('UserInfoStore', {
     getPassword(): string {
       return this.password
     },
+    getFirstName(): string {
+      return this.firstname
+    },
+    getLastname(): string {
+      return this.lastname
+    },
+    getEmail(): string {
+      return this.email
+    },
     isLoggedIn(): boolean {
       return this.accessToken !== '';
     },
