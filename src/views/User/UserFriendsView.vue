@@ -657,6 +657,5 @@ ul.friend-list .right p {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-
 }
 </style>

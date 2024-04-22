@@ -87,6 +87,16 @@ const routes = [
     component: LoginView,
   },
   {
+    path: '/forgotten-password',
+    name: 'forgotten-password',
+    component: () => import('@/views/Authentication/ForgottenPasswordView.vue'),
+  },
+  {
+    path: '/change-password/:token',
+    name: 'change-password',
+    component: () => import('@/views/Authentication/ChangePasswordView.vue'),
+  },
+  {
     path: '/sign-up',
     name: 'sign up',
     component: () => import('@/views/Authentication/SignUpView.vue'),
