@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import SignUp from '@/components/SignUp/SignUp.vue'
+
 </script>
 
 <template>
-  <SignUp/>
+  <p>Don't have an account? <RouterLink to="/sign-up">Sign up</RouterLink></p>
 </template>
 
 <style scoped>

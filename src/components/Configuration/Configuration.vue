@@ -1,49 +1,25 @@
 <script setup lang="ts">
-import ProgressBar from '@/components/Configuration/ProgressBar.vue'
+import ProgressBar from '@/components/Configuration/ConfigurationProgressBar.vue'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useRoute } from 'vue-router'
 
-// Configuration variables
-let bankId = ref('')
-let commitment = ref('')
-let experience = ref('')
-let suitableChallenges = ref([])
-let savingGoalTitle = ref('')
-let sumToSpare = ref(0)
-let dueDate = ref(null)
-
 const router = useRouter()
+
 // The configuration steps with path and order value.
-const configurationSteps = {'/bank-id': 1, '/commitment': 2, '/experience': 3, '/suitable-challenges': 4, '/first-saving-goal': 5}
+const configurationSteps = {'/commitment': 1, '/experience': 2, '/suitable-challenges': 3}
 const length = Object.keys(configurationSteps).length
 let percentage = ref(1/length);
 
-// Initially pushes to '/bank-id' RouterView and sets current path to this path.
+// Initially pushes to the commitment-RouterView and sets current path to this path.
 router.push(Object.keys(configurationSteps)[0])
 let currentRoute = useRoute()
 let currentPath = currentRoute.fullPath
 
 // Sets the current path to a new path and updates progressbar
-const onNewRouteEvent = (path) => {
+const onNewRouteEvent = (path: string) => {
   currentPath = path
   percentage.value = (1/length) * configurationSteps[path]
-}
-
-const onBankIdSelectedEvent = (value) => {
-  bankId.value = value
-}
-
-const onCommitmentSelectedEvent = (value) => {
-  commitment.value = value
-}
-
-const onExperienceSelectedEvent = (value) => {
-  experience.value = value
-}
-
-const onChallengesSelectedEvent = (value) => {
-  suitableChallenges.value = value
 }
 
 </script>
@@ -54,12 +30,7 @@ const onChallengesSelectedEvent = (value) => {
       <ProgressBar id="progressbar" :percentage="percentage"/>
     </div>
     <div class="configuration-container">
-      <RouterView @changeRouterEvent="onNewRouteEvent"
-                  @bankIdSelectedEvent="onBankIdSelectedEvent"
-                  @commitmentSelectedEvent="onCommitmentSelectedEvent"
-                  @experienceSelectedEvent="onExperienceSelectedEvent"
-                  @challengesSelectedEvent="onChallengesSelectedEvent"
-      />
+      <RouterView @changeRouterEvent="onNewRouteEvent"/>
     </div>
   </div>
 </template>

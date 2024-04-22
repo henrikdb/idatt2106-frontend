@@ -1,4 +1,5 @@
 <script setup lang="ts">
+/*
 import Button1 from '@/components/Buttons/Button1.vue'
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
@@ -10,7 +11,7 @@ const vippsRef = ref(false)
 
 
 const router = useRouter();
-const emit = defineEmits(['changeRouterEvent', 'bankIdSelectedEvent']);
+const emit = defineEmits(['changeRouterEvent']);
 emit('changeRouterEvent', '/bank-id');
 
 const onClick = () => {
@@ -30,10 +31,11 @@ const onClick = () => {
   emit('bankIdSelectedEvent', choice)
   router.push('/commitment')
 }
-
+*/
 </script>
 
 <template>
+  <!--
   <div class="container">
     <div>
       <h3 class="d-flex align-items-center justify-content-center">
@@ -62,9 +64,11 @@ const onClick = () => {
     </div>
 
   </div>
+  -->
 </template>
 
 <style scoped>
+/*
 #confirmButton {
   margin-bottom: 2rem;
   width: 300px;
@@ -74,4 +78,5 @@ const onClick = () => {
   display: flex;
   justify-content: center;
 }
+ */
 </style>

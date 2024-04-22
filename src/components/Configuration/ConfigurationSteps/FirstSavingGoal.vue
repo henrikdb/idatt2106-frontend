@@ -1,4 +1,5 @@
 <script setup lang="ts">
+/*
 import BaseInput from '@/components/InputFields/BaseInput.vue'
 import { ref } from 'vue'
 import Button1 from '@/components/Buttons/Button1.vue'
@@ -33,10 +34,11 @@ const getTodayDate = () => {
 
   return `${year}-${month}-${day}`;
 };
-
+ */
 </script>
 
 <template>
+  <!--
   <div class="container">
     <div>
       <h3 class="d-flex align-items-center justify-content-center">
@@ -72,9 +74,11 @@ const getTodayDate = () => {
       <button1 id="confirmButton" @click="onClick" button-text="Continue"></button1>
     </div>
   </div>
+  -->
 </template>
 
 <style scoped>
+/*
 #confirmButton {
   margin-bottom: 2rem;
   width: 300px;
@@ -84,4 +88,5 @@ const getTodayDate = () => {
   display: flex;
   justify-content: center;
 }
+*/
 </style>

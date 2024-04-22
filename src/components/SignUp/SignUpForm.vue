@@ -3,8 +3,13 @@ import BaseInput from '@/components/InputFields/BaseInput.vue'
 import Button1 from '@/components/Buttons/Button1.vue'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { AuthenticationService } from '@/api'
+import handleUnknownError from '@/components/Exceptions/unkownErrorHandler'
+import { useUserInfoStore } from '@/stores/UserStore'
+import LoginLink from '@/components/Login/LoginLink.vue'
 
 const router = useRouter();
+const userStore = useUserInfoStore();
 
 const firstNameRef = ref('')
 const surnameRef = ref('')
@@ -13,10 +18,10 @@ const passwordRef = ref('')
 const confirmPasswordRef = ref('')
 const formRef = ref()
 let samePasswords = ref(true)
+let errorMsg = ref('');
 
 const handleFirstNameInputEvent = (newValue: any) => {
   firstNameRef.value = newValue
-  console.log(firstNameRef.value)
 }
 
 const handleSurnameInputEvent = (newValue: any) => {
@@ -29,41 +34,43 @@ const handleEmailInputEvent = (newValue: any) => {
 
 const handlePasswordInputEvent = (newValue: any) => {
   passwordRef.value = newValue
-  console.log(passwordRef.value)
 }
 
 const handleConfirmPasswordInputEvent = (newValue: any) => {
   confirmPasswordRef.value = newValue
-  console.log(confirmPasswordRef.value)
 }
 
 const handleSubmit = async () => {
-  console.log(firstNameRef.value)
 
   samePasswords.value = (passwordRef.value === confirmPasswordRef.value)
-  console.log(samePasswords.value)
-  const form = formRef.value;
-
-  // Check if the form is valid
-  if (form.checkValidity()) {
-    // Form is valid, submit the form or perform other actions
-    console.log('Form is valid');
-  } else {
-    console.log('Form is not valid');
-  }
-
-
   formRef.value.classList.add("was-validated")
+
+  const form = formRef.value;
+  if (form.checkValidity()) {
+    if (samePasswords.value) {
+      try {
+        let response = await AuthenticationService.validateEmail({email: emailRef.value});
+        userStore.setUserInfo({
+          firstname: firstNameRef.value,
+          lastname: surnameRef.value,
+          email: emailRef.value,
+        });
+        userStore.setPassword(passwordRef.value)
+        await router.push('/configuration')
+      } catch (error) {
+        errorMsg.value = handleUnknownError(error);
+      }
+    }
+  }
 }
 
 </script>
 
 <template>
   <div class="container">
-    <form ref="formRef" id="signUpForm" @submit.prevent="handleSubmit">
-      <BaseInput :model-value="firstNameRef"
+    <form ref="formRef" id="signUpForm" @submit.prevent="handleSubmit" novalidate>
+      <BaseInput :model-value=firstNameRef
                  @input-change-event="handleFirstNameInputEvent"
-                 ref="firstNameRef"
                  id="firstNameInput"
                  input-id="first-name"
                  type="text"
@@ -72,7 +79,6 @@ const handleSubmit = async () => {
                  invalid-message="Please enter your first name"/>
       <BaseInput :model-value="surnameRef"
                  @input-change-event="handleSurnameInputEvent"
-                 ref="surnameRef"
                  id="surnameInput"
                  input-id="surname"
                  type="text"
@@ -81,7 +87,6 @@ const handleSubmit = async () => {
                  invalid-message="Please enter your surname"/>
       <BaseInput :model-value="emailRef"
                  @input-change-event="handleEmailInputEvent"
-                 ref="emailRef"
                  id="emailInput"
                  input-id="email"
                  type="email"
@@ -90,7 +95,6 @@ const handleSubmit = async () => {
                  invalid-message="Invalid email"/>
       <BaseInput :model-value="passwordRef"
                  @input-change-event="handlePasswordInputEvent"
-                 ref="passwordRef"
                  id="passwordInput"
                  input-id="password"
                  type="password"
@@ -100,7 +104,6 @@ const handleSubmit = async () => {
                  invalid-message="Password must be between 4 and 16 characters and contain one capital letter, small letter and a number"/>
       <BaseInput :modelValue="confirmPasswordRef"
                  @input-change-event="handleConfirmPasswordInputEvent"
-                 ref="confirmPasswordRef"
                  id="confirmPasswordInput"
                  input-id="confirmPassword"
                  type="password"
@@ -108,8 +111,10 @@ const handleSubmit = async () => {
                  label="Confirm Password"
                  placeholder="Confirm password"
                  invalid-message="Password must be between 4 and 16 characters and contain one capital letter, small letter and a number"/>
-      <p v-if="samePasswords" class="text-danger">The passwords are not identical</p>
+      <p class="text-danger">{{ errorMsg }}</p>
+      <p v-if="!samePasswords" class="text-danger">The passwords are not identical</p>
       <button1 id="confirmButton" @click="handleSubmit" button-text="Sign up"></button1>
+      <LoginLink/>
     </form>
   </div>
 

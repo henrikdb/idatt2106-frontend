@@ -37,6 +37,10 @@ const props = defineProps({
   invalidMessage: {
     type: String,
     default: ''
+  },
+  required: {
+    type: Boolean,
+    default: true
   }
 });
 
@@ -53,9 +57,11 @@ const onInputEvent = (event: any) => {
            :type="type"
            class="form-control"
            :placeholder="placeholder"
-           :id="inputId" required
+           :id="inputId"
            :min="min"
-           :pattern="pattern"/>
+           :pattern="pattern"
+           :required="required"
+    />
     <div class="valid-feedback">{{ validMessage }}</div>
     <div class="invalid-feedback">{{ invalidMessage }}</div>
   </div>
