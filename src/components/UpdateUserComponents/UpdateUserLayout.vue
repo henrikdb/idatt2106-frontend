@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import BaseInput from "@/components/InputFields/BaseInput.vue";
 import {onMounted, ref} from "vue";
-import {AuthenticationService, LeaderboardService, UserControllerService} from "@/api";
+import {AuthenticationService, LeaderboardService, UserControllerService, type UserUpdateDTO} from "@/api";
 
 
 
@@ -66,13 +66,26 @@ const handleSubmit = async () => {
   formRef.value.classList.add("was-validated")
   const form = formRef.value;
 
+  const updateUserPayload: UserUpdateDTO = {
+    firstName: firstNameRef.value,
+    lastName: surnameRef.value,
+    email: emailRef.value,
+    password: passwordRef.value
+  };
+
+
 
 
     // Check if the form is valid
     if (form.checkValidity()) {
       if(samePasswords.value){
-        console.log('Form is valid');
-      }
+        try {
+          UserControllerService.update({requestBody: updateUserPayload})
+
+        }catch (err){
+          cosole.error(err)
+        }
+        }
     } else {
       console.log('Form is not valid');
     }
