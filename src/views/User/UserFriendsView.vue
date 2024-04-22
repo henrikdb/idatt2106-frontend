@@ -1,285 +1,381 @@
 <template>
     <div class="container">
         <h1>Your Friends</h1>
-<div class="row">
-    <div class="col-lg-3">
-        <div class="card card-one">
-            <div class="header">
-                <div class="avatar">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
-                </div>
-            </div>
-            <h3>Amillie Price</h3>
-            <div class="desc">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
-            </div>
-            <div class="contacts">
-                <a href="#"><i class="fas fa-plus"></i></a>
-                <a href="#"><i class="fab fa-whatsapp"></i></a>
-                <a href="#"><i class="fas fa-envelope"></i></a>
-                <div class="clear"></div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3">
-        <div class="card card-one">
-            <div class="header">
-                <div class="avatar">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
-                </div>
-            </div>
-            <h3>Victoria Fox</h3>
-            <div class="desc">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
-            </div>
-            <div class="contacts">
-                <a href="#"><i class="fas fa-plus"></i></a>
-                <a href="#"><i class="fab fa-whatsapp"></i></a>
-                <a href="#"><i class="fas fa-envelope"></i></a>
-                <div class="clear"></div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3">
-        <div class="card card-one">
-            <div class="header">
-                <div class="avatar">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="">
-                </div>
-            </div>
-            <h3>Coray Shoe</h3>
-            <div class="desc">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
-            </div>
-            <div class="contacts">
-                <a href="#"><i class="fas fa-plus"></i></a>
-                <a href="#"><i class="fab fa-whatsapp"></i></a>
-                <a href="#"><i class="fas fa-envelope"></i></a>
-                <div class="clear"></div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3">
-        <div class="card card-one">
-            <div class="header">
-                <div class="avatar">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
-                </div>
-            </div>
-            <h3>Christiano Mooray</h3>
-            <div class="desc">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
-            </div>
-            <div class="contacts">
-                <a href="#"><i class="fas fa-plus"></i></a>
-                <a href="#"><i class="fab fa-whatsapp"></i></a>
-                <a href="#"><i class="fas fa-envelope"></i></a>
-                <div class="clear"></div>
-            </div>
-        </div>
-    </div>
-</div>
+        <button class="btn btn-primary pull-right my-3" @click="addFriend">+ Add Friend</button>
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="card card-one">
+                    <div class="header">
+                        <div class="avatar">
+                            <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
+                        </div>
+                    </div>
+                    <h3>Amillie Price</h3>
+                    <div class="desc">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
+                    </div>
+                    <div class="contacts">
+                        <a class="text removeFriend" data-bs-toggle="collapse" href="#collapseExample" role="button"
+                            aria-expanded="false" aria-controls="collapseExample">
+                            See more
+                        </a>
 
-<div class="row">
-    <div class="col-lg-3">
-        <div class="card card-one">
-            <div class="header">
-                <div class="avatar">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar4.png" alt="">
+                        <div class="collapse" id="collapseExample">
+                            <button class="btn btn-danger">
+                               
+                                <h5> <img src="@/assets/icons/remove-white.svg" style="width: 30px"> Remove friend</h5>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <h3>Lynda West</h3>
-            <div class="desc">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
-            </div>
-            <div class="contacts">
-                <a href="#"><i class="fas fa-plus"></i></a>
-                <a href="#"><i class="fab fa-whatsapp"></i></a>
-                <a href="#"><i class="fas fa-envelope"></i></a>
-                <div class="clear"></div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3">
-        <div class="card card-one">
-            <div class="header">
-                <div class="avatar">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
-                </div>
-            </div>
-            <h3>Jayden G</h3>
-            <div class="desc">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
-            </div>
-            <div class="contacts">
-                <a href="#"><i class="fas fa-plus"></i></a>
-                <a href="#"><i class="fab fa-whatsapp"></i></a>
-                <a href="#"><i class="fas fa-envelope"></i></a>
-                <div class="clear"></div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3">
-        <div class="card card-one">
-            <div class="header">
-                <div class="avatar">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="">
-                </div>
-            </div>
-            <h3>Julia Ann</h3>
-            <div class="desc">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
-            </div>
-            <div class="contacts">
-                <a href="#"><i class="fas fa-plus"></i></a>
-                <a href="#"><i class="fab fa-whatsapp"></i></a>
-                <a href="#"><i class="fas fa-envelope"></i></a>
-                <div class="clear"></div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3">
-        <div class="card card-one">
-            <div class="header">
-                <div class="avatar">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
-                </div>
-            </div>
-            <h3>Ava Ray</h3>
-            <div class="desc">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
-            </div>
-            <div class="contacts">
-                <a href="#"><i class="fas fa-plus"></i></a>
-                <a href="#"><i class="fab fa-whatsapp"></i></a>
-                <a href="#"><i class="fas fa-envelope"></i></a>
-                <div class="clear"></div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3">
-        <div class="card card-one">
-            <div class="header">
-                <div class="avatar">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="">
-                </div>
-            </div>
-            <h3>Maria Shwenstiger</h3>
-            <div class="desc">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
-            </div>
-            <div class="contacts">
-                <a href="#"><i class="fas fa-plus"></i></a>
-                <a href="#"><i class="fab fa-whatsapp"></i></a>
-                <a href="#"><i class="fas fa-envelope"></i></a>
-                <div class="clear"></div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3">
-        <div class="card card-one">
-            <div class="header">
-                <div class="avatar">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="">
-                </div>
-            </div>
-            <h3>Kate Perry</h3>
-            <div class="desc">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
-            </div>
-            <div class="contacts">
-                <a href="#"><i class="fas fa-plus"></i></a>
-                <a href="#"><i class="fab fa-whatsapp"></i></a>
-                <a href="#"><i class="fas fa-envelope"></i></a>
-                <div class="clear"></div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3">
-        <div class="card card-one">
-            <div class="header">
-                <div class="avatar">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="">
-                </div>
-            </div>
-            <h3>Robart Gibbs</h3>
-            <div class="desc">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
-            </div>
-            <div class="contacts">
-                <a href="#"><i class="fas fa-plus"></i></a>
-                <a href="#"><i class="fab fa-whatsapp"></i></a>
-                <a href="#"><i class="fas fa-envelope"></i></a>
-                <div class="clear"></div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3">
-        <div class="card card-one">
-            <div class="header">
-                <div class="avatar">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar5.png" alt="">
-                </div>
-            </div>
-            <h3>Anna Winslet</h3>
-            <div class="desc">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
-            </div>
-            <div class="contacts">
-                <a href="#"><i class="fas fa-plus"></i></a>
-                <a href="#"><i class="fab fa-whatsapp"></i></a>
-                <a href="#"><i class="fas fa-envelope"></i></a>
-                <div class="clear"></div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-    </template>
-    
-    <script setup lang="ts">
-    import { useRouter, useRoute } from 'vue-router';
-    import { ref, onMounted, computed } from "vue";
-    
-    
-    import { useUserInfoStore } from '@/stores/UserStore';
-    
-    const userStore = useUserInfoStore();
-    
-    const createdQuizzes = ref(1);
-    const createdQuizzesIsEmpty = ref(null);
-    const coAuthorQuizzes = ref(null);
-    const coAuthorQuizzesIsEmpty = ref(null);
-    const router = useRouter();
-    
-    let userid = ref("");
-    
-    async function fetchUserData() {
-        
-    }
-    
-    async function fetchLibrary() {
-        
-    }
-    
-    // Define the navigateToQuiz method
-    const navigateToFriend = (frinedID) => {
-        
-    };
+            <div class="col-lg-3">
+                <div class="card card-one">
+                    <div class="header">
+                        <div class="avatar">
+                            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                        </div>
+                    </div>
+                    <h3>Victoria Fox</h3>
+                    <div class="desc">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
+                    </div>
+                    <div class="contacts">
+                        <a class="text removeFriend" data-bs-toggle="collapse" href="#collapseExample" role="button"
+                            aria-expanded="false" aria-controls="collapseExample">
+                            See more
+                        </a>
 
-    const removeFriend = (friendID) => {
-        
-    };
-    
-    onMounted(fetchUserData);
-    </script>
-    
-    <style scoped>
-    body {
+                        <div class="collapse" id="collapseExample">
+                            <button class="btn btn-danger">
+                               
+                                <h5> <img src="@/assets/icons/remove-white.svg" style="width: 30px"> Remove friend</h5>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card card-one">
+                    <div class="header">
+                        <div class="avatar">
+                            <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="">
+                        </div>
+                    </div>
+                    <h3>Coray Shoe</h3>
+                    <div class="desc">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
+                    </div>
+                    <div class="contacts">
+                        <a class="text removeFriend" data-bs-toggle="collapse" href="#collapseExample" role="button"
+                            aria-expanded="false" aria-controls="collapseExample">
+                            See more
+                        </a>
+
+                        <div class="collapse" id="collapseExample">
+                            <button class="btn btn-danger">
+                               
+                                <h5> <img src="@/assets/icons/remove-white.svg" style="width: 30px"> Remove friend</h5>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card card-one">
+                    <div class="header">
+                        <div class="avatar">
+                            <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
+                        </div>
+                    </div>
+                    <h3>Christiano Mooray</h3>
+                    <div class="desc">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
+                    </div>
+                    <div class="contacts">
+                        <a class="text removeFriend" data-bs-toggle="collapse" href="#collapseExample" role="button"
+                            aria-expanded="false" aria-controls="collapseExample">
+                            See more
+                        </a>
+
+                        <div class="collapse" id="collapseExample">
+                            <button class="btn btn-danger">
+                               
+                                <h5> <img src="@/assets/icons/remove-white.svg" style="width: 30px"> Remove friend</h5>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="card card-one">
+                    <div class="header">
+                        <div class="avatar">
+                            <img src="https://bootdey.com/img/Content/avatar/avatar4.png" alt="">
+                        </div>
+                    </div>
+                    <h3>Lynda West</h3>
+                    <div class="desc">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
+                    </div>
+                    <div class="contacts">
+                        <a class="text removeFriend" data-bs-toggle="collapse" href="#collapseExample" role="button"
+                            aria-expanded="false" aria-controls="collapseExample">
+                            See more
+                        </a>
+
+                        <div class="collapse" id="collapseExample">
+                            <button class="btn btn-danger">
+                               
+                                <h5> <img src="@/assets/icons/remove-white.svg" style="width: 30px"> Remove friend</h5>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card card-one">
+                    <div class="header">
+                        <div class="avatar">
+                            <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
+                        </div>
+                    </div>
+                    <h3>Jayden G</h3>
+                    <div class="desc">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
+                    </div>
+                    <div class="contacts">
+                        <a class="text removeFriend" data-bs-toggle="collapse" href="#collapseExample" role="button"
+                            aria-expanded="false" aria-controls="collapseExample">
+                            See more
+                        </a>
+
+                        <div class="collapse" id="collapseExample">
+                            <button class="btn btn-danger">
+                               
+                                <h5> <img src="@/assets/icons/remove-white.svg" style="width: 30px"> Remove friend</h5>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card card-one">
+                    <div class="header">
+                        <div class="avatar">
+                            <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="">
+                        </div>
+                    </div>
+                    <h3>Julia Ann</h3>
+                    <div class="desc">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
+                    </div>
+                    <div class="contacts">
+                        <a class="text removeFriend" data-bs-toggle="collapse" href="#collapseExample" role="button"
+                            aria-expanded="false" aria-controls="collapseExample">
+                            See more
+                        </a>
+
+                        <div class="collapse" id="collapseExample">
+                            <button class="btn btn-danger">
+                               
+                                <h5> <img src="@/assets/icons/remove-white.svg" style="width: 30px"> Remove friend</h5>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card card-one">
+                    <div class="header">
+                        <div class="avatar">
+                            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                        </div>
+                    </div>
+                    <h3>Ava Ray</h3>
+                    <div class="desc">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
+                    </div>
+                    <div class="contacts">
+                        <a class="text removeFriend" data-bs-toggle="collapse" href="#collapseExample" role="button"
+                            aria-expanded="false" aria-controls="collapseExample">
+                            See more
+                        </a>
+
+                        <div class="collapse" id="collapseExample">
+                            <button class="btn btn-danger">
+                               
+                                <h5> <img src="@/assets/icons/remove-white.svg" style="width: 30px"> Remove friend</h5>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card card-one">
+                    <div class="header">
+                        <div class="avatar">
+                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="">
+                        </div>
+                    </div>
+                    <h3>Maria Shwenstiger</h3>
+                    <div class="desc">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
+                    </div>
+                    <div class="contacts">
+                        <a class="text removeFriend" data-bs-toggle="collapse" href="#collapseExample" role="button"
+                            aria-expanded="false" aria-controls="collapseExample">
+                            See more
+                        </a>
+
+                        <div class="collapse" id="collapseExample">
+                            <button class="btn btn-danger">
+                               
+                                <h5> <img src="@/assets/icons/remove-white.svg" style="width: 30px"> Remove friend</h5>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card card-one">
+                    <div class="header">
+                        <div class="avatar">
+                            <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="">
+                        </div>
+                    </div>
+                    <h3>Kate Perry</h3>
+                    <div class="desc">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
+                    </div>
+                    <div class="contacts">
+                        <a class="text removeFriend" data-bs-toggle="collapse" href="#collapseExample" role="button"
+                            aria-expanded="false" aria-controls="collapseExample">
+                            See more
+                        </a>
+
+                        <div class="collapse" id="collapseExample">
+                            <button class="btn btn-danger">
+                               
+                                <h5> <img src="@/assets/icons/remove-white.svg" style="width: 30px"> Remove friend</h5>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card card-one">
+                    <div class="header">
+                        <div class="avatar">
+                            <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="">
+                        </div>
+                    </div>
+                    <h3>Robart Gibbs</h3>
+                    <div class="desc">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
+                    </div>
+                    <div class="contacts">
+                        <a class="text removeFriend" data-bs-toggle="collapse" href="#collapseExample" role="button"
+                            aria-expanded="false" aria-controls="collapseExample">
+                            See more
+                        </a>
+
+                        <div class="collapse" id="collapseExample">
+                            <button class="btn btn-danger">
+                               
+                                <h5> <img src="@/assets/icons/remove-white.svg" style="width: 30px"> Remove friend</h5>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card card-one">
+                    <div class="header">
+                        <div class="avatar">
+                            <img src="https://bootdey.com/img/Content/avatar/avatar5.png" alt="">
+                        </div>
+                    </div>
+                    <h3>Anna Winslet</h3>
+                    <div class="desc">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
+                    </div>
+                    <div class="contacts">
+                        <a class="text removeFriend" data-bs-toggle="collapse" href="#collapseExample" role="button"
+                            aria-expanded="false" aria-controls="collapseExample">
+                            See more
+                        </a>
+
+                        <div class="collapse" id="collapseExample">
+                            <button class="btn btn-danger">
+                               
+                                <h5> <img src="@/assets/icons/remove-white.svg" style="width: 30px"> Remove friend</h5>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</template>
+
+<script setup lang="ts">
+import { useRouter, useRoute } from 'vue-router';
+import { ref, onMounted, computed } from "vue";
+
+
+import { useUserInfoStore } from '@/stores/UserStore';
+
+const userStore = useUserInfoStore();
+
+const createdQuizzes = ref(1);
+const createdQuizzesIsEmpty = ref(null);
+const coAuthorQuizzes = ref(null);
+const coAuthorQuizzesIsEmpty = ref(null);
+const router = useRouter();
+
+let userid = ref("");
+
+async function fetchUserData() {
+
+}
+
+function addFriend() {
+    router.push('/add-friend');
+}
+
+// Define the navigateToQuiz method
+const navigateToFriend = (frinedID) => {
+
+};
+
+const removeFriend = (friendID) => {
+
+};
+
+onMounted(fetchUserData);
+</script>
+
+<style scoped>
+body {
     background-color: #f0f6ff;
     color: #28384d;
 
 }
+
 /*social */
 .card-one {
     position: relative;
@@ -287,8 +383,10 @@
     background: #fff;
     box-shadow: 0 10px 7px -5px rgba(0, 0, 0, 0.4);
 }
+
 .card {
     margin-bottom: 35px;
+    padding-bottom: 1rem;
     box-shadow: 0 10px 20px 0 rgba(26, 44, 57, 0.14);
     border: none;
 }
@@ -543,96 +641,22 @@ ul.friend-list .right p {
     color: #777;
 }
 
-.card-one .contacts {
-    width: 200px;
-    max-width: 100%;
-    margin: 0 auto 3rem;
-}
-
-.card-one .contacts a {
-    display: block;
-    width: 33.333333%;
-    float: left;
-    text-align: center;
-    color: #c8c;
-}
-
-.card-one .contacts a:hover {
-    color: #333;
-}
-
-.card-one .contacts a:hover .fa::before {
-    color: #fff;
-}
-
-.card-one .contacts a:hover .fa::after {
-    width: 100%;
-    height: 100%;
-}
-
-.card-one .contacts a .fa {
-    position: relative;
-    width: 40px;
-    height: 40px;
-    line-height: 39px;
-    overflow: hidden;
-    text-align: center;
-    font-size: 1.3em;
-}
-
-.card-one .contacts a .fa:before {
-    position: relative;
-    z-index: 1;
-}
-
-.card-one .contacts a .fa::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    background: #c8c;
-    transition: width .3s, height .3s;
-}
-
-.card-one .contacts a:last-of-type .fa {
-    line-height: 36px;
-}
-
-.card-one .footer {
-    position: relative;
-    padding: 1rem;
-    background-color: #3afe;
-    text-align: center;
-}
-
-.card-one .footer a {
-    padding: 0 1rem;
-    color: #e2e2e2;
-    transition: color .4s;
-}
-
-.card-one .footer a:hover {
-    color: #c8c;
-}
-
-.card-one .footer::before {
-    content: '';
-    position: absolute;
-    top: -27px;
-    left: 50%;
-    margin-left: -15px;
-    border: 15px solid transparent;
-    border-bottom-color: #3afe;
-}
-
 #gallery li {
     width: 24%;
     float: left;
     margin: 6px;
-   
+
 }
-    </style>
+
+.removeFriend {
+    text-wrap: nowrap;
+}
+
+.contacts {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}
+</style>

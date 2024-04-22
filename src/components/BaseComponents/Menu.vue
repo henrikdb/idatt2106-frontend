@@ -37,9 +37,13 @@
                             <li><a class="dropdown-item text-white dropdown-username-link" href="#"
                                     @click="toUserProfile"><img src="@/assets/icons/person.svg">User Profile</a></li>
                             <li><a class="dropdown-item text-white dropdown-username-link" href="#"
+                                    @click="toFriends"><img src="@/assets/icons/friends.svg">Friends</a></li>
+                            <li><a class="dropdown-item text-white dropdown-username-link" href="#"
                                     @click="toSetting"><img src="@/assets/icons/settings.svg">Setting</a></li>
                             <li><a class="dropdown-item text-white dropdown-username-link" href="#"
                                     @click="toFeedback"><img src="@/assets/icons/feedback.svg">Feedback</a></li>
+                            <li><a class="dropdown-item text-white dropdown-username-link" href="#"
+                                    @click="toSetting"><img src="@/assets/icons/admin.svg">Admin table</a></li>
                             <li><a class="dropdown-item text-white dropdown-username-link" href="#"
                                     @click="toLogout"><img src="@/assets/icons/logout.svg">Log out</a></li>
                         </ul>
@@ -88,6 +92,9 @@ function toFeedback() {
     router.push('/feedback')
 }
 
+function toFriends() {
+    router.push('/friends')
+}
 
 function toUserProfile() {
     router.push('/profile')
