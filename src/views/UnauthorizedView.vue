@@ -26,3 +26,10 @@ const home = () => {
     router.push('/'); 
 };
 </script>
+
+
+<style scoped>
+    body {
+        background-image: url('@/assets/401-error.jpg');
+    }
+</style>

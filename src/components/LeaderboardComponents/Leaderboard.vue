@@ -4,7 +4,7 @@
       <table>
         <tr v-for="(entry, index) in leaderboard" :key="entry.user.id">
           <td class="number">{{ index + 1 }}</td>
-          <td class="name" @click="navigateToUserProfile(entry.user.id)">{{ entry.user.username }}</td>
+          <td class="name" @click="navigateToUserProfile(entry.user.id)">{{ entry.user.firstName }}</td>
           <td class="points" v-if="index === 0">
             {{ entry.score }}
             <div class = "medal">
@@ -55,7 +55,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    flex-wrap: wrap;
+    height: 4rem;
   }
   
   tr:not(:first-child):hover {
@@ -126,7 +126,7 @@
   }
   
   .ribbon {
-    width: 100%;
+    width: 106%;
     height: 4.5rem;
     top: -0.5rem;
     background-color: #0A58CA;
