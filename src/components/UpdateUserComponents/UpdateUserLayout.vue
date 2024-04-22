@@ -57,9 +57,6 @@ const handleConfirmPasswordInputEvent = (newValue: any) => {
 }
 
 const handleSubmit = async () => {
-  console.log(firstNameRef.value)
-
-  let isValid
 
   samePasswords.value = (passwordRef.value === confirmPasswordRef.value)
   console.log(samePasswords.value)
@@ -76,7 +73,7 @@ const handleSubmit = async () => {
 
 
 
-    // Check if the form is valid
+
     if (form.checkValidity()) {
       if(samePasswords.value){
         try {
