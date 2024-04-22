@@ -108,9 +108,10 @@ onMounted(()=>{
     <div class="row">
       <div class="col-md-2 text-center">
         <img src="/src/assets/userprofile.png" class="img-fluid" alt="userprofile">
-        <p class="h2">Username</p>
+        <p class="h2">{{useUserInfoStore().getFirstName}}</p>
       </div>
       <div class="col-md-10">
+        <!-- May need to deactive @submit.prevent -->
         <form ref="formRef" @submit.prevent="handleSubmit" id="newForm">
           <div class="row">
             <div class="form-group col-md-6" >
