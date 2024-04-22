@@ -60,9 +60,19 @@ const routes = [
         component: () => import('@/views/ShopView.vue'),
       },
       {
-        path: '/profile',
+        path: 'profile',
         name: 'profile',
         component: UserProfileView
+      },
+      {
+        path: 'friends',
+        name: 'friends',
+        component: () => import('@/views/User/UserFriendsView.vue'),
+      },
+      {
+        path: 'add-friend',
+        name: 'add-friend',
+        component: () => import('@/views/User/UserAddFriend.vue'),
       },
       {
         path: 'admin',
@@ -86,6 +96,16 @@ const routes = [
     path: '/login',
     name: 'login',
     component: LoginView,
+  },
+  {
+    path: '/forgotten-password',
+    name: 'forgotten-password',
+    component: () => import('@/views/Authentication/ForgottenPasswordView.vue'),
+  },
+  {
+    path: '/change-password/:token',
+    name: 'change-password',
+    component: () => import('@/views/Authentication/ChangePasswordView.vue'),
   },
   {
     path: '/sign-up',

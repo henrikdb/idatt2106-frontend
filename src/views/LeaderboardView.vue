@@ -70,6 +70,23 @@ async function global() {
         type: "CURRENT_STREAK",
         filter: "GLOBAL",
     });
+    let globalPointsYou = await LeaderboardService.getSurrounding({
+        type: "TOTAL_POINTS",
+        filter: "GLOBAL",
+    });
+    let globalStreakYou = await LeaderboardService.getSurrounding({
+        type: "TOP_STREAK",
+        filter: "GLOBAL",
+    });
+    let globalCurrentStreakYou = await LeaderboardService.getSurrounding({
+        type: "CURRENT_STREAK",
+        filter: "GLOBAL",
+    });
+
+    console.log(globalPointsYou);
+    console.log(globalStreakYou);
+    console.log(globalCurrentStreakYou);
+
     pointsLeaderboardData.value = globalPoints.entries;
     currentLeaderboardData.value = globalCurrentStreak.entries;
     streakLeaderboardData.value = globalStreak.entries;
