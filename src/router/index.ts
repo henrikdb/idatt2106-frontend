@@ -49,9 +49,19 @@ const routes = [
         component: () => import('@/views/ShopView.vue'),
       },
       {
-        path: '/profile',
+        path: 'profile',
         name: 'profile',
         component: UserProfileView
+      },
+      {
+        path: 'friends',
+        name: 'friends',
+        component: () => import('@/views/User/UserFriendsView.vue'),
+      },
+      {
+        path: 'add-friend',
+        name: 'add-friend',
+        component: () => import('@/views/User/UserAddFriend.vue'),
       },
       {
         path: 'admin',
