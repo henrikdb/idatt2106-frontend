@@ -7,6 +7,7 @@ import { AuthenticationService, OpenAPI, LoginRequest } from '@/api';
 import { useRouter, useRoute } from 'vue-router';
 import handleUnknownError from '@/components/Exceptions/unkownErrorHandler';
 import { useErrorStore } from '@/stores/ErrorStore';
+import SignUpLink from '@/components/SignUp/SignUpLink.vue'
 
 const emailRef = ref('')
 const passwordRef = ref('')
@@ -95,6 +96,7 @@ const handleSubmit = async () => {
 
       <p class="text-danger">{{ errorMsg }}</p>
       <button1 id="confirmButton" type="submit" @click="handleSubmit" button-text="Login"></button1>
+      <SignUpLink/>
     </form>
   </div>
 </template>

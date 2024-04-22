@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ProgressBar from '@/components/Configuration/ProgressBar.vue'
+import ProgressBar from '@/components/Configuration/ConfigurationProgressBar.vue'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useRoute } from 'vue-router'
@@ -17,7 +17,7 @@ let currentRoute = useRoute()
 let currentPath = currentRoute.fullPath
 
 // Sets the current path to a new path and updates progressbar
-const onNewRouteEvent = (path) => {
+const onNewRouteEvent = (path: string) => {
   currentPath = path
   percentage.value = (1/length) * configurationSteps[path]
 }

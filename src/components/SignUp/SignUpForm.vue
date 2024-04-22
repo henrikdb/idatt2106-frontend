@@ -6,6 +6,7 @@ import { useRouter } from 'vue-router'
 import { AuthenticationService } from '@/api'
 import handleUnknownError from '@/components/Exceptions/unkownErrorHandler'
 import { useUserInfoStore } from '@/stores/UserStore'
+import LoginLink from '@/components/Login/LoginLink.vue'
 
 const router = useRouter();
 const userStore = useUserInfoStore();
@@ -113,6 +114,7 @@ const handleSubmit = async () => {
       <p class="text-danger">{{ errorMsg }}</p>
       <p v-if="!samePasswords" class="text-danger">The passwords are not identical</p>
       <button1 id="confirmButton" @click="handleSubmit" button-text="Sign up"></button1>
+      <LoginLink/>
     </form>
   </div>
 

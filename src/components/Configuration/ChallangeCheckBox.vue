@@ -16,6 +16,12 @@ const props = defineProps({
   }
 })
 
+/**
+ * This method is run whenever a change has occurred in the checkbox. It retrieves
+ * the current value of the checkbox (true/false) and emits a data object containing
+ * the challenge's description and the checked value.
+ * @param event The event object containing information about the input's checked value.
+ */
 const onChallengeChanged = (event: any) => {
   const value = event.target.checked
   const data = [props.text, value]
