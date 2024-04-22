@@ -3,6 +3,7 @@
 import Menu from "@/components/BaseComponents/Menu.vue";
 import Footer from "@/components/BaseComponents/Footer.vue";
 import {useRouter} from "vue-router";
+import {useUserInfoStore} from "../../stores/UserStore";
 
 let numberOfHistory = 6;
 
@@ -26,7 +27,7 @@ function toUpdateUserSettings(){
     <div class="row">
       <div class="col">
         <img src="/src/assets/userprofile.png" class="img-fluid">
-        <p class="h2">Username</p>
+        <p class="h2">{{useUserInfoStore().getFirstName}}</p>
         <p><a class="link-dark" @click="toUpdateUserSettings" href="#">Edit profile</a></p>
       </div>
     </div>
