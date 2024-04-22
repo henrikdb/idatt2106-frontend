@@ -19,6 +19,7 @@
     "@popperjs/core": "^2.11.8",
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
+    "install": "^0.13.0",
     "js-cookie": "^3.0.5",
     "oh-vue-icons": "^1.0.0-rc3",
     "pinia": "^2.1.7",
