@@ -4,6 +4,7 @@ import LoginView from '../views/Authentication/LoginView.vue';
 import { useUserInfoStore } from '@/stores/UserStore';
 import UserProfileView from "@/views/User/UserProfileView.vue";
 import SignUp from '@/components/SignUp/SignUp.vue'
+import UpdateUserView from "@/views/UpdateUser/UpdateUserView.vue";
 
 
 const routes = [
@@ -32,6 +33,16 @@ const routes = [
         path: 'test',
         name: 'test',
         component: () => import('@/views/TestView.vue'),
+      },
+      {
+        path: '/profile',
+        name: 'profile',
+        component: UserProfileView
+      },
+      {
+        path: 'update-user',
+        name: 'update-user',
+        component: UpdateUserView
       },
       {
         path: 'roadmap',
