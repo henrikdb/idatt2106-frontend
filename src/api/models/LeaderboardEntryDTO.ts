@@ -6,5 +6,6 @@ import type { UserDTO } from './UserDTO';
 export type LeaderboardEntryDTO = {
     user?: UserDTO;
     score?: number;
+    rank?: number;
 };
 
