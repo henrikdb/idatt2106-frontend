@@ -37,6 +37,8 @@
                             <li><a class="dropdown-item text-white dropdown-username-link" href="#"
                                     @click="toUserProfile"><img src="@/assets/icons/person.svg">User Profile</a></li>
                             <li><a class="dropdown-item text-white dropdown-username-link" href="#"
+                                    @click="toBudget">Budget</a></li>
+                            <li><a class="dropdown-item text-white dropdown-username-link" href="#"
                                     @click="toSetting"><img src="@/assets/icons/settings.svg">Setting</a></li>
                             <li><a class="dropdown-item text-white dropdown-username-link" href="#"
                                     @click="toFeedback"><img src="@/assets/icons/feedback.svg">Feedback</a></li>
@@ -91,6 +93,10 @@ function toFeedback() {
 
 function toUserProfile() {
     router.push('/profile')
+}
+
+function toBudget() {
+  router.push('/budget')
 }
 
 function toLogout() {

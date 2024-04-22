@@ -54,6 +54,11 @@ const routes = [
         component: UserProfileView
       },
       {
+        path: '/budget',
+        name: 'budget',
+        component: () => import('@/views/BudgetOverview.vue'),
+      },
+      {
         path: 'admin',
         name: 'admin',
         component: () => import('@/views/TestView.vue'),
