@@ -4,6 +4,7 @@ interface Step {
   showPanel: boolean;
   description: string;
   percentFinished: number;
+  unFinished: boolean;
 }
 export default {
   data() {
@@ -13,18 +14,28 @@ export default {
       title: 'Spain trip' as string,
       //This will be changed to info gathered from backend
       steps: [
-        { title: 'Challenge 1', showPanel: false, description: 'Save 50kr on coffee in 3 days', percentFinished: 22 },
-        { title: 'Challenge 2', showPanel: false, description: 'Save 500kr on food in 7 days', percentFinished: 73 },
-        { title: 'Challenge 3', showPanel: false, description: 'Save 350kr on clothes in 5 days', percentFinished: 50 },
-        { title: 'Challenge 4', showPanel: false, description: 'Save 150kr on coffee in 4 days', percentFinished: 10 },
-        { title: 'Challenge 5', showPanel: false, description: 'Save 50kr on coffee in 3 days', percentFinished: 90 }
+        { title: 'Challenge 1', showPanel: false, description: 'Save 50kr on coffee in 3 days', percentFinished: 22, unFinished: false },
+        { title: 'Challenge 2', showPanel: false, description: 'Save 500kr on food in 7 days', percentFinished: 73, unFinished: false },
+        { title: 'Challenge 3', showPanel: false, description: 'Save 350kr on clothes in 5 days', percentFinished: 50, unFinished: true },
+        { title: 'Challenge 4', showPanel: false, description: 'Save 150kr on coffee in 4 days', percentFinished: 10, unFinished: true },
+        { title: 'Challenge 5', showPanel: false, description: 'Save 50kr on coffee in 3 days', percentFinished: 90, unFinished: true }
       ]
       ,
       bluePanelMaxHeight: 'auto' as string
     };
   },
   mounted() {
-    this.togglePanel(this.steps[2]);
+    setTimeout(() => {
+      this.togglePanel(this.steps[2]);
+    }, 500);
+    
+  },
+  computed: {
+    computeImageFilter() {
+      return (step: Step) => {
+        return step.unFinished ? 'none' : 'grayscale(100%)';
+      };
+    }
   },
   methods: {
     togglePanel(step: Step) {
@@ -40,12 +51,8 @@ export default {
       if (step.showPanel) {
         this.$nextTick(() => {
           const panel = document.getElementById(`panel-${this.steps.indexOf(step)}`);
-          console.log(panel);
           if (panel) {
-            setTimeout(() => {
-              panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
-              console.log('I should have scrolled');
-            }, 100); // Wait for 1 second before scrolling
+            panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
           }
         });
       }
@@ -56,11 +63,24 @@ export default {
 
 <template>
   <div class="col-lg-8">
-    <div class="SavingGoalTitle text-center">{{title}}</div>
+    <div class="SavingGoalTitle text-center">
+      {{title}}
+      <br>
+      <p class="d-inline-flex gap-1">
+        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="font-size: 25px;">
+          See more info
+        </button>
+      </p>
+      <div class="collapse" id="collapseExample">
+        <div class="card card-body bg-primary mx-auto" style="width: 80%;">
+          Total saved: 20kr
+        </div>
+      </div>
+    </div>
     <ul class="timeline">
       <li v-for="(step, index) in steps" :key="index" :class="{ 'timeline-inverted': index % 2 !== 0 }">
           <div class="timeline-image z-1" @click="togglePanel(step)">
-            <img class="circular-image" :src="step.showPanel ? altImage : image" alt="">
+            <img class="circular-image" :src="step.showPanel ? altImage : image" :style="{ filter: computeImageFilter(step) }" alt="">
           </div>
         <div class="timeline-panel z-3" :id="'panel-' + index" v-show="step.showPanel">
           <div class="timeline-heading">
@@ -95,9 +115,8 @@ export default {
 
 <style scoped>
 .col-lg-8 {
-  width: 63%;
+  width: 58%;
   margin-bottom: 20px;
-  max-height: 1000px;
 }
 
 .SavingGoalTitle {

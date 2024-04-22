@@ -22,10 +22,6 @@ const props = defineProps({
     type: String,
     default: ""
   },
-  isValid: {
-    type: Boolean,
-    default: false
-  },
   min: {
     type: String,
     required: false
@@ -33,6 +29,14 @@ const props = defineProps({
   pattern: {
     type: String,
     default: null
+  },
+  validMessage: {
+    type: String,
+    default: ''
+  },
+  invalidMessage: {
+    type: String,
+    default: ''
   }
 });
 
@@ -44,17 +48,16 @@ const onInputEvent = (event: any) => {
 <template>
   <div>
     <label :for="inputId">{{ label }}</label>
-    <input :value="props.modelValue"
+    <input :value="modelValue"
            @input="onInputEvent"
-           :type="props.type"
+           :type="type"
            class="form-control"
-           :placeholder="props.placeholder"
+           :placeholder="placeholder"
            :id="inputId" required
            :min="min"
-           :pattern="pattern"
-    />
-    <div v-if="props.isValid" class="invalid-feedback">Invalid {{ label }}</div>
-    <div v-else class="valid-feedback">Valid {{ label }}</div>
+           :pattern="pattern"/>
+    <div class="valid-feedback">{{ validMessage }}</div>
+    <div class="invalid-feedback">{{ invalidMessage }}</div>
   </div>
 </template>
 

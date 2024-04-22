@@ -22,6 +22,7 @@ const onChangedChallengeEvent = (value) => {
     console.log('Reached')
     chosenChallenges.value = chosenChallenges.value.filter(item => item !== value[0]);
   }
+  console.log(chosenChallenges.value)
 }
 
 const onClick = () => {

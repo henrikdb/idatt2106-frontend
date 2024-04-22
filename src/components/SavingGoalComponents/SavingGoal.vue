@@ -36,7 +36,7 @@ export default {
 </script>
 
 <template>
-  <div class="container">
+  <div class="cont">
     <div class="row">
       <div class="col-lg-4 blue-background overflow-auto" :style="{ 'max-height': bluePanelMaxHeight }">
         <h3 style="color: white; margin-bottom: 16px">Your saving goals</h3>
@@ -53,9 +53,10 @@ export default {
 </template>
 
 <style scoped>
-.container {
+.cont {
+  padding-left: 10px;
   margin: 0;
-  width: 100%;
+  width: 98%;
   box-sizing: unset;
 }
 
