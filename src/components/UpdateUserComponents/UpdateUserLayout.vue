@@ -2,6 +2,7 @@
 import BaseInput from "@/components/InputFields/BaseInput.vue";
 import {onMounted, ref} from "vue";
 import {AuthenticationService, LeaderboardService, UserControllerService, type UserUpdateDTO} from "@/api";
+import {useUserInfoStore} from "@/stores/UserStore";
 
 
 
@@ -14,7 +15,6 @@ const passwordRef = ref('')
 const confirmPasswordRef = ref('')
 const formRef = ref()
 let samePasswords = ref(true)
-
 
 async function setupForm() {
   try {
@@ -78,6 +78,12 @@ const handleSubmit = async () => {
       if(samePasswords.value){
         try {
           UserControllerService.update({requestBody: updateUserPayload})
+          useUserInfoStore().setUserInfo({
+            email: emailRef.value,
+            firstname: firstNameRef.value,
+            lastname: surnameRef.value,
+            password: passwordRef.value
+          })
 
         }catch (err){
           cosole.error(err)
