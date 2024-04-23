@@ -1,12 +1,8 @@
 <script setup lang="ts">
 import BaseInput from "@/components/InputFields/BaseInput.vue";
-import {onMounted, ref} from "vue";
-import {AuthenticationService, LeaderboardService, UserService, type UserUpdateDTO} from "@/api";
-import {useUserInfoStore} from "@/stores/UserStore";
-
-
-
-
+import { onMounted, ref } from "vue";
+import { AuthenticationService, LeaderboardService, UserService, type UserUpdateDTO } from "@/api";
+import { useUserInfoStore } from "@/stores/UserStore";
 
 const firstNameRef = ref()
 const surnameRef = ref('')
@@ -28,7 +24,7 @@ async function setupForm() {
     if (response.email != null) {
       emailRef.value = response.email
     }
-  }catch (err){
+  } catch (err) {
     console.error(err)
   }
 }
@@ -74,27 +70,27 @@ const handleSubmit = async () => {
 
 
 
-    if (form.checkValidity()) {
-      if(samePasswords.value){
-        try {
-          UserControllerService.update({requestBody: updateUserPayload})
-          useUserInfoStore().setUserInfo({
-            email: emailRef.value,
-            firstname: firstNameRef.value,
-            lastname: surnameRef.value,
-            password: passwordRef.value
-          })
+  if (form.checkValidity()) {
+    if (samePasswords.value) {
+      try {
+        UserService.update({ requestBody: updateUserPayload })
+        useUserInfoStore().setUserInfo({
+          email: emailRef.value,
+          firstname: firstNameRef.value,
+          lastname: surnameRef.value,
+          password: passwordRef.value
+        })
 
-        }catch (err){
-          cosole.error(err)
-        }
-        }
-    } else {
-      console.log('Form is not valid');
+      } catch (err) {
+        cosole.error(err)
+      }
     }
+  } else {
+    console.log('Form is not valid');
+  }
 
 }
-onMounted(()=>{
+onMounted(() => {
   setupForm()
 })
 
@@ -103,123 +99,132 @@ onMounted(()=>{
 </script>
 
 <template>
-  <div class="container">
-    <!-- The userprofile and the form that will update name, email, password -->
-    <div class="row">
-      <div class="col-md-2 text-center">
-        <img src="/src/assets/userprofile.png" class="img-fluid" alt="userprofile">
-        <p class="h2">{{useUserInfoStore().getFirstName}}</p>
-      </div>
-      <div class="col-md-10">
-        <!-- May need to deactive @submit.prevent -->
-        <form ref="formRef" @submit.prevent="handleSubmit" id="newForm">
-          <div class="row">
-            <div class="form-group col-md-6" >
-             <!-- <label for="inputFirstName" class="form-label">First Name</label>
-              <input type="text" class="form-control" id="inputFirstName" placeholder="ex: Brian">-->
-              <BaseInput :model-value="firstNameRef"
-                  @input-change-event="handleFirstNameInputEvent"
-                         id="firstNameInputChange"
-                         input-id="first-name-new"
-                         type="text"
-                         label="First name"
-                         placeholder="Enter your first name"
-                         invalid-message="Please enter your first name"
-
-              />
-            </div>
-            <div class="form-group col-md-6">
-             <!-- <label for="inputPassword4">Last Name</label>
-              <input type="text" class="form-control" id="inputLastName" placeholder="ex: Cox">-->
-              <BaseInput :model-value="surnameRef"
-                         @input-change-event="handleSurnameInputEvent"
-                         id="surnameInput-change"
-                         input-id="surname-new"
-                         type="text"
-                         label="Surname"
-                         placeholder="Enter your surname"
-                         invalid-message="Please enter your surname"
-                          />
+  <div class="containers">
+    <div class="row gutters">
+      <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="account-settings">
+              <div class="user-profile">
+                <div class="user-avatar">
+                  <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Maxwell Admin">
+                </div>
+                <div class="text-center">
+                  <div class="mt-2">
+                    <span class="btn btn-primary"><img src="@/assets/icons/download.svg"></span>
+                  </div>
+                </div>
+                <br>
+                <h5 class="user-name">Yuki Hayashi</h5>
+                <h6 class="user-email">yuki@Maxwell.com</h6>
+              </div>
             </div>
           </div>
-          <div class="form-group col-md-6">
-           <!-- <label for="inputAddress">Email</label>
-            <input type="email" class="form-control" id="inputMail" placeholder="ex: briancox@mail.com">-->
-            <BaseInput :model-value="emailRef"
-                       @input-change-event="handleEmailInputEvent"
-                       id="emailInput-change"
-                       input-id="email-new"
-                       type="email"
-                       label="Email"
-                       placeholder="Enter your email"
-                       invalid-message="Invalid email"
-                       />
-          </div>
-          <div class="row">
-            <div class="form-group col-md-6">
-             <!-- <label for="inputPassword">Password</label>
-              <input type="password" class="form-control" id="inputPassword" placeholder="Password with capital letter, number and a special character">-->
-              <BaseInput :model-value="passwordRef"
-                         @input-change-event="handlePasswordInputEvent"
-                         id="passwordInput-change"
-                         input-id="password-new"
-                         type="password"
-                         pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,16}"
-                         label="Password"
-                         placeholder="Enter password"
-                         invalid-message="Password must be between 4 and 16 characters and contain one capital letter, small letter and a number"
-                         />
-            </div>
-            <div class="form-group col-md-6">
-             <!-- <label for="inputPasswordConfirmed">Confirmed Password</label>
-              <input type="password" class="form-control" id="inputPasswordConfirmed" placeholder="Repeat password">-->
-              <BaseInput :modelValue="confirmPasswordRef"
-                         @input-change-event="handleConfirmPasswordInputEvent"
-                         id="confirmPasswordInput-change"
-                         input-id="confirmPassword-new"
-                         type="password"
-                         pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,16}"
-                         label="Confirm Password"
-                         placeholder="Confirm password"
-                         invalid-message="Password must be between 4 and 16 characters and contain one capital letter, small letter and a number"
-                         />
-
-              <p v-if="!samePasswords" class="text-danger">The passwords are not identical</p>
-            </div>
-          </div>
-          <button type="submit" @click="handleSubmit" class="btn btn-primary">Change settings</button>
-        </form>
-      </div>
-    </div>
-    <!-- Maybe a profile-pictures here that collapses or not -->
-    <div class="row">
-      <div class="col">
-        <p>
-        <a class="btn" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-          Profile Pictures
-        </a>
-        </p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="collapse" id="collapseExample">
-        <div class="card card-body">
-          This is the content of the user profile
         </div>
       </div>
-    </div>
-    <!-- Div that contains the configuration -->
-    <div class="row">
-      <div class="col"><p>
-        <a class="btn" data-bs-toggle="collapse" href="#collapseConfiguration" role="button" aria-expanded="false" aria-controls="collapseConfiguration">
-          User Configuration
-        </a>
-      </p></div>
-    </div>
-    <div class="row">
-      <div class="collapse" id="collapseConfiguration">
-        <div class="card card-body">
-          This is the configuration of the user configuration
+      <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="row gutters">
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <h6 class="mb-2 text-primary">Personal Details <img src="@/assets/icons/black_person.svg"></h6>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <BaseInput :model-value="firstNameRef" @input-change-event="handleFirstNameInputEvent"
+                    id="firstNameInputChange" input-id="first-name-new" type="text" label="First name"
+                    placeholder="Enter your first name" invalid-message="Please enter your first name" />
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <BaseInput :model-value="surnameRef" @input-change-event="handleSurnameInputEvent"
+                    id="surnameInput-change" input-id="surname-new" type="text" label="Surname"
+                    placeholder="Enter your surname" invalid-message="Please enter your surname" />
+
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <BaseInput :model-value="emailRef" @input-change-event="handleEmailInputEvent" id="emailInput-change"
+                    input-id="email-new" type="email" label="Email" placeholder="Enter your email"
+                    invalid-message="Invalid email" />
+
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <BaseInput :model-value="passwordRef" @input-change-event="handlePasswordInputEvent"
+                    id="passwordInput-change" input-id="password-new" type="password"
+                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,16}" label="Password" placeholder="Enter password"
+                    invalid-message="Password must be between 4 and 16 characters and contain one capital letter, small letter and a number" />
+
+                </div>
+              </div>
+            </div>
+
+            <div class="row gutters">
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" style="margin-top: 10px;">
+                <h6 class="mb-2 text-primary">Personal Configuration <img src="@/assets/icons/black_person.svg"></h6>
+              </div>
+              <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                  <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                      Configuration
+                    </button>
+                  </h2>
+                  <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                      Hallo
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row gutters">
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <h6 class="mt-3 mb-2 text-primary">Styles <img src="@/assets/icons/black_paintBrush.svg"></h6>
+              </div>
+              <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                  <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                      Profile pictures
+                    </button>
+                  </h2>
+                  <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                      Hallo
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      Road styles
+                    </button>
+                  </h2>
+                  <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                      Hallo
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row gutters">
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="text-right">
+                  <button type="button" id="submit" name="submit" class="btn btn-secondary">Cancel</button>
+                  <button type="button" id="submit" name="submit" class="btn btn-primary">Update</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -228,5 +233,94 @@ onMounted(()=>{
 </template>
 
 <style scoped>
+body {
+  margin: 0;
+  padding-top: 40px;
+  color: #2e323c;
+  background: #f5f6fa;
+  position: relative;
+  height: 100%;
+}
 
+.row {
+  margin: 0px;
+}
+
+.containers {
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  margin-top: 2rem;
+  margin-bottom: 4rem;
+}
+
+.account-settings .user-profile {
+  margin: 0 0 1rem 0;
+  padding-bottom: 1rem;
+  text-align: center;
+}
+
+.account-settings .user-profile .user-avatar {
+  margin: 0 0 1rem 0;
+}
+
+.account-settings .user-profile .user-avatar img {
+  width: 90px;
+  height: 90px;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  border-radius: 100px;
+}
+
+.account-settings .user-profile h5.user-name {
+  margin: 0 0 0.5rem 0;
+}
+
+.account-settings .user-profile h6.user-email {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #9fa8b9;
+}
+
+.account-settings .about {
+  margin: 2rem 0 0 0;
+  text-align: center;
+}
+
+.account-settings .about h5 {
+  margin: 0 0 15px 0;
+  color: #007ae1;
+}
+
+.account-settings .about p {
+  font-size: 0.825rem;
+}
+
+.form-control {
+  border: 1px solid #cfd1d8;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  font-size: .825rem;
+  background: #ffffff;
+  color: #2e323c;
+}
+
+.text-right {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.card {
+  background: #efefef;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  border: 0;
+  margin-bottom: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
 </style>
