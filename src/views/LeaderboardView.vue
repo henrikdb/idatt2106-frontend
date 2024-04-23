@@ -77,17 +77,17 @@ async function global() {
     let globalPointsYou = await LeaderboardService.getSurrounding({
         type: "TOTAL_POINTS",
         filter: "GLOBAL",
-        entryCount: 1,
+        entryCount: 2,
     });
     let globalStreakYou = await LeaderboardService.getSurrounding({
         type: "TOP_STREAK",
         filter: "GLOBAL",
-        entryCount: 1,
+        entryCount: 2,
     });
     let globalCurrentStreakYou = await LeaderboardService.getSurrounding({
         type: "CURRENT_STREAK",
         filter: "GLOBAL",
-        entryCount: 1,
+        entryCount: 2,
     });
     
     pointsLeaderboardData.value = globalPoints.entries;
@@ -117,17 +117,17 @@ async function friends() {
     let friendsPointsYou = await LeaderboardService.getSurrounding({
         type: "TOTAL_POINTS",
         filter: "FRIENDS",
-        entryCount: 3,
+        entryCount: 2,
     });
     let friendsStreakYou = await LeaderboardService.getSurrounding({
         type: "TOP_STREAK",
         filter: "FRIENDS",
-        entryCount: 3,
+        entryCount: 2,
     });
     let friendsCurrentStreakYou = await LeaderboardService.getSurrounding({
         type: "CURRENT_STREAK",
         filter: "FRIENDS",
-        entryCount: 3,
+        entryCount: 2,
     });
 
 
