@@ -65,6 +65,16 @@ const routes = [
         component: UserProfileView
       },
       {
+        path: '/budget-overview',
+        name: 'budget overview',
+        component: () => import('@/views/BudgetOverview.vue'),
+      },
+      {
+        path: '/budget',
+        name: 'budget',
+        component: () => import('@/views/BudgetView.vue'),
+      },
+      {
         path: 'friends',
         name: 'friends',
         component: () => import('@/views/User/UserFriendsView.vue'),

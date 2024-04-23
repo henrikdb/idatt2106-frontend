@@ -37,6 +37,8 @@
                             <li><a class="dropdown-item text-white dropdown-username-link" href="#"
                                     @click="toUserProfile"><img src="@/assets/icons/person.svg">User Profile</a></li>
                             <li><a class="dropdown-item text-white dropdown-username-link" href="#"
+                                    @click="toBudget">Budget</a></li>
+                            <li><a class="dropdown-item text-white dropdown-username-link" href="#"
                                     @click="toFriends"><img src="@/assets/icons/friends.svg">Friends</a></li>
                             <li><a class="dropdown-item text-white dropdown-username-link" href="#"
                                     @click="toSetting"><img src="@/assets/icons/settings.svg">Setting</a></li>
@@ -68,6 +70,10 @@ function toHome() {
     router.push('/')
 }
 
+function toBudget() {
+  router.push('/budget-overview')
+}
+
 function toSavingGoals() {
     router.push('/roadmap')
 }
@@ -92,9 +98,6 @@ function toFeedback() {
     router.push('/feedback')
 }
 
-function toFriends() {
-    router.push('/friends')
-}
 
 function toUserProfile() {
     router.push('/profile')
