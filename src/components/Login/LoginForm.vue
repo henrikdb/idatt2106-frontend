@@ -93,6 +93,7 @@ const handleSubmit = async () => {
                  valid-message="Valid password"
                  invalid-message="Password must be between 4 and 16 characters and contain one capital letter, small letter and a number"
       />
+      <p>Forgotten password? <RouterLink to="/forgotten-password">Reset password</RouterLink></p>
 
       <p class="text-danger">{{ errorMsg }}</p>
       <button1 id="confirmButton" type="submit" @click="handleSubmit" button-text="Login"></button1>
