@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import BaseInput from "@/components/InputFields/BaseInput.vue";
 import {onMounted, ref} from "vue";
-import {AuthenticationService, LeaderboardService, UserControllerService, type UserUpdateDTO} from "@/api";
+import {AuthenticationService, LeaderboardService, UserService, type UserUpdateDTO} from "@/api";
 import {useUserInfoStore} from "@/stores/UserStore";
 
 
@@ -18,7 +18,7 @@ let samePasswords = ref(true)
 
 async function setupForm() {
   try {
-    let response = await UserControllerService.getUser();
+    let response = await UserService.getUser();
     console.log(response.firstName)
 
     firstNameRef.value = response.firstName;
