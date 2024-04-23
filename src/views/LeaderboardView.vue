@@ -17,16 +17,16 @@
     </div>
     <main>
         <div id="leaderboard">
-            <h1><img src="@/assets/items/v-buck.png" style="width: 2rem"> Total points</h1>
-            <Leaderboard :leaderboard="pointsLeaderboardData" @navigateToUserProfile="navigateToUserProfile" />
+            <h1><img src="@/assets/items/pigcoin.png" style="width: 3rem"> Total points</h1>
+            <Leaderboard :leaderboard="pointsLeaderboardData" :leaderboardExtra="pointsLeaderboardDataExtra" @navigateToUserProfile="navigateToUserProfile" />
         </div>
         <div id="leaderboard">
             <h1><img src="@/assets/icons/fire.png" style="width: 2rem"> Current streak</h1>
-            <Leaderboard :leaderboard="currentLeaderboardData" @navigateToUserProfile="navigateToUserProfile" />
+            <Leaderboard :leaderboard="currentLeaderboardData" :leaderboardExtra="currentLeaderboardDataExtra" @navigateToUserProfile="navigateToUserProfile" />
         </div>
         <div id="leaderboard">
             <h1><img src="@/assets/icons/fire.png" style="width: 2rem"> Highest streak</h1>
-            <Leaderboard :leaderboard="streakLeaderboardData" @navigateToUserProfile="navigateToUserProfile" />
+            <Leaderboard :leaderboard="streakLeaderboardData" :leaderboardExtra="streakLeaderboardDataExtra" @navigateToUserProfile="navigateToUserProfile" />
         </div>
     </main>
     </div>
@@ -41,11 +41,15 @@ import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import Leaderboard from '@/components/LeaderboardComponents/Leaderboard.vue';
 import { on } from 'events';
-import { LeaderboardService } from '@/api';
+import { LeaderboardService, UserControllerService } from '@/api';
 
 let streakLeaderboardData = ref([]);
 let currentLeaderboardData = ref([]);
 let pointsLeaderboardData = ref([]);
+
+let streakLeaderboardDataExtra = ref([]);
+let currentLeaderboardDataExtra = ref([]);
+let pointsLeaderboardDataExtra = ref([]);
 
 const router = useRouter();
 
@@ -73,23 +77,26 @@ async function global() {
     let globalPointsYou = await LeaderboardService.getSurrounding({
         type: "TOTAL_POINTS",
         filter: "GLOBAL",
+        entryCount: 2,
     });
     let globalStreakYou = await LeaderboardService.getSurrounding({
         type: "TOP_STREAK",
         filter: "GLOBAL",
+        entryCount: 2,
     });
     let globalCurrentStreakYou = await LeaderboardService.getSurrounding({
         type: "CURRENT_STREAK",
         filter: "GLOBAL",
+        entryCount: 2,
     });
-
-    console.log(globalPointsYou);
-    console.log(globalStreakYou);
-    console.log(globalCurrentStreakYou);
-
+    
     pointsLeaderboardData.value = globalPoints.entries;
     currentLeaderboardData.value = globalCurrentStreak.entries;
     streakLeaderboardData.value = globalStreak.entries;
+
+    pointsLeaderboardDataExtra.value = globalPointsYou.entries;
+    currentLeaderboardDataExtra.value = globalCurrentStreakYou.entries;
+    streakLeaderboardDataExtra.value = globalStreakYou.entries;
 }
 
 async function friends() {
@@ -105,9 +112,30 @@ async function friends() {
         type: "CURRENT_STREAK",
         filter: "FRIENDS",
     });
+    let friendsPointsYou = await LeaderboardService.getSurrounding({
+        type: "TOTAL_POINTS",
+        filter: "FRIENDS",
+        entryCount: 2,
+    });
+    let friendsStreakYou = await LeaderboardService.getSurrounding({
+        type: "TOP_STREAK",
+        filter: "FRIENDS",
+        entryCount: 2,
+    });
+    let friendsCurrentStreakYou = await LeaderboardService.getSurrounding({
+        type: "CURRENT_STREAK",
+        filter: "FRIENDS",
+        entryCount: 2,
+    });
+
+
     pointsLeaderboardData.value = friendsPoints.entries;
     currentLeaderboardData.value = friendsCurrentStreak.entries;
     streakLeaderboardData.value = friendsStreak.entries;
+
+    pointsLeaderboardDataExtra.value = friendsPointsYou.entries;
+    currentLeaderboardDataExtra.value = friendsStreakYou.entries;
+    streakLeaderboardDataExtra.value = friendsCurrentStreakYou.entries;
 }
 
 const navigateToUserProfile = (userId: number) => {
@@ -121,7 +149,7 @@ main {
     width: 80%;
     display: flex;
     justify-content: space-around;
-    align-items: center;
+    align-items: start;
     flex-wrap: wrap;
     flex-direction: row;
 }
@@ -138,7 +166,6 @@ main {
 #content {
     display: flex;
     flex-direction: row;
-   
     justify-content: center;
     flex-wrap: wrap;
 }
@@ -156,7 +183,6 @@ h1 {
     display: flex;
     justify-content: center;
     margin-bottom: 2rem;
-
 }
 
 #radioContainer {
