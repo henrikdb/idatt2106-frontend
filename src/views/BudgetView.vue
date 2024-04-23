@@ -27,6 +27,7 @@ let expenseJSONObject = ref({
   ]
 });
 
+// Initially updates the total expense display
 for (let expense of expenseJSONObject.value.expenses) {
   expenses.value += expense.value
 }
@@ -36,9 +37,13 @@ let budgetTitle = ref('')
 let budgetValue = ref()
 let expenseDescription = ref('')
 let expenseAmount = ref()
-
+// Reactive background variable
 const iRef = ref()
 
+/**
+ * Checks the value of the balance and adjust background color depending
+ * on negative or positive value after rendering.
+ */
 onMounted(() => {
   if (balance.value >= 0) {
     iRef.value.style.backgroundColor = 'rgba(34, 231, 50, 0.43)';
@@ -46,11 +51,16 @@ onMounted(() => {
   balance.value = budget.value - expenses.value
 })
 
+/**
+ * Updates the balance and background color based on the budget and expenses.
+ */
 const updateBalance = () => {
+  // Resets expenses and then re-calculates it
   expenses.value = 0
   for (let expense of expenseJSONObject.value.expenses) {
     expenses.value += expense.value
   }
+  // Updates balance value and background
   balance.value = budget.value - expenses.value
   if (balance.value >= 0) {
     iRef.value.style.backgroundColor = 'rgba(34, 231, 50, 0.43)';
@@ -59,11 +69,23 @@ const updateBalance = () => {
   }
 }
 
+/**
+ * Calculates a new budget and updates the balance.
+ *
+ * @param newBudget The new budget value.
+ */
 const calculateNewBudget = (newBudget: number) => {
   budget.value = newBudget
   updateBalance()
 }
 
+/**
+ * TODO update javadoc when backend integration is done
+ * Adds a new expense to the expense JSON object and updates the balance.
+ *
+ * @param expenseDescription The description of the expense.
+ * @param expenseValue The value of the expense.
+ */
 const addNewExpense = (expenseDescription: string, expenseValue: number) => {
   expenseJSONObject.value.expenses.push({
     "title": expenseDescription,
@@ -72,15 +94,33 @@ const addNewExpense = (expenseDescription: string, expenseValue: number) => {
   updateBalance()
 }
 
+
+/**
+ * Updates the title of the budget.
+ *
+ * @param newTitle The new title for the budget.
+ */
 const editBudgetTitle = (newTitle: string) => {
   title.value = newTitle
 }
 
+/**
+ * Deletes an expense from the list of expenses.
+ *
+ * @param index The index of the expense to delete.
+ */
 const deleteExpense = (index: number) => {
   expenseJSONObject.value.expenses.splice(index, 1);
   updateBalance()
 }
 
+/**
+ * Edits an existing expense in the list of expenses.
+ *
+ * @param index          The index of the expense to edit.
+ * @param newDescription The new description for the expense.
+ * @param newAmount      The new amount for the expense.
+ */
 const editExpense = (index: number, newDescription: string, newAmount: number) => {
   console.log('Reached')
   expenseJSONObject.value.expenses[index].title = newDescription
@@ -186,8 +226,7 @@ const onDeleteBudgetPressed = () => {
                      :description="expense.title"
                      :amount="expense.value"
                      @deleteEvent="deleteExpense"
-                     @editEvent="editExpense"
-        />
+                     @editEvent="editExpense"/>
       </div>
     </div>
 
@@ -284,6 +323,5 @@ i {
   overflow-y: auto;
   overflow-x: hidden;
   max-height: 100vh;
-}
 
 </style>

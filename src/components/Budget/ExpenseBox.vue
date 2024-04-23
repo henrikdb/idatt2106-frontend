@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 import Button1 from '@/components/Buttons/Button1.vue'
 import { type CreateAppFunction, ref } from 'vue'
 
@@ -19,13 +18,23 @@ const props = defineProps({
   }
 })
 
+// Reactive variables for expense description and amount
 let editDescription = ref('')
 let editAmount = ref('')
 
+/**
+ * Emits an event to parent component with the type 'deleteEvent' to signalize
+ * that an expense with index 'index' must be removed.
+ */
 const emitDeleteEvent = () => {
   emit('deleteEvent', props.index)
 }
 
+/**
+ * Emits an event to parent component with the type 'editEvent' to signalize
+ * that an expense with index 'index' is to be edited with the values 'editDescription'
+ * and 'editAmount'
+ */
 const emitEditEvent = () => {
   emit('editEvent', props.index, editDescription.value, editAmount.value)
 }

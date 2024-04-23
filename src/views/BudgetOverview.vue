@@ -17,6 +17,7 @@ import BudgetBox from '@/components/Budget/BudgetBox.vue'
       </div>
     </div>
 
+    <!--TODO make this more generic-->
     <ul class="budgetContainer">
       <li><budget-box title="April 2024" budget="1000" expenses="908700"></budget-box></li>
       <li><budget-box title="Mai 2024" budget="1000" expenses="87"></budget-box></li>
@@ -52,7 +53,6 @@ import BudgetBox from '@/components/Budget/BudgetBox.vue'
 </template>
 
 <style scoped>
-
 .collapse-container {
   align-content: center;
   justify-content: center;
@@ -71,9 +71,4 @@ import BudgetBox from '@/components/Budget/BudgetBox.vue'
 ul > li {
   margin: 10px 0;
 }
-
-#navbar {
-
-}
-
 </style>
