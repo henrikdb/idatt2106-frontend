@@ -1,6 +1,8 @@
 <script setup lang="ts">
-
 import { onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter();
 
 const props = defineProps({
   title: {
@@ -27,10 +29,14 @@ onMounted(() => {
   }
 })
 
+const onBudgetContainerPressed = () => {
+  router.push('/budget')
+}
+
 </script>
 
 <template>
-  <div class="container-fluid row">
+  <div class="container-fluid row" @click="onBudgetContainerPressed">
     <div class="col-12">
       <div class="title-container">
         <h2>{{title}}</h2>
@@ -77,14 +83,15 @@ onMounted(() => {
 }
 
 .container-fluid {
-  border: 4px solid #4747ce;
+  border: 4px solid #5959ea;
   min-height: 90px;
   border-radius: 15px;
-  transition: transform 150ms ease-in-out;
+  transition: transform 150ms ease-in-out, border 200ms ease-in-out;
   cursor: pointer;
 }
 
 .container-fluid:hover {
+  border: 4px solid #0000f1;
   transform: scale(1.03);
 }
 

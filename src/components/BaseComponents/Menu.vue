@@ -70,6 +70,10 @@ function toHome() {
     router.push('/')
 }
 
+function toBudget() {
+  router.push('/budget-overview')
+}
+
 function toSavingGoals() {
     router.push('/roadmap')
 }
