@@ -1,7 +1,4 @@
 <script setup lang="ts">
-
-import Menu from "@/components/BaseComponents/Menu.vue";
-import Footer from "@/components/BaseComponents/Footer.vue";
 import { useRouter } from "vue-router";
 import { useUserInfoStore } from "../../stores/UserStore";
 
@@ -12,14 +9,15 @@ let cardTitles = ["Spain tour", "Food waste", "Coffee", "Concert", "New book", "
 let points = 0;
 let streak = 0;
 
-let route = useRouter()
-function toRoadmap() {
-  route.push('/roadmap')
-}
+const router = useRouter()
+const toRoadmap = () => {
+  router.push('/');
+};
 
-function toUpdateUserSettings() {
-  route.push('/update-user')
-}
+// Function to navigate to update user settings
+const toUpdateUserSettings = () => {
+  router.push('/update-user');
+};
 </script>
 
 <template>
@@ -32,7 +30,7 @@ function toUpdateUserSettings() {
               <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="Generic placeholder image"
                 class="img-fluid img-thumbnail mt-4 mb-2" style="width: 150px; z-index: 1">
               <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary"
-                data-mdb-ripple-color="dark" style="z-index: 1;" @click="toUpdateUserSettings">
+                data-mdb-ripple-color="dark" style="z-index: 1;" id="toUpdate" @click="toUpdateUserSettings">
                 Edit profile
               </button>
             </div>
