@@ -37,7 +37,7 @@ function toUpdateUserSettings() {
               </button>
             </div>
             <div class="ms-3" style="margin-top: 130px;">
-              <h1>Andy Horwitz</h1>
+              <h1>{{useUserInfoStore().firstname}}</h1>
             </div>
           </div>
           <div class="p-4 text-black" style="background-color: #f8f9fa;">
