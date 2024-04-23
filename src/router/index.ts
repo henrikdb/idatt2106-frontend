@@ -65,6 +65,11 @@ const routes = [
         component: UserProfileView
       },
       {
+        path: '/profile/:id',
+        name: 'friend-profile',
+        component: () => import('@/views/User/UserProfileForeignView.vue'),
+      },
+      {
         path: 'friends',
         name: 'friends',
         component: () => import('@/views/User/UserFriendsView.vue'),
