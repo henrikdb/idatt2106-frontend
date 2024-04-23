@@ -1,5 +1,5 @@
 <template>
-    <button type="button" class="btn btn-primary" id="buttonStyle"><img src="@/assets/items/v-buck.png" style="width: 2rem"> +{{ buttonText }}</button>
+    <button type="button" class="btn btn-primary" id="buttonStyle"><img src="@/assets/items/pigcoin.png" style="width: 2rem"> +{{ buttonText }}</button>
 </template>
 
 <script>

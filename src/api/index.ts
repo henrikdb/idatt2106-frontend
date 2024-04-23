@@ -12,6 +12,7 @@ export type { ExceptionResponse } from './models/ExceptionResponse';
 export type { LeaderboardDTO } from './models/LeaderboardDTO';
 export type { LeaderboardEntryDTO } from './models/LeaderboardEntryDTO';
 export type { LoginRequest } from './models/LoginRequest';
+export type { PasswordResetDTO } from './models/PasswordResetDTO';
 export type { ProfileDTO } from './models/ProfileDTO';
 export type { SignUpRequest } from './models/SignUpRequest';
 export type { UserDTO } from './models/UserDTO';
@@ -19,4 +20,4 @@ export type { UserUpdateDTO } from './models/UserUpdateDTO';
 
 export { AuthenticationService } from './services/AuthenticationService';
 export { LeaderboardService } from './services/LeaderboardService';
-export { UserControllerService } from './services/UserControllerService';
+export { UserService } from './services/UserService';

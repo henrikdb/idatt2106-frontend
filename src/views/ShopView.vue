@@ -73,14 +73,14 @@
                         <img src="@/assets/items/adfree.png" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">Adfree</h5>
-                            <ShopButton button-text="35kr"></ShopButton>
+                            <button type="button" class="btn btn-primary" id="buttonStyle"> +35kr</button>
                         </div>
                     </div> 
                     <div class="card text-center" style="width: 16rem; border: none">
                         <img src="@/assets/items/piggybank.webp" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">Premium</h5>
-                            <ShopButton button-text="50kr"></ShopButton>
+                            <button type="button" class="btn btn-primary" id="buttonStyle">+50kr</button>
                         </div>
                     </div> 
                 </div>

@@ -68,6 +68,7 @@ const handleSubmit = async () => {
 
 <template>
   <div class="container">
+    <img src="@/assets/Sparesti-logo.png" style="width: 120px">
     <form ref="formRef" id="signUpForm" @submit.prevent="handleSubmit" novalidate>
       <BaseInput :model-value=firstNameRef
                  @input-change-event="handleFirstNameInputEvent"
@@ -124,12 +125,17 @@ const handleSubmit = async () => {
 
 .container {
   max-width: 450px;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  flex-direction: column;
 }
 
 #signUpForm {
   display: flex;
   flex-direction: column;
   justify-items: center;
+  width: 100%;
 }
 
 #firstNameInput, #surnameInput, #emailInput, #passwordInput, #confirmButton, #confirmPasswordInput {
