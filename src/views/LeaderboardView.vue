@@ -17,7 +17,7 @@
     </div>
     <main>
         <div id="leaderboard">
-            <h1><img src="@/assets/items/v-buck.png" style="width: 2rem"> Total points</h1>
+            <h1><img src="@/assets/items/pigcoin.png" style="width: 3rem"> Total points</h1>
             <Leaderboard :leaderboard="pointsLeaderboardData" :leaderboardExtra="pointsLeaderboardDataExtra" @navigateToUserProfile="navigateToUserProfile" />
         </div>
         <div id="leaderboard">
@@ -97,8 +97,6 @@ async function global() {
     pointsLeaderboardDataExtra.value = globalPointsYou.entries;
     currentLeaderboardDataExtra.value = globalCurrentStreakYou.entries;
     streakLeaderboardDataExtra.value = globalStreakYou.entries;
-
-    console.log(pointsLeaderboardDataExtra.value);
 }
 
 async function friends() {
@@ -138,8 +136,6 @@ async function friends() {
     pointsLeaderboardDataExtra.value = friendsPointsYou.entries;
     currentLeaderboardDataExtra.value = friendsStreakYou.entries;
     streakLeaderboardDataExtra.value = friendsCurrentStreakYou.entries;
-
-
 }
 
 const navigateToUserProfile = (userId: number) => {
@@ -170,7 +166,6 @@ main {
 #content {
     display: flex;
     flex-direction: row;
-   
     justify-content: center;
     flex-wrap: wrap;
 }
@@ -188,7 +183,6 @@ h1 {
     display: flex;
     justify-content: center;
     margin-bottom: 2rem;
-
 }
 
 #radioContainer {

@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="containers">
         <div class="row justify-content-center">
             <div class="col-lg-5">
                 <div class="card shadow-lg border-0 rounded-lg mt-5">
@@ -71,3 +71,16 @@ const submitForm = async () => {
 };
 
 </script>
+
+<style scoped>
+    .containers {
+        width: 100%;
+        background-color: #A2CC99;
+        height: 100vh;
+    }
+
+    .row {
+        margin-right: 0px;
+        margin-left: 0px;
+    }
+</style>
