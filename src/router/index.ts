@@ -35,7 +35,7 @@ const routes = [
         component: () => import('@/views/TestView.vue'),
       },
       {
-        path: '/profile',
+        path: 'profile',
         name: 'profile',
         component: UserProfileView
       },
@@ -58,11 +58,6 @@ const routes = [
         path: 'shop',
         name: 'shop',
         component: () => import('@/views/ShopView.vue'),
-      },
-      {
-        path: 'profile',
-        name: 'profile',
-        component: UserProfileView
       },
       {
         path: '/budget-overview',
