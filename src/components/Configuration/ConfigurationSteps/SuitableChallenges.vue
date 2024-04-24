@@ -37,6 +37,7 @@ const onChangedChallengeEvent = (value) => {
   else {
     chosenChallenges.value = chosenChallenges.value.filter(item => item !== value[0]);
   }
+  console.log(chosenChallenges.value)
 }
 
 /**

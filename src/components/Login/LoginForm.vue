@@ -32,7 +32,14 @@ const handleSubmit = async () => {
   console.log(emailRef.value)
   console.log(passwordRef.value)
 
+
   formRef.value.classList.add("was-validated")
+
+  const form = formRef.value;
+  if (!form.checkValidity()) {
+    return;
+  }
+
   const loginUserPayload: LoginRequest = {
     email: emailRef.value,
     password: passwordRef.value

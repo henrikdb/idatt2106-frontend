@@ -2,12 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { ConfigurationDTO } from './ConfigurationDTO';
-export type UserUpdateDTO = {
+export type ParticipantUserDTO = {
     firstName?: string;
     lastName?: string;
-    email?: string;
-    password?: string;
-    configuration?: ConfigurationDTO;
 };
 
