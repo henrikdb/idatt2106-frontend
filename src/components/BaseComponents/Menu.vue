@@ -98,6 +98,9 @@ function toFeedback() {
     router.push('/feedback')
 }
 
+function toFriends() {
+    router.push('/friends')
+}
 
 function toUserProfile() {
     router.push('/profile')
