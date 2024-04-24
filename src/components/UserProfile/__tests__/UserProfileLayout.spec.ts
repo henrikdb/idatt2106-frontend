@@ -1,47 +1,86 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { mount } from '@vue/test-utils';
-import DashboardComponent from '@/components/UserProfile/UserProfileLayout.vue'; // Update with your actual import
+import { createRouter, createMemoryHistory } from 'vue-router';
+import { createPinia, setActivePinia } from 'pinia';
+import { useUserInfoStore } from '@/stores/UserStore';
+import MyComponent from '@/components/UserProfile/UserProfileLayout.vue'; // Adjust path as needed
+import router from '@/router/index'; // Adjust path as needed
+import { access } from 'fs';
 
-// Correctly mocking 'vue-router'
-vi.mock('vue-router', async (importOriginal) => {
-  const actual = await importOriginal(); // Import the actual vue-router module
-  return {
-    ...actual, // Spread all exports
-    // Optionally override specific exports if needed
-  };
-});
+describe('MyComponent and Router Tests', () => {
+  let store, mockRouter;
 
-describe('DashboardComponent', () => {
-  // Now you can import and use createRouter and createWebHistory
-  const { createRouter, createWebHistory } = require('vue-router');
-
-  const router = createRouter({
-    history: createWebHistory(),
-    routes: [{ path: '/', name: 'home' }, { path: '/update-user', name: 'update-user' }]
-  });
-
-  it('renders correctly', () => {
-    const wrapper = mount(DashboardComponent, {
-      global: {
-        plugins: [router]
+  beforeEach(() => {
+    // Create a fresh Pinia and Router instance before each test
+    setActivePinia(createPinia());
+    store = useUserInfoStore();
+    mockRouter = createRouter({
+      history: createMemoryHistory(),
+      routes: router.getRoutes(),
+    });
+    router.beforeEach((to, from, next) => {
+      const isAuthenticated = store.accessToken;
+      if (to.matched.some(record => record.meta.requiresAuth) && !isAuthenticated) {
+        next({ name: 'login' });
+      } else {
+        next();
       }
     });
 
-    // Check if the component renders
-    expect(wrapper.find('.container').exists()).toBe(true);
-    expect(wrapper.find('h1').text()).toBe('Andy Horwitz');
-    expect(wrapper.findAll('.card').length).toBeGreaterThan(0); // Checks if any cards are rendered
   });
 
-  it('navigates to roadmap page', async () => {
-    const wrapper = mount(DashboardComponent, {
-      global: {
-        plugins: [router]
-      }
+  describe('Component Rendering', () => {
+    it('renders MyComponent correctly with data from the store', () => {
+      // Mock user information
+      store.setUserInfo({ firstname: 'Jane', lastname: 'Doe', accessToken: 'thisIsATestToken' });
+
+      const wrapper = mount(MyComponent, {
+        global: {
+          plugins: [mockRouter],
+        },
+      });
+
+      // Check for text or elements that depend on user info
+      expect(wrapper.text()).toContain('Jane');
+      expect(wrapper.text()).toContain('Doe');
+    });
+  });
+
+  describe('Navigation Guards', () => {
+    it('redirects an unauthenticated user to login when accessing a protected route', async () => {
+      // Simulate the user being unauthenticated
+      store.$patch({ accessToken: '' });
+  
+      router.push('/profile');
+      await router.isReady();
+  
+      expect(router.currentRoute.value.name).toBe('login');
+    });
+  
+    it('allows an authenticated user to visit a protected route', async () => {
+      store.$patch({ accessToken: 'valid-token' }); // Token is present
+      mockRouter.push('/profile');
+      await mockRouter.isReady();
+      expect(mockRouter.currentRoute.value.name).toBe('profile');
+    });
+  });
+  
+
+  describe('UserStore Actions', () => {
+    it('updates user information correctly', () => {
+      store.setUserInfo({ firstname: 'John', lastname: 'Smith' });
+
+      expect(store.firstname).toBe('John');
+      expect(store.lastname).toBe('Smith');
     });
 
-    await router.isReady(); // Wait for router to be ready
-    await wrapper.find('.stretched-link').trigger('click'); // Simulate clicking the link that calls toRoadmap
-    expect(router.currentRoute.value.path).toBe('/');
+    it('clears user information correctly', () => {
+      store.setUserInfo({ firstname: 'John', lastname: 'Smith', accessToken: 'thisIsATestToken'});
+      store.clearUserInfo();
+
+      expect(store.firstname).toBe('');
+      expect(store.lastname).toBe('');
+      expect(store.accessToken).toBe('');
+    });
   });
 });
