@@ -7,10 +7,11 @@ export default mergeConfig(
   defineConfig({
     test: {
       environment: 'jsdom',
-      exclude: [...configDefaults.exclude, 'e2e/**', 'node_modules/**', 'views/**', 'stores/**', 'router/**', 'assets/**'],
+      exclude: [...configDefaults.exclude, 'e2e/**'],
       root: fileURLToPath(new URL('./', import.meta.url)),
       coverage: {
-          provider: 'v8'
+          provider: 'v8',
+          exclude: ['src/views/']
       }
     }
   })
