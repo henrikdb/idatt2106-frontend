@@ -64,13 +64,15 @@ const onClick = async () => {
      */
 
     const signUpPayLoad = {
-      "commitment": useConfigurationStore().getCommitment,
-      "experience": useConfigurationStore().getExperience,
-      "challenges": useConfigurationStore().getChallenges,
       "firstName": useUserInfoStore().getFirstName,
       "lastName": useUserInfoStore().getLastname,
       "email": useUserInfoStore().getEmail,
       "password": useUserInfoStore().getPassword,
+      "configuration": {
+        "commitment": useConfigurationStore().getCommitment,
+        "experience": useConfigurationStore().getExperience,
+        "challenges": useConfigurationStore().getChallenges
+      }
     };
 
     let response = await AuthenticationService.signup({ requestBody: signUpPayLoad });
