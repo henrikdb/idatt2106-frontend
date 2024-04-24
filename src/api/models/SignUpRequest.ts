@@ -2,13 +2,12 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { ConfigurationDTO } from './ConfigurationDTO';
 export type SignUpRequest = {
     firstName?: string;
     lastName?: string;
     email?: string;
     password?: string;
-    commitment?: string;
-    experience?: string;
-    challengeTypes?: Array<string>;
+    configuration: ConfigurationDTO;
 };
 
