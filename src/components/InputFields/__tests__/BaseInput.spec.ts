@@ -18,6 +18,4 @@ describe('InputField.vue', () => {
     expect(wrapper.emitted().inputChangeEvent).toBeTruthy();
     expect(wrapper.emitted().inputChangeEvent[0]).toEqual(['Test Value']);
   });
-
-  // Add more test cases for other functionalities as needed
 });

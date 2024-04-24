@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useUserInfoStore } from "../../stores/UserStore";
 
@@ -8,8 +9,15 @@ let cardTitles = ["Spain tour", "Food waste", "Coffee", "Concert", "New book", "
 
 let points = 0;
 let streak = 0;
+let firstname = ref("");
+let lastname = ref("");
 
-const router = useRouter()
+const router = useRouter();
+const userStore = useUserInfoStore();
+firstname.value = userStore.firstname;
+lastname.value = userStore.lastname;
+
+
 const toRoadmap = () => {
   router.push('/');
 };
@@ -35,7 +43,7 @@ const toUpdateUserSettings = () => {
               </button>
             </div>
             <div class="ms-3" style="margin-top: 130px;">
-              <h1>Andy Horwitz</h1>
+              <h1>{{ firstname }} {{ lastname }}</h1>
             </div>
           </div>
           <div class="p-4 text-black" style="background-color: #f8f9fa;">
