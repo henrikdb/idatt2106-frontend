@@ -35,7 +35,7 @@ const routes = [
         component: () => import('@/views/TestView.vue'),
       },
       {
-        path: '/profile',
+        path: 'profile',
         name: 'profile',
         component: UserProfileView
       },
@@ -58,11 +58,6 @@ const routes = [
         path: 'shop',
         name: 'shop',
         component: () => import('@/views/ShopView.vue'),
-      },
-      {
-        path: 'profile',
-        name: 'profile',
-        component: UserProfileView
       },
       {
         path: '/budget-overview',
@@ -161,7 +156,7 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(import.meta.env.BASE_URL || '/'),
   routes,
   scrollBehavior() {
     return { top: 0 };

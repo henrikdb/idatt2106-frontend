@@ -20,7 +20,7 @@
       <tbody id="line">`</tbody>
       <tbody v-if="!userInLeaderboard">
         <tr></tr>
-        <tr v-for="(entry, index) in leaderboardExtra" :key="entry.user.id" :class="{ 'is-user-5': entry.user.firstName === 'User' }">
+        <tr v-for="(entry, index) in leaderboardExtra" :key="entry.user.id" :class="{ 'is-user-5': entry.user.firstName === userStore.firstname }">
           <td class="number">{{ entry.rank }}</td>
           <td class="name" @click="navigateToUserProfile(entry.user.id)">{{ entry.user.firstName }}</td>
           <td class="points">{{ entry.score }}</td>

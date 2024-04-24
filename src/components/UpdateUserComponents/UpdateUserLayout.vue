@@ -115,7 +115,7 @@ onMounted(() => {
                   </div>
                 </div>
                 <br>
-                <h5 class="user-name">Yuki Hayashi</h5>
+                <h3 class="user-name">Yuki Hayashi</h3>
                 <h6 class="user-email">yuki@Maxwell.com</h6>
               </div>
             </div>
@@ -273,7 +273,7 @@ body {
   border-radius: 100px;
 }
 
-.account-settings .user-profile h5.user-name {
+.account-settings .user-profile h3.user-name {
   margin: 0 0 0.5rem 0;
 }
 
