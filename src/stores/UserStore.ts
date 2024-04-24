@@ -38,8 +38,8 @@ export type UserStoreInfo = {
   role?: string;
 };
 
-export const useUserInfoStore = defineStore('UserInfoStore', {
-  state: () => ({
+export const useUserInfoStore : any = defineStore('UserInfoStore', {
+  state: (): UserStoreInfo => ({
     email: '',
     firstname: '',
     lastname: '',
@@ -73,16 +73,16 @@ export const useUserInfoStore = defineStore('UserInfoStore', {
   },
   getters: {
     getPassword(): string {
-      return this.password
+      return <string>this.password
     },
     getFirstName(): string {
-      return this.firstname
+      return <string>this.firstname
     },
     getLastname(): string {
-      return this.lastname
+      return <string>this.lastname
     },
     getEmail(): string {
-      return this.email
+      return <string>this.email
     },
     isLoggedIn(): boolean {
       return this.accessToken !== '';

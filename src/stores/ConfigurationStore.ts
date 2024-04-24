@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-export const useConfigurationStore = defineStore('ConfigurationStore', {
+export const useConfigurationStore  = defineStore('ConfigurationStore', {
   state: () => ({
     commitment: '',
     experience: '',
@@ -13,7 +13,7 @@ export const useConfigurationStore = defineStore('ConfigurationStore', {
       this.experience = experience
     },
     setChallenges(challenges: Array<string>) {
-      this.challenges = challenges
+      this.challenges = (challenges as any)
     },
     resetConfiguration() {
       this.commitment = ''
@@ -29,7 +29,7 @@ export const useConfigurationStore = defineStore('ConfigurationStore', {
       return this.experience
     },
     getChallenges(): string {
-      return this.challenges
+      return (this.challenges as any)
     }
   },
   persist: {

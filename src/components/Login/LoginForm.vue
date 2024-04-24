@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import BaseInput from '@/components/InputFields/BaseInput.vue'
+//@ts-ignore
 import Button1 from '@/components/Buttons/Button1.vue'
 import { ref } from 'vue'
 import { useUserInfoStore } from '@/stores/UserStore';
+//@ts-ignore
 import { AuthenticationService, OpenAPI, LoginRequest } from '@/api';
 import { useRouter, useRoute } from 'vue-router';
 import handleUnknownError from '@/components/Exceptions/unkownErrorHandler';

@@ -1,0 +1,1 @@
+declare module '@/components/Buttons/Button1.vue'

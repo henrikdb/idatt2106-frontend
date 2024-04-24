@@ -91,7 +91,7 @@
 </template>
 
 <script setup lang="ts">
-import ShopButton from '@/components/Buttons/ShopButton.vue';
+import ShopButton from '/src/components/Buttons/ShopButton.vue';
 </script>
 
 <style scoped>

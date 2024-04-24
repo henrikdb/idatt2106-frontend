@@ -21,12 +21,14 @@ const props = defineProps({
 
 let balance = props.budget - props.expenses
 
+
 const iRef = ref(null)
 
 onMounted(() => {
   if (balance >= 0) {
     iRef.value.style.backgroundColor = 'rgba(34, 231, 50, 0.43)';
   }
+
 })
 
 const onBudgetContainerPressed = () => {

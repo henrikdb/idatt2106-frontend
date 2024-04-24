@@ -168,7 +168,7 @@ router.beforeEach((to, from, next) => {
   const requiresAdmin = to.matched.some(record => record.meta.requiresAdmin);
   let user = useUserInfoStore();
   const userRole = user.role;
-  const isAuthenticated = user.isLoggedIn;
+  const isAuthenticated = (user as any).isLoggedIn;
 
   if (requiresAuth && !isAuthenticated) {
     next({ name: 'login', query: { redirect: to.fullPath } });

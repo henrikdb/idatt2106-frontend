@@ -9,7 +9,7 @@ import { useUserInfoStore } from '@/stores/UserStore'
 import LoginLink from '@/components/Login/LoginLink.vue'
 
 const router = useRouter();
-const userStore = useUserInfoStore();
+const userStore: any = useUserInfoStore();
 
 const firstNameRef = ref('')
 const surnameRef = ref('')

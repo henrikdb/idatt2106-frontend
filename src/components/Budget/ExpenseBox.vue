@@ -1,6 +1,4 @@
 <script setup lang="ts">
-
-import Button1 from '@/components/Buttons/Button1.vue'
 import { type CreateAppFunction, ref } from 'vue'
 
 const emit = defineEmits(['deleteEvent', 'editEvent']);

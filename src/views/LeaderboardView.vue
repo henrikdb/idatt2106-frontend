@@ -41,9 +41,9 @@ import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import Leaderboard from '@/components/LeaderboardComponents/Leaderboard.vue';
 import { on } from 'events';
-import { LeaderboardService, UserControllerService } from '@/api';
+import { LeaderboardService, UserService } from '@/api';
 
-let streakLeaderboardData = ref([]);
+let streakLeaderboardData  = ref([]);
 let currentLeaderboardData = ref([]);
 let pointsLeaderboardData = ref([]);
 

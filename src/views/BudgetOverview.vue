@@ -1,4 +1,5 @@
 <script setup lang="ts">
+//@ts-ignore
 import Button1 from '@/components/Buttons/Button1.vue'
 import BudgetBox from '@/components/Budget/BudgetBox.vue'
 </script>

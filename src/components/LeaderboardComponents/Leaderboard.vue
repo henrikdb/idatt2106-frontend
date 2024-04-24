@@ -53,9 +53,10 @@ const props = defineProps({
 
 console.log(props.leaderboardExtra);
 
-const userInLeaderboard = computed(() => props.leaderboard.some(entry => entry.user.email === userStore.email));
+const userInLeaderboard = computed(() => props.leaderboard.some((entry : any) => entry.user.email === userStore.email));
 
-const navigateToUserProfile = () => {
+const navigateToUserProfile = (id : any) => {
+  console.log(id)
   router.push({ name: 'user-profile' });
 };
 </script>

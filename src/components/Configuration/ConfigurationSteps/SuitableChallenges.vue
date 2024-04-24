@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import ChallangeCheckBox from '@/components/Configuration/ChallangeCheckBox.vue'
+//@ts-ignore
 import Button1 from '@/components/Buttons/Button1.vue'
 import { ref } from 'vue'
 import { useConfigurationStore } from '@/stores/ConfigurationStore'
 import { useUserInfoStore } from '@/stores/UserStore'
-import { AuthenticationService, OpenAPI, SignUpRequest } from '@/api'
+import { AuthenticationService, OpenAPI, } from '@/api'
 import handleUnknownError from '@/components/Exceptions/unkownErrorHandler'
 
 const router = useRouter();
@@ -28,7 +29,7 @@ const challenges = ['Make packed lunch', 'Stop shopping', 'Drop coffee',
  *                        The first element is the challenge value, and the second element
  *                        indicates whether the challenge is checked (true) or unchecked (false).
  */
-const onChangedChallengeEvent = (value) => {
+const onChangedChallengeEvent = (value : never) => {
   // if challenge is checked then add it to the chosenChallenges variable
   if (value[1]) {
     chosenChallenges.value.push(value[0])
@@ -64,13 +65,13 @@ const onClick = async () => {
      */
 
     const signUpPayLoad = {
-      "commitment": useConfigurationStore().getCommitment,
-      "experience": useConfigurationStore().getExperience,
-      "challenges": useConfigurationStore().getChallenges,
-      "firstName": useUserInfoStore().getFirstName,
-      "lastName": useUserInfoStore().getLastname,
-      "email": useUserInfoStore().getEmail,
-      "password": useUserInfoStore().getPassword,
+      "commitment": useConfigurationStore().commitment,
+      "experience": useConfigurationStore().experience,
+      "challenges": useConfigurationStore().challenges,
+      "firstName": useUserInfoStore().firstname,
+      "lastName": useUserInfoStore().lastname,
+      "email": useUserInfoStore().email,
+      "password": useUserInfoStore().password,
     };
 
     let response = await AuthenticationService.signup({ requestBody: signUpPayLoad });
@@ -102,7 +103,7 @@ const onClick = async () => {
     </div>
 
     <div class="challenge-container">
-      <ChallangeCheckBox v-for="(item, index) in challenges" :id="index" :text="item"
+      <ChallangeCheckBox v-for="(item, index) in challenges" :id="String(index)" :text="item"
                          @challengeChangedEvent="onChangedChallengeEvent"
       />
     </div>

@@ -358,11 +358,11 @@ function addFriend() {
 }
 
 // Define the navigateToQuiz method
-const navigateToFriend = (frinedID) => {
+const navigateToFriend = (friendID : any) => {
 
 };
 
-const removeFriend = (friendID) => {
+const removeFriend = (friendID : any) => {
 
 };
 
