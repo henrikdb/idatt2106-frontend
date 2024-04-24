@@ -103,6 +103,10 @@ function toUserProfile() {
     router.push('/profile')
 }
 
+function toFriends() {
+  router.push('/friends')
+}
+
 function toLogout() {
     userStore.clearUserInfo();
     router.push('login')
