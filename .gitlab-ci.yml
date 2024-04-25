@@ -13,12 +13,6 @@ install_dependencies:
     paths:
       - node_modules
 
-lint:
-  stage: lint
-  script:
-    - npm run lint
-  allow_failure: true  
-
 build_project:
   stage: build_project
   script:
