@@ -24,7 +24,7 @@ const toRoadmap = () => {
 
 // Function to navigate to update user settings
 const toUpdateUserSettings = () => {
-  router.push('/update-user');
+  router.push('/settings/profile');
 };
 </script>
 

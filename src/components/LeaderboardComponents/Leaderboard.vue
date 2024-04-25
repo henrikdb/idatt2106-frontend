@@ -3,9 +3,9 @@
     <div class="ribbon"></div>
     <table>
       <tbody>
-        <tr v-for="(entry, index) in leaderboard" :key="entry.user.id" :class="{ 'is-user-5': entry.user.firstName === 'User' }">
+        <tr v-for="(entry, index) in leaderboard" :key="entry.user?.id" :class="{ 'is-user-5': entry.user?.firstName === 'User' }">
           <td class="number">{{ entry.rank }}</td>
-          <td class="name" @click="navigateToUserProfile(entry.user.id)">{{ entry.user.firstName }}</td>
+          <td class="name" @click="navigateToUserProfile(entry.user?.id ?? 0)">{{ entry.user?.firstName }}</td>
           <td class="points" v-if="index === 0">
             {{ entry.score }}
             <div class="medal">
@@ -20,9 +20,9 @@
       <tbody id="line">`</tbody>
       <tbody v-if="!userInLeaderboard">
         <tr></tr>
-        <tr v-for="(entry, index) in leaderboardExtra" :key="entry.user.id" :class="{ 'is-user-5': entry.user.firstName === userStore.firstname }">
+        <tr v-for="(entry, index) in leaderboardExtra" :key="entry.user?.id" :class="{ 'is-user-5': entry.user?.firstName === userStore.firstname }">
           <td class="number">{{ entry.rank }}</td>
-          <td class="name" @click="navigateToUserProfile(entry.user.id)">{{ entry.user.firstName }}</td>
+          <td class="name" @click="navigateToUserProfile(entry.user?.id ?? 0)">{{ entry.user?.firstName }}</td>
           <td class="points">{{ entry.score }}</td>
         </tr>
       </tbody>
@@ -36,26 +36,27 @@
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useUserInfoStore } from '@/stores/UserStore';
+import type { LeaderboardEntryDTO } from '@/api/models/LeaderboardEntryDTO';
+import type { PropType } from 'vue';
 
 const router = useRouter();
 const userStore = useUserInfoStore();
 
 const props = defineProps({
   leaderboard: {
-    type: Array,
+    type: Array as PropType<LeaderboardEntryDTO[]>,
     required: true
   },
   leaderboardExtra: {
-    type: Array,
+    type: Array as PropType<LeaderboardEntryDTO[]>,
     required: true
   }
 });
 
 console.log(props.leaderboardExtra);
 
-const userInLeaderboard = computed(() => props.leaderboard.some(entry => entry.user.email === userStore.email));
-
-const navigateToUserProfile = () => {
+const userInLeaderboard = computed(() => props.leaderboard.some(entry => entry.user && entry.user.email === userStore.email));
+const navigateToUserProfile = (id: number) => {
   router.push({ name: 'user-profile' });
 };
 </script>

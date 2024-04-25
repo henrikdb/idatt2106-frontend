@@ -45,6 +45,38 @@ const routes = [
         component: UpdateUserView
       },
       {
+        path: '/settings',
+        name: 'settings',
+        component: () => import('@/views/SettingsView.vue'),
+        children: [
+          {
+            path: '/settings/account',
+            name: 'account',
+            component: () => import('@/views/Settings/SettingsAccountView.vue'),
+          },
+          {
+            path: '/settings/profile',
+            name: 'profilesettings',
+            component: () => import('@/views/Settings/SettingsProfileView.vue'),
+          },
+          {
+            path: '/settings/security',
+            name: 'security',
+            component: () => import('@/views/Settings/SettingsSecurityView.vue'),
+          },
+          {
+            path: '/settings/notification',
+            name: 'notification',
+            component: () => import('@/views/Settings/SettingsNotificationView.vue'),
+          },
+          {
+            path: '/settings/bank',
+            name: 'bank',
+            component: () => import('@/views/Settings/SettingsBankView.vue'),
+          },
+        ]
+      },
+      {
         path: 'roadmap',
         name: 'roadmap',
         component: () => import('@/views/SavingGoalView/RoadmapView.vue'),

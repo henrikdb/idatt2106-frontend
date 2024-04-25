@@ -26,6 +26,8 @@
         </div>
         <div id="leaderboard">
             <h1><img src="@/assets/icons/fire.png" style="width: 2rem"> Highest streak</h1>
+            let streakLeaderboardData = ref([] as LeaderboardEntryDTO[]);
+            let streakLeaderboardDataExtra = ref([] as LeaderboardEntryDTO[]);
             <Leaderboard :leaderboard="streakLeaderboardData" :leaderboardExtra="streakLeaderboardDataExtra" @navigateToUserProfile="navigateToUserProfile" />
         </div>
     </main>
@@ -37,19 +39,20 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, type PropType } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import Leaderboard from '@/components/LeaderboardComponents/Leaderboard.vue';
 import { on } from 'events';
-import { LeaderboardService, UserControllerService } from '@/api';
+import { LeaderboardService } from '@/api';
+import type { LeaderboardEntryDTO } from '@/api/models/LeaderboardEntryDTO';
 
-let streakLeaderboardData = ref([]);
-let currentLeaderboardData = ref([]);
-let pointsLeaderboardData = ref([]);
+let streakLeaderboardData = ref([] as  any);
+let currentLeaderboardData = ref([] as any);
+let pointsLeaderboardData = ref([] as any);
 
-let streakLeaderboardDataExtra = ref([]);
-let currentLeaderboardDataExtra = ref([]);
-let pointsLeaderboardDataExtra = ref([]);
+let streakLeaderboardDataExtra = ref([] as any);
+let currentLeaderboardDataExtra = ref([] as any);
+let pointsLeaderboardDataExtra = ref([] as any);
 
 const router = useRouter();
 

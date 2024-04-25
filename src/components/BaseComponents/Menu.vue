@@ -91,7 +91,7 @@ function toStore() {
 }
 
 function toSetting() {
-    router.push('/news')
+    router.push('/settings/profile')
 }
 
 function toFeedback() {
