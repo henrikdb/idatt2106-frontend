@@ -1,4 +1,5 @@
-# image: node:alpine # Much smaller than other variants, faster and more resource effective
+image: image: node:latest
+# Much smaller than other variants, faster and more resource effective
 
 stages:
   - install_dependencies
