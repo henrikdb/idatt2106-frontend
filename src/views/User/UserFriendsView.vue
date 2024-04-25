@@ -1,4 +1,5 @@
 <template>
+  <!-- Refactor with a for-loop -->
     <div class="container">
         <h1>Your Friends</h1>
         <button class="btn btn-primary pull-right my-3" @click="addFriend">+ Add Friend</button>
@@ -11,6 +12,7 @@
                         </div>
                     </div>
                     <h3>Amillie Price</h3>
+                  <a href="#" @click="navigateToFriend(46)" class="btn  stretched-link"></a>
                     <div class="desc">
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
                     </div>
@@ -358,8 +360,8 @@ function addFriend() {
 }
 
 // Define the navigateToQuiz method
-const navigateToFriend = (frinedID) => {
-
+const navigateToFriend = (friendID :string) => {
+router.push('/profile/' + friendID)
 };
 
 const removeFriend = (friendID) => {
