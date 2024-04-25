@@ -1,7 +1,7 @@
 <template>
     <nav id="navBar" class="navbar navbar-expand-xl">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/" @click="toHome">
+            <a class="navbar-brand" href="/" @click="toHome" id="home">
                 <img id="logoImg" src="/src/assets/Sparesti-logo.png" alt="Sparesti-logo" width="60">
                 <span id="logo" class="text-white">Sparesti</span>
             </a>
@@ -37,6 +37,8 @@
                             <li><a class="dropdown-item text-white dropdown-username-link" href="#"
                                     @click="toUserProfile"><img src="@/assets/icons/person.svg">User Profile</a></li>
                             <li><a class="dropdown-item text-white dropdown-username-link" href="#"
+                                    @click="toBudget">Budget</a></li>
+                            <li><a class="dropdown-item text-white dropdown-username-link" href="#"
                                     @click="toFriends"><img src="@/assets/icons/friends.svg">Friends</a></li>
                             <li><a class="dropdown-item text-white dropdown-username-link" href="#"
                                     @click="toSetting"><img src="@/assets/icons/settings.svg">Setting</a></li>
@@ -45,7 +47,7 @@
                             <li><a class="dropdown-item text-white dropdown-username-link" href="#"
                                     @click="toSetting"><img src="@/assets/icons/admin.svg">Admin table</a></li>
                             <li><a class="dropdown-item text-white dropdown-username-link" href="#"
-                                    @click="toLogout"><img src="@/assets/icons/logout.svg">Log out</a></li>
+                                    @click="toLogout" data-testid="logout"><img src="@/assets/icons/logout.svg">Log out</a></li>
                         </ul>
                     </li>
                     <li v-else class="nav-item">
@@ -66,6 +68,10 @@ const userStore = useUserInfoStore();
 
 function toHome() {
     router.push('/')
+}
+
+function toBudget() {
+  router.push('/budget-overview')
 }
 
 function toSavingGoals() {
@@ -102,7 +108,7 @@ function toUserProfile() {
 
 function toLogout() {
     userStore.clearUserInfo();
-    router.push('/login')
+    router.push('login')
 }
 
 

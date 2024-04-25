@@ -63,7 +63,7 @@ const onInputEvent = (event: any) => {
            :required="required"
     />
     <div class="valid-feedback">{{ validMessage }}</div>
-    <div class="invalid-feedback">{{ invalidMessage }}</div>
+    <div class="invalid-feedback" id="invalid">{{ invalidMessage }}</div>
   </div>
 </template>
 

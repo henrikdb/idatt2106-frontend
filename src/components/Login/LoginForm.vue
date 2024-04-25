@@ -32,7 +32,14 @@ const handleSubmit = async () => {
   console.log(emailRef.value)
   console.log(passwordRef.value)
 
+
   formRef.value.classList.add("was-validated")
+
+  const form = formRef.value;
+  if (!form.checkValidity()) {
+    return;
+  }
+
   const loginUserPayload: LoginRequest = {
     email: emailRef.value,
     password: passwordRef.value
@@ -55,6 +62,9 @@ const handleSubmit = async () => {
       email: emailRef.value,
       role: response.role,
     });
+
+    console.log()
+
     await router.push({ name: 'home' });
   } catch (error: any) {
     errorMsg.value = handleUnknownError(error);

@@ -37,6 +37,7 @@ const onChangedChallengeEvent = (value) => {
   else {
     chosenChallenges.value = chosenChallenges.value.filter(item => item !== value[0]);
   }
+  console.log(chosenChallenges.value)
 }
 
 /**
@@ -63,13 +64,15 @@ const onClick = async () => {
      */
 
     const signUpPayLoad = {
-      "commitment": useConfigurationStore().getCommitment,
-      "experience": useConfigurationStore().getExperience,
-      "challenges": useConfigurationStore().getChallenges,
       "firstName": useUserInfoStore().getFirstName,
       "lastName": useUserInfoStore().getLastname,
       "email": useUserInfoStore().getEmail,
       "password": useUserInfoStore().getPassword,
+      "configuration": {
+        "commitment": useConfigurationStore().getCommitment,
+        "experience": useConfigurationStore().getExperience,
+        "challenges": useConfigurationStore().getChallenges
+      }
     };
 
     let response = await AuthenticationService.signup({ requestBody: signUpPayLoad });
