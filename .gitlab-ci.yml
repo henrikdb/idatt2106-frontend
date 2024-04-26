@@ -10,6 +10,7 @@ stages:
   - install
   - build
   - test
+  - lint
 
 install_dependencies:
   stage: install
@@ -58,7 +59,6 @@ eslint_run-lint:
     key: ${CI_COMMIT_REF_SLUG}
     paths:
         - node_modules/
-    policy: pull
   allow_failure: true  
 
 
