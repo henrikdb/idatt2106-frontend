@@ -1,7 +1,7 @@
-image: node:alpine
+image: node:alpine # Much smaller than other variants, faster and more resource effective
 
 cache:
-  key: "${CI_COMMIT_REF_SLUG}"
+  key: "${CI_COMMIT_REF_SLUG}" # Branch-specific cache keys to have separate caches across branches.
   paths:
     - node_modules/
     - build/
@@ -15,10 +15,10 @@ install_dependencies:
   script:
     - npm ci
   cache:
-        key: ${CI_COMMIT_REF_SLUG}
-        paths:
-            - node_modules/
-        policy: push
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+        - node_modules/
+    policy: push
 
 build_project:
   stage: build
