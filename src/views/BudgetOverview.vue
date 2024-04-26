@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import Button1 from '@/components/Buttons/Button1.vue'
 import BudgetBox from '@/components/Budget/BudgetBox.vue'
+
+const budget = 1000;
+const expenses = 95600;
 </script>
 
 <template>
@@ -19,15 +22,15 @@ import BudgetBox from '@/components/Budget/BudgetBox.vue'
 
     <!--TODO make this more generic-->
     <ul class="budgetContainer">
-      <li><budget-box title="April 2024" budget="1000" expenses="908700"></budget-box></li>
-      <li><budget-box title="Mai 2024" budget="1000" expenses="87"></budget-box></li>
-      <li><budget-box title="Juni 2024" budget="1000" expenses="87"></budget-box></li>
-      <li><budget-box title="Juli 2024" budget="1000" expenses="87"></budget-box></li>
-      <li><budget-box title="August 2024" budget="1000" expenses="87"></budget-box></li>
-      <li><budget-box title="September 2024" budget="1000" expenses="87"></budget-box></li>
-      <li><budget-box title="Oktober 2024" budget="1000" expenses="87"></budget-box></li>
-      <li><budget-box title="November 2024" budget="1000" expenses="87"></budget-box></li>
-      <li><budget-box title="Desember 2024" budget="1000" expenses="87"></budget-box></li>
+      <li><budget-box title="April 2024" :budget=budget :expenses=expenses></budget-box></li>
+      <li><budget-box title="Mai 2024" :budget=budget :expenses=expenses></budget-box></li>
+      <li><budget-box title="Juni 2024" :budget=budget :expenses=expenses></budget-box></li>
+      <li><budget-box title="Juli 2024" :budget=budget :expenses=expenses></budget-box></li>
+      <li><budget-box title="August 2024" :budget=budget :expenses=expenses></budget-box></li>
+      <li><budget-box title="September 2024" :budget=budget :expenses=expenses></budget-box></li>
+      <li><budget-box title="Oktober 2024" :budget=budget :expenses=expenses></budget-box></li>
+      <li><budget-box title="November 2024" :budget=budget :expenses=expenses></budget-box></li>
+      <li><budget-box title="Desember 2024" :budget=budget :expenses=expenses></budget-box></li>
     </ul>
 
     <nav id="navbar" aria-label="Page navigation example">

@@ -153,7 +153,7 @@ const onDeleteBudgetPressed = () => {
             <button class="btn btn-close" data-bs-dismiss="modal"></button>
           </div>
           <div class="modal-body">
-            <button id="importButton" class="btn btn-primary"><img src="../assets/icons/import.svg" height="20" width="20">Import budget</button>
+            <button id="importButton" class="btn btn-primary"><img src="../assets/icons/import.svg" height="20" width="20" alt="picture">Import budget</button>
             <button id="editBudget" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#editBudgetCollapse" aria-expanded="false" aria-controls="editBudgetCollapse"><img src="../assets/icons/edit-button.svg" alt="editButton">Rename budget</button>
             <div class="collapse" id="editBudgetCollapse">
               <div class="container collapse-container">
@@ -165,7 +165,7 @@ const onDeleteBudgetPressed = () => {
                 </form>
               </div>
             </div>
-            <button id="deleteButton" class="btn btn-primary" data-bs-toggle="modal" @click="onDeleteBudgetPressed"><img src="../assets/icons/trash-can.svg" height="20" width="20">Delete budget</button>
+            <button id="deleteButton" class="btn btn-primary" data-bs-toggle="modal" @click="onDeleteBudgetPressed"><img src="../assets/icons/trash-can.svg" height="20" width="20" alt="picture">Delete budget</button>
           </div>
         </div>
       </div>
@@ -173,7 +173,7 @@ const onDeleteBudgetPressed = () => {
 
     <div class="budget-info-container">
       <div class="info budget-container">
-        <i><img src="../assets/icons/money2.svg" width="48px" height="48px"></i>
+        <i><img src="../assets/icons/money2.svg" width="48px" height="48px" alt="picture"></i>
         <div class="budget-text-container">
           <h5>{{budget}} kr</h5>
           <p>Budget</p>
@@ -181,7 +181,7 @@ const onDeleteBudgetPressed = () => {
       </div>
 
       <div class="info expenses-container">
-        <i><img src="../assets/icons/credit-card.svg" width="48px" height="48px"></i>
+        <i><img src="../assets/icons/credit-card.svg" width="48px" height="48px" alt="picture"></i>
         <div class="expenses-text-container">
           <h5>{{expenses}} kr</h5>
           <p>Expenses</p>
@@ -189,7 +189,7 @@ const onDeleteBudgetPressed = () => {
       </div>
 
       <div class="info balance-container">
-        <i ref="iRef"><img src="../assets/icons/scale.svg" width="48px" height="48px"></i>
+        <i ref="iRef"><img src="../assets/icons/scale.svg" width="48px" height="48px" alt="picture"></i>
         <div class="balance-text-container">
           <h5>{{balance}} kr</h5>
           <p>Balance</p>

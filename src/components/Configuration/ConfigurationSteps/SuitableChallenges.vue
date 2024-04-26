@@ -28,7 +28,7 @@ const challenges = ['Make packed lunch', 'Stop shopping', 'Drop coffee',
  *                        The first element is the challenge value, and the second element
  *                        indicates whether the challenge is checked (true) or unchecked (false).
  */
-const onChangedChallengeEvent = (value) => {
+const onChangedChallengeEvent = (value: any) => {
   // if challenge is checked then add it to the chosenChallenges variable
   if (value[1]) {
     chosenChallenges.value.push(value[0])

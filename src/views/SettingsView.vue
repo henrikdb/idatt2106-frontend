@@ -116,7 +116,7 @@ function toBilling() {
                     <div class="card-header border-bottom mb-3 d-flex d-md-none">
                         <ul class="nav nav-tabs card-header-tabs nav-gap-x-1" role="tablist">
                             <li class="nav-item">
-                                <a href="#profile" data-toggle="tab" class="nav-link has-icon active"><svg
+                                <a href="#" data-toggle="tab" class="nav-link has-icon active"><svg
                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round" class="feather feather-user">
@@ -125,7 +125,7 @@ function toBilling() {
                                     </svg></a>
                             </li>
                             <li class="nav-item">
-                                <a href="#account" data-toggle="tab" class="nav-link has-icon"><svg
+                                <a href="#" data-toggle="tab" class="nav-link has-icon"><svg
                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round" class="feather feather-settings">
@@ -136,7 +136,7 @@ function toBilling() {
                                     </svg></a>
                             </li>
                             <li class="nav-item">
-                                <a href="#security" data-toggle="tab" class="nav-link has-icon"><svg
+                                <a href="#" data-toggle="tab" class="nav-link has-icon"><svg
                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round" class="feather feather-shield">
@@ -144,7 +144,7 @@ function toBilling() {
                                     </svg></a>
                             </li>
                             <li class="nav-item">
-                                <a href="#notification" data-toggle="tab" class="nav-link has-icon"><svg
+                                <a href="#" data-toggle="tab" class="nav-link has-icon"><svg
                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round" class="feather feather-bell">
@@ -153,7 +153,7 @@ function toBilling() {
                                     </svg></a>
                             </li>
                             <li class="nav-item">
-                                <a href="#billing" data-toggle="tab" class="nav-link has-icon"><svg
+                                <a href="#" data-toggle="tab" class="nav-link has-icon"><svg
                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round" class="feather feather-credit-card">
@@ -178,10 +178,6 @@ function toBilling() {
 .container {
     margin-top: 2rem;
     margin-bottom: 4rem;
-}
-
-.main-body {
-    padding: 15px;
 }
 
 .nav-link {
@@ -215,31 +211,13 @@ function toBilling() {
     margin-left: -8px;
 }
 
-.gutters-sm>.col,
-.gutters-sm>[class*=col-] {
+.gutters-sm>,
+.gutters-sm> {
     padding-right: 8px;
     padding-left: 8px;
 }
 
-.mb-3,
-.my-3 {
+.mb-3 {
     margin-bottom: 1rem !important;
-}
-
-.bg-gray-300 {
-    background-color: #e2e8f0;
-}
-
-.h-100 {
-    height: 100% !important;
-}
-
-.shadow-none {
-    box-shadow: none !important;
-}
-
-.routerLink {
-    text-decoration: none;
-    color: #4a5568;
 }
 </style>

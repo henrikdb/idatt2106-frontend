@@ -11,6 +11,15 @@ const confirmPasswordRef = ref('')
 const formRef = ref()
 let samePasswords = ref(true)
 
+const handleFirstNameInputEvent = (newValue: any) => {
+  firstNameRef.value = newValue
+}
+
+
+const handleSurnameInputEvent = (newValue: any) => {
+  surnameRef.value = newValue
+}
+
 </script>
 
 

@@ -3,7 +3,7 @@
         <div class="container py-5">
             <div class="row">
                 <div class="col-md-2 text-center">
-                    <p><img src="@/assets/icons/danger.svg"> <br/>Status Code: 403</p>
+                    <p><img src="@/assets/icons/danger.svg" alt="danger"> <br/>Status Code: 403</p>
                 </div>
                 <div class="col-md-10">
                     <h3>OPPSSS!!!! Sorry...</h3>
@@ -16,7 +16,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
 import Button1 from '@/components/Buttons/Button1.vue';
 
