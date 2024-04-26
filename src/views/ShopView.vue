@@ -6,6 +6,25 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
+                <h1>Stash</h1>
+                <div class="category row justify-content-between mb-5 m-2">
+                    <div class="card text-center" style="width: 16rem; border: none">
+                        <img src="@/assets/items/adfree.png" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Adfree</h5>
+                            <button type="button" class="btn btn-primary" id="buttonStyle"> +35kr</button>
+                        </div>
+                    </div> 
+                    <div class="card text-center" style="width: 16rem; border: none">
+                        <img src="@/assets/items/piggybank.webp" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Premium</h5>
+                            <button type="button" class="btn btn-primary" id="buttonStyle">+50kr</button>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+            <div class="col-md-12">
                 <h1>Fantacy</h1>
                 <div class="category row justify-content-between mb-5 m-2">
                     <!--<div class="col-md-4" v-for="product in products" :key="product.id">-->
@@ -62,25 +81,6 @@
                         <div class="card-body">
                             <h5 class="card-title">-10% rabatt</h5>
                             <ShopButton button-text="1000"></ShopButton>
-                        </div>
-                    </div> 
-                </div>
-            </div>
-            <div class="col-md-12">
-                <h1>Stash</h1>
-                <div class="category row justify-content-between mb-5 m-2">
-                    <div class="card text-center" style="width: 16rem; border: none">
-                        <img src="@/assets/items/adfree.png" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Adfree</h5>
-                            <button type="button" class="btn btn-primary" id="buttonStyle"> +35kr</button>
-                        </div>
-                    </div> 
-                    <div class="card text-center" style="width: 16rem; border: none">
-                        <img src="@/assets/items/piggybank.webp" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Premium</h5>
-                            <button type="button" class="btn btn-primary" id="buttonStyle">+50kr</button>
                         </div>
                     </div> 
                 </div>
