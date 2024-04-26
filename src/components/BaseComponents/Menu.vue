@@ -1,7 +1,7 @@
 <template>
     <nav id="navBar" class="navbar navbar-expand-xl">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/" @click="toHome" id="home">
+            <a class="navbar-brand" href="#" @click="toSavingGoals" id="home">
                 <img id="logoImg" src="/src/assets/Sparesti-logo.png" alt="Sparesti-logo" width="60">
                 <span id="logo" class="text-white">Sparesti</span>
             </a>
