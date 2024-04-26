@@ -9,6 +9,7 @@ cache:
 stages:
   - install
   - build
+  - test
 
 install_dependencies:
   stage: install
@@ -32,3 +33,34 @@ build_project:
     paths:
       - node_modules/
     policy: pull
+
+vitest_unit-tests:
+  stage: test
+  script:
+    - npm ci
+    - npm run test:unit
+  dependencies:
+    - install_dependencies
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+        - node_modules/
+    policy: pull
+
+eslint_run-lint:
+  stage: test
+  script:
+    - npm ci
+    - npm run lint
+  dependencies:
+    - install_dependencies
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+        - node_modules/
+    policy: pull
+  allow_failure: true  
+
+
+
+    
