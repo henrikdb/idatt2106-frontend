@@ -32,4 +32,5 @@ const home = () => {
     body {
         background-image: url('@/assets/401-error.png');
     }
+
 </style>

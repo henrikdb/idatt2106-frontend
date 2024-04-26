@@ -2,7 +2,7 @@
     <button type="button" class="btn btn-primary" id="buttonStyle">{{ buttonText }}</button>
 </template>
 
-<script>
+<script setup lang="ts">
 export default {
     props: ['buttonText']
 }

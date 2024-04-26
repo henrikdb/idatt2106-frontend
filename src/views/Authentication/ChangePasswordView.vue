@@ -60,7 +60,7 @@ const submitForm = async () => {
     try {
         const resetPassword = {
             password: newPassword.value,
-            token: token
+            token: token as string,
         };
         const response = await UserService.confirmPasswordReset({ requestBody: resetPassword });
         console.log(response);
