@@ -46,6 +46,9 @@ export const useUserInfoStore = defineStore('UserInfoStore', {
     accessToken: '',
     role: '',
   }),
+  persist: {
+    storage: cookiesStorage,
+  },
   actions: {
     setPassword(password: string) {
       this.password = password
