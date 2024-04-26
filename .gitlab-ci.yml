@@ -24,6 +24,7 @@ install_dependencies:
 build_project:
   stage: build
   script:
+    - npm ci
     - npm run build
   dependencies:
     - install_dependencies
