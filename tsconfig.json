@@ -12,6 +12,8 @@
     }
   ],
   "compilerOptions": {
-    "module": "NodeNext"
+    "module": "NodeNext",
+    "types" : ["pinia-plugin-persist"],
+    "typeRoots": ["./node_modules/@types", "./node_modules/pinia-plugin-persist/dist"]
   }
 }

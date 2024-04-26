@@ -3,7 +3,7 @@ export const useConfigurationStore = defineStore('ConfigurationStore', {
   state: () => ({
     commitment: '',
     experience: '',
-    challenges: []
+    challenges: [] as Array<string>,
   }),
   actions: {
     setCommitment(commitment: string) {
@@ -28,11 +28,9 @@ export const useConfigurationStore = defineStore('ConfigurationStore', {
     getExperience(): string {
       return this.experience
     },
-    getChallenges(): string {
+    getChallenges(): Array<string> {
       return this.challenges
     }
   },
-  persist: {
-    enabled: true,
-  }
+
 });
