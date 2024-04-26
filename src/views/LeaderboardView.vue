@@ -9,40 +9,38 @@
             <div class="btn-group-vertical" id="radioContainer" role="group"
             aria-label="Vertical radio toggle button group">
             <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio1" autocomplete="off" checked>
-            <label class="btn btn-outline-primary" for="vbtn-radio1" @click="global"><img src="@/assets/globe.png" style="width: 60px">  Global</label>
+            <label class="btn btn-outline-primary" for="vbtn-radio1" @click="global"><img src="@/assets/globe.png" style="width: 60px" alt="globe">  Global</label>
             <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio2" autocomplete="off">
-            <label class="btn btn-outline-primary" for="vbtn-radio2" @click="friends"><img src="@/assets/friends.png" style="width: 60px">  Friends</label>
+            <label class="btn btn-outline-primary" for="vbtn-radio2" @click="friends"><img src="@/assets/friends.png" style="width: 60px" alt="friends">  Friends</label>
         </div>
         </div>
     </div>
     <main>
         <div id="leaderboard">
-            <h1><img src="@/assets/items/pigcoin.png" style="width: 2rem"> Total points</h1>
+            <h1><img src="@/assets/items/pigcoin.png" style="width: 2rem" alt="pig coin"> Total points</h1>
             <Leaderboard :leaderboard="pointsLeaderboardData" :leaderboardExtra="pointsLeaderboardDataExtra" @navigateToUserProfile="navigateToUserProfile" />
         </div>
         <div id="leaderboard">
-            <h1><img src="@/assets/icons/fire.png" style="width: 2rem"> Current streak</h1>
+            <h1><img src="@/assets/icons/fire.png" style="width: 2rem" alt="fire"> Current streak</h1>
             <Leaderboard :leaderboard="currentLeaderboardData" :leaderboardExtra="currentLeaderboardDataExtra" @navigateToUserProfile="navigateToUserProfile" />
         </div>
         <div id="leaderboard">
-            <h1><img src="@/assets/icons/fire.png" style="width: 2rem"> Highest streak</h1>
+            <h1><img src="@/assets/icons/fire.png" style="width: 2rem" alt="fire"> Highest streak</h1>
             <Leaderboard :leaderboard="streakLeaderboardData" :leaderboardExtra="streakLeaderboardDataExtra" @navigateToUserProfile="navigateToUserProfile" />
         </div>
     </main>
     </div>
     <div id="communityContainer">
         <h1>Total points earned as a community</h1>
-        <h2>1000000 <img src="@/assets/items/v-buck.png" style="width: 2rem"></h2>
+        <h2>1000000 <img src="@/assets/items/v-buck.png" style="width: 2rem" alt="alt"></h2>
     </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, type PropType } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import Leaderboard from '@/components/LeaderboardComponents/Leaderboard.vue';
-import { on } from 'events';
 import { LeaderboardService } from '@/api';
-import type { LeaderboardEntryDTO } from '@/api/models/LeaderboardEntryDTO';
 
 let streakLeaderboardData = ref([] as  any);
 let currentLeaderboardData = ref([] as any);
@@ -55,7 +53,7 @@ let pointsLeaderboardDataExtra = ref([] as any);
 const router = useRouter();
 
 async function fetchQuizData() {
-    global();
+    await global();
 }
 
 onMounted(() => {
@@ -202,10 +200,4 @@ h1 {
     margin-bottom: 5rem;
 }
 
-.leaderBoardButton {
-    padding: 1rem 4rem;
-    font-weight: 700;
-    border-radius: 2rem;
-    margin: 1rem;
-}
 </style>

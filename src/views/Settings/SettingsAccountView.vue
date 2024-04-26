@@ -11,6 +11,14 @@ const confirmPasswordRef = ref('')
 const formRef = ref()
 let samePasswords = ref(true)
 
+const handleFirstNameInputEvent = (newValue: any) => {
+  firstNameRef.value = newValue
+}
+
+const handleEmailInputEvent = (newValue: any) => {
+  emailRef.value = newValue
+}
+
 </script>
 
 <template>
