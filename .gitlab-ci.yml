@@ -37,7 +37,6 @@ build_project:
 vitest_unit-tests:
   stage: test
   script:
-    - npm ci
     - npm run test:unit
   cache:
     key: ${CI_COMMIT_REF_SLUG}
