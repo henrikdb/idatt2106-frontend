@@ -3,9 +3,7 @@
 </template>
 
 <script setup lang="ts">
-export default {
-    props: ['buttonText']
-}
+defineProps<{ buttonText: string }>();
 </script>
 
 <style scoped>
