@@ -36,7 +36,7 @@ export type UserStoreInfo = {
   accessToken?: string;
   role?: string;
 };
-
+//todo Fix if there is time
 export const useUserInfoStore = defineStore('UserInfoStore', {
   state: () => ({
     email: '',

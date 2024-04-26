@@ -55,7 +55,7 @@ const emitEditEvent = () => {
     </button>
   </div>
 
-  <div class="collapse" id=index>
+  <div class="collapse" :id=String(index)>
     <div class="container collapse-container">
       <form @submit.prevent="emitEditEvent">
         <div class="input-group">
