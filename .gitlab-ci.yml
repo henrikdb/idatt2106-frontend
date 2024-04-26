@@ -1,25 +1,32 @@
 image: node:alpine
 
-stages:
-  - install_dependencies
-  - build_project
-
 cache:
   key: "${CI_COMMIT_REF_SLUG}"
   paths:
     - node_modules/
     - build/
 
+stages:
+  - install
+  - build
+
 install_dependencies:
-  stage: install_dependencies
+  stage: install
   script:
     - npm ci
+  cache:
+        key: ${CI_COMMIT_REF_SLUG}
+        paths:
+            - node_modules/
+        policy: push
 
 build_project:
-  stage: build_project
+  stage: build
   script:
     - npm ci
     - npm run build
+  dependencies:
+    - install_dependencies
   cache:
     key: "${CI_COMMIT_REF_SLUG}"
     paths:
