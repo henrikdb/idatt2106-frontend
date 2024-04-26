@@ -9,6 +9,7 @@ cache:
 stages:
   - install
   - build
+  - test
 
 install_dependencies:
   stage: install
@@ -32,3 +33,17 @@ build_project:
     paths:
       - node_modules/
     policy: pull
+  artifacts:
+    name: "Build project ${CI_COMMIT_REF_NAME}-${CI_JOB_ID}"
+    paths:
+        - build/
+    expire_in: 1 day
+
+vitest_unit-tests:
+  stage: test
+  script:
+    - npm run test:unit
+
+
+
+    
