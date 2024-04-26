@@ -4,19 +4,17 @@ stages:
   - install_dependencies
   - build_project
 
+cache:
+  key: "${CI_COMMIT_REF_SLUG}" # Branch-specific cache keys to have separate caches across branches.
+  paths:
+    - node_modules/
+
 install_dependencies:
   stage: install_dependencies
   script:
     - npm ci
-  artifacts:
-    paths:
-      - node_modules
 
 build_project:
   stage: build_project
   script:
     - npm run build
-  artifacts:
-    paths:
-      - node_modules/
-
