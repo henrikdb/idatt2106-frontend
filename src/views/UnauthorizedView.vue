@@ -28,8 +28,5 @@ const home = () => {
 
 
 <style scoped>
-    body {
-        background-image: url('@/assets/401-error.png');
-    }
 
 </style>
