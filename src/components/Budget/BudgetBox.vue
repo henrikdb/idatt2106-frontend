@@ -21,16 +21,17 @@ const props = defineProps({
 // Calculated balance variable
 let balance = props.budget - props.expenses
 // Reactive variable for determining background color
-const iRef = ref(null)
+const iRef = ref<Element | null>(null);
 
 /**
  * Checks if the balance is positive, and depending on the value
  * changes background color to green (positive) or red (negative)
  */
 onMounted(() => {
-  if (balance >= 0) {
+  if (iRef.value !== null && balance >= 0) {
     // By default, the background is set to red
-    iRef.value.style.backgroundColor = 'rgba(34, 231, 50, 0.43)';
+    const element = iRef.value as HTMLElement;
+    element.style.backgroundColor = 'rgba(34, 231, 50, 0.43)';
   }
 })
 
