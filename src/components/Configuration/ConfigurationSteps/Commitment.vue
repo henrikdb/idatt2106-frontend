@@ -30,7 +30,7 @@ const onClick = () => {
     if (lowRef.value.checked) choice = 'LITTLE'
     else if (mediumRef.value.checked) choice = 'SOME'
     else if (highRef.value.checked) choice = 'MUCH'
-    useConfigurationStore().commitment(choice)
+    useConfigurationStore().setCommitment(choice)
     router.push('/experience')
   }
   else {
