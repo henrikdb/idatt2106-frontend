@@ -15,9 +15,10 @@ let percentage = ref(1/length);
 router.push(Object.keys(configurationSteps)[0])
 let currentRoute = useRoute()
 let currentPath = currentRoute.fullPath
+type ConfigurationStepPath = keyof typeof configurationSteps;
 
 // Sets the current path to a new path and updates progressbar
-const onNewRouteEvent = (path: string) => {
+const onNewRouteEvent = (path: ConfigurationStepPath) => {
   currentPath = path
   percentage.value = (1/length) * configurationSteps[path]
 }
