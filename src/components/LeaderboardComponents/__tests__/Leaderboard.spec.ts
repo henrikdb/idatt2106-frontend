@@ -7,7 +7,9 @@ import { useUserInfoStore } from '@/stores/UserStore';
 import router from '@/router/index';
 
 describe('Leaderboard', () => {
-  let wrapper, store, mockRouter;
+  let wrapper : any
+  let store : any
+  let mockRouter : any
 
   const leaderboard = [
     { user: { id: 1, firstName: 'Alice', email: 'alice@example.com' }, rank: 1, score: 50 },

@@ -44,7 +44,7 @@ export default defineComponent({
   left: 50%;
   transform: translate(-50%, 0);
   width: min(100%, 700px);
-  background-color: var(--red-color);
+  background-color: red ;   /*var(--red-color);*/
   padding: 7px;
   border-radius: 5px;
   z-index: 1000;

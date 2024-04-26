@@ -12,10 +12,10 @@ emit('changeRouterEvent', '/experience')
 
 // Declaration of reactive variables for the form and radio buttons
 const formRef = ref()
-const beginnerRef = ref('')
-const someExperienceRef = ref('')
-const expertRef = ref('')
-let errorMsg = ref('');
+const beginnerRef = ref()
+const someExperienceRef = ref()
+const expertRef = ref()
+let errorMsg = ref();
 
 /**
  * Validates the experience form radio buttons and updates the commitment choice in the store.
