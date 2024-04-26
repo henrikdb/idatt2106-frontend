@@ -10,7 +10,8 @@ import { render, screen } from '@testing-library/vue';
 import userEvent from '@testing-library/user-event';
 
 describe('Menu and Router Tests', () => {
-  let store, mockRouter;
+  let store : any
+  let mockRouter : any;
 
   beforeEach(() => {
     // Create a fresh Pinia and Router instance before each test
