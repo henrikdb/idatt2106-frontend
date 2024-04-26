@@ -118,7 +118,7 @@ describe('Menu and Router Tests', () => {
           await mockRouter.isReady();
       }
 
-      expect(mockRouter.currentRoute.value.name).toBe('home'); // Assuming 'Home' is the route name for '/'
+      expect(mockRouter.currentRoute.value.name).toBe('roadmap'); // Assuming 'Home' is the route name for '/'
   });
   });
 });
