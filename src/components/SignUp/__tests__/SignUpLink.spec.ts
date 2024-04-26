@@ -1,5 +1,4 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { render } from '@testing-library/vue';
 import { createPinia, setActivePinia } from 'pinia';
 import { createRouter, createMemoryHistory } from 'vue-router';
 import LoginPrompt from '@/components/SignUp/SignUpLink.vue';
@@ -9,7 +8,7 @@ import { render, screen } from '@testing-library/vue';
 import userEvent from '@testing-library/user-event';
 
 describe('LoginPrompt', () => {
-    let store, mockRouter;
+    let store: any, mockRouter: any;
 
     beforeEach(() => {
         // Create a fresh Pinia and Router instance before each test

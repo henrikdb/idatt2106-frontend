@@ -1,21 +1,12 @@
 <script setup lang="ts">
-// A more limited view of a users profile
-import Menu from "@/components/BaseComponents/Menu.vue";
-import Footer from "@/components/BaseComponents/Footer.vue";
 import {useRoute, useRouter} from "vue-router";
-import {useUserInfoStore} from "../../stores/UserStore";
 
 import {onMounted, ref} from "vue";
 import {UserService} from "@/api";
 
 let numberOfHistory = 6;
 
-
-
 let cardTitles = ["Spain tour", "Food waste", "Coffee", "Concert", "New book", "Pretty clothes"]
-
-let points = 0;
-let streak = 0;
 
 let username = ref()
 
