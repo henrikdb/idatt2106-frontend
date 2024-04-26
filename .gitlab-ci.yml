@@ -16,5 +16,11 @@ install_dependencies:
 
 build_project:
   stage: build_project
+  before_script:
+    - ls -l node_modules/.bin 
+    - whoami 
   script:
     - npm run build
+  after_script:
+    - ls -l 
+
