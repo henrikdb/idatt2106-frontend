@@ -2,10 +2,8 @@
     <button type="button" class="btn btn-primary" id="buttonStyle">{{ buttonText }}</button>
 </template>
 
-<script>
-export default {
-    props: ['buttonText']
-}
+<script setup lang="ts">
+defineProps<{ buttonText: string }>();
 </script>
 
 <style scoped>

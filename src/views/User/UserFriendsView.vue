@@ -360,11 +360,11 @@ function addFriend() {
 }
 
 // Define the navigateToQuiz method
-const navigateToFriend = (friendID :string) => {
+const navigateToFriend = (friendID :number) => {
 router.push('/profile/' + friendID)
 };
 
-const removeFriend = (friendID) => {
+const removeFriend = (friendID: number) => {
 
 };
 

@@ -12,10 +12,10 @@ emit('changeRouterEvent', '/commitment')
 
 // Reactive variables for form and radio buttons.
 const formRef = ref()
-const lowRef = ref('')
-const mediumRef = ref('')
-const highRef = ref('')
-let errorMsg = ref('');
+const lowRef = ref()
+const mediumRef = ref()
+const highRef = ref()
+let errorMsg = ref();
 
 /**
  * Validates the commitment form radio buttons and updates the commitment choice in the store.

@@ -5,10 +5,9 @@ import { createPinia, setActivePinia } from 'pinia';
 import { useUserInfoStore } from '@/stores/UserStore';
 import MyComponent from '@/components/UserProfile/UserProfileLayout.vue'; // Adjust path as needed
 import router from '@/router/index'; // Adjust path as needed
-import { access } from 'fs';
 
 describe('MyComponent and Router Tests', () => {
-  let store, mockRouter;
+  let store: any, mockRouter: any;
 
   beforeEach(() => {
     // Create a fresh Pinia and Router instance before each test

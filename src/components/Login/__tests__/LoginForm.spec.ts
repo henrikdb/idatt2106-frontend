@@ -72,8 +72,8 @@ describe('Menu and Router Tests', () => {
         it('updates user credetials correctly', async () => {
             const { getByPlaceholderText } = render(MyComponent);
 
-            const emailInput = getByPlaceholderText('Enter your email');
-            const passwordInput = getByPlaceholderText('Enter password');
+            const emailInput = getByPlaceholderText('Enter your email') as HTMLInputElement;
+            const passwordInput = getByPlaceholderText('Enter password') as HTMLInputElement;
             await fireEvent.update(emailInput, 'user@example.com');
             await fireEvent.update(passwordInput, 'Password1');
 

@@ -68,13 +68,14 @@ describe('Menu and Router Tests', () => {
 
 
     describe('Input fields', () => {
-        it('updates user credetials correctly', async () => {
+        it('updates user credentials correctly', async () => {
             const { getByPlaceholderText } = render(MyComponent);
 
-            const firstInput = getByPlaceholderText('Enter your first name');
-            const lastInput = getByPlaceholderText('Enter your surname');
-            const emailInput = getByPlaceholderText('Enter your email');
-            const passwordInput = getByPlaceholderText('Enter password');
+            const firstInput = getByPlaceholderText('Enter your first name') as HTMLInputElement;
+            const lastInput = getByPlaceholderText('Enter your surname') as HTMLInputElement;
+            const emailInput = getByPlaceholderText('Enter your email') as HTMLInputElement;
+            const passwordInput = getByPlaceholderText('Enter password') as HTMLInputElement;
+
             await fireEvent.update(firstInput, 'Alice');
             await fireEvent.update(lastInput, 'Alicon');
             await fireEvent.update(emailInput, 'user@example.com');
@@ -85,6 +86,7 @@ describe('Menu and Router Tests', () => {
             expect(emailInput.value).toBe('user@example.com');
             expect(passwordInput.value).toBe('Password1');
         });
+
 
         it('Password error msg', async () => {
             const { container } = render(MyComponent, {

@@ -2,7 +2,6 @@ import { OpenAPI } from '@/api';
 import Cookies from 'js-cookie';
 import { defineStore } from 'pinia';
 
-
 const cookiesStorage: Storage = {
   setItem(key, state) {
     return Cookies.set(key, state, { expires: 3 });
@@ -87,9 +86,5 @@ export const useUserInfoStore = defineStore('UserInfoStore', {
     isLoggedIn(): boolean {
       return this.accessToken !== '';
     },
-  },
-  persist: {
-    enabled: true,
-    strategies: [{ key: 'userInfo', storage: cookiesStorage }]
   },
 });

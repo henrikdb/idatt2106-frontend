@@ -1,6 +1,6 @@
 <template>
   <error-box :error-message="errorStore.getFirstError" @update:errorMessage="errorStore.removeCurrentError" />
-  <slot />
+  <slot></slot>
 </template>
 
 <script setup lang="ts">

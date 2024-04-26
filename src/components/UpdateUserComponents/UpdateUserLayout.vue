@@ -82,7 +82,7 @@ const handleSubmit = async () => {
         })
 
       } catch (err) {
-        cosole.error(err)
+        console.error(err)
       }
     }
   } else {
