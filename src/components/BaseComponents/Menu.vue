@@ -31,7 +31,7 @@
                     <li v-if="userStore.isLoggedIn" class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle username-text text-white " href="#" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="@/assets/icons/person.svg">{{ userStore.firstname }}
+                            <img src="@/assets/icons/person.svg">{{ useUserInfoStore().firstname}}
                         </a>
                         <ul class="dropdown-menu dropdown-username-content">
                             <li><a class="dropdown-item text-white dropdown-username-link" href="#"
@@ -64,7 +64,7 @@ import { useUserInfoStore } from '@/stores/UserStore';
 
 const router = useRouter();
 
-const userStore = useUserInfoStore();
+const userStore : any = useUserInfoStore();
 
 function toHome() {
     router.push('/')
