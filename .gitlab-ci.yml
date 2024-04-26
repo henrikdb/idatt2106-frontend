@@ -47,7 +47,7 @@ vitest_unit-tests:
         - node_modules/
     policy: pull
 
-eslint_lint:
+eslint_check-lint:
   stage: test
   script:
     - npm run lint
