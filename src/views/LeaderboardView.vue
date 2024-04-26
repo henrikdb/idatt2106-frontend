@@ -17,7 +17,7 @@
     </div>
     <main>
         <div id="leaderboard">
-            <h1><img src="@/assets/items/pigcoin.png" style="width: 3rem"> Total points</h1>
+            <h1><img src="@/assets/items/pigcoin.png" style="width: 2rem"> Total points</h1>
             <Leaderboard :leaderboard="pointsLeaderboardData" :leaderboardExtra="pointsLeaderboardDataExtra" @navigateToUserProfile="navigateToUserProfile" />
         </div>
         <div id="leaderboard">
@@ -26,8 +26,6 @@
         </div>
         <div id="leaderboard">
             <h1><img src="@/assets/icons/fire.png" style="width: 2rem"> Highest streak</h1>
-            let streakLeaderboardData = ref([] as LeaderboardEntryDTO[]);
-            let streakLeaderboardDataExtra = ref([] as LeaderboardEntryDTO[]);
             <Leaderboard :leaderboard="streakLeaderboardData" :leaderboardExtra="streakLeaderboardDataExtra" @navigateToUserProfile="navigateToUserProfile" />
         </div>
     </main>
