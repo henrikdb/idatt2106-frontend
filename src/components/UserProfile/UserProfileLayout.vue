@@ -7,8 +7,6 @@ let numberOfHistory = 6;
 
 let cardTitles = ["Spain tour", "Food waste", "Coffee", "Concert", "New book", "Pretty clothes"]
 
-let points = 0;
-let streak = 0;
 let firstname = ref("");
 let lastname = ref("");
 

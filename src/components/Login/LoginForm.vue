@@ -3,7 +3,7 @@ import BaseInput from '@/components/InputFields/BaseInput.vue'
 import Button1 from '@/components/Buttons/Button1.vue'
 import { ref } from 'vue'
 import { useUserInfoStore } from '@/stores/UserStore';
-import { AuthenticationService, OpenAPI, LoginRequest } from '@/api';
+import { AuthenticationService, OpenAPI, type LoginRequest } from '@/api';
 import { useRouter, useRoute } from 'vue-router';
 import handleUnknownError from '@/components/Exceptions/unkownErrorHandler';
 import { useErrorStore } from '@/stores/ErrorStore';

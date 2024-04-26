@@ -2,7 +2,6 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { mount } from '@vue/test-utils';
 import MyComponent from '@/components/NewsComponents/NewsComponent.vue'; // Adjust the import path according to your setup
 
-// Mocking the global fetch API
 global.fetch = vi.fn(() =>
   Promise.resolve({
     json: () => Promise.resolve({
@@ -19,7 +18,7 @@ global.fetch = vi.fn(() =>
 );
 
 describe('MyComponent', () => {
-  let wrapper;
+  let wrapper :any;
 
   beforeEach(() => {
     vi.useFakeTimers(); // Set up fake timers
