@@ -18,6 +18,7 @@ install_dependencies:
 build_project:
   stage: build_project
   script:
+    - npm ci
     - npm run build
   cache:
     key: "${CI_COMMIT_REF_SLUG}"
