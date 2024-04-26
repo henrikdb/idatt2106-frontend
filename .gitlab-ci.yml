@@ -8,6 +8,7 @@ cache:
   key: "${CI_COMMIT_REF_SLUG}"
   paths:
     - node_modules/
+    - build/
 
 install_dependencies:
   stage: install_dependencies
@@ -16,11 +17,10 @@ install_dependencies:
 
 build_project:
   stage: build_project
-  before_script:
-    - ls -l node_modules/.bin # list files to debug
-    - whoami # confirm we're running as root
-    - chmod +x node_modules/.bin/* # ensure scripts are executable
   script:
     - npm run build
-  after_script:
-    - ls -l # list files in current directory to debug
+  cache:
+    key: "${CI_COMMIT_REF_SLUG}"
+    paths:
+      - node_modules/
+    policy: pull
