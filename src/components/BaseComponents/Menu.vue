@@ -45,7 +45,7 @@
                                 src="@/assets/icons/feedback.svg">Feedback</router-link></li>
                             <li><router-link class="dropdown-item text-white dropdown-username-link" :to="toSetting()"><img
                                 src="@/assets/icons/admin.svg">Admin</router-link></li>
-                            <li><a class="dropdown-item text-white dropdown-username-link" ref="#" @click="toLogout()"><img
+                            <li><a data-testid="logout" class="dropdown-item text-white dropdown-username-link" ref="#" @click="toLogout()"><img
                                 src="@/assets/icons/logout.svg">Log out</a></li>
                         </ul>
                     </li>
