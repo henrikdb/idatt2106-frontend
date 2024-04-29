@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import Button1 from '@/components/Buttons/Button1.vue'
-import { type CreateAppFunction, ref } from 'vue'
+import { ref } from 'vue'
 
 const emit = defineEmits(['deleteEvent', 'editEvent']);
 const props = defineProps({
+  id: {
+    type: Number,
+    required: true
+  },
   index: {
     type: Number,
     default: 0
@@ -19,24 +22,24 @@ const props = defineProps({
 })
 
 // Reactive variables for expense description and amount
-let editDescription = ref('')
-let editAmount = ref('')
+let editDescription = ref(props.description)
+let editAmount = ref(props.amount)
 
 /**
  * Emits an event to parent component with the type 'deleteEvent' to signalize
- * that an expense with index 'index' must be removed.
+ * that an expense with given id must be removed.
  */
 const emitDeleteEvent = () => {
-  emit('deleteEvent', props.index)
+  emit('deleteEvent', props.id)
 }
 
 /**
  * Emits an event to parent component with the type 'editEvent' to signalize
- * that an expense with index 'index' is to be edited with the values 'editDescription'
+ * that an expense with given id is to be edited with the values 'editDescription'
  * and 'editAmount'
  */
 const emitEditEvent = () => {
-  emit('editEvent', props.index, editDescription.value, editAmount.value)
+  emit('editEvent', props.id, editDescription.value, editAmount.value)
 }
 </script>
 
@@ -55,11 +58,11 @@ const emitEditEvent = () => {
     </button>
   </div>
 
-  <div class="collapse" id=index>
+  <div class="collapse" :id=String(index)>
     <div class="container collapse-container">
       <form @submit.prevent="emitEditEvent">
         <div class="input-group">
-          <span class="input-group-text">Edit expense #{{ index+1 }}: </span>
+          <span class="input-group-text">Edit expense {{ index+1 }} </span>
           <input type="text" class="form-control" placeholder="Expense description" required v-model="editDescription">
           <input type="number" min="0" class="form-control" placeholder="Amount (kr)" required v-model="editAmount">
           <button type="submit" class="btn btn-primary" data-bs-toggle="collapse" :data-bs-target="'#' + index">Confirm</button>
@@ -70,6 +73,10 @@ const emitEditEvent = () => {
 </template>
 
 <style scoped>
+div.collapse {
+  margin-bottom: 10px;
+}
+
 .expense-container {
   padding: 0 10px;
   display: grid;
