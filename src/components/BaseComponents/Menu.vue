@@ -1,10 +1,10 @@
 <template>
     <nav id="navBar" class="navbar navbar-expand-xl">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#" @click="toSavingGoals" id="home">
+          <router-link class="navbar-brand" id="home" :to="toSavingGoals()">
                 <img id="logoImg" src="/src/assets/Sparesti-logo.png" alt="Sparesti-logo" width="60">
                 <span id="logo" class="text-white">Sparesti</span>
-            </a>
+            </router-link>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -13,19 +13,19 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 ui-menu">
                     <li class="nav-item">
-                      <router-link class="nav-link text-white" to="/roadmap"><img
+                      <router-link class="nav-link text-white" :to="toSavingGoals()"><img
                                 src="@/assets/icons/saving.svg">Saving goals</router-link>
                     </li>
                     <li class="nav-item">
-                      <router-link class="nav-link text-white" to="/leaderboard"><img
+                      <router-link class="nav-link text-white" :to="toLeaderboard()"><img
                                 src="@/assets/icons/leaderboard.svg">Leaderboard</router-link>
                     </li>
                     <li class="nav-item">
-                      <router-link class="nav-link text-white" to="/news"><img
+                      <router-link class="nav-link text-white" :to="toNews()"><img
                           src="@/assets/icons/newsletter.svg">News</router-link>
                     </li>
                     <li class="nav-item">
-                      <router-link class="nav-link text-white" to="/shop"><img
+                      <router-link class="nav-link text-white" :to="toStore()"><img
                           src="@/assets/icons/storefront.svg">Store</router-link>
                     </li>
                     <li v-if="userStore.isLoggedIn" class="nav-item dropdown">
@@ -66,7 +66,7 @@ const router = useRouter();
 const userStore : any = useUserInfoStore();
 
 function toHome() {
-    router.push('/')
+    return '/'
 }
 
 function toBudget() {
@@ -74,19 +74,19 @@ function toBudget() {
 }
 
 function toSavingGoals() {
-    router.push('/roadmap')
+    return '/roadmap'
 }
 
 function toLeaderboard() {
-    router.push('/leaderboard')
+    return '/leaderboard'
 }
 
 function toNews() {
-    router.push('/news')
+    return '/news'
 }
 
 function toStore() {
-    router.push('/shop')
+    return '/shop'
 }
 
 function toSetting() {
