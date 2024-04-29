@@ -126,8 +126,8 @@
           "required": true
         },
         "responses": {
-          "404": {
-            "description": "Bank profile id does not exist",
+          "200": {
+            "description": "No accounts associated with a bank user",
             "content": {
               "*/*": {
                 "schema": {
@@ -136,8 +136,8 @@
               }
             }
           },
-          "200": {
-            "description": "No accounts associated with a bank user",
+          "404": {
+            "description": "Bank profile id does not exist",
             "content": {
               "*/*": {
                 "schema": {
@@ -168,8 +168,8 @@
           "required": true
         },
         "responses": {
-          "400": {
-            "description": "Could not create profile",
+          "200": {
+            "description": "Successfully created a bank profile",
             "content": {
               "*/*": {
                 "schema": {
@@ -178,8 +178,8 @@
               }
             }
           },
-          "200": {
-            "description": "Successfully created a bank profile",
+          "400": {
+            "description": "Could not create profile",
             "content": {
               "*/*": {
                 "schema": {
@@ -210,8 +210,8 @@
           "required": true
         },
         "responses": {
-          "404": {
-            "description": "Provided bank profile id could not be found",
+          "200": {
+            "description": "Successfully created account",
             "content": {
               "*/*": {
                 "schema": {
@@ -220,8 +220,8 @@
               }
             }
           },
-          "200": {
-            "description": "Successfully created account",
+          "404": {
+            "description": "Provided bank profile id could not be found",
             "content": {
               "*/*": {
                 "schema": {
@@ -278,17 +278,17 @@
           "required": true
         },
         "responses": {
-          "403": {
-            "description": "Invalid token"
-          },
           "204": {
             "description": "Password was reset successfully"
+          },
+          "403": {
+            "description": "Invalid token"
           }
         },
         "security": []
       }
     },
-    "/api/images": {
+    "/api/image/upload": {
       "post": {
         "tags": [
           "Image"
@@ -298,7 +298,7 @@
         "operationId": "uploadImage",
         "requestBody": {
           "content": {
-            "multipart/form-data": {
+            "application/json": {
               "schema": {
                 "required": [
                   "file"
@@ -315,8 +315,19 @@
           }
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Successfully uploaded the image",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
             "content": {
               "*/*": {
                 "schema": {
@@ -415,8 +426,8 @@
           "required": true
         },
         "responses": {
-          "500": {
-            "description": "Budget is not found",
+          "200": {
+            "description": "Successfully updated budget",
             "content": {
               "application/json": {
                 "schema": {
@@ -425,8 +436,8 @@
               }
             }
           },
-          "200": {
-            "description": "Successfully updated budget",
+          "500": {
+            "description": "Budget is not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -468,8 +479,8 @@
           "required": true
         },
         "responses": {
-          "500": {
-            "description": "Error updating expense",
+          "200": {
+            "description": "Successfully updated budget",
             "content": {
               "application/json": {
                 "schema": {
@@ -478,8 +489,8 @@
               }
             }
           },
-          "200": {
-            "description": "Successfully updated budget",
+          "500": {
+            "description": "Error updating expense",
             "content": {
               "application/json": {
                 "schema": {
@@ -542,22 +553,22 @@
           }
         ],
         "responses": {
-          "409": {
-            "description": "Email already exists",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExceptionResponse"
-                }
-              }
-            }
-          },
           "200": {
             "description": "Email is valid",
             "content": {
               "*/*": {
                 "schema": {
                   "type": "object"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Email already exists",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResponse"
                 }
               }
             }
@@ -726,38 +737,6 @@
         }
       }
     },
-    "/api/users/password": {
-      "patch": {
-        "tags": [
-          "User"
-        ],
-        "summary": "Update a password",
-        "description": "Update the password of the authenticated user",
-        "operationId": "updatePassword",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PasswordUpdateDTO"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Successfully updated password",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserDTO"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/bank/v1/account/accounts/ssn/{ssn}": {
       "get": {
         "tags": [
@@ -827,8 +806,8 @@
           }
         ],
         "responses": {
-          "404": {
-            "description": "Bank profile id does not exist",
+          "200": {
+            "description": "No accounts associated with a bank user",
             "content": {
               "*/*": {
                 "schema": {
@@ -840,8 +819,8 @@
               }
             }
           },
-          "200": {
-            "description": "No accounts associated with a bank user",
+          "404": {
+            "description": "Bank profile id does not exist",
             "content": {
               "*/*": {
                 "schema": {
@@ -1007,7 +986,7 @@
         }
       }
     },
-    "/api/images/{id}": {
+    "/api/image/{id}": {
       "get": {
         "tags": [
           "Image"
@@ -1042,14 +1021,16 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "type": "string",
-                  "format": "binary"
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "byte"
+                  }
                 }
               }
             }
           }
-        },
-        "security": []
+        }
       }
     },
     "/api/goal/getGoals": {
@@ -1190,8 +1171,8 @@
           }
         ],
         "responses": {
-          "500": {
-            "description": "Budget is not found",
+          "200": {
+            "description": "Successfully got budget",
             "content": {
               "application/json": {
                 "schema": {
@@ -1200,8 +1181,8 @@
               }
             }
           },
-          "200": {
-            "description": "Successfully got budget",
+          "500": {
+            "description": "Budget is not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -1312,8 +1293,8 @@
           }
         ],
         "responses": {
-          "500": {
-            "description": "Budget is not found",
+          "200": {
+            "description": "Successfully deleted budget",
             "content": {
               "application/json": {
                 "schema": {
@@ -1322,8 +1303,8 @@
               }
             }
           },
-          "200": {
-            "description": "Successfully deleted budget",
+          "500": {
+            "description": "Budget is not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -1747,9 +1728,8 @@
           "email": {
             "type": "string"
           },
-          "profileImage": {
-            "type": "integer",
-            "format": "int64"
+          "password": {
+            "type": "string"
           },
           "configuration": {
             "$ref": "#/components/schemas/ConfigurationDTO"
@@ -1768,10 +1748,6 @@
           },
           "lastName": {
             "type": "string"
-          },
-          "profileImage": {
-            "type": "integer",
-            "format": "int64"
           },
           "email": {
             "type": "string"
@@ -1797,17 +1773,6 @@
           }
         }
       },
-      "PasswordUpdateDTO": {
-        "type": "object",
-        "properties": {
-          "oldPassword": {
-            "type": "string"
-          },
-          "newPassword": {
-            "type": "string"
-          }
-        }
-      },
       "ProfileDTO": {
         "type": "object",
         "properties": {
@@ -1820,10 +1785,6 @@
           },
           "lastName": {
             "type": "string"
-          },
-          "profileImage": {
-            "type": "integer",
-            "format": "int64"
           },
           "createdAt": {
             "type": "string",

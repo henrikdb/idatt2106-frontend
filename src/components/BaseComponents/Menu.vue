@@ -1,10 +1,10 @@
 <template>
     <nav id="navBar" class="navbar navbar-expand-xl">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#" @click="toSavingGoals" id="home">
+          <router-link class="navbar-brand" id="home" :to="toSavingGoals()">
                 <img id="logoImg" src="/src/assets/Sparesti-logo.png" alt="Sparesti-logo" width="60">
                 <span id="logo" class="text-white">Sparesti</span>
-            </a>
+            </router-link>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -13,20 +13,20 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 ui-menu">
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#" @click="toSavingGoals"><img
-                                src="@/assets/icons/saving.svg">Saving goals</a>
+                      <router-link class="nav-link text-white" :to="toSavingGoals()"><img
+                                src="@/assets/icons/saving.svg">Saving goals</router-link>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#" @click="toLeaderboard"><img
-                                src="@/assets/icons/leaderboard.svg">Leaderboard</a>
+                      <router-link class="nav-link text-white" :to="toLeaderboard()"><img
+                                src="@/assets/icons/leaderboard.svg">Leaderboard</router-link>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#" @click="toNews"><img
-                                src="@/assets/icons/newsletter.svg">News</a>
+                      <router-link class="nav-link text-white" :to="toNews()"><img
+                          src="@/assets/icons/newsletter.svg">News</router-link>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#" @click="toStore"><img
-                                src="@/assets/icons/storefront.svg">Store</a>
+                      <router-link class="nav-link text-white" :to="toStore()"><img
+                          src="@/assets/icons/storefront.svg">Store</router-link>
                     </li>
                     <li v-if="userStore.isLoggedIn" class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle username-text text-white " href="#" role="button"
@@ -34,20 +34,19 @@
                             <img src="@/assets/icons/person.svg">{{ useUserInfoStore().firstname}}
                         </a>
                         <ul class="dropdown-menu dropdown-username-content">
-                            <li><a class="dropdown-item text-white dropdown-username-link" href="#"
-                                    @click="toUserProfile"><img src="@/assets/icons/person.svg">User Profile</a></li>
-                            <li><a class="dropdown-item text-white dropdown-username-link" href="#"
-                                    @click="toBudget">Budget</a></li>
-                            <li><a class="dropdown-item text-white dropdown-username-link" href="#"
-                                    @click="toFriends"><img src="@/assets/icons/friends.svg">Friends</a></li>
-                            <li><a class="dropdown-item text-white dropdown-username-link" href="#"
-                                    @click="toSetting"><img src="@/assets/icons/settings.svg">Setting</a></li>
-                            <li><a class="dropdown-item text-white dropdown-username-link" href="#"
-                                    @click="toFeedback"><img src="@/assets/icons/feedback.svg">Feedback</a></li>
-                            <li><a class="dropdown-item text-white dropdown-username-link" href="#"
-                                    @click="toSetting"><img src="@/assets/icons/admin.svg">Admin table</a></li>
-                            <li><a class="dropdown-item text-white dropdown-username-link" href="#"
-                                    @click="toLogout" data-testid="logout"><img src="@/assets/icons/logout.svg">Log out</a></li>
+                            <li><router-link class="dropdown-item text-white dropdown-username-link" :to="toUserProfile()"><img
+                                  src="@/assets/icons/person.svg">User Profile</router-link></li>
+                            <li><router-link class="dropdown-item text-white dropdown-username-link" :to="toBudget()"><img>Budget</router-link></li>
+                            <li><router-link class="dropdown-item text-white dropdown-username-link" :to="toFriends()"><img
+                                src="@/assets/icons/friends.svg">Friends</router-link></li>
+                            <li><router-link class="dropdown-item text-white dropdown-username-link" :to="toSetting()"><img
+                                src="@/assets/icons/settings.svg">Settings</router-link></li>
+                            <li><router-link class="dropdown-item text-white dropdown-username-link" :to="toFeedback()"><img
+                                src="@/assets/icons/feedback.svg">Feedback</router-link></li>
+                            <li><router-link class="dropdown-item text-white dropdown-username-link" :to="toSetting()"><img
+                                src="@/assets/icons/admin.svg">Admin</router-link></li>
+                            <li><a data-testid="logout" class="dropdown-item text-white dropdown-username-link" ref="#" @click="toLogout()"><img
+                                src="@/assets/icons/logout.svg">Log out</a></li>
                         </ul>
                     </li>
                     <li v-else class="nav-item">
@@ -67,43 +66,43 @@ const router = useRouter();
 const userStore : any = useUserInfoStore();
 
 function toHome() {
-    router.push('/')
+    return '/'
 }
 
 function toBudget() {
-  router.push('/budget-overview')
+  return '/budget-overview'
 }
 
 function toSavingGoals() {
-    router.push('/roadmap')
+    return '/roadmap'
 }
 
 function toLeaderboard() {
-    router.push('/leaderboard')
+    return '/leaderboard'
 }
 
 function toNews() {
-    router.push('/news')
+    return '/news'
 }
 
 function toStore() {
-    router.push('/shop')
+    return '/shop'
 }
 
 function toSetting() {
-    router.push('/settings/profile')
+    return '/settings/profile'
 }
 
 function toFeedback() {
-    router.push('/feedback')
+    return '/feedback'
 }
 
 function toFriends() {
-    router.push('/friends')
+    return '/friends'
 }
 
 function toUserProfile() {
-    router.push('/profile')
+   return '/profile'
 }
 
 function toLogout() {
