@@ -10,6 +10,7 @@ import type { BudgetResponseDTO } from '../models/BudgetResponseDTO';
 import type { ExpenseRequestDTO } from '../models/ExpenseRequestDTO';
 import type { ExpenseResponseDTO } from '../models/ExpenseResponseDTO';
 import type { PasswordResetDTO } from '../models/PasswordResetDTO';
+import type { PasswordUpdateDTO } from '../models/PasswordUpdateDTO';
 import type { ProfileDTO } from '../models/ProfileDTO';
 import type { UserDTO } from '../models/UserDTO';
 import type { UserUpdateDTO } from '../models/UserUpdateDTO';
@@ -63,13 +64,18 @@ export class UserService {
      * @throws ApiError
      */
     public static updateBudget({
+        budgetId,
         requestBody,
     }: {
-        requestBody: BudgetResponseDTO,
+        budgetId: number,
+        requestBody: BudgetRequestDTO,
     }): CancelablePromise<Record<string, any>> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/budget/update',
+            url: '/api/budget/update/{budgetId}',
+            path: {
+                'budgetId': budgetId,
+            },
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -153,6 +159,24 @@ export class UserService {
         return __request(OpenAPI, {
             method: 'PATCH',
             url: '/api/users/update-account',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
+     * Update a password
+     * Update the password of the authenticated user
+     * @returns UserDTO Successfully updated password
+     * @throws ApiError
+     */
+    public static updatePassword({
+        requestBody,
+    }: {
+        requestBody: PasswordUpdateDTO,
+    }): CancelablePromise<UserDTO> {
+        return __request(OpenAPI, {
+            method: 'PATCH',
+            url: '/api/users/password',
             body: requestBody,
             mediaType: 'application/json',
         });

@@ -6,6 +6,7 @@ export type UserDTO = {
     id?: number;
     firstName?: string;
     lastName?: string;
+    profileImage?: number;
     email?: string;
     createdAt?: string;
     role?: string;

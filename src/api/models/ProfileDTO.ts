@@ -6,6 +6,7 @@ export type ProfileDTO = {
     id?: number;
     firstName?: string;
     lastName?: string;
+    profileImage?: number;
     createdAt?: string;
 };
 
