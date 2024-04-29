@@ -43,8 +43,59 @@
           }
         ],
         "responses": {
+          "404": {
+            "description": "Friend request not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Friend request successfully accepted",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Friend"
+        ],
+        "summary": "Delete a friend or cancel a friend request",
+        "description": "Deletes an existing friend from your friend list or cancels a received friend request.",
+        "operationId": "deleteFriendOrFriendRequest",
+        "parameters": [
+          {
+            "name": "friendId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Friend or friend request not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Friend successfully deleted or friend request cancelled",
             "content": {
               "*/*": {
                 "schema": {
@@ -464,7 +515,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Budget"
+                  "type": "object"
                 }
               }
             }
@@ -587,8 +638,8 @@
               }
             }
           },
-          "404": {
-            "description": "User not found",
+          "401": {
+            "description": "Invalid credentials",
             "content": {
               "application/json": {
                 "schema": {
@@ -597,8 +648,8 @@
               }
             }
           },
-          "401": {
-            "description": "Invalid credentials",
+          "404": {
+            "description": "User not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -1601,260 +1652,6 @@
           },
           "amount": {
             "type": "number"
-          }
-        }
-      },
-      "Badge": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "badgeName": {
-            "type": "string"
-          },
-          "criteria": {
-            "type": "string"
-          },
-          "badgeUserList": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/BadgeUser"
-            }
-          }
-        }
-      },
-      "BadgeUser": {
-        "type": "object",
-        "properties": {
-          "badgeUserId": {
-            "$ref": "#/components/schemas/BadgeUserId"
-          },
-          "earnedAt": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
-      },
-      "BadgeUserId": {
-        "type": "object",
-        "properties": {
-          "badge": {
-            "$ref": "#/components/schemas/Badge"
-          },
-          "user": {
-            "$ref": "#/components/schemas/User"
-          }
-        }
-      },
-      "Budget": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "user": {
-            "$ref": "#/components/schemas/User"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "budgetName": {
-            "type": "string"
-          },
-          "budgetAmount": {
-            "type": "number"
-          },
-          "expenseAmount": {
-            "type": "number"
-          }
-        }
-      },
-      "Configuration": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "commitment": {
-            "type": "string",
-            "enum": [
-              "LITTLE",
-              "SOME",
-              "MUCH"
-            ]
-          },
-          "experience": {
-            "type": "string",
-            "enum": [
-              "NONE",
-              "SOME",
-              "EXPERT"
-            ]
-          },
-          "challengeTypes": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "NO_COFFEE",
-                "NO_CAR",
-                "SHORTER_SHOWER",
-                "SPEND_LESS_ON_FOOD",
-                "BUY_USED_CLOTHES",
-                "LESS_SHOPPING",
-                "DROP_SUBSCRIPTION",
-                "SELL_SOMETHING",
-                "BUY_USED",
-                "EAT_PACKED_LUNCH",
-                "STOP_SHOPPING",
-                "ZERO_SPENDING",
-                "RENT_YOUR_STUFF",
-                "MEATLESS",
-                "SCREEN_TIME_LIMIT",
-                "UNPLUGGED_ENTERTAINMENT"
-              ]
-            }
-          }
-        }
-      },
-      "GrantedAuthority": {
-        "type": "object",
-        "properties": {
-          "authority": {
-            "type": "string"
-          }
-        }
-      },
-      "Point": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "currentPoints": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "totalEarnedPoints": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      },
-      "Streak": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "currentStreak": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "currentStreakCreatedAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "currentStreakUpdatedAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "highestStreak": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "highestStreakCreatedAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "highestStreakEndedAt": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
-      },
-      "User": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "firstName": {
-            "type": "string"
-          },
-          "lastName": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string"
-          },
-          "profileImage": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "checkingAccount": {
-            "$ref": "#/components/schemas/Account"
-          },
-          "savingsAccount": {
-            "$ref": "#/components/schemas/Account"
-          },
-          "password": {
-            "type": "string"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "role": {
-            "type": "string",
-            "enum": [
-              "USER",
-              "ADMIN"
-            ]
-          },
-          "badges": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Badge"
-            }
-          },
-          "point": {
-            "$ref": "#/components/schemas/Point"
-          },
-          "streak": {
-            "$ref": "#/components/schemas/Streak"
-          },
-          "configuration": {
-            "$ref": "#/components/schemas/Configuration"
-          },
-          "enabled": {
-            "type": "boolean"
-          },
-          "username": {
-            "type": "string"
-          },
-          "authorities": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/GrantedAuthority"
-            }
-          },
-          "accountNonLocked": {
-            "type": "boolean"
-          },
-          "credentialsNonExpired": {
-            "type": "boolean"
-          },
-          "accountNonExpired": {
-            "type": "boolean"
           }
         }
       },

@@ -4,7 +4,6 @@
 /* eslint-disable */
 import type { Account } from '../models/Account';
 import type { BankAccountDTO } from '../models/BankAccountDTO';
-import type { Budget } from '../models/Budget';
 import type { BudgetRequestDTO } from '../models/BudgetRequestDTO';
 import type { BudgetResponseDTO } from '../models/BudgetResponseDTO';
 import type { ExpenseRequestDTO } from '../models/ExpenseRequestDTO';
@@ -112,14 +111,14 @@ export class UserService {
     /**
      * Create a new budget
      * Create a new budget with based on the budget request
-     * @returns Budget Successfully created new budget
+     * @returns any Successfully created new budget
      * @throws ApiError
      */
     public static createBudget({
         requestBody,
     }: {
         requestBody: BudgetRequestDTO,
-    }): CancelablePromise<Budget> {
+    }): CancelablePromise<Record<string, any>> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/budget/create',
