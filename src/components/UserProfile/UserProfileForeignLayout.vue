@@ -2,7 +2,7 @@
 import {useRoute, useRouter} from "vue-router";
 
 import {onMounted, ref} from "vue";
-import {UserService} from "@/api";
+import {UserService, type ProfileDTO} from "@/api";
 
 let numberOfHistory = 6;
 
@@ -11,6 +11,10 @@ let cardTitles = ["Spain tour", "Food waste", "Coffee", "Concert", "New book", "
 let username = ref()
 
 let friend = ref(false)
+
+let profile: ProfileDTO;;
+
+const imageUrl = ref(`../src/assets/userprofile.png`);
 
 
 let id = ref()
@@ -33,7 +37,12 @@ onMounted(async () => {
     let response = await UserService.getProfile({
       userId: id.value.id
     })
-    username.value = response.firstName
+    profile = response;
+    console.log(profile)
+    username.value = profile.firstName
+    if (profile.profileImage){
+      imageUrl.value = `http://localhost:8080/api/images/${profile.profileImage}`
+    }
     console.log(username)
   } catch (error) {
     console.error("Something went wrong getting the profile: ", error)
@@ -69,7 +78,7 @@ function toUpdateUserSettings(){
         <div class="card">
           <div class="rounded-top text-white d-flex flex-row bg-primary" style="height:200px;">
             <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
-              <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="Generic placeholder image"
+              <img :src="imageUrl" alt="Generic placeholder image"
                    class="img-fluid img-thumbnail mt-4 mb-2" style="width: 150px; z-index: 1">
               <button v-if="!friend" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary"
                       data-mdb-ripple-color="dark" style="z-index: 1;" @click="addFriend">

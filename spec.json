@@ -16,7 +16,46 @@
       "Bearer Authentication": []
     }
   ],
+  "tags": [
+    {
+      "name": "Friend",
+      "description": "API for managing friend relationships"
+    }
+  ],
   "paths": {
+    "/api/friends/{friendId}": {
+      "put": {
+        "tags": [
+          "Friend"
+        ],
+        "summary": "Accept a friend request",
+        "description": "Accepts a friend request from another user.",
+        "operationId": "acceptFriendRequest",
+        "parameters": [
+          {
+            "name": "friendId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Friend request successfully accepted",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/bank/v1/transaction/norwegian-domestic-payment-to-self": {
       "post": {
         "tags": [
@@ -269,6 +308,32 @@
         }
       }
     },
+    "/api/friends/{userId}": {
+      "post": {
+        "tags": [
+          "Friend"
+        ],
+        "summary": "Send a friend request",
+        "description": "Sends a new friend request to another user.",
+        "operationId": "addFriendRequest",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Friend request successfully created"
+          }
+        }
+      }
+    },
     "/api/budget/update/{budgetId}": {
       "post": {
         "tags": [
@@ -469,22 +534,22 @@
           "required": true
         },
         "responses": {
-          "201": {
-            "description": "Successfully signed up",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AuthenticationResponse"
-                }
-              }
-            }
-          },
           "409": {
             "description": "Email already exists",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ExceptionResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Successfully signed up",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthenticationResponse"
                 }
               }
             }
@@ -522,8 +587,8 @@
               }
             }
           },
-          "401": {
-            "description": "Invalid credentials",
+          "404": {
+            "description": "User not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -532,8 +597,8 @@
               }
             }
           },
-          "404": {
-            "description": "User not found",
+          "401": {
+            "description": "Invalid credentials",
             "content": {
               "application/json": {
                 "schema": {
@@ -911,6 +976,16 @@
           }
         ],
         "responses": {
+          "404": {
+            "description": "Image not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Successfully retrieved the image",
             "content": {
@@ -918,16 +993,6 @@
                 "schema": {
                   "type": "string",
                   "format": "binary"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Image not found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExceptionResponse"
                 }
               }
             }
@@ -972,6 +1037,56 @@
               "*/*": {
                 "schema": {
                   "$ref": "#/components/schemas/GoalDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/friends": {
+      "get": {
+        "tags": [
+          "Friend"
+        ],
+        "summary": "Get all friends",
+        "description": "Returns a list of all friends.",
+        "operationId": "getFriends",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved list of friends",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/friends/requests": {
+      "get": {
+        "tags": [
+          "Friend"
+        ],
+        "summary": "Get friend requests",
+        "description": "Returns a list of all users who have sent a friend request.",
+        "operationId": "getFriendRequests",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved friend requests",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDTO"
+                  }
                 }
               }
             }
@@ -1723,22 +1838,22 @@
           "enabled": {
             "type": "boolean"
           },
+          "username": {
+            "type": "string"
+          },
           "authorities": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/GrantedAuthority"
             }
           },
-          "username": {
-            "type": "string"
-          },
-          "accountNonExpired": {
+          "accountNonLocked": {
             "type": "boolean"
           },
           "credentialsNonExpired": {
             "type": "boolean"
           },
-          "accountNonLocked": {
+          "accountNonExpired": {
             "type": "boolean"
           }
         }
