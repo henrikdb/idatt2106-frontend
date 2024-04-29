@@ -24,11 +24,11 @@ export type User = {
     streak?: Streak;
     configuration?: Configuration;
     enabled?: boolean;
-    authorities?: Array<GrantedAuthority>;
     username?: string;
-    accountNonExpired?: boolean;
-    credentialsNonExpired?: boolean;
+    authorities?: Array<GrantedAuthority>;
     accountNonLocked?: boolean;
+    credentialsNonExpired?: boolean;
+    accountNonExpired?: boolean;
 };
 export namespace User {
     export enum role {

@@ -1,20 +1,35 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useUserInfoStore } from "../../stores/UserStore";
+import { UserService } from "@/api";
 
 let numberOfHistory = 6;
 
 let cardTitles = ["Spain tour", "Food waste", "Coffee", "Concert", "New book", "Pretty clothes"]
 
-let firstname = ref("");
-let lastname = ref("");
+let firstname = ref();
+let lastname = ref();
+const imageUrl = ref(`../src/assets/userprofile.png`);
 
 const router = useRouter();
-const userStore = useUserInfoStore();
-firstname.value = userStore.firstname;
-lastname.value = userStore.lastname;
 
+async function setupForm() {
+  try {
+    const response = await UserService.getUser();
+    console.log(response.firstName)
+
+    firstname.value = response.firstName;
+    lastname.value = response.lastName;
+    imageUrl.value = "http://localhost:8080/api/images/" + response.profileImage;
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+onMounted(() => {
+  setupForm()
+})
 
 const toRoadmap = () => {
   router.push('/');
@@ -33,7 +48,7 @@ const toUpdateUserSettings = () => {
         <div class="card">
           <div class="rounded-top text-white d-flex flex-row bg-primary" style="height:200px;">
             <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
-              <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="Generic placeholder image"
+              <img :src="imageUrl" alt="Generic placeholder image"
                 class="img-fluid img-thumbnail mt-4 mb-2" style="width: 150px; z-index: 1">
               <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary"
                 data-mdb-ripple-color="dark" style="z-index: 1;" id="toUpdate" @click="toUpdateUserSettings">

@@ -62,7 +62,7 @@ const handleSubmit = async () => {
   const updateUserPayload: UserUpdateDTO = {
     firstName: firstNameRef.value,
     lastName: surnameRef.value,
-    email: emailRef.value
+    email: emailRef.value,
   };
 
 

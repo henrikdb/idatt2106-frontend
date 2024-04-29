@@ -50,6 +50,7 @@ export type { UserUpdateDTO } from './models/UserUpdateDTO';
 export { AccountControllerService } from './services/AccountControllerService';
 export { AuthenticationService } from './services/AuthenticationService';
 export { BankProfileControllerService } from './services/BankProfileControllerService';
+export { FriendService } from './services/FriendService';
 export { GoalService } from './services/GoalService';
 export { ImageService } from './services/ImageService';
 export { LeaderboardService } from './services/LeaderboardService';
