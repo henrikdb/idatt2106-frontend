@@ -207,7 +207,7 @@ const importBudget = async (budgetId: number) => {
     for (let expense of expenses) {
       const expenseRequest: ExpenseRequestDTO = {
         description: expense.description,
-        amount: expense.amount
+        amount: Number(expense.amount) || 0
       }
       await UserService.updateExpense({budgetId: useBudgetStore().getActiveBudgetId, requestBody: expenseRequest});
     }
