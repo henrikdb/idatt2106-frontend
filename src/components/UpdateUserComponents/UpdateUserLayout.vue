@@ -63,7 +63,6 @@ const handleSubmit = async () => {
     firstName: firstNameRef.value,
     lastName: surnameRef.value,
     email: emailRef.value,
-    password: passwordRef.value
   };
 
 
