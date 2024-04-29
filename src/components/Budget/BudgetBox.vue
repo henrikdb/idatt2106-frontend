@@ -1,10 +1,18 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import ConfirmDeleteModal from '@/components/Budget/Modal/ConfirmDeleteModal.vue'
 
-const router = useRouter();
+const emit = defineEmits(['deletedBudgetEvent', 'budgetPressedEvent'])
 const props = defineProps({
+  id: {
+    type: Number,
+    required: true
+  },
   title: {
+    type: String,
+    default: ''
+  },
+  createdAt: {
     type: String,
     default: ''
   },
@@ -35,22 +43,36 @@ onMounted(() => {
   }
 })
 
-// TODO consider store chosen budget in a pinia store
+
 /**
- * Navigates to the pressed budget
+ * Navigates to the pressed budget with its id.
  */
 const onBudgetContainerPressed = () => {
-  router.push('/budget')
+  emit('budgetPressedEvent', props.id)
+}
+
+/**
+ * Emits an event to tell parent component to delete budget with its id.
+ */
+const onBudgetDeleted = () => {
+  emit('deletedBudgetEvent');
 }
 
 </script>
 
 <template>
+  <confirm-delete-modal :budget-id="id"
+                        :modal-id="String(id)"
+                        :budgetTitle="title"
+                        @deletedEvent="onBudgetDeleted"/>
+
   <div class="container-fluid row" @click="onBudgetContainerPressed">
     <div class="col-12">
       <div class="title-container">
         <h2>{{title}}</h2>
+        <p>Created {{createdAt.substring(0, 10).replace(/-/g, "/")}}</p>
       </div>
+      <button id="deleteButton" class="btn btn-danger" data-bs-toggle="modal" :data-bs-target="'#' + id" @click.stop=";"><img src="../../assets/icons/trash-can.svg" height="20" width="20" alt="picture">Delete</button>
     </div>
 
     <div class="col-4 budget">
@@ -135,8 +157,22 @@ div.col-4 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   border-radius: 10px;
-  margin: 10px 0;
+  margin: 5px 0;
 }
 
+div.col-12 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
 
+div.col-12 p {
+  margin: 0;
+  padding: 0;
+}
+
+#deleteButton {
+  z-index: 999;
+  align-self: center;
+  justify-self: right;
+}
 </style>

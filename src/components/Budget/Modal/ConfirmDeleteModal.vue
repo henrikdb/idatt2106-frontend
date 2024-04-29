@@ -1,0 +1,62 @@
+<script setup lang="ts">
+import { UserService } from '@/api'
+
+const emit = defineEmits(['errorEvent', 'deletedEvent'])
+const props = defineProps({
+  modalId: {
+    type: String,
+    required: true
+  },
+  budgetId: {
+    type: Number,
+    required: true
+  },
+  budgetTitle: {
+    type: String,
+    default: ''
+  }
+})
+
+/**
+ * Deletes a budget with the specified ID and emits a delete event.
+ */
+const deleteBudget = async () => {
+  try {
+    await UserService.deleteBudget({budgetId: props.budgetId})
+    emit('deletedEvent')
+  } catch (error) {
+    emit('errorEvent', error)
+  }
+}
+
+</script>
+
+<template>
+  <div class="modal fade" :id="modalId">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Are you sure you want to delete this budget <i>{{ budgetTitle }}?</i></h3>
+          <button class="btn btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <button class="btn btn-primary" data-bs-dismiss="modal" @click="deleteBudget">Yes</button>
+          <button class="btn btn-primary" data-bs-dismiss="modal">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+
+.modal-header {
+  display: flex;
+}
+
+.modal-body {
+  display: grid;
+  gap: 10px
+}
+
+</style>
