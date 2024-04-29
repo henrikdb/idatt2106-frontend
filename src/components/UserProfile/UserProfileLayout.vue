@@ -9,6 +9,9 @@ let cardTitles = ["Spain tour", "Food waste", "Coffee", "Concert", "New book", "
 
 let firstname = ref("");
 let lastname = ref("");
+let imageID = ref(12)
+const imageUrl = ref(`http://localhost:8080/api/images/${imageID.value}`);
+
 
 const router = useRouter();
 const userStore = useUserInfoStore();
@@ -33,7 +36,7 @@ const toUpdateUserSettings = () => {
         <div class="card">
           <div class="rounded-top text-white d-flex flex-row bg-primary" style="height:200px;">
             <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
-              <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="Generic placeholder image"
+              <img :src="imageUrl" alt="Generic placeholder image"
                 class="img-fluid img-thumbnail mt-4 mb-2" style="width: 150px; z-index: 1">
               <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary"
                 data-mdb-ripple-color="dark" style="z-index: 1;" id="toUpdate" @click="toUpdateUserSettings">

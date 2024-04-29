@@ -15,6 +15,5 @@ import { RouterView } from 'vue-router'
   main {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: 600;
-
   }
 </style>
