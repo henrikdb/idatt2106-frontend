@@ -13,6 +13,7 @@ export type User = {
     firstName?: string;
     lastName?: string;
     email?: string;
+    profileImage?: number;
     checkingAccount?: Account;
     savingsAccount?: Account;
     password?: string;
@@ -23,11 +24,11 @@ export type User = {
     streak?: Streak;
     configuration?: Configuration;
     enabled?: boolean;
-    accountNonExpired?: boolean;
-    credentialsNonExpired?: boolean;
     username?: string;
     authorities?: Array<GrantedAuthority>;
     accountNonLocked?: boolean;
+    credentialsNonExpired?: boolean;
+    accountNonExpired?: boolean;
 };
 export namespace User {
     export enum role {

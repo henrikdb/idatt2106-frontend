@@ -94,12 +94,12 @@ const routes = [
       {
         path: '/budget-overview',
         name: 'budget overview',
-        component: () => import('@/views/BudgetOverview.vue'),
+        component: () => import('@/views/Budget/BudgetOverview.vue'),
       },
       {
         path: '/budget',
         name: 'budget',
-        component: () => import('@/views/BudgetView.vue'),
+        component: () => import('@/views/Budget/BudgetView.vue'),
       },
       {
         path: '/profile/:id',

@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue';
 import BaseInput from '@/components/InputFields/BaseInput.vue';
 import { useUserInfoStore } from "@/stores/UserStore";
-import { UserService } from '@/api';
+import { UserService, ImageService } from '@/api';
 import type { UserUpdateDTO } from '@/api';
 
 const firstNameRef = ref()
@@ -11,6 +11,9 @@ const emailRef = ref('')
 const passwordRef = ref('')
 const formRef = ref()
 let samePasswords = ref(true)
+
+const iconSrc = ref('../src/assets/userprofile.png');
+const fileInputRef = ref();
 
 const handleFirstNameInputEvent = (newValue: any) => {
   firstNameRef.value = newValue
@@ -21,15 +24,44 @@ const handleSurnameInputEvent = (newValue: any) => {
   surnameRef.value = newValue
 }
 
+const triggerFileUpload = () => {
+  fileInputRef.value.click();
+};
+
+const handleFileChange = (event: any) => {
+  const file = event.target.files[0];
+  if (file) {
+    uploadImage(file);
+  }
+};
+
+const uploadImage = async (file: any) => {
+  const formData = { file: new Blob([file]) }
+
+  try {
+    const response = await ImageService.uploadImage({ formData });
+    iconSrc.value = "http://localhost:8080/api/images/" + response;
+
+    const updateUserPayload: UserUpdateDTO = {
+      profileImage: response,
+    };
+    UserService.update({ requestBody: updateUserPayload })
+  } catch (error) {
+    console.error('Failed to upload image:', error);
+  }
+};
+
 async function setupForm() {
   try {
-    let response = await UserService.getUser();
+    const response = await UserService.getUser();
     console.log(response.firstName)
 
     firstNameRef.value = response.firstName;
     if (response.lastName != null) {
       surnameRef.value = response.lastName;
     }
+    console.log(response.profileImage)
+    iconSrc.value = "http://localhost:8080/api/images/" + response.profileImage;
   } catch (err) {
     console.error(err)
   }
@@ -66,11 +98,12 @@ onMounted(() => {
     <hr>
     <form @submit.prevent="handleSubmit" novalidate>
       <div class="user-avatar">
-        <img id="icon" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Maxwell Admin">
-      </div>
-      <div class="btn">
+        <input type="file" ref="fileInputRef" @change="handleFileChange" accept=".jpg, .jpeg, .png"
+          style="display: none;" />
+        <img :src="iconSrc" alt="User Avatar" style="width: 300px">
         <div class="mt-2">
-          <span class="btn btn-primary"><img src="@/assets/icons/download.svg"></span>
+          <button type="button" class="btn btn-primary" @click="triggerFileUpload"><img
+              src="@/assets/icons/download.svg"> Upload Image</button>
         </div>
       </div>
       <div class="form-group">

@@ -105,7 +105,7 @@ const handleSubmit = async () => {
       />
       <p>Forgotten password? <RouterLink to="/forgotten-password">Reset password</RouterLink></p>
 
-      <p class="text-danger">{{ errorMsg }}</p>
+      <p class="text-danger" data-cy="error">{{ errorMsg }}</p>
       <button1 id="confirmButton" type="submit" @click="handleSubmit" button-text="Login"></button1>
       <SignUpLink/>
     </form>

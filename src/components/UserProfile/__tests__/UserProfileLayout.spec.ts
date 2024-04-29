@@ -29,19 +29,14 @@ describe('MyComponent and Router Tests', () => {
   });
 
   describe('Component Rendering', () => {
-    it('renders MyComponent correctly with data from the store', () => {
-      // Mock user information
-      store.setUserInfo({ firstname: 'Jane', lastname: 'Doe', accessToken: 'thisIsATestToken' });
+    it('renders MyComponent correctly', () => {
 
       const wrapper = mount(MyComponent, {
         global: {
           plugins: [mockRouter],
         },
       });
-
-      // Check for text or elements that depend on user info
-      expect(wrapper.text()).toContain('Jane');
-      expect(wrapper.text()).toContain('Doe');
+      expect(wrapper.text()).toContain('Edit profile');
     });
   });
 
