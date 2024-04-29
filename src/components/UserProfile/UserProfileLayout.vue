@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import {onMounted, ref} from "vue";
 import { useRouter } from "vue-router";
 import { useUserInfoStore } from "../../stores/UserStore";
+import {GoalService} from "@/api";
 
 let numberOfHistory = 6;
 
@@ -9,6 +10,7 @@ let cardTitles = ["Spain tour", "Food waste", "Coffee", "Concert", "New book", "
 
 let firstname = ref("");
 let lastname = ref("");
+let hasHistory = ref(true)
 
 const router = useRouter();
 const userStore = useUserInfoStore();
@@ -20,10 +22,27 @@ const toRoadmap = () => {
   router.push('/');
 };
 
+async function getGoals() {
+  let response = await GoalService.getGoals();
+  if(response.length > 0) {
+    hasHistory.value = true
+  }else{
+    hasHistory.value = false
+    console.log('No history')
+  }
+}
+
+
+
 // Function to navigate to update user settings
 const toUpdateUserSettings = () => {
   router.push('/settings/profile');
 };
+
+onMounted(() =>{
+  getGoals()
+})
+
 </script>
 
 <template>
@@ -102,7 +121,7 @@ const toUpdateUserSettings = () => {
                 <!-- Here is the history of saving target -->
                 <div class="container-fluid mb-5">
                   <h1 class="mt-5 text-start history-text">History</h1>
-                  <div class="row scrolling-wrapper-history">
+                  <div v-if="hasHistory" class="row scrolling-wrapper-history">
                     <div v-for="index in numberOfHistory" :key="index"
                       class="col-md-4 col-sm-4 col-lg-4 col-xs-4 col-xl-4 control-label">
                       <div class="card history-block">
@@ -125,6 +144,7 @@ const toUpdateUserSettings = () => {
                       </div>
                     </div>
                   </div>
+                  <div v-if="!hasHistory">No History!</div>
 
                 </div>
               </div>
