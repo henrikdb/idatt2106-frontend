@@ -1,23 +1,35 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useUserInfoStore } from "../../stores/UserStore";
+import { UserService } from "@/api";
 
 let numberOfHistory = 6;
 
 let cardTitles = ["Spain tour", "Food waste", "Coffee", "Concert", "New book", "Pretty clothes"]
 
-let firstname = ref("");
-let lastname = ref("");
-let imageID = ref(12)
-const imageUrl = ref(`http://localhost:8080/api/images/${imageID.value}`);
-
+let firstname = ref();
+let lastname = ref();
+const imageUrl = ref(`../src/assets/userprofile.png`);
 
 const router = useRouter();
-const userStore = useUserInfoStore();
-firstname.value = userStore.firstname;
-lastname.value = userStore.lastname;
 
+async function setupForm() {
+  try {
+    const response = await UserService.getUser();
+    console.log(response.firstName)
+
+    firstname.value = response.firstName;
+    lastname.value = response.lastName;
+    imageUrl.value = "http://localhost:8080/api/images/" + response.profileImage;
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+onMounted(() => {
+  setupForm()
+})
 
 const toRoadmap = () => {
   router.push('/');
