@@ -13,35 +13,38 @@ export class ImageService {
      * @throws ApiError
      */
     public static uploadImage({
-        requestBody,
+        formData,
     }: {
-        requestBody?: {
+        formData?: {
             file: Blob;
         },
     }): CancelablePromise<number> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/image/upload',
-            body: requestBody,
-            mediaType: 'application/json',
+            url: '/api/images',
+            formData: formData,
+            mediaType: 'multipart/form-data',
         });
     }
     /**
      * Retrieve an image
      * Retrieve an image from the server
-     * @returns string Successfully retrieved the image
+     * @returns binary Successfully retrieved the image
      * @throws ApiError
      */
     public static getImage({
         id,
     }: {
         id: number,
-    }): CancelablePromise<Array<string>> {
+    }): CancelablePromise<Blob> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/image/{id}',
+            url: '/api/images/{id}',
             path: {
                 'id': id,
+            },
+            errors: {
+                404: `Image not found`,
             },
         });
     }

@@ -37,6 +37,7 @@ export type { LoginRequest } from './models/LoginRequest';
 export { ParticipantDTO } from './models/ParticipantDTO';
 export type { ParticipantUserDTO } from './models/ParticipantUserDTO';
 export type { PasswordResetDTO } from './models/PasswordResetDTO';
+export type { PasswordUpdateDTO } from './models/PasswordUpdateDTO';
 export type { Point } from './models/Point';
 export type { ProfileDTO } from './models/ProfileDTO';
 export type { SignUpRequest } from './models/SignUpRequest';

@@ -7,7 +7,7 @@ export type UserUpdateDTO = {
     firstName?: string;
     lastName?: string;
     email?: string;
-    password?: string;
+    profileImage?: number;
     configuration?: ConfigurationDTO;
 };
 
