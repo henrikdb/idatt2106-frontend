@@ -36,7 +36,22 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                           <li v-for="(array,key) in notifMap" :key="key" >
-                            <router-link class="not-item dropdown-item text-white"   :to="getPath(array[1][0])">{{array[1][1]}}</router-link>
+                            <div class="d-flex align-items-center">
+                              <div v-if="array[1][0] === '1'" class="flex-shrink-0">
+                                <img src="/src/assets/icons/medal.png" alt="Notification Icon" class="notification-icon" style="height: 20px; width: 20px">
+                              </div>
+                              <div v-if="array[1][0] === '2'" class="flex-shrink-0">
+                                <img src="/src/assets/userprofile.png" alt="Notification Icon" class="notification-icon" style="height: 20px; width: 20px">
+                              </div>
+                              <div v-if="array[1][0] === '3'" class="flex-shrink-0">
+                                <img src="/src/assets/icons/piggybank.svg" alt="Notification Icon" class="notification-icon" style="height: 20px; width: 20px">
+                              </div>
+                              <div class="flex-grow-1 ms-3">
+                                <router-link class="not-item dropdown-item text-white"   :to="getPath(array[1][0])">{{array[1][1]}}</router-link>
+                              </div>
+                            </div>
+
+
                           </li>
                         </ul>
                     </li>
@@ -111,9 +126,9 @@ let path = ref('#');
 
 function getNotification(){
   //axios call
-  let response = ref( ['1', 'You have recived a award for getting 200 points'])
-  let response2 = ref( ['2', 'You have recived a friend request from Jens Aanestad'])
-  let response3 = ref( ['3', 'You have lost your streak. Come back to try again'])
+  let response: any = ref( ['1', 'You have recived a award for getting 200 points'])
+  let response2: any = ref( ['2', 'You have recived a friend request from Jens Aanestad'])
+  let response3: any = ref( ['3', 'You have lost your streak. Come back to try again'])
   notifMap.value.set(notifId.value,response.value)
   notifId.value++
   notifMap.value.set(notifId.value,response2.value)
@@ -135,6 +150,8 @@ function getPath(id : string){
   if(id === '3'){
     return path.value = '/roadmap'
   }
+
+  return '#';
 }
 
 function removeNotification() {
