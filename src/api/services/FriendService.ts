@@ -24,6 +24,31 @@ export class FriendService {
             path: {
                 'friendId': friendId,
             },
+            errors: {
+                404: `Friend request not found`,
+            },
+        });
+    }
+    /**
+     * Delete a friend or cancel a friend request
+     * Deletes an existing friend from your friend list or cancels a received friend request.
+     * @returns any Friend successfully deleted or friend request cancelled
+     * @throws ApiError
+     */
+    public static deleteFriendOrFriendRequest({
+        friendId,
+    }: {
+        friendId: number,
+    }): CancelablePromise<Record<string, any>> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/api/friends/{friendId}',
+            path: {
+                'friendId': friendId,
+            },
+            errors: {
+                404: `Friend or friend request not found`,
+            },
         });
     }
     /**

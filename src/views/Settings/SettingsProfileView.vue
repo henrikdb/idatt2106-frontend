@@ -46,6 +46,9 @@ const uploadImage = async (file: any) => {
       profileImage: response,
     };
     UserService.update({ requestBody: updateUserPayload })
+    useUserInfoStore().setUserInfo({
+      profileImage: response,
+    })
   } catch (error) {
     console.error('Failed to upload image:', error);
   }
@@ -61,7 +64,11 @@ async function setupForm() {
       surnameRef.value = response.lastName;
     }
     console.log(response.profileImage)
-    iconSrc.value = "http://localhost:8080/api/images/" + response.profileImage;
+    if(response.profileImage != null){
+      iconSrc.value = "http://localhost:8080/api/images/" + response.profileImage;
+    } else {
+      iconSrc.value = "../src/assets/userprofile.png";
+    }
   } catch (err) {
     console.error(err)
   }
