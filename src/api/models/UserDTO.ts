@@ -10,5 +10,6 @@ export type UserDTO = {
     email?: string;
     createdAt?: string;
     role?: string;
+    subscriptionLevel?: string;
 };
 

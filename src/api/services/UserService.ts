@@ -200,6 +200,28 @@ export class UserService {
         });
     }
     /**
+     * Search for users by name and filter
+     * Returns a list of users whose names contain the specified search term and match the filter.
+     * @returns UserDTO Successfully retrieved list of users
+     * @throws ApiError
+     */
+    public static getUsersByNameAndFilter({
+        searchTerm,
+        filter,
+    }: {
+        searchTerm: string,
+        filter: string,
+    }): CancelablePromise<Array<UserDTO>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/users/search/{searchTerm}/{filter}',
+            path: {
+                'searchTerm': searchTerm,
+                'filter': filter,
+            },
+        });
+    }
+    /**
      * Get the authenticated user
      * Get all user information for the authenticated user
      * @returns UserDTO Successfully got user

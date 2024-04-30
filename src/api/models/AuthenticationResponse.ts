@@ -6,6 +6,7 @@ export type AuthenticationResponse = {
     firstName?: string;
     lastName?: string;
     role?: string;
+    subscriptionLevel?: string;
     token?: string;
 };
 
