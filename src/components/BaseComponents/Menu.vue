@@ -1,7 +1,7 @@
 <template>
     <nav id="navBar" class="navbar navbar-expand-xl">
         <div class="container-fluid">
-            <router-link class="navbar-brand" id="home" :to="toSavingGoals()">
+          <router-link class="navbar-brand" id="home" :to="toSavingGoals()">
                 <img id="logoImg" src="/src/assets/Sparesti-logo.png" alt="Sparesti-logo" width="60">
                 <span id="logo" class="text-white">Sparesti</span>
             </router-link>
@@ -13,45 +13,52 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 ui-menu">
                     <li class="nav-item">
-                        <router-link class="nav-link text-white" :to="toSavingGoals()"><img
+                      <router-link data-cy="savingGoals" class="nav-link text-white"
+                                   :to="toSavingGoals()"><img
                                 src="@/assets/icons/saving.svg">Saving goals</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link text-white" :to="toLeaderboard()"><img
+                      <router-link data-cy="leaderboard" class="nav-link text-white"
+                                   :to="toLeaderboard()"><img
                                 src="@/assets/icons/leaderboard.svg">Leaderboard</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link text-white" :to="toNews()"><img
-                                src="@/assets/icons/newsletter.svg">News</router-link>
+                      <router-link data-cy="news" class="nav-link text-white" :to="toNews()"><img
+                          src="@/assets/icons/newsletter.svg">News</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link text-white" :to="toStore()"><img
-                                src="@/assets/icons/storefront.svg">Store</router-link>
+                      <router-link data-cy="store" class="nav-link text-white" :to="toStore()"><img
+                          src="@/assets/icons/storefront.svg">Store</router-link>
                     </li>
                     <li v-if="userStore.isLoggedIn" class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle username-text text-white " href="#" role="button"
+                        <a data-cy="user"
+                           class="nav-link dropdown-toggle username-text text-white "
+                           href="#" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <img :src="useUserInfoStore().profileImage ? 'http://localhost:8080/api/images/' + useUserInfoStore().profileImage : 'src/assets/userprofile.png'"
                                 style="width: 50px; border: 2px solid black; border-radius: 50%">{{
                 useUserInfoStore().firstname }}
                         </a>
                         <ul class="dropdown-menu dropdown-username-content">
-                            <li><router-link class="dropdown-item text-white dropdown-username-link"
-                                    :to="toUserProfile()"><img src="@/assets/icons/person.svg">User
-                                    Profile</router-link></li>
-                            <li><router-link class="dropdown-item text-white dropdown-username-link"
-                                    :to="toBudget()"><img>Budget</router-link></li>
-                            <li><router-link class="dropdown-item text-white dropdown-username-link"
-                                    :to="toFriends()"><img src="@/assets/icons/friends.svg">Friends</router-link></li>
-                            <li><router-link class="dropdown-item text-white dropdown-username-link"
-                                    :to="toSetting()"><img src="@/assets/icons/settings.svg">Settings</router-link></li>
-                            <li><router-link class="dropdown-item text-white dropdown-username-link"
-                                    :to="toFeedback()"><img src="@/assets/icons/feedback.svg">Feedback</router-link>
-                            </li>
-                            <li><router-link class="dropdown-item text-white dropdown-username-link"
-                                    :to="toSetting()"><img src="@/assets/icons/admin.svg">Admin</router-link></li>
-                            <li><a data-testid="logout" class="dropdown-item text-white dropdown-username-link" ref="#"
-                                    @click="toLogout()"><img src="@/assets/icons/logout.svg">Log out</a></li>
+                            <li><router-link data-cy="profile"
+                              class="dropdown-item text-white dropdown-username-link" :to="toUserProfile()"><img
+                                  src="@/assets/icons/person.svg">User Profile</router-link></li>
+                            <li><router-link data-cy="budget"
+                              class="dropdown-item text-white dropdown-username-link" :to="toBudget()"><img>Budget</router-link></li>
+                            <li><router-link data-cy="friends"
+                              class="dropdown-item text-white dropdown-username-link" :to="toFriends()"><img
+                                src="@/assets/icons/friends.svg">Friends</router-link></li>
+                            <li><router-link data-cy="settings"
+                              class="dropdown-item text-white dropdown-username-link" :to="toSetting()"><img
+                                src="@/assets/icons/settings.svg">Settings</router-link></li>
+                            <li><router-link data-cy="feedback"
+                              class="dropdown-item text-white dropdown-username-link" :to="toFeedback()"><img
+                                src="@/assets/icons/feedback.svg">Feedback</router-link></li>
+                            <li><router-link data-cy="admin"
+                              class="dropdown-item text-white dropdown-username-link" :to="toSetting()"><img
+                                src="@/assets/icons/admin.svg">Admin</router-link></li>
+                            <li><a data-testid="logout" class="dropdown-item text-white dropdown-username-link" ref="#" @click="toLogout()"><img
+                                src="@/assets/icons/logout.svg">Log out</a></li>
                         </ul>
                     </li>
                     <li v-else class="nav-item">

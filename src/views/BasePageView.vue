@@ -7,7 +7,7 @@ import FooterAlternative from "@/components/BaseComponents/FooterAlternative.vue
 
 <template>
   
-    <Menu></Menu>
+    <Menu data-cy="menu"></Menu>
     <div style="display: flex; flex-direction: row;">
       <img v-for="item in 7" src="@/assets/coca.webp" style="width: 100%; height: 100px; margin: 5px; border-radius: 1rem;" alt="picture">
     </div>
