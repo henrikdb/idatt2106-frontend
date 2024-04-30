@@ -29,7 +29,7 @@
                           src="@/assets/icons/storefront.svg">Store</router-link>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class=" nav-link me-3 dropdown-toggle hidden-arrow" href="#" id="navbarDropdownMenuLink"
+                        <a data-mdb-dropdown-init class=" nav-link me-3 dropdown-toggle hidden-arrow notification" href="#" id="navbarDropdownMenuLink"
                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
                           <i class="fas fa-bell text-white"></i>
                           <span class="badge rounded-pill badge-notification bg-danger">1</span>
@@ -41,7 +41,7 @@
                         </ul>
                     </li>
                     <li v-if="userStore.isLoggedIn" class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle username-text text-white " href="#" role="button"
+                        <a class="nav-link dropdown-toggle username-text text-white" href="#" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="@/assets/icons/person.svg">{{ useUserInfoStore().firstname}}
                         </a>
@@ -86,7 +86,7 @@ let notifMap = ref (new Map<number, any[]>);
 
 let notifId = ref(0);
 
-let path = ref('#');
+let path = ref('');
 
 
 let notReadNotification = ['You', 'Another news', 'Something else here'];
@@ -120,7 +120,6 @@ function toBadges(){
 function goToSite(id : string){
   if(id === '1'){
     path.value = '/profile'
-    return path
   }
   if(id === '2'){
     path.value = '/friends'
@@ -280,4 +279,9 @@ onMounted(() => {
     height: auto;
     aspect-ratio: 1.3/1;
 }
+.notification.hidden-arrow::after{
+  display: none;
+}
+
+
 </style>
