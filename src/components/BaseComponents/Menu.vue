@@ -30,6 +30,33 @@
                       <router-link data-cy="store" class="nav-link text-white" :to="toStore()"><img
                           src="@/assets/icons/storefront.svg">Store</router-link>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a data-mdb-dropdown-init class=" nav-link me-3 dropdown-toggle hidden-arrow notification" href="#" id="navbarDropdownMenuLink"
+                           role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          <i class="fas fa-bell text-white"></i>
+                          <span class="badge rounded-pill badge-notification bg-danger">{{counter}}</span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                          <li v-for="(array,key) in notifMap" :key="key" >
+                            <div class="d-flex align-items-center">
+                              <div v-if="array[1][0] === '1'" class="flex-shrink-0">
+                                <img src="/src/assets/icons/medal.png" alt="Notification Icon" class="notification-icon" style="height: 20px; width: 20px">
+                              </div>
+                              <div v-if="array[1][0] === '2'" class="flex-shrink-0">
+                                <img src="/src/assets/userprofile.png" alt="Notification Icon" class="notification-icon" style="height: 20px; width: 20px">
+                              </div>
+                              <div v-if="array[1][0] === '3'" class="flex-shrink-0">
+                                <img src="/src/assets/icons/piggybank.svg" alt="Notification Icon" class="notification-icon" style="height: 20px; width: 20px">
+                              </div>
+                              <div class="flex-grow-1 ms-3">
+                                <router-link class="not-item dropdown-item text-white"   :to="getPath(array[1][0])">{{array[1][1]}}</router-link>
+                              </div>
+                            </div>
+
+
+                          </li>
+                        </ul>
+                    </li>
                     <li v-if="userStore.isLoggedIn" class="nav-item dropdown">
                         <a data-cy="user"
                            class="nav-link dropdown-toggle username-text text-white "
@@ -70,9 +97,11 @@
     </nav>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue';
 import { useRouter } from "vue-router";
 import { useUserInfoStore } from '@/stores/UserStore';
+import {onMounted, ref} from "vue";
+
+
 
 const router = useRouter();
 
@@ -85,6 +114,65 @@ if (useUserInfoStore().profileImage !== 0) {
 } else {
     profileImage = 'src/assets/userprofile.png';
 }
+
+//Hashmap that contains the path to the Badges, The Friend, The dashboard etc.
+//The key value pair is the message of the notification and the path of the route
+let notifMap = ref (new Map<number, any[]>);
+
+let notifId = ref(0);
+
+let path = ref('#');
+
+let counter = ref(0)
+
+
+/* id: 0 -> /roadmap
+   id: 1 -> /profile
+   id: 2 -> /friend
+ */
+
+
+
+function getNotification(){
+  //axios call
+  let response: any = ref( ['1', 'You have recived a award for getting 200 points'])
+  let response2: any = ref( ['2', 'You have recived a friend request from Jens Aanestad'])
+  let response3: any = ref( ['3', 'You have lost your streak. Come back to try again'])
+  notifMap.value.set(notifId.value,response.value)
+  notifId.value++
+  notifMap.value.set(notifId.value,response2.value)
+  notifId.value++
+  notifMap.value.set(notifId.value,response3.value)
+  notifId.value++
+
+  counter.value = notifMap.value.size
+}
+function toBadges(){
+
+}
+
+function getPath(id : string){
+  if(id === '1'){
+    return path.value = '/profile'
+  }
+  if(id === '2'){
+    return path.value = '/friends'
+  }
+  if(id === '3'){
+    return path.value = '/roadmap'
+  }
+
+  return '#';
+}
+
+function updateNotification(){
+  //Axios get request to the getFunction
+}
+
+function removeNotification() {
+
+}
+
 
 function toHome() {
     return '/'
@@ -130,7 +218,9 @@ function toLogout() {
     userStore.clearUserInfo();
     router.push('login')
 }
-
+onMounted(() => {
+  getNotification()
+})
 
 </script>
 <style scoped>
@@ -150,6 +240,9 @@ function toLogout() {
 
 .nav-item:hover {
     background-color: #2b6ac7;
+}
+.not-item:hover {
+  background-color: #2b6ac7;
 }
 
 .nav-item .dropdown {
@@ -172,6 +265,16 @@ function toLogout() {
 .dropdown-menu {
     background-color: #0A58CA;
     right: -0.5rem;
+}
+
+#notifyBtn  {
+  background-color: #0A58CA;
+  border: #0A58CA;
+}
+
+#notifyBtn:hover {
+  background-color: #2b6ac7;
+  border: #2b6ac7;
 }
 
 .dropdown-menu[data-bs-popper] {
@@ -216,4 +319,9 @@ function toLogout() {
     height: auto;
     aspect-ratio: 1.3/1;
 }
+.notification.hidden-arrow::after{
+  display: none;
+}
+
+
 </style>
