@@ -32,7 +32,7 @@
                         <a data-mdb-dropdown-init class=" nav-link me-3 dropdown-toggle hidden-arrow notification" href="#" id="navbarDropdownMenuLink"
                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
                           <i class="fas fa-bell text-white"></i>
-                          <span class="badge rounded-pill badge-notification bg-danger">1</span>
+                          <span class="badge rounded-pill badge-notification bg-danger">{{counter}}</span>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                           <li v-for="(array,key) in notifMap" :key="key" >
@@ -116,6 +116,8 @@ let notifId = ref(0);
 
 let path = ref('#');
 
+let counter = ref(0)
+
 
 /* id: 0 -> /roadmap
    id: 1 -> /profile
@@ -135,6 +137,8 @@ function getNotification(){
   notifId.value++
   notifMap.value.set(notifId.value,response3.value)
   notifId.value++
+
+  counter.value = notifMap.value.size
 }
 function toBadges(){
 
@@ -152,6 +156,10 @@ function getPath(id : string){
   }
 
   return '#';
+}
+
+function updateNotification(){
+  //Axios get request to the getFunction
 }
 
 function removeNotification() {
