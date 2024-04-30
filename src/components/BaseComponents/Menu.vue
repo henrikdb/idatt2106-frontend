@@ -39,7 +39,7 @@
                             <li><router-link class="dropdown-item text-white dropdown-username-link"
                                     :to="toUserProfile()"><img src="@/assets/icons/person.svg">User
                                     Profile</router-link></li>
-                            <li><router-link class="dropdown-item text-white dropdown-username-link"
+                            <li v-if="useUserInfoStore().isPremium"><router-link class="dropdown-item text-white dropdown-username-link"
                                     :to="toBudget()"><img>Budget</router-link></li>
                             <li><router-link class="dropdown-item text-white dropdown-username-link"
                                     :to="toFriends()"><img src="@/assets/icons/friends.svg">Friends</router-link></li>

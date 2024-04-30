@@ -36,9 +36,10 @@ export type UserStoreInfo = {
   password?: string;
   accessToken?: string;
   role?: string;
+  subscriptionLevel?: string;
   profileImage?: number;
 };
-//todo Fix if there is time
+
 export const useUserInfoStore = defineStore('UserInfoStore', {
   state: () => ({
     id: 0,
@@ -48,6 +49,7 @@ export const useUserInfoStore = defineStore('UserInfoStore', {
     password: '',
     accessToken: '',
     role: '',
+    subscriptionLevel: '',
     profileImage: 0,
   }),
   persist: {
@@ -68,6 +70,7 @@ export const useUserInfoStore = defineStore('UserInfoStore', {
       userinfo.accessToken && (this.$state.accessToken = userinfo.accessToken);
       userinfo.accessToken && (OpenAPI.TOKEN = this.$state.accessToken);
       userinfo.role && (this.$state.role = userinfo.role);
+      userinfo.subscriptionLevel && (this.$state.subscriptionLevel = userinfo.subscriptionLevel);
       userinfo.profileImage && (this.$state.profileImage = userinfo.profileImage);
     },
     clearUserInfo() {
@@ -77,6 +80,7 @@ export const useUserInfoStore = defineStore('UserInfoStore', {
       this.$state.lastname = '';
       this.$state.accessToken = '';
       this.$state.role = '';
+      this.$state.subscriptionLevel = '';
       this.$state.profileImage = 0;
       OpenAPI.TOKEN = undefined;
     },
@@ -97,5 +101,11 @@ export const useUserInfoStore = defineStore('UserInfoStore', {
     isLoggedIn(): boolean {
       return this.accessToken !== '';
     },
+    isPremium(): boolean {
+      return this.subscriptionLevel === 'PREMIUM';
+    },
+    isNoAds(): boolean {
+      return this.subscriptionLevel === 'NO_ADS';
+    }
   },
 });

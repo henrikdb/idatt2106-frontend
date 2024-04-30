@@ -12,16 +12,17 @@
                         <img src="@/assets/items/adfree.png" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">Adfree</h5>
-                            <button type="button" class="btn btn-primary" id="buttonStyle"> +35kr</button>
+                            <button type="button" class="btn btn-primary" id="buttonStyle" @click="buyNoAds"> +35kr</button>
                         </div>
-                    </div> 
+                    </div>
                     <div class="card text-center" style="width: 16rem; border: none">
                         <img src="@/assets/items/piggybank.webp" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">Premium</h5>
-                            <button type="button" class="btn btn-primary" id="buttonStyle">+50kr</button>
+                            <button type="button" class="btn btn-primary" id="buttonStyle"
+                                @click="buyPremium">+50kr</button>
                         </div>
-                    </div> 
+                    </div>
                 </div>
             </div>
             <div class="col-md-12">
@@ -68,21 +69,21 @@
                             <h5 class="card-title">Free Coffee</h5>
                             <ShopButton button-text="500"></ShopButton>
                         </div>
-                    </div> 
+                    </div>
                     <div class="card text-center" style="width: 16rem; border: none">
                         <img src="@/assets/items/viaplay.jpg" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">1 Month Viaplay</h5>
                             <ShopButton button-text="10000"></ShopButton>
                         </div>
-                    </div> 
+                    </div>
                     <div class="card text-center" style="width: 16rem; border: none">
                         <img src="@/assets/items/pirbad.png" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">-10% rabatt</h5>
                             <ShopButton button-text="1000"></ShopButton>
                         </div>
-                    </div> 
+                    </div>
                 </div>
             </div>
 
@@ -92,6 +93,31 @@
 
 <script setup lang="ts">
 import ShopButton from '@/components/Buttons/ShopButton.vue';
+import { ref } from 'vue';
+import { UserService } from '@/api';
+import { useUserInfoStore } from '@/stores/UserStore';
+
+const buyPremium = async () => {
+    try {
+        const response = await UserService.updateSubscriptionLevel({ subscriptionLevel: 'PREMIUM' });
+        useUserInfoStore().setUserInfo({
+            subscriptionLevel: 'PREMIUM',
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const buyNoAds = async () => {
+    try {
+        const response = await UserService.updateSubscriptionLevel({ subscriptionLevel: 'NO_ADS' });
+        useUserInfoStore().setUserInfo({
+            subscriptionLevel: 'NO_ADS',
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
 </script>
 
 <style scoped>
@@ -105,14 +131,14 @@ import ShopButton from '@/components/Buttons/ShopButton.vue';
 }
 
 .box {
-    width:90%;
+    width: 90%;
 }
 
 .card:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.card-body{
+.card-body {
     height: 100px;
     padding: 5px;
 }
