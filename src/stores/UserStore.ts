@@ -29,22 +29,26 @@ const cookiesStorage: Storage = {
 };
 
 export type UserStoreInfo = {
+  id?: number;
   email?: string;
   firstname?: string;
   lastname?: string;
   password?: string;
   accessToken?: string;
   role?: string;
+  profileImage?: number;
 };
 //todo Fix if there is time
 export const useUserInfoStore = defineStore('UserInfoStore', {
   state: () => ({
+    id: 0,
     email: '',
     firstname: '',
     lastname: '',
     password: '',
     accessToken: '',
     role: '',
+    profileImage: 0,
   }),
   persist: {
     storage: cookiesStorage,
@@ -57,19 +61,23 @@ export const useUserInfoStore = defineStore('UserInfoStore', {
       this.password = ''
     },
     setUserInfo(userinfo: UserStoreInfo) {
+      userinfo.id && (this.$state.id = userinfo.id);
       userinfo.email && (this.$state.email = userinfo.email);
       userinfo.firstname && (this.$state.firstname = userinfo.firstname);
       userinfo.lastname && (this.$state.lastname = userinfo.lastname);
       userinfo.accessToken && (this.$state.accessToken = userinfo.accessToken);
       userinfo.accessToken && (OpenAPI.TOKEN = this.$state.accessToken);
       userinfo.role && (this.$state.role = userinfo.role);
+      userinfo.profileImage && (this.$state.profileImage = userinfo.profileImage);
     },
     clearUserInfo() {
+      this.$state.id = 0;
       this.$state.email = '';
       this.$state.firstname = '';
       this.$state.lastname = '';
       this.$state.accessToken = '';
       this.$state.role = '';
+      this.$state.profileImage = 0;
       OpenAPI.TOKEN = undefined;
     },
   },

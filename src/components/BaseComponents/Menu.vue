@@ -35,7 +35,9 @@
                            class="nav-link dropdown-toggle username-text text-white "
                            href="#" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="@/assets/icons/person.svg">{{ useUserInfoStore().firstname}}
+                            <img :src="useUserInfoStore().profileImage ? 'http://localhost:8080/api/images/' + useUserInfoStore().profileImage : 'src/assets/userprofile.png'"
+                                style="width: 50px; border: 2px solid black; border-radius: 50%">{{
+                useUserInfoStore().firstname }}
                         </a>
                         <ul class="dropdown-menu dropdown-username-content">
                             <li><router-link data-cy="profile"
@@ -68,19 +70,28 @@
     </nav>
 </template>
 <script setup lang="ts">
+import { ref } from 'vue';
 import { useRouter } from "vue-router";
 import { useUserInfoStore } from '@/stores/UserStore';
 
 const router = useRouter();
 
-const userStore : any = useUserInfoStore();
+const userStore: any = useUserInfoStore();
+
+let profileImage: any = ref('');
+
+if (useUserInfoStore().profileImage !== 0) {
+    profileImage = 'http://localhost:8080/api/images/' + useUserInfoStore().profileImage;
+} else {
+    profileImage = 'src/assets/userprofile.png';
+}
 
 function toHome() {
     return '/'
 }
 
 function toBudget() {
-  return '/budget-overview'
+    return '/budget-overview'
 }
 
 function toSavingGoals() {
@@ -112,7 +123,7 @@ function toFriends() {
 }
 
 function toUserProfile() {
-   return '/profile'
+    return '/profile'
 }
 
 function toLogout() {

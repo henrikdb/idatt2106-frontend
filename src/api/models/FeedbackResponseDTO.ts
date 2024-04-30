@@ -2,14 +2,10 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type UserDTO = {
-    id?: number;
-    firstName?: string;
-    lastName?: string;
-    profileImage?: number;
+export type FeedbackResponseDTO = {
+    id?: string;
     email?: string;
+    message?: string;
     createdAt?: string;
-    role?: string;
-    subscriptionLevel?: string;
 };
 

@@ -24,6 +24,8 @@ export type { DailyChallengeProgressDTO } from './models/DailyChallengeProgressD
 export type { ExceptionResponse } from './models/ExceptionResponse';
 export type { ExpenseRequestDTO } from './models/ExpenseRequestDTO';
 export type { ExpenseResponseDTO } from './models/ExpenseResponseDTO';
+export type { FeedbackRequestDTO } from './models/FeedbackRequestDTO';
+export type { FeedbackResponseDTO } from './models/FeedbackResponseDTO';
 export type { GoalDTO } from './models/GoalDTO';
 export type { LeaderboardDTO } from './models/LeaderboardDTO';
 export type { LeaderboardEntryDTO } from './models/LeaderboardEntryDTO';
