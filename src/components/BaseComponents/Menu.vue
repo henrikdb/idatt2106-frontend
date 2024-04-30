@@ -70,7 +70,7 @@
                             <li><router-link data-cy="profile"
                               class="dropdown-item text-white dropdown-username-link" :to="toUserProfile()"><img
                                   src="@/assets/icons/person.svg">User Profile</router-link></li>
-                            <li><router-link data-cy="budget"
+                            <li v-if="useUserInfoStore().isPremium"><router-link data-cy="budget"
                               class="dropdown-item text-white dropdown-username-link" :to="toBudget()"><img>Budget</router-link></li>
                             <li><router-link data-cy="friends"
                               class="dropdown-item text-white dropdown-username-link" :to="toFriends()"><img

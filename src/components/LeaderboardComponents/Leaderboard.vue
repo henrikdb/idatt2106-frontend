@@ -57,7 +57,7 @@ console.log(props.leaderboardExtra);
 
 const userInLeaderboard = computed(() => props.leaderboard.some(entry => entry.user && entry.user.email === userStore.email));
 const navigateToUserProfile = (id: number) => {
-  router.push({ name: 'user-profile' });
+  router.push(`/profile/${id}`);
 };
 </script>
 
