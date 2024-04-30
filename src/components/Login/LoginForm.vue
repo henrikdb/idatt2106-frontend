@@ -56,11 +56,13 @@ const handleSubmit = async () => {
     OpenAPI.TOKEN = response.token;
 
     userStore.setUserInfo({
+      id: response.userId,
       accessToken: response.token,
       firstname: response.firstName,
       lastname: response.lastName,
       email: emailRef.value,
       role: response.role,
+      profileImage: response.profileImage
     });
 
     console.log()

@@ -3,7 +3,7 @@
     <div class="ribbon"></div>
     <table>
       <tbody>
-        <tr v-for="(entry, index) in leaderboard" :key="entry.user?.id" :class="{ 'is-user-5': entry.user?.firstName === 'User' }">
+        <tr v-for="(entry, index) in leaderboard" :key="entry.user?.id" :class="{ 'is-user-5': entry.user?.id === userStore.id }">
           <td class="number">{{ entry.rank }}</td>
           <td class="name" @click="navigateToUserProfile(entry.user?.id ?? 0)">{{ entry.user?.firstName }}</td>
           <td class="points" v-if="index === 0">
@@ -20,7 +20,7 @@
       <tbody id="line">`</tbody>
       <tbody v-if="!userInLeaderboard">
         <tr></tr>
-        <tr v-for="(entry, index) in leaderboardExtra" :key="entry.user?.id" :class="{ 'is-user-5': entry.user?.firstName === userStore.firstname }">
+        <tr v-for="(entry, index) in leaderboardExtra" :key="entry.user?.id" :class="{ 'is-user-5': entry.user?.id === userStore.id }">
           <td class="number">{{ entry.rank }}</td>
           <td class="name" @click="navigateToUserProfile(entry.user?.id ?? 0)">{{ entry.user?.firstName }}</td>
           <td class="points">{{ entry.score }}</td>
