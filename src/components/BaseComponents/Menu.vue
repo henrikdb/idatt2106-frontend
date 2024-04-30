@@ -36,7 +36,7 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                           <li v-for="(array,key) in notifMap" :key="key" >
-                            <router-link class="not-item dropdown-item text-white" @click="goToSite(array[1][0])"  :to="path">{{array[1][1]}}</router-link>
+                            <router-link class="not-item dropdown-item text-white"   :to="getPath(array[1][0])">{{array[1][1]}}</router-link>
                           </li>
                         </ul>
                     </li>
@@ -75,7 +75,6 @@
     </nav>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue';
 import { useRouter } from "vue-router";
 import { useUserInfoStore } from '@/stores/UserStore';
 import {onMounted, ref} from "vue";
@@ -100,13 +99,8 @@ let notifMap = ref (new Map<number, any[]>);
 
 let notifId = ref(0);
 
-let path = ref('');
+let path = ref('#');
 
-
-let notReadNotification = ['You', 'Another news', 'Something else here'];
-let readNotification = []
-let isRead = ref(false)
-let counter = ref(0)
 
 /* id: 0 -> /roadmap
    id: 1 -> /profile
@@ -131,15 +125,15 @@ function toBadges(){
 
 }
 
-function goToSite(id : string){
+function getPath(id : string){
   if(id === '1'){
-    path.value = '/profile'
+    return path.value = '/profile'
   }
   if(id === '2'){
-    path.value = '/friends'
+    return path.value = '/friends'
   }
   if(id === '3'){
-    path.value = '/roadmap'
+    return path.value = '/roadmap'
   }
 }
 
