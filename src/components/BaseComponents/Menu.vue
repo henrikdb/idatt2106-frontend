@@ -35,8 +35,8 @@
                           <span class="badge rounded-pill badge-notification bg-danger">1</span>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                          <li v-for="index in notReadNotification" :key="index">
-                            <a class="not-item dropdown-item text-white" href="#">{{index}}</a>
+                          <li v-for="(array,key) in notifMap" :key="key" >
+                            <router-link class="not-item dropdown-item text-white" @click="goToSite(array[1][0])"  :to="path">{{array[1][1]}}</router-link>
                           </li>
                         </ul>
                     </li>
@@ -72,7 +72,7 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
 import { useUserInfoStore } from '@/stores/UserStore';
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 
 
 
@@ -82,9 +82,11 @@ const userStore : any = useUserInfoStore();
 
 //Hashmap that contains the path to the Badges, The Friend, The dashboard etc.
 //The key value pair is the message of the notification and the path of the route
-let messagePath = new Map<string, string>();
-let notifMap = new Map<number, Map<string, string>>();
-let notifId = 0;
+let notifMap = ref (new Map<number, any[]>);
+
+let notifId = ref(0);
+
+let path = ref('#');
 
 
 let notReadNotification = ['You', 'Another news', 'Something else here'];
@@ -101,13 +103,31 @@ let counter = ref(0)
 
 function getNotification(){
   //axios call
-  let response = ['#id', 'message', ]
-  messagePath.set(response[0], response[1])
-  notifMap.set(notifId,messagePath)
-  notReadNotification.push(response[1])
+  let response = ref( ['1', 'You have recived a award for getting 200 points'])
+  let response2 = ref( ['2', 'You have recived a friend request from Jens Aanestad'])
+  let response3 = ref( ['3', 'You have lost your streak. Come back to try again'])
+  notifMap.value.set(notifId.value,response.value)
+  notifId.value++
+  notifMap.value.set(notifId.value,response2.value)
+  notifId.value++
+  notifMap.value.set(notifId.value,response3.value)
+  notifId.value++
 }
 function toBadges(){
 
+}
+
+function goToSite(id : string){
+  if(id === '1'){
+    path.value = '/profile'
+    return path
+  }
+  if(id === '2'){
+    path.value = '/friends'
+  }
+  if(id === '3'){
+    path.value = '/roadmap'
+  }
 }
 
 function removeNotification() {
@@ -159,7 +179,9 @@ function toLogout() {
     userStore.clearUserInfo();
     router.push('login')
 }
-
+onMounted(() => {
+  getNotification()
+})
 
 </script>
 <style scoped>
