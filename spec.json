@@ -23,6 +23,38 @@
     }
   ],
   "paths": {
+    "/api/users/subscription/{subscriptionLevel}": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update User Subscription Level",
+        "description": "Updates the subscription level of the current user",
+        "operationId": "updateSubscriptionLevel",
+        "parameters": [
+          {
+            "name": "subscriptionLevel",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Subscription level updated successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/friends/{friendId}": {
       "put": {
         "tags": [
@@ -126,8 +158,8 @@
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "No accounts associated with a bank user",
+          "404": {
+            "description": "Bank profile id does not exist",
             "content": {
               "*/*": {
                 "schema": {
@@ -136,8 +168,8 @@
               }
             }
           },
-          "404": {
-            "description": "Bank profile id does not exist",
+          "200": {
+            "description": "No accounts associated with a bank user",
             "content": {
               "*/*": {
                 "schema": {
@@ -168,8 +200,8 @@
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "Successfully created a bank profile",
+          "400": {
+            "description": "Could not create profile",
             "content": {
               "*/*": {
                 "schema": {
@@ -178,8 +210,8 @@
               }
             }
           },
-          "400": {
-            "description": "Could not create profile",
+          "200": {
+            "description": "Successfully created a bank profile",
             "content": {
               "*/*": {
                 "schema": {
@@ -210,16 +242,6 @@
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "Successfully created account",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/AccountResponseDTO"
-                }
-              }
-            }
-          },
           "404": {
             "description": "Provided bank profile id could not be found",
             "content": {
@@ -229,6 +251,41 @@
                 }
               }
             }
+          },
+          "200": {
+            "description": "Successfully created account",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/send-feedback": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Send feedback",
+        "description": "Send feedback from an email.",
+        "operationId": "sendFeedback",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FeedbackRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
           }
         }
       }
@@ -278,17 +335,17 @@
           "required": true
         },
         "responses": {
-          "204": {
-            "description": "Password was reset successfully"
-          },
           "403": {
             "description": "Invalid token"
+          },
+          "204": {
+            "description": "Password was reset successfully"
           }
         },
         "security": []
       }
     },
-    "/api/image/upload": {
+    "/api/images": {
       "post": {
         "tags": [
           "Image"
@@ -298,7 +355,7 @@
         "operationId": "uploadImage",
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
                 "required": [
                   "file"
@@ -315,19 +372,8 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "Successfully uploaded the image",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "type": "integer",
-                  "format": "int64"
-                }
-              }
-            }
-          },
           "201": {
-            "description": "Created",
+            "description": "Successfully uploaded the image",
             "content": {
               "*/*": {
                 "schema": {
@@ -426,8 +472,8 @@
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "Successfully updated budget",
+          "500": {
+            "description": "Budget is not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -436,8 +482,8 @@
               }
             }
           },
-          "500": {
-            "description": "Budget is not found",
+          "200": {
+            "description": "Successfully updated budget",
             "content": {
               "application/json": {
                 "schema": {
@@ -479,8 +525,8 @@
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "Successfully updated budget",
+          "500": {
+            "description": "Error updating expense",
             "content": {
               "application/json": {
                 "schema": {
@@ -489,8 +535,8 @@
               }
             }
           },
-          "500": {
-            "description": "Error updating expense",
+          "200": {
+            "description": "Successfully updated budget",
             "content": {
               "application/json": {
                 "schema": {
@@ -737,6 +783,38 @@
         }
       }
     },
+    "/api/users/password": {
+      "patch": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update a password",
+        "description": "Update the password of the authenticated user",
+        "operationId": "updatePassword",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PasswordUpdateDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated password",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/bank/v1/account/accounts/ssn/{ssn}": {
       "get": {
         "tags": [
@@ -806,8 +884,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "No accounts associated with a bank user",
+          "404": {
+            "description": "Bank profile id does not exist",
             "content": {
               "*/*": {
                 "schema": {
@@ -819,8 +897,8 @@
               }
             }
           },
-          "404": {
-            "description": "Bank profile id does not exist",
+          "200": {
+            "description": "No accounts associated with a bank user",
             "content": {
               "*/*": {
                 "schema": {
@@ -911,6 +989,50 @@
         }
       }
     },
+    "/api/users/search/random/{amount}/{filter}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get X amount of random users",
+        "description": "Get X amount of random users that fit the filter",
+        "operationId": "getRandomUsers",
+        "parameters": [
+          {
+            "name": "amount",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved list of users",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/users/me": {
       "get": {
         "tags": [
@@ -926,6 +1048,31 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UserDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/get-feedback": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Send feedback",
+        "description": "Send feedback from a user.",
+        "operationId": "getFeedback",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FeedbackResponseDTO"
+                  }
                 }
               }
             }
@@ -1029,7 +1176,7 @@
         }
       }
     },
-    "/api/image/{id}": {
+    "/api/images/{id}": {
       "get": {
         "tags": [
           "Image"
@@ -1064,16 +1211,14 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "format": "byte"
-                  }
+                  "type": "string",
+                  "format": "binary"
                 }
               }
             }
           }
-        }
+        },
+        "security": []
       }
     },
     "/api/goal/getGoals": {
@@ -1214,8 +1359,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Successfully got budget",
+          "500": {
+            "description": "Budget is not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -1224,8 +1369,8 @@
               }
             }
           },
-          "500": {
-            "description": "Budget is not found",
+          "200": {
+            "description": "Successfully got budget",
             "content": {
               "application/json": {
                 "schema": {
@@ -1336,8 +1481,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Successfully deleted budget",
+          "500": {
+            "description": "Budget is not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -1346,8 +1491,8 @@
               }
             }
           },
-          "500": {
-            "description": "Budget is not found",
+          "200": {
+            "description": "Successfully deleted budget",
             "content": {
               "application/json": {
                 "schema": {
@@ -1497,6 +1642,17 @@
           },
           "balance": {
             "type": "number"
+          }
+        }
+      },
+      "FeedbackRequestDTO": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
           }
         }
       },
@@ -1740,6 +1896,14 @@
           "lastName": {
             "type": "string"
           },
+          "userId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "profileImage": {
+            "type": "integer",
+            "format": "int64"
+          },
           "role": {
             "type": "string"
           },
@@ -1774,8 +1938,9 @@
           "email": {
             "type": "string"
           },
-          "password": {
-            "type": "string"
+          "profileImage": {
+            "type": "integer",
+            "format": "int64"
           },
           "configuration": {
             "$ref": "#/components/schemas/ConfigurationDTO"
@@ -1794,6 +1959,10 @@
           },
           "lastName": {
             "type": "string"
+          },
+          "profileImage": {
+            "type": "integer",
+            "format": "int64"
           },
           "email": {
             "type": "string"
@@ -1822,6 +1991,17 @@
           }
         }
       },
+      "PasswordUpdateDTO": {
+        "type": "object",
+        "properties": {
+          "oldPassword": {
+            "type": "string"
+          },
+          "newPassword": {
+            "type": "string"
+          }
+        }
+      },
       "ProfileDTO": {
         "type": "object",
         "properties": {
@@ -1833,6 +2013,28 @@
             "type": "string"
           },
           "lastName": {
+            "type": "string"
+          },
+          "profileImage": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "FeedbackResponseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "message": {
             "type": "string"
           },
           "createdAt": {

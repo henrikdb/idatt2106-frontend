@@ -152,8 +152,13 @@ const searchProfile = async (searchTerm: string) => {
 };
 
 const addNewFriends = async () => {
+    const userPayload = {
+        amount: 6 as number,
+        filter: 'NON_FRIENDS' as string,
+    };
     try {
-        //const response = await FriendService.();
+        const response = await UserService.getRandomUsers(userPayload);
+        searchedUsers.value = response;
         showAddFriend.value = true;
     } catch (error) {
         console.error('Failed to add friend', error);
