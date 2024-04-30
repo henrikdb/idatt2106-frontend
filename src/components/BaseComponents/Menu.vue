@@ -28,6 +28,18 @@
                       <router-link class="nav-link text-white" :to="toStore()"><img
                           src="@/assets/icons/storefront.svg">Store</router-link>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a class=" nav-link me-3 dropdown-toggle hidden-arrow" href="#" id="navbarDropdownMenuLink"
+                           role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          <i class="fas fa-bell text-white"></i>
+                          <span class="badge rounded-pill badge-notification bg-danger">1</span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                          <li v-for="index in notReadNotification" :key="index">
+                            <a class="not-item dropdown-item text-white" href="#">{{index}}</a>
+                          </li>
+                        </ul>
+                    </li>
                     <li v-if="userStore.isLoggedIn" class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle username-text text-white " href="#" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -60,10 +72,48 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
 import { useUserInfoStore } from '@/stores/UserStore';
+import {ref} from "vue";
+
+
 
 const router = useRouter();
 
 const userStore : any = useUserInfoStore();
+
+//Hashmap that contains the path to the Badges, The Friend, The dashboard etc.
+//The key value pair is the message of the notification and the path of the route
+let messagePath = new Map<string, string>();
+let notifMap = new Map<number, Map<string, string>>();
+let notifId = 0;
+
+
+let notReadNotification = ['You', 'Another news', 'Something else here'];
+let readNotification = []
+let isRead = ref(false)
+let counter = ref(0)
+
+/* id: 0 -> /roadmap
+   id: 1 -> /profile
+   id: 2 -> /friend
+ */
+
+
+
+function getNotification(){
+  //axios call
+  let response = ['#id', 'message', ]
+  messagePath.set(response[0], response[1])
+  notifMap.set(notifId,messagePath)
+  notReadNotification.push(response[1])
+}
+function toBadges(){
+
+}
+
+function removeNotification() {
+
+}
+
 
 function toHome() {
     return '/'
@@ -130,6 +180,9 @@ function toLogout() {
 .nav-item:hover {
     background-color: #2b6ac7;
 }
+.not-item:hover {
+  background-color: #2b6ac7;
+}
 
 .nav-item .dropdown {
     display: flex;
@@ -151,6 +204,16 @@ function toLogout() {
 .dropdown-menu {
     background-color: #0A58CA;
     right: -0.5rem;
+}
+
+#notifyBtn  {
+  background-color: #0A58CA;
+  border: #0A58CA;
+}
+
+#notifyBtn:hover {
+  background-color: #2b6ac7;
+  border: #2b6ac7;
 }
 
 .dropdown-menu[data-bs-popper] {
