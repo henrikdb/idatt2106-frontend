@@ -585,22 +585,22 @@
           "required": true
         },
         "responses": {
-          "409": {
-            "description": "Email already exists",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExceptionResponse"
-                }
-              }
-            }
-          },
           "201": {
             "description": "Successfully signed up",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/AuthenticationResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Email already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResponse"
                 }
               }
             }
@@ -638,8 +638,8 @@
               }
             }
           },
-          "401": {
-            "description": "Invalid credentials",
+          "404": {
+            "description": "User not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -648,8 +648,8 @@
               }
             }
           },
-          "404": {
-            "description": "User not found",
+          "401": {
+            "description": "Invalid credentials",
             "content": {
               "application/json": {
                 "schema": {
@@ -882,6 +882,49 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProfileDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/search/{searchTerm}/{filter}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Search for users by name and filter",
+        "description": "Returns a list of users whose names contain the specified search term and match the filter.",
+        "operationId": "getUsersByNameAndFilter",
+        "parameters": [
+          {
+            "name": "searchTerm",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved list of users",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDTO"
+                  }
                 }
               }
             }
@@ -1719,6 +1762,9 @@
           "role": {
             "type": "string"
           },
+          "subscriptionLevel": {
+            "type": "string"
+          },
           "token": {
             "type": "string"
           }
@@ -1781,6 +1827,9 @@
             "format": "date-time"
           },
           "role": {
+            "type": "string"
+          },
+          "subscriptionLevel": {
             "type": "string"
           }
         }
