@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { UserService } from '@/api'
+import { BudgetService } from '@/api'
 
 const emit = defineEmits(['errorEvent', 'deletedEvent'])
 const props = defineProps({
@@ -22,7 +22,7 @@ const props = defineProps({
  */
 const deleteBudget = async () => {
   try {
-    await UserService.deleteBudget({budgetId: props.budgetId})
+    await BudgetService.deleteBudget({budgetId: props.budgetId})
     emit('deletedEvent')
   } catch (error) {
     emit('errorEvent', error)

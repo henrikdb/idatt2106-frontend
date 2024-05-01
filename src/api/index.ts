@@ -11,6 +11,7 @@ export type { Account } from './models/Account';
 export type { AccountRequestDTO } from './models/AccountRequestDTO';
 export type { AccountResponseDTO } from './models/AccountResponseDTO';
 export type { AuthenticationResponse } from './models/AuthenticationResponse';
+export type { BadgeDTO } from './models/BadgeDTO';
 export type { BankAccountDTO } from './models/BankAccountDTO';
 export type { BankProfile } from './models/BankProfile';
 export type { BankProfileDTO } from './models/BankProfileDTO';
@@ -44,7 +45,9 @@ export type { UserUpdateDTO } from './models/UserUpdateDTO';
 
 export { AccountControllerService } from './services/AccountControllerService';
 export { AuthenticationService } from './services/AuthenticationService';
+export { BadgeService } from './services/BadgeService';
 export { BankProfileControllerService } from './services/BankProfileControllerService';
+export { BudgetService } from './services/BudgetService';
 export { FriendService } from './services/FriendService';
 export { GoalService } from './services/GoalService';
 export { ImageService } from './services/ImageService';

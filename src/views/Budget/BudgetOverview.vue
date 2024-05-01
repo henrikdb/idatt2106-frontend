@@ -4,7 +4,7 @@ import BudgetBox from '@/components/Budget/BudgetBox.vue'
 import { onMounted, ref } from 'vue'
 import handleUnknownError from '@/components/Exceptions/unkownErrorHandler'
 import { useBudgetStore } from '@/stores/BudgetStore'
-import { type BudgetRequestDTO, type BudgetResponseDTO, UserService } from '@/api'
+import { type BudgetRequestDTO, type BudgetResponseDTO, BudgetService } from '@/api'
 import { useRouter } from 'vue-router'
 
 const router = useRouter();
@@ -23,7 +23,7 @@ let budgetListKey = ref(0);
  */
 onMounted(async () => {
   try {
-    budgetList.value = await UserService.getBudgetsByUser()
+    budgetList.value = await BudgetService.getBudgetsByUser()
     console.log(budgetList.value)
   } catch (error) {
     errorMsg.value = handleUnknownError(error);
@@ -42,7 +42,7 @@ const createNewBudget = async() => {
       expenseAmount: 0
     }
     // Creates new budget with the budget request body
-    await UserService.createBudget({requestBody: request})
+    await BudgetService.createBudget({requestBody: request})
     // Updates displayed budget list after creation
     await updateBudgetList()
   } catch (error) {
@@ -54,7 +54,7 @@ const createNewBudget = async() => {
  * Updates the displayed budget list.
  */
 const updateBudgetList = async () => {
-  budgetList.value = await UserService.getBudgetsByUser()
+  budgetList.value = await BudgetService.getBudgetsByUser()
   budgetListKey.value++
 }
 

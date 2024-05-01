@@ -7,7 +7,7 @@ import { useRoute } from 'vue-router'
 const router = useRouter()
 
 // The configuration steps with path and order value.
-const configurationSteps = {'/commitment': 1, '/experience': 2, '/suitable-challenges': 3}
+const configurationSteps = {'/commitment': 1, '/experience': 2, '/suitable-challenges': 3, '/first-saving-goal': 4, '/finished-configuration': 5}
 const length = Object.keys(configurationSteps).length
 let percentage = ref(1/length);
 

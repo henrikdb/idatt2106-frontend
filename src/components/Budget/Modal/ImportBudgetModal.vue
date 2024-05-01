@@ -41,7 +41,7 @@ const emitImportBudgetEvent = (budgetId: number) => {
                          :budget-amount="Number(item.budgetAmount)"
                          :expense-amount="Number(item.expenseAmount)"
                          @importBudgetEvent="emitImportBudgetEvent"
-          >
+                         data-bs-dismiss="modal">
           </MiniBudgetBox>
         </div>
       </div>
