@@ -99,9 +99,9 @@ const handleSubmit = async () => {
                      id="emailInput"
                      input-id="email"
                      type="email"
-                     label="E-postadresse"
-                     placeholder="Skriv inn din e-postadresse"
-                     invalid-message="Ugyldig e-postadresse"/>
+                     label="E-post"
+                     placeholder="Skriv inn din e-post"
+                     invalid-message="Ugyldig e-post"/>
         </div>
         <div class="col-sm">
           <BaseInput :model-value="passwordRef"
@@ -120,7 +120,7 @@ const handleSubmit = async () => {
                      type="password"
                      pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,16}"
                      label="Bekreft Passord"
-                     placeholder="Skriv inn passord"
+                     placeholder="Bekreft passord"
                      invalid-message="Passordet må være mellom 4 og 16 tegn og inneholde én stor bokstav, liten bokstav og et tall"
           />
         </div>

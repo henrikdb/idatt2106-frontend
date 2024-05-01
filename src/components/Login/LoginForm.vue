@@ -89,9 +89,9 @@ const handleSubmit = async () => {
                  id="emailInput"
                  input-id="email"
                  type="email"
-                 label="E-postadresse"
-                 placeholder="Skriv inn din e-postadresse"
-                 invalid-message="Ugyldig e-postadresse"
+                 label="E-post"
+                 placeholder="Skriv inn din e-post"
+                 invalid-message="Ugyldig e-post"
       />
 
       <BaseInput :model-value="passwordRef"

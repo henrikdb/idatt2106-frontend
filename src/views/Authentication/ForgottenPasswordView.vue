@@ -7,7 +7,7 @@
         <div class="form-floating inputBox">
           <input v-model="email" class="form-control" id="inputEmail" type="email"
                  placeholder="name@example.com" required>
-          <label for="emailInput">Enter email address</label>
+          <label for="emailInput">Skriv inn din e-post</label>
         </div>
 
         <div v-if="errorMessage" class="text-danger">
@@ -19,7 +19,7 @@
         <button1 id="confirmButton" type="submit" :disabled="isSubmitting" button-text="Send e-post"></button1>
 
         <div class="login-link">
-          <Router-Link to="/login" class="small">Return to login</Router-Link>
+          <Router-Link to="/login" class="small">Gå tilbake</Router-Link>
         </div>
       </form>
     </div>
