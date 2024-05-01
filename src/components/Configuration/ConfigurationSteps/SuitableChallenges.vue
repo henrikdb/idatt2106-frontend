@@ -76,7 +76,7 @@ const signUpUser = async () => {
       role: response.role,
     });
     useUserInfoStore().resetPassword()
-    await router.push({ name: 'home' });
+    await router.push("/first-saving-goal")
   }
   catch (error) {
     errorMsg.value = handleUnknownError(error);
@@ -89,7 +89,11 @@ const handleSubmit = () => {
   }
   useConfigurationStore().setChallenges(chosenChallenges.value)
   console.log(useConfigurationStore().getChallenges)
-  router.push("/first-saving-goal")
+  try {
+    signUpUser()
+  } catch (e) {
+    console.log(e)
+  }
 }
 
 </script>
