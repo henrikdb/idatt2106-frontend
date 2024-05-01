@@ -19,6 +19,7 @@ const confirmPasswordRef = ref('')
 const formRef = ref()
 let samePasswords = ref(true)
 let errorMsg = ref('');
+const isSubmitting = ref(false);
 
 const handleFirstNameInputEvent = (newValue: any) => {
   firstNameRef.value = newValue
@@ -41,6 +42,8 @@ const handleConfirmPasswordInputEvent = (newValue: any) => {
 }
 
 const handleSubmit = async () => {
+  if (isSubmitting.value) return;
+  isSubmitting.value = true;
 
   samePasswords.value = (passwordRef.value === confirmPasswordRef.value)
   formRef.value.classList.add("was-validated")
@@ -62,59 +65,69 @@ const handleSubmit = async () => {
       }
     }
   }
+  isSubmitting.value = false;
 }
 
 </script>
 
 <template>
-  <div class="container">
-    <img src="@/assets/Sparesti-logo.png" style="width: 120px">
+  <div class="container-fluid">
+    <div class="container-fluid d-flex justify-content-center align-items-center flex-column mt-5">
+      <h1>Registrer deg</h1>
+    </div>
     <form ref="formRef" id="signUpForm" @submit.prevent="handleSubmit" novalidate>
-      <BaseInput :model-value=firstNameRef
-                 @input-change-event="handleFirstNameInputEvent"
-                 id="firstNameInput"
-                 input-id="first-name"
-                 type="text"
-                 label="First name"
-                 placeholder="Enter your first name"
-                 invalid-message="Please enter your first name"/>
-      <BaseInput :model-value="surnameRef"
-                 @input-change-event="handleSurnameInputEvent"
-                 id="surnameInput"
-                 input-id="surname"
-                 type="text"
-                 label="Surname"
-                 placeholder="Enter your surname"
-                 invalid-message="Please enter your surname"/>
-      <BaseInput :model-value="emailRef"
-                 @input-change-event="handleEmailInputEvent"
-                 id="emailInput"
-                 input-id="email"
-                 type="email"
-                 label="Email"
-                 placeholder="Enter your email"
-                 invalid-message="Invalid email"/>
-      <BaseInput :model-value="passwordRef"
-                 @input-change-event="handlePasswordInputEvent"
-                 id="passwordInput"
-                 input-id="password"
-                 type="password"
-                 pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,16}"
-                 label="Password"
-                 placeholder="Enter password"
-                 invalid-message="Password must be between 4 and 16 characters and contain one capital letter, small letter and a number"/>
-      <BaseInput :modelValue="confirmPasswordRef"
-                 @input-change-event="handleConfirmPasswordInputEvent"
-                 id="confirmPasswordInput"
-                 input-id="confirmPassword"
-                 type="password"
-                 pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,16}"
-                 label="Confirm Password"
-                 placeholder="Confirm password"
-                 invalid-message="Password must be between 4 and 16 characters and contain one capital letter, small letter and a number"/>
+      <div class="row">
+        <div class="col-sm">
+          <BaseInput :model-value=firstNameRef
+                     @input-change-event="handleFirstNameInputEvent"
+                     id="firstNameInput"
+                     input-id="first-name"
+                     type="text"
+                     label="Fornavn"
+                     placeholder="Skriv inn ditt fornavn"
+                     invalid-message="Ugyldig fornavn"/>
+          <BaseInput :model-value="surnameRef"
+                     @input-change-event="handleSurnameInputEvent"
+                     id="surnameInput"
+                     input-id="surname"
+                     type="text"
+                     label="Etternavn"
+                     placeholder="Skriv inn ditt etternavn"
+                     invalid-message="Ugyldig etternavn"/>
+          <BaseInput :model-value="emailRef"
+                     @input-change-event="handleEmailInputEvent"
+                     id="emailInput"
+                     input-id="email"
+                     type="email"
+                     label="E-postadresse"
+                     placeholder="Skriv inn din e-postadresse"
+                     invalid-message="Ugyldig e-postadresse"/>
+        </div>
+        <div class="col-sm">
+          <BaseInput :model-value="passwordRef"
+                     @input-change-event="handlePasswordInputEvent"
+                     id="passwordInput"
+                     input-id="password"
+                     type="password"
+                     pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,16}"
+                     label="Passord"
+                     placeholder="Skriv inn passord"
+                     invalid-message="Passordet må være mellom 4 og 16 tegn og inneholde én stor bokstav, liten bokstav og et tall"/>
+          <BaseInput :modelValue="confirmPasswordRef"
+                     @input-change-event="handleConfirmPasswordInputEvent"
+                     id="confirmPasswordInput"
+                     input-id="confirmPassword"
+                     type="password"
+                     pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,16}"
+                     label="Bekreft Passord"
+                     placeholder="Skriv inn passord"
+                     invalid-message="Passordet må være mellom 4 og 16 tegn og inneholde én stor bokstav, liten bokstav og et tall"
+          />
+        </div>
+      </div>
       <p class="text-danger">{{ errorMsg }}</p>
-      <p v-if="!samePasswords" class="text-danger">The passwords are not identical</p>
-      <button1 id="confirmButton" @click="handleSubmit" button-text="Sign up"></button1>
+      <p v-if="!samePasswords" class="text-danger">Passordene er ikke like</p>
+      <button1 id="confirmButton" @click="handleSubmit" :disabled="isSubmitting" button-text="Registrer deg"></button1>
       <LoginLink/>
     </form>
   </div>
@@ -123,12 +136,8 @@ const handleSubmit = async () => {
 
 <style scoped>
 
-.container {
-  max-width: 450px;
-  display: flex;
-  justify-content: center;
-  align-items: center; 
-  flex-direction: column;
+.container-fluid {
+  max-width: 950px;
 }
 
 #signUpForm {
@@ -140,5 +149,10 @@ const handleSubmit = async () => {
 
 #firstNameInput, #surnameInput, #emailInput, #passwordInput, #confirmButton, #confirmPasswordInput {
   margin: 1rem 0;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: bold;
 }
 </style>

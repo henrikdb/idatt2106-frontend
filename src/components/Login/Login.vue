@@ -4,6 +4,7 @@ import LoginForm from '@/components/Login/LoginForm.vue'
 
 <template>
   <div class="containers">
+    <h1 class="title">Sparesti</h1>
     <div class="box">
       <LoginForm/>
     </div>
@@ -12,20 +13,29 @@ import LoginForm from '@/components/Login/LoginForm.vue'
 
 <style scoped>
   .containers {
-    background-color: #A2CC99;
+    background: url('./src/assets/wave.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
   }
 
   .box {
     background-color: white;
-    border-radius: 3rem;
+    border-radius: 1rem;
     max-width: 450px;
-    padding: 1rem 4rem;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    padding: 0 3rem 1rem 3rem;
+    box-shadow: rgba(57, 57, 63, 0.5) 0px 1px 20px 0px;
   }
 
+  .title {
+    font-size: 60px;
+    color: white;
+    margin-bottom: 40px;
+    font-weight: 700;
+  }
   
 </style>
