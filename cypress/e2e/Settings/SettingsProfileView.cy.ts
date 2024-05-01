@@ -12,13 +12,18 @@ describe('SettingsProfile Test', () => {
   it('updates first and last name', () => {
     cy.get('[data-cy="first-name"]').find('[data-cy="bi-input"]').should('have.value','User')
     cy.get('[data-cy="last-name"]').find('[data-cy="bi-input"]').should( 'have.value','User')
-    cy.get('[data-cy="first-name"]').find('[data-cy="bi-input"]').clear().type('NewFirstName')
-    cy.get('[data-cy="last-name"]').find('[data-cy="bi-input"]').clear().type('NewLastName')
+    cy.get('[data-cy="first-name"]').find('[data-cy="bi-input"]').clear()
+    cy.get('[data-cy="first-name"]').find('[data-cy="bi-input"]').type('NewFirstName')
+    cy.get('[data-cy="last-name"]').find('[data-cy="bi-input"]').clear()
+    cy.get('[data-cy="last-name"]').find('[data-cy="bi-input"]').type('NewLastName')
+
     cy.get('[data-cy="profile-submit-btn"]').click()
     cy.get('[data-cy="menu"]').get('[data-cy="user"]').should('include.text', 'NewFirstName')
     //update the user back to its original state
-    cy.get('[data-cy="first-name"]').find('[data-cy="bi-input"]').clear().type('User')
-    cy.get('[data-cy="last-name"]').find('[data-cy="bi-input"]').clear().type('User')
+    cy.get('[data-cy="first-name"]').find('[data-cy="bi-input"]').clear()
+    cy.get('[data-cy="first-name"]').find('[data-cy="bi-input"]').type('User')
+    cy.get('[data-cy="last-name"]').find('[data-cy="bi-input"]').clear()
+    cy.get('[data-cy="last-name"]').find('[data-cy="bi-input"]').type('User')
     cy.get('[data-cy="profile-submit-btn"]').click()
   })
 })
