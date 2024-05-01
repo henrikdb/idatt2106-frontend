@@ -11,7 +11,7 @@
                         Beklager, det har oppstått en feil. Forespurt side ikke funnet!
                     </div>
                     <div class="error-actions">
-                        <Button1 button-text="Ta meg hjem" @click="home" />
+                        <Button1 button-text="Take Me Home" @click="home" />
                     </div>
                 </div>
             </div>
