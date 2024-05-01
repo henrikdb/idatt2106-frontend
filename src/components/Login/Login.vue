@@ -13,7 +13,7 @@ import LoginForm from '@/components/Login/LoginForm.vue'
 
 <style scoped>
   .containers {
-    background: url('./src/assets/wave.svg');
+    background: url('@/assets/wave.svg');
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;

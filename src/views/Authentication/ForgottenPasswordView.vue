@@ -59,7 +59,7 @@ const submitForm = async () => {
 
 <style scoped>
 .containers {
-  background: url('./src/assets/wave.svg');
+  background: url('@/assets/wave.svg');
   background-size: cover;
   height: 100vh;
   display: flex;
