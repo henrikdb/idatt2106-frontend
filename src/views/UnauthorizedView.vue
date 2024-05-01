@@ -3,17 +3,18 @@
         <div class="container py-5">
             <div class="row">
                 <div class="col-md-2 text-center">
-                    <p><img src="@/assets/icons/danger.svg" alt="danger"> <br/>Status Code: 403</p>
+                    <p><img src="@/assets/icons/danger.svg" alt="fare"> <br/>Statuskode: 403</p>
                 </div>
                 <div class="col-md-10">
-                    <h3>OPPSSS!!!! Sorry...</h3>
-                    <p>Sorry, your access is refused due to security reasons of our server and also our sensitive data.<br/>Please go back to the home page to continue browsing.</p>
-                    <Button1 :button-text="'Take Me Home'" @click="home" />
+                    <h3>OOPS!!! Beklager...</h3>
+                    <p>Beklager, din tilgang er nektet av sikkerhetsgrunner på serveren vår og også våre sensitive data.<br/>Vennligst gå tilbake til startsiden for å fortsette å surfe.</p>
+                    <Button1 :button-text="'Ta meg hjem'" @click="home" />
                 </div>
             </div>
         </div>
     </body>
 </template>
+
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';

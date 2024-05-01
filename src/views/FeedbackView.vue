@@ -2,14 +2,14 @@
     <main>
       <div class="wrapper">
       <div id="formFrame">
-          <h1>Feedback</h1>
+          <h1>TIlbakemelding</h1>
       <form @submit.prevent="submitForm">
         <BaseInput v-model="email" label="Email" type="email" placeholder="Enter your email" inputId="email" required />
         <br>
-        <label for="feedback">Your feedback:</label>
+        <label for="feedback">Din tilbakemelding:</label>
         <textarea v-model="message" placeholder="Write here" rows="5" name="comment[text]" id="comment_text" cols="33"
           required></textarea>
-        <Button1 button-text="Send" @click="submitForm">Submit</Button1>
+        <Button1 button-text="Send" @click="submitForm">Send inn</Button1>
         <p v-if="submissionStatus">{{ submissionStatus }}</p>
       </form>
     </div>
