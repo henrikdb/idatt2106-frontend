@@ -19,8 +19,6 @@ const props = defineProps({
     required: true
   },
   modelValue: {
-    type: String,
-    default: ""
   },
   min: {
     type: String,

@@ -5,7 +5,7 @@ import Button1 from '@/components/Buttons/Button1.vue'
 import { ref } from 'vue'
 import { useConfigurationStore } from '@/stores/ConfigurationStore'
 import { useUserInfoStore } from '@/stores/UserStore'
-import { AuthenticationService, Configuration, OpenAPI, type SignUpRequest } from '@/api'
+import { AuthenticationService, OpenAPI, type SignUpRequest } from '@/api'
 import handleUnknownError from '@/components/Exceptions/unkownErrorHandler'
 
 const router = useRouter();
