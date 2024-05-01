@@ -20,12 +20,10 @@ const userStore = useUserInfoStore();
 
 const handleEmailInputEvent = (newValue: any) => {
   emailRef.value = newValue
-  console.log(emailRef.value)
 }
 
 const handlePasswordInputEvent = (newValue: any) => {
   passwordRef.value = newValue
-  console.log(passwordRef.value)
 }
 
 const handleSubmit = async () => {
@@ -65,7 +63,7 @@ const handleSubmit = async () => {
       profileImage: response.profileImage
     });
 
-    console.log()
+    console.log(response.token)
 
     await router.push({ name: 'home' });
   } catch (error: any) {
