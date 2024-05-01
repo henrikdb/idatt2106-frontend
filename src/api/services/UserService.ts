@@ -4,11 +4,12 @@
 /* eslint-disable */
 import type { Account } from '../models/Account';
 import type { BankAccountDTO } from '../models/BankAccountDTO';
-import type { Budget } from '../models/Budget';
 import type { BudgetRequestDTO } from '../models/BudgetRequestDTO';
 import type { BudgetResponseDTO } from '../models/BudgetResponseDTO';
 import type { ExpenseRequestDTO } from '../models/ExpenseRequestDTO';
 import type { ExpenseResponseDTO } from '../models/ExpenseResponseDTO';
+import type { FeedbackRequestDTO } from '../models/FeedbackRequestDTO';
+import type { FeedbackResponseDTO } from '../models/FeedbackResponseDTO';
 import type { PasswordResetDTO } from '../models/PasswordResetDTO';
 import type { PasswordUpdateDTO } from '../models/PasswordUpdateDTO';
 import type { ProfileDTO } from '../models/ProfileDTO';
@@ -18,6 +19,43 @@ import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class UserService {
+    /**
+     * Update User Subscription Level
+     * Updates the subscription level of the current user
+     * @returns any Subscription level updated successfully
+     * @throws ApiError
+     */
+    public static updateSubscriptionLevel({
+        subscriptionLevel,
+    }: {
+        subscriptionLevel: string,
+    }): CancelablePromise<Record<string, any>> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/api/users/subscription/{subscriptionLevel}',
+            path: {
+                'subscriptionLevel': subscriptionLevel,
+            },
+        });
+    }
+    /**
+     * Send feedback
+     * Send feedback from an email.
+     * @returns any Success
+     * @throws ApiError
+     */
+    public static sendFeedback({
+        requestBody,
+    }: {
+        requestBody: FeedbackRequestDTO,
+    }): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/users/send-feedback',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
     /**
      * Initiate a password reset
      * Send a password reset mail to the user with the specified email
@@ -112,14 +150,14 @@ export class UserService {
     /**
      * Create a new budget
      * Create a new budget with based on the budget request
-     * @returns Budget Successfully created new budget
+     * @returns any Successfully created new budget
      * @throws ApiError
      */
     public static createBudget({
         requestBody,
     }: {
         requestBody: BudgetRequestDTO,
-    }): CancelablePromise<Budget> {
+    }): CancelablePromise<Record<string, any>> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/budget/create',
@@ -201,6 +239,50 @@ export class UserService {
         });
     }
     /**
+     * Search for users by name and filter
+     * Returns a list of users whose names contain the specified search term and match the filter.
+     * @returns UserDTO Successfully retrieved list of users
+     * @throws ApiError
+     */
+    public static getUsersByNameAndFilter({
+        searchTerm,
+        filter,
+    }: {
+        searchTerm: string,
+        filter: string,
+    }): CancelablePromise<Array<UserDTO>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/users/search/{searchTerm}/{filter}',
+            path: {
+                'searchTerm': searchTerm,
+                'filter': filter,
+            },
+        });
+    }
+    /**
+     * Get X amount of random users
+     * Get X amount of random users that fit the filter
+     * @returns UserDTO Successfully retrieved list of users
+     * @throws ApiError
+     */
+    public static getRandomUsers({
+        amount,
+        filter,
+    }: {
+        amount: number,
+        filter: string,
+    }): CancelablePromise<Array<UserDTO>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/users/search/random/{amount}/{filter}',
+            path: {
+                'amount': amount,
+                'filter': filter,
+            },
+        });
+    }
+    /**
      * Get the authenticated user
      * Get all user information for the authenticated user
      * @returns UserDTO Successfully got user
@@ -210,6 +292,18 @@ export class UserService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/users/me',
+        });
+    }
+    /**
+     * Send feedback
+     * Send feedback from a user.
+     * @returns FeedbackResponseDTO Success
+     * @throws ApiError
+     */
+    public static getFeedback(): CancelablePromise<Array<FeedbackResponseDTO>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/users/get-feedback',
         });
     }
     /**

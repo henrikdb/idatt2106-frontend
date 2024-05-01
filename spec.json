@@ -23,6 +23,38 @@
     }
   ],
   "paths": {
+    "/api/users/subscription/{subscriptionLevel}": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update User Subscription Level",
+        "description": "Updates the subscription level of the current user",
+        "operationId": "updateSubscriptionLevel",
+        "parameters": [
+          {
+            "name": "subscriptionLevel",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Subscription level updated successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/friends/{friendId}": {
       "put": {
         "tags": [
@@ -43,8 +75,59 @@
           }
         ],
         "responses": {
+          "404": {
+            "description": "Friend request not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Friend request successfully accepted",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Friend"
+        ],
+        "summary": "Delete a friend or cancel a friend request",
+        "description": "Deletes an existing friend from your friend list or cancels a received friend request.",
+        "operationId": "deleteFriendOrFriendRequest",
+        "parameters": [
+          {
+            "name": "friendId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Friend or friend request not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Friend successfully deleted or friend request cancelled",
             "content": {
               "*/*": {
                 "schema": {
@@ -75,8 +158,8 @@
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "No accounts associated with a bank user",
+          "404": {
+            "description": "Bank profile id does not exist",
             "content": {
               "*/*": {
                 "schema": {
@@ -85,8 +168,8 @@
               }
             }
           },
-          "404": {
-            "description": "Bank profile id does not exist",
+          "200": {
+            "description": "No accounts associated with a bank user",
             "content": {
               "*/*": {
                 "schema": {
@@ -117,8 +200,8 @@
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "Successfully created a bank profile",
+          "400": {
+            "description": "Could not create profile",
             "content": {
               "*/*": {
                 "schema": {
@@ -127,8 +210,8 @@
               }
             }
           },
-          "400": {
-            "description": "Could not create profile",
+          "200": {
+            "description": "Successfully created a bank profile",
             "content": {
               "*/*": {
                 "schema": {
@@ -159,16 +242,6 @@
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "Successfully created account",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/AccountResponseDTO"
-                }
-              }
-            }
-          },
           "404": {
             "description": "Provided bank profile id could not be found",
             "content": {
@@ -178,6 +251,41 @@
                 }
               }
             }
+          },
+          "200": {
+            "description": "Successfully created account",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/send-feedback": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Send feedback",
+        "description": "Send feedback from an email.",
+        "operationId": "sendFeedback",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FeedbackRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
           }
         }
       }
@@ -227,17 +335,17 @@
           "required": true
         },
         "responses": {
-          "204": {
-            "description": "Password was reset successfully"
-          },
           "403": {
             "description": "Invalid token"
+          },
+          "204": {
+            "description": "Password was reset successfully"
           }
         },
         "security": []
       }
     },
-    "/api/image/upload": {
+    "/api/images": {
       "post": {
         "tags": [
           "Image"
@@ -247,7 +355,7 @@
         "operationId": "uploadImage",
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
                 "required": [
                   "file"
@@ -264,19 +372,8 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "Successfully uploaded the image",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "type": "integer",
-                  "format": "int64"
-                }
-              }
-            }
-          },
           "201": {
-            "description": "Created",
+            "description": "Successfully uploaded the image",
             "content": {
               "*/*": {
                 "schema": {
@@ -375,8 +472,8 @@
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "Successfully updated budget",
+          "500": {
+            "description": "Budget is not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -385,8 +482,8 @@
               }
             }
           },
-          "500": {
-            "description": "Budget is not found",
+          "200": {
+            "description": "Successfully updated budget",
             "content": {
               "application/json": {
                 "schema": {
@@ -428,8 +525,8 @@
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "Successfully updated budget",
+          "500": {
+            "description": "Error updating expense",
             "content": {
               "application/json": {
                 "schema": {
@@ -438,8 +535,8 @@
               }
             }
           },
-          "500": {
-            "description": "Error updating expense",
+          "200": {
+            "description": "Successfully updated budget",
             "content": {
               "application/json": {
                 "schema": {
@@ -475,7 +572,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Budget"
+                  "type": "object"
                 }
               }
             }
@@ -545,22 +642,22 @@
           "required": true
         },
         "responses": {
-          "409": {
-            "description": "Email already exists",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExceptionResponse"
-                }
-              }
-            }
-          },
           "201": {
             "description": "Successfully signed up",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/AuthenticationResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Email already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResponse"
                 }
               }
             }
@@ -686,6 +783,38 @@
         }
       }
     },
+    "/api/users/password": {
+      "patch": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update a password",
+        "description": "Update the password of the authenticated user",
+        "operationId": "updatePassword",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PasswordUpdateDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated password",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/bank/v1/account/accounts/ssn/{ssn}": {
       "get": {
         "tags": [
@@ -755,8 +884,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "No accounts associated with a bank user",
+          "404": {
+            "description": "Bank profile id does not exist",
             "content": {
               "*/*": {
                 "schema": {
@@ -768,8 +897,8 @@
               }
             }
           },
-          "404": {
-            "description": "Bank profile id does not exist",
+          "200": {
+            "description": "No accounts associated with a bank user",
             "content": {
               "*/*": {
                 "schema": {
@@ -817,6 +946,93 @@
         }
       }
     },
+    "/api/users/search/{searchTerm}/{filter}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Search for users by name and filter",
+        "description": "Returns a list of users whose names contain the specified search term and match the filter.",
+        "operationId": "getUsersByNameAndFilter",
+        "parameters": [
+          {
+            "name": "searchTerm",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved list of users",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/search/random/{amount}/{filter}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get X amount of random users",
+        "description": "Get X amount of random users that fit the filter",
+        "operationId": "getRandomUsers",
+        "parameters": [
+          {
+            "name": "amount",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved list of users",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/users/me": {
       "get": {
         "tags": [
@@ -832,6 +1048,31 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UserDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/get-feedback": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Send feedback",
+        "description": "Send feedback from a user.",
+        "operationId": "getFeedback",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FeedbackResponseDTO"
+                  }
                 }
               }
             }
@@ -935,7 +1176,7 @@
         }
       }
     },
-    "/api/image/{id}": {
+    "/api/images/{id}": {
       "get": {
         "tags": [
           "Image"
@@ -970,16 +1211,14 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "format": "byte"
-                  }
+                  "type": "string",
+                  "format": "binary"
                 }
               }
             }
           }
-        }
+        },
+        "security": []
       }
     },
     "/api/goal/getGoals": {
@@ -1120,8 +1359,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Successfully got budget",
+          "500": {
+            "description": "Budget is not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -1130,8 +1369,8 @@
               }
             }
           },
-          "500": {
-            "description": "Budget is not found",
+          "200": {
+            "description": "Successfully got budget",
             "content": {
               "application/json": {
                 "schema": {
@@ -1242,8 +1481,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Successfully deleted budget",
+          "500": {
+            "description": "Budget is not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -1252,8 +1491,8 @@
               }
             }
           },
-          "500": {
-            "description": "Budget is not found",
+          "200": {
+            "description": "Successfully deleted budget",
             "content": {
               "application/json": {
                 "schema": {
@@ -1403,6 +1642,17 @@
           },
           "balance": {
             "type": "number"
+          }
+        }
+      },
+      "FeedbackRequestDTO": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
           }
         }
       },
@@ -1585,256 +1835,6 @@
           }
         }
       },
-      "Badge": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "badgeName": {
-            "type": "string"
-          },
-          "criteria": {
-            "type": "string"
-          },
-          "badgeUserList": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/BadgeUser"
-            }
-          }
-        }
-      },
-      "BadgeUser": {
-        "type": "object",
-        "properties": {
-          "badgeUserId": {
-            "$ref": "#/components/schemas/BadgeUserId"
-          },
-          "earnedAt": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
-      },
-      "BadgeUserId": {
-        "type": "object",
-        "properties": {
-          "badge": {
-            "$ref": "#/components/schemas/Badge"
-          },
-          "user": {
-            "$ref": "#/components/schemas/User"
-          }
-        }
-      },
-      "Budget": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "user": {
-            "$ref": "#/components/schemas/User"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "budgetName": {
-            "type": "string"
-          },
-          "budgetAmount": {
-            "type": "number"
-          },
-          "expenseAmount": {
-            "type": "number"
-          }
-        }
-      },
-      "Configuration": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "commitment": {
-            "type": "string",
-            "enum": [
-              "LITTLE",
-              "SOME",
-              "MUCH"
-            ]
-          },
-          "experience": {
-            "type": "string",
-            "enum": [
-              "NONE",
-              "SOME",
-              "EXPERT"
-            ]
-          },
-          "challengeTypes": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "NO_COFFEE",
-                "NO_CAR",
-                "SHORTER_SHOWER",
-                "SPEND_LESS_ON_FOOD",
-                "BUY_USED_CLOTHES",
-                "LESS_SHOPPING",
-                "DROP_SUBSCRIPTION",
-                "SELL_SOMETHING",
-                "BUY_USED",
-                "EAT_PACKED_LUNCH",
-                "STOP_SHOPPING",
-                "ZERO_SPENDING",
-                "RENT_YOUR_STUFF",
-                "MEATLESS",
-                "SCREEN_TIME_LIMIT",
-                "UNPLUGGED_ENTERTAINMENT"
-              ]
-            }
-          }
-        }
-      },
-      "GrantedAuthority": {
-        "type": "object",
-        "properties": {
-          "authority": {
-            "type": "string"
-          }
-        }
-      },
-      "Point": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "currentPoints": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "totalEarnedPoints": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      },
-      "Streak": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "currentStreak": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "currentStreakCreatedAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "currentStreakUpdatedAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "highestStreak": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "highestStreakCreatedAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "highestStreakEndedAt": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
-      },
-      "User": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "firstName": {
-            "type": "string"
-          },
-          "lastName": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string"
-          },
-          "checkingAccount": {
-            "$ref": "#/components/schemas/Account"
-          },
-          "savingsAccount": {
-            "$ref": "#/components/schemas/Account"
-          },
-          "password": {
-            "type": "string"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "role": {
-            "type": "string",
-            "enum": [
-              "USER",
-              "ADMIN"
-            ]
-          },
-          "badges": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Badge"
-            }
-          },
-          "point": {
-            "$ref": "#/components/schemas/Point"
-          },
-          "streak": {
-            "$ref": "#/components/schemas/Streak"
-          },
-          "configuration": {
-            "$ref": "#/components/schemas/Configuration"
-          },
-          "enabled": {
-            "type": "boolean"
-          },
-          "username": {
-            "type": "string"
-          },
-          "authorities": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/GrantedAuthority"
-            }
-          },
-          "accountNonLocked": {
-            "type": "boolean"
-          },
-          "credentialsNonExpired": {
-            "type": "boolean"
-          },
-          "accountNonExpired": {
-            "type": "boolean"
-          }
-        }
-      },
       "ExceptionResponse": {
         "type": "object",
         "properties": {
@@ -1896,7 +1896,18 @@
           "lastName": {
             "type": "string"
           },
+          "userId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "profileImage": {
+            "type": "integer",
+            "format": "int64"
+          },
           "role": {
+            "type": "string"
+          },
+          "subscriptionLevel": {
             "type": "string"
           },
           "token": {
@@ -1927,8 +1938,9 @@
           "email": {
             "type": "string"
           },
-          "password": {
-            "type": "string"
+          "profileImage": {
+            "type": "integer",
+            "format": "int64"
           },
           "configuration": {
             "$ref": "#/components/schemas/ConfigurationDTO"
@@ -1948,6 +1960,10 @@
           "lastName": {
             "type": "string"
           },
+          "profileImage": {
+            "type": "integer",
+            "format": "int64"
+          },
           "email": {
             "type": "string"
           },
@@ -1956,6 +1972,9 @@
             "format": "date-time"
           },
           "role": {
+            "type": "string"
+          },
+          "subscriptionLevel": {
             "type": "string"
           }
         }
@@ -1972,6 +1991,17 @@
           }
         }
       },
+      "PasswordUpdateDTO": {
+        "type": "object",
+        "properties": {
+          "oldPassword": {
+            "type": "string"
+          },
+          "newPassword": {
+            "type": "string"
+          }
+        }
+      },
       "ProfileDTO": {
         "type": "object",
         "properties": {
@@ -1983,6 +2013,28 @@
             "type": "string"
           },
           "lastName": {
+            "type": "string"
+          },
+          "profileImage": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "FeedbackResponseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "message": {
             "type": "string"
           },
           "createdAt": {

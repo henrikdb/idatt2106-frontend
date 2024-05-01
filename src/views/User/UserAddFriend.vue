@@ -1,11 +1,22 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+import { FriendService } from '@/api';
+
+async function addFriend(friendID: number) {
+    const response = await FriendService.addFriendRequest({ userId: friendID });
+    console.log(response);
+}
+</script>
+
+
 <template>
     <div class="container">
         <h1>Add Friend</h1>
         <div class="row">
             <form class="col-md-5" id="searchBox" role="search">
-    <input class="form-control me-2 custom-border" type="search" placeholder="Search" aria-label="Search">
-    <button class="btn btn-success" type="submit">Search</button>
-</form>
+                <input class="form-control me-2 custom-border" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-success" type="submit">Search</button>
+            </form>
             <div class="col-md-8">
                 <div class="people-nearby">
                     <div class="nearby-user">
@@ -20,7 +31,7 @@
                                 <p class="text-muted">500m away</p>
                             </div>
                             <div class="col-md-3 col-sm-3">
-                                <button class="btn btn-primary pull-right">Add Friend</button>
+                                <button class="btn btn-primary pull-right" @click="addFriend(1)">Add Friend</button>
                             </div>
                         </div>
                     </div>
@@ -221,6 +232,7 @@ img.profile-photo-lg {
 }
 
 .form-control.custom-border {
-    border-color: #222223; /* Change to your desired color */
+    border-color: #222223;
+    /* Change to your desired color */
 }
 </style>

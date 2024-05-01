@@ -1,375 +1,241 @@
 <template>
-  <!-- Refactor with a for-loop -->
     <div class="container">
         <h1>Your Friends</h1>
-        <button class="btn btn-primary pull-right my-3" @click="addFriend">+ Add Friend</button>
-        <div class="row">
-            <div class="col-lg-3">
-                <div class="card card-one">
-                    <div class="header">
-                        <div class="avatar">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
-                        </div>
-                    </div>
-                    <h3>Amillie Price</h3>
-                  <a href="#" @click="navigateToFriend(46)" class="btn  stretched-link"></a>
-                    <div class="desc">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
-                    </div>
-                    <div class="contacts">
-                        <a class="text removeFriend" data-bs-toggle="collapse" href="#collapseExample" role="button"
-                            aria-expanded="false" aria-controls="collapseExample">
-                            See more
-                        </a>
-
-                        <div class="collapse" id="collapseExample">
-                            <button class="btn btn-danger">
-                               
-                                <h5> <img src="@/assets/icons/remove-white.svg" style="width: 30px"> Remove friend</h5>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="card card-one">
-                    <div class="header">
-                        <div class="avatar">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
-                        </div>
-                    </div>
-                    <h3>Victoria Fox</h3>
-                    <div class="desc">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
-                    </div>
-                    <div class="contacts">
-                        <a class="text removeFriend" data-bs-toggle="collapse" href="#collapseExample" role="button"
-                            aria-expanded="false" aria-controls="collapseExample">
-                            See more
-                        </a>
-
-                        <div class="collapse" id="collapseExample">
-                            <button class="btn btn-danger">
-                               
-                                <h5> <img src="@/assets/icons/remove-white.svg" style="width: 30px"> Remove friend</h5>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="card card-one">
-                    <div class="header">
-                        <div class="avatar">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="">
-                        </div>
-                    </div>
-                    <h3>Coray Shoe</h3>
-                    <div class="desc">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
-                    </div>
-                    <div class="contacts">
-                        <a class="text removeFriend" data-bs-toggle="collapse" href="#collapseExample" role="button"
-                            aria-expanded="false" aria-controls="collapseExample">
-                            See more
-                        </a>
-
-                        <div class="collapse" id="collapseExample">
-                            <button class="btn btn-danger">
-                               
-                                <h5> <img src="@/assets/icons/remove-white.svg" style="width: 30px"> Remove friend</h5>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="card card-one">
-                    <div class="header">
-                        <div class="avatar">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
-                        </div>
-                    </div>
-                    <h3>Christiano Mooray</h3>
-                    <div class="desc">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
-                    </div>
-                    <div class="contacts">
-                        <a class="text removeFriend" data-bs-toggle="collapse" href="#collapseExample" role="button"
-                            aria-expanded="false" aria-controls="collapseExample">
-                            See more
-                        </a>
-
-                        <div class="collapse" id="collapseExample">
-                            <button class="btn btn-danger">
-                               
-                                <h5> <img src="@/assets/icons/remove-white.svg" style="width: 30px"> Remove friend</h5>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+        <div>
+            <button class="btn btn-primary pull-right" @click="addNewFriends">+ Add Friend</button>
+            <div class="my-3">
+                <button class="btn pages" @click="setupFriends">Your Friends</button>
+                <button class="btn pages" @click="requestFriend">Friend Requests</button>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-lg-3">
-                <div class="card card-one">
-                    <div class="header">
-                        <div class="avatar">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar4.png" alt="">
-                        </div>
-                    </div>
-                    <h3>Lynda West</h3>
-                    <div class="desc">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
-                    </div>
-                    <div class="contacts">
-                        <a class="text removeFriend" data-bs-toggle="collapse" href="#collapseExample" role="button"
-                            aria-expanded="false" aria-controls="collapseExample">
-                            See more
-                        </a>
-
-                        <div class="collapse" id="collapseExample">
-                            <button class="btn btn-danger">
-                               
-                                <h5> <img src="@/assets/icons/remove-white.svg" style="width: 30px"> Remove friend</h5>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="card card-one">
-                    <div class="header">
-                        <div class="avatar">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
-                        </div>
-                    </div>
-                    <h3>Jayden G</h3>
-                    <div class="desc">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
-                    </div>
-                    <div class="contacts">
-                        <a class="text removeFriend" data-bs-toggle="collapse" href="#collapseExample" role="button"
-                            aria-expanded="false" aria-controls="collapseExample">
-                            See more
-                        </a>
-
-                        <div class="collapse" id="collapseExample">
-                            <button class="btn btn-danger">
-                               
-                                <h5> <img src="@/assets/icons/remove-white.svg" style="width: 30px"> Remove friend</h5>
-                            </button>
+        <div v-if="showFriends">
+            <div v-if="elementsInFriends">
+                <div class="row">
+                    <div class="col-lg-3" v-for="friend in friends" :key="friend.id">
+                        <div class="card card-one">
+                            <div class="header">
+                                <div v-if="friend.profileImage" class="avatar">
+                                    <img :src="'http://localhost:8080/api/images/' + friend.profileImage" alt="">
+                                </div>
+                                <div v-else class="avatar">
+                                    <img :src="'../src/assets/userprofile.png'" alt="">
+                                </div>
+                            </div>
+                            <h3><a href="#" class="btn stretched-link" id="profileName"
+                                    @click="navigateToFriend(friend.id)">{{
+                friend.firstName }}</a></h3>
+                            <div class="desc">{{ friend.firstName }} {{ friend.lastName }}</div>
+                            <div class="contacts">
+                                <a class="text removeFriend" data-bs-toggle="collapse"
+                                    :href="'#collapseExample' + friend.id" role="button" aria-expanded="false"
+                                    :aria-controls="'collapseExample' + friend.id">
+                                    See more
+                                </a>
+                                <div class="collapse" :id="'collapseExample' + friend.id">
+                                    <button class="btn btn-danger" @click="removeFriend(friend.id)">
+                                        <h5><img src="@/assets/icons/remove-white.svg" style="width: 30px"> Remove
+                                            friend
+                                        </h5>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
-                <div class="card card-one">
-                    <div class="header">
-                        <div class="avatar">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="">
-                        </div>
+            <div v-else>No Friends</div>
+        </div>
+        <div v-else-if="showRequests" class="row">
+            <div class="content-body">
+                <div v-if="elementsInFriendRequest" id="requests">
+                    <div class="request" v-for="(friend) in friendRequests" :key="friend.id">
+                        <div v-if="friend.profileImage !== null"><img id="profilePicture"
+                                :src="'http://localhost:8080/api/images/' + friend.profileImage" alt="user"
+                                class="profile-photo-lg"></div>
+                        <div v-else><img id="profilePicture" :src="'../src/assets/userprofile.png'" alt="user"
+                                class="profile-photo-lg"></div>
+                        <h2>{{ friend.firstName }}</h2> - <button class="btn btn-success mx-2"
+                            @click="acceptRequest(friend.id)">Accept</button>
+                        <button class="btn btn-danger" @click="rejectRequest(friend.id)">Reject</button>
                     </div>
-                    <h3>Julia Ann</h3>
-                    <div class="desc">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
+                </div>
+                <div v-else>No friend requests</div>
+            </div>
+        </div>
+        <div v-if="showAddFriend" class="modal" tabindex="-1" role="dialog"
+            style="display:block; background-color: rgba(0,0,0,0.5);">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add Friend</h5>
+                        <button type="button" class="close" @click="showAddFriend = false">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                    <div class="contacts">
-                        <a class="text removeFriend" data-bs-toggle="collapse" href="#collapseExample" role="button"
-                            aria-expanded="false" aria-controls="collapseExample">
-                            See more
-                        </a>
+                    <div class="modal-body d-flex justify-content-center align-items-center flex-column">
+                        <form class="col-md-10 d-flex justify-content-center align-items-center flex-row my-4"
+                            id="searchBox" role="search" @submit.prevent="searchProfile(searchWord)">
+                            <input class="form-control me-2 custom-border" type="search" placeholder="Search"
+                                aria-label="Search" v-model="searchWord">
+                            <button class="btn btn-success" type="submit">Search</button>
+                        </form>
+                        <div class="col-md-12">
+                            <div class="people-nearby">
+                                <div v-for="user in searchedUsers" :key="user.id" class="nearby-user">
+                                    <div class="row d-flex align-items-center">
+                                        <div class="col-md-2 col-sm-2">
+                                            <div v-if="user.profileImage !== null"><img id="profilePicture"
+                                                    :src="'http://localhost:8080/api/images/' + user.profileImage"
+                                                    alt="user" class="profile-photo-lg"></div>
+                                            <div v-else><img id="profilePicture" :src="'../src/assets/userprofile.png'"
+                                                    alt="user" class="profile-photo-lg"></div>
 
-                        <div class="collapse" id="collapseExample">
-                            <button class="btn btn-danger">
-                               
-                                <h5> <img src="@/assets/icons/remove-white.svg" style="width: 30px"> Remove friend</h5>
-                            </button>
+                                        </div>
+                                        <div class="col-md-7 col-sm-7">
+                                            <h5><a href="#" class="profile-link" @click="toUserProfile(user.id)">{{
+                                                    user.firstName }}</a>
+                                            </h5>
+                                        </div>
+                                        <div class="col-md-3 col-sm-3">
+                                            <button class="btn btn-primary pull-right" @click="addFriend(user.id)">Add
+                                                Friend</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
-                <div class="card card-one">
-                    <div class="header">
-                        <div class="avatar">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
-                        </div>
-                    </div>
-                    <h3>Ava Ray</h3>
-                    <div class="desc">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
-                    </div>
-                    <div class="contacts">
-                        <a class="text removeFriend" data-bs-toggle="collapse" href="#collapseExample" role="button"
-                            aria-expanded="false" aria-controls="collapseExample">
-                            See more
-                        </a>
-
-                        <div class="collapse" id="collapseExample">
-                            <button class="btn btn-danger">
-                               
-                                <h5> <img src="@/assets/icons/remove-white.svg" style="width: 30px"> Remove friend</h5>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="card card-one">
-                    <div class="header">
-                        <div class="avatar">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="">
-                        </div>
-                    </div>
-                    <h3>Maria Shwenstiger</h3>
-                    <div class="desc">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
-                    </div>
-                    <div class="contacts">
-                        <a class="text removeFriend" data-bs-toggle="collapse" href="#collapseExample" role="button"
-                            aria-expanded="false" aria-controls="collapseExample">
-                            See more
-                        </a>
-
-                        <div class="collapse" id="collapseExample">
-                            <button class="btn btn-danger">
-                               
-                                <h5> <img src="@/assets/icons/remove-white.svg" style="width: 30px"> Remove friend</h5>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="card card-one">
-                    <div class="header">
-                        <div class="avatar">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="">
-                        </div>
-                    </div>
-                    <h3>Kate Perry</h3>
-                    <div class="desc">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
-                    </div>
-                    <div class="contacts">
-                        <a class="text removeFriend" data-bs-toggle="collapse" href="#collapseExample" role="button"
-                            aria-expanded="false" aria-controls="collapseExample">
-                            See more
-                        </a>
-
-                        <div class="collapse" id="collapseExample">
-                            <button class="btn btn-danger">
-                               
-                                <h5> <img src="@/assets/icons/remove-white.svg" style="width: 30px"> Remove friend</h5>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="card card-one">
-                    <div class="header">
-                        <div class="avatar">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="">
-                        </div>
-                    </div>
-                    <h3>Robart Gibbs</h3>
-                    <div class="desc">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
-                    </div>
-                    <div class="contacts">
-                        <a class="text removeFriend" data-bs-toggle="collapse" href="#collapseExample" role="button"
-                            aria-expanded="false" aria-controls="collapseExample">
-                            See more
-                        </a>
-
-                        <div class="collapse" id="collapseExample">
-                            <button class="btn btn-danger">
-                               
-                                <h5> <img src="@/assets/icons/remove-white.svg" style="width: 30px"> Remove friend</h5>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="card card-one">
-                    <div class="header">
-                        <div class="avatar">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar5.png" alt="">
-                        </div>
-                    </div>
-                    <h3>Anna Winslet</h3>
-                    <div class="desc">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit et cupiditate deleniti.
-                    </div>
-                    <div class="contacts">
-                        <a class="text removeFriend" data-bs-toggle="collapse" href="#collapseExample" role="button"
-                            aria-expanded="false" aria-controls="collapseExample">
-                            See more
-                        </a>
-
-                        <div class="collapse" id="collapseExample">
-                            <button class="btn btn-danger">
-                               
-                                <h5> <img src="@/assets/icons/remove-white.svg" style="width: 30px"> Remove friend</h5>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                </ul>
-            </nav>
         </div>
     </div>
 </template>
 
+
+
 <script setup lang="ts">
-import { useRouter, useRoute } from 'vue-router';
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { FriendService, UserService } from '@/api';
+import type { UserDTO } from '@/api';
 
-
-import { useUserInfoStore } from '@/stores/UserStore';
-
-const userStore = useUserInfoStore();
-
-const createdQuizzes = ref(1);
-const createdQuizzesIsEmpty = ref(null);
-const coAuthorQuizzes = ref(null);
-const coAuthorQuizzesIsEmpty = ref(null);
 const router = useRouter();
+const friends = ref();
+const showFriends = ref(true);
+const showRequests = ref(false);
+const showAddFriend = ref(false);
+const friendRequests = ref([] as any);
+const addFriends = ref([] as any);
+const searchedUsers = ref([] as any);
 
-let userid = ref("");
+const searchWord = ref("");
 
-async function fetchUserData() {
+const elementsInFriendRequest = ref(false);
+const elementsInFriends = ref(false);
 
-}
-
-function addFriend() {
-    router.push('/add-friend');
-}
-
-// Define the navigateToQuiz method
-const navigateToFriend = (friendID :number) => {
-router.push('/profile/' + friendID)
+const toUserProfile = (userId: number) => {
+    router.push('/profile/' + userId);
 };
 
-const removeFriend = (friendID: number) => {
-
+const searchProfile = async (searchTerm: string) => {
+    const userPayload = {
+        searchTerm: searchTerm as string,
+        filter: 'NON_FRIENDS' as string,
+    };
+    try {
+        const response = await UserService.getUsersByNameAndFilter(userPayload);
+        searchedUsers.value = response;
+        console.log(response);
+    } catch (error) {
+        console.error('Failed to search for profile', error);
+    }
 };
 
-onMounted(fetchUserData);
+const addNewFriends = async () => {
+    const userPayload = {
+        amount: 6 as number,
+        filter: 'NON_FRIENDS' as string,
+    };
+    try {
+        const response = await UserService.getRandomUsers(userPayload);
+        searchedUsers.value = response;
+        showAddFriend.value = true;
+    } catch (error) {
+        console.error('Failed to add friend', error);
+    }
+};
+
+async function addFriend(friendID: number) {
+    const response = await FriendService.addFriendRequest({ userId: friendID });
+}
+
+async function requestFriend() {
+    showRequests.value = true;
+    showFriends.value = false;
+    try {
+        const response = await FriendService.getFriendRequests();
+        friendRequests.value = response;
+        elementsInFriendRequest.value = response.length > 0;
+        console.log("Friend requests: " + response);
+    } catch (error) {
+        console.error('Failed to fetch friend requests', error);
+    }
+}
+
+const navigateToFriend = (friendID: number) => {
+    router.push('/profile/' + friendID);
+};
+
+const removeFriend = async (friendID: number) => {
+    try {
+        await FriendService.deleteFriendOrFriendRequest({ friendId: friendID });
+        const responseFriends = await FriendService.getFriends();
+        friends.value = responseFriends;
+    } catch (error) {
+        console.error('Failed to remove friend', error);
+    }
+};
+
+const setupFriends = async () => {
+    showFriends.value = true;
+    showRequests.value = false;
+    try {
+        const response = await FriendService.getFriends();
+        friends.value = response;
+        elementsInFriends.value = response.length > 0;
+        console.log(response);
+    } catch (error) {
+        console.error('Failed to fetch friends', error);
+    }
+};
+
+const acceptRequest = async (requestID: number) => {
+    try {
+        await FriendService.acceptFriendRequest({ friendId: requestID });
+        const responseRequest = await FriendService.getFriendRequests();
+        friendRequests.value = responseRequest;
+        const responseFriends = await FriendService.getFriends();
+        friends.value = responseFriends;
+    } catch (error) {
+        console.error('Failed to accept friend request', error);
+    }
+};
+
+const rejectRequest = async (requestID: number) => {
+    try {
+        await FriendService.deleteFriendOrFriendRequest({ friendId: requestID });
+        const response = await FriendService.getFriendRequests();
+        friendRequests.value = response;
+    } catch (error) {
+        console.error('Failed to reject friend request', error);
+    }
+};
+
+onMounted(() => {
+    setupFriends();
+});
 </script>
+
 
 <style scoped>
 body {
@@ -659,5 +525,46 @@ ul.friend-list .right p {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+}
+
+#profileName {
+    font-size: 1.5rem;
+    font-weight: 600;
+    width: 100%;
+}
+
+#requests {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.request {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem;
+}
+
+#profilePicture {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin-right: 1rem;
+    border: 2px solid #000;
+}
+
+.modal-content {
+    padding: 1rem;
+}
+
+.modal-header {
+    margin-bottom: 5px;
+}
+
+.pages {
+    border-bottom: 1px solid #000;
+    border-radius: 0px;
+    margin: 0px 5px;
 }
 </style>

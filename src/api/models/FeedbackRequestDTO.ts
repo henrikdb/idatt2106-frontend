@@ -2,9 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { BadgeUserId } from './BadgeUserId';
-export type BadgeUser = {
-    badgeUserId?: BadgeUserId;
-    earnedAt?: string;
+export type FeedbackRequestDTO = {
+    email?: string;
+    message?: string;
 };
 

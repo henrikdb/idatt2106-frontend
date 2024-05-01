@@ -47,7 +47,6 @@ const handleSubmit = async () => {
 
   try {
     let response = await AuthenticationService.login({ requestBody: loginUserPayload });
-
     if (response.token == null || response.token == undefined) {
       errorMsg.value = 'A valid token could not be created';
       return;
@@ -56,15 +55,15 @@ const handleSubmit = async () => {
     OpenAPI.TOKEN = response.token;
 
     userStore.setUserInfo({
+      id: response.userId,
       accessToken: response.token,
       firstname: response.firstName,
       lastname: response.lastName,
       email: emailRef.value,
       role: response.role,
+      subscriptionLevel: response.subscriptionLevel,
+      profileImage: response.profileImage
     });
-
-    console.log()
-
     await router.push({ name: 'home' });
   } catch (error: any) {
     errorMsg.value = handleUnknownError(error);
