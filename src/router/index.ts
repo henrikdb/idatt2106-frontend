@@ -5,7 +5,7 @@ import { useUserInfoStore } from '@/stores/UserStore';
 import UserProfileView from "@/views/User/UserProfileView.vue";
 import SignUp from '@/components/SignUp/SignUp.vue'
 import UpdateUserView from "@/views/UpdateUser/UpdateUserView.vue";
-
+import RedirectView from '@/views/RedirectView.vue';
 
 const routes = [
   {
@@ -155,6 +155,11 @@ const routes = [
     path: '/sign-up',
     name: 'sign up',
     component: () => import('@/views/Authentication/SignUpView.vue'),
+  },
+  {
+    path: '/redirect',
+    name: 'redirect',
+    component: () => RedirectView,
   },
   {
     path: '/configuration',

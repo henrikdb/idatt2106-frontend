@@ -43,7 +43,7 @@ describe('LoginPrompt', () => {
 
         await router.isReady(); // Ensure the router is ready before asserting
 
-        const loginLink = getByText('Login');
+        const loginLink = getByText('Logg inn');
         expect(loginLink).toBeDefined(); // Check if the 'Login' link is rendered
     });
 

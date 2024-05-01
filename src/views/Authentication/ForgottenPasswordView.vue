@@ -1,72 +1,103 @@
 <template>
-    <div class="containers">
-        <div class="row justify-content-center">
-            <div class="col-lg-5">
-                <div class="card shadow-lg border-0 rounded-lg mt-5">
-                    <div class="card-header">
-                        <h3 class="text-center font-weight-light my-4">Password Recovery</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="small mb-3 text-muted">Enter your email address and we will send you a link to reset
-                            your password.</div>
-                        <form @submit.prevent="submitForm">
-                            <div class="form-floating mb-3">
-                                <input v-model="email" class="form-control" id="inputEmail" type="email"
-                                    placeholder="name@example.com" required>
-                                <label for="inputEmail">Enter email address</label>
-                            </div>
-                            <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                <router-link to="/login" class="small">Return to login</router-link>
-                                <button class="btn btn-primary" type="submit">Reset Password</button>
-                            </div>
-                            <div class="text-success">
-                                {{ confirmationMessage }}
-                            </div>
-                        </form>
-                    </div>
-                    <div class="card-footer text-center py-3">
-                        <div class="small"><router-link to="/sign-up">Need an account? Sign up!</router-link></div>
-                    </div>
-                </div>
-            </div>
+  <div class="containers">
+    <div class="box">
+      <h1 class="title">Tilbakestill passord</h1>
+      <p>Fyll inn e-posten din, så sender vi deg instruksjoner for å tilbakestille passordet ditt.</p>
+      <form @submit.prevent="submitForm" id="resetForm" ref="formRef" novalidate>
+        <div class="form-floating inputBox">
+          <input v-model="email" class="form-control" id="inputEmail" type="email"
+                 placeholder="name@example.com" required>
+          <label for="emailInput">Skriv inn din e-post</label>
         </div>
+
+        <div v-if="errorMessage" class="text-danger">
+          {{ errorMessage }}
+        </div>
+        <div v-else class="text-success">
+          {{ confirmationMessage }}
+        </div>
+        <button1 id="confirmButton" type="submit" :disabled="isSubmitting" button-text="Send e-post"></button1>
+
+        <div class="login-link">
+          <Router-Link to="/login" class="small">Gå tilbake</Router-Link>
+        </div>
+      </form>
     </div>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
-import axios from 'axios';
 import { UserService } from '@/api';
+import BaseInput from '@/components/InputFields/BaseInput.vue'
+import Button1 from '@/components/Buttons/Button1.vue'
 
-const router = useRouter();
-
+const formRef = ref()
+const form = formRef.value;
 const email = ref('');
-let confirmationMessage = ref('');
+const confirmationMessage = ref('');
+const errorMessage = ref('');
+const isSubmitting = ref(false);
 
 const submitForm = async () => {
-    try {
-        const response = await UserService.resetPassword({
-            requestBody: email.value 
-        });
-        console.log('Success:', response.data);
-        confirmationMessage.value = 'An email has been sent to your email address with a link to reset your password.';
-    } catch (error) {
-        console.error('Error:', error);
-    }
-};
+  if (isSubmitting.value) return;
+  isSubmitting.value = true;
 
+  formRef.value.classList.add("was-validated")
+
+  try {
+    await UserService.resetPassword({ requestBody: email.value });
+    confirmationMessage.value = 'An email has been sent to your email address with a link to reset your password.';
+    errorMessage.value = '';
+  } catch (error) {
+    errorMessage.value = 'Failed to send email. Please try again.';
+    confirmationMessage.value = '';
+  }
+  isSubmitting.value = false;
+};
 </script>
 
 <style scoped>
-    .containers {
-        width: 100%;
-        background-color: #A2CC99;
-        height: 100vh;
-    }
+.containers {
+  background: url('@/assets/wave.svg');
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-    .row {
-        margin-right: 0px;
-        margin-left: 0px;
-    }
+.box {
+  background-color: white;
+  border-radius: 1rem;
+  width: 100%;
+  max-width: 450px;
+  padding: 2rem;
+  box-shadow: rgba(57, 57, 63, 0.5) 0px 1px 20px 0px;
+  text-align: center;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+#resetForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-link {
+  width: 100%;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.inputBox {
+  width: 100%;
+  margin: 20px;
+}
 </style>
