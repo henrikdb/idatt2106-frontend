@@ -3,16 +3,17 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useUserInfoStore } from "../../stores/UserStore";
 import { UserService } from "@/api";
+import { ItemService } from "@/api";
 
 let numberOfHistory = 6;
-
 let cardTitles = ["Spain tour", "Food waste", "Coffee", "Concert", "New book", "Pretty clothes"]
-
 let firstname = ref();
 let lastname = ref();
 const imageUrl = ref(`../src/assets/userprofile.png`);
 
 const router = useRouter();
+const inventory = ref([] as any);
+const backgroundName = ref("");
 
 async function setupForm() {
   try {
@@ -22,9 +23,26 @@ async function setupForm() {
     firstname.value = response.firstName;
     lastname.value = response.lastName;
     imageUrl.value = "http://localhost:8080/api/images/" + response.profileImage;
+    getInventory();
   } catch (err) {
     console.error(err)
   }
+}
+
+const getInventory = async () => {
+  try {
+    const response = await ItemService.getInventory();
+    inventory.value = response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const selectItem = (item: any) => {
+  backgroundName.value = item.itemName;
+  useUserInfoStore().setUserInfo({
+    roadBackground: item.imageId,
+  })
 }
 
 onMounted(() => {
@@ -48,8 +66,8 @@ const toUpdateUserSettings = () => {
         <div class="card">
           <div class="rounded-top text-white d-flex flex-row bg-primary" style="height:200px;">
             <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
-              <img :src="imageUrl" alt="Generisk plassholderbilde"
-                class="img-fluid img-thumbnail mt-4 mb-2" style="width: 150px; z-index: 1">
+              <img :src="imageUrl" alt="Generisk plassholderbilde" class="img-fluid img-thumbnail mt-4 mb-2"
+                style="width: 150px; z-index: 1">
               <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary"
                 data-mdb-ripple-color="dark" style="z-index: 1;" id="toUpdate" @click="toUpdateUserSettings">
                 Rediger profil
@@ -68,6 +86,26 @@ const toUpdateUserSettings = () => {
               <div class="px-3">
                 <p class="mb-1 h2">1026 <img src="@/assets/icons/fire.png" style="width: 4rem"></p>
                 <p class="small text-muted mb-0">Streak</p>
+              </div>
+            </div>
+          </div>
+          <div class="card-body p-1 text-black">
+            <div class="row">
+              <div class="col">
+                <div class="container-fluid">
+                  <h1 class="mt-5 text-start badges-text">Lageret ditt</h1>
+                  <div class="scrolling-wrapper-badges row flex-row flex-nowrap mt-4 pb-4 pt-2">
+                    <div v-for="product in inventory" :key="product.id" class="card text-center"
+                        style="width: 12rem; border: none; cursor: pointer; margin: 1rem; border: 2px solid black" @click="selectItem(product)">
+                        <img :src="`http://localhost:8080/api/images/${product.imageId}`" class="card-img-top"
+                            alt="..." />
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.itemName }}</h5>
+                        </div>
+                    </div>
+                  </div>
+                  <div v-if="backgroundName" class="text-success">You selected the background: <strong>{{ backgroundName }}!</strong></div>
+                </div>
               </div>
             </div>
           </div>
@@ -131,7 +169,8 @@ const toUpdateUserSettings = () => {
                               <div class="card-body">
                                 <h5 class="card-title">{{ cardTitles[index - 1] }}</h5>
                                 <p class="card-text">Penger spart: 200 <br />Du har fullført en utfordring: 21</p>
-                                <p class="card-text"><small class="text-muted">Sist oppdatert for 3 minutter siden</small></p>
+                                <p class="card-text"><small class="text-muted">Sist oppdatert for 3 minutter
+                                    siden</small></p>
                                 <a href="#" class="btn  stretched-link" @click="toRoadmap"></a>
                               </div>
                             </div>
