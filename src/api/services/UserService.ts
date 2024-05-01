@@ -4,6 +4,10 @@
 /* eslint-disable */
 import type { Account } from '../models/Account';
 import type { BankAccountDTO } from '../models/BankAccountDTO';
+import type { BudgetRequestDTO } from '../models/BudgetRequestDTO';
+import type { BudgetResponseDTO } from '../models/BudgetResponseDTO';
+import type { ExpenseRequestDTO } from '../models/ExpenseRequestDTO';
+import type { ExpenseResponseDTO } from '../models/ExpenseResponseDTO';
 import type { FeedbackRequestDTO } from '../models/FeedbackRequestDTO';
 import type { FeedbackResponseDTO } from '../models/FeedbackResponseDTO';
 import type { PasswordResetDTO } from '../models/PasswordResetDTO';

@@ -78,4 +78,23 @@ export class GoalService {
             mediaType: 'application/json',
         });
     }
+    /**
+     * Update a challenge
+     * Update a challenge day as completed
+     * @returns any Successfully updated the challenge
+     * @throws ApiError
+     */
+    public static getGoal({
+        id,
+    }: {
+        id: number,
+    }): CancelablePromise<GoalDTO> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/goals/{id}',
+            query: {
+                'id': id,
+            },
+        });
+    }
 }
