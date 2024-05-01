@@ -4,22 +4,26 @@
         <hr>
         <form @submit.prevent="handleSpendingSubmit">
             <div class="form-group">
-                <BaseInput :model-value="spendingAccount" @input-change-event="handleSpendingInputEvent" id="firstNameInputChange" input-id="first-name-new"
+                <BaseInput data-cy="spending-account-input" :model-value="spendingAccount"
+                            @input-change-event="handleSpendingInputEvent" id="firstNameInputChange" input-id="first-name-new"
                     type="Number" label="Brukskonto" placeholder="Skriv inn din brukskonto"
                     invalid-message="Vennligst skriv inn din brukskonto" />
             </div>
             <br>
-            <button type="submit" class="btn btn-primary">Oppdater brukskonto</button>
+            <button data-cy="update-spending-btn" type="submit" class="btn btn-primary">Oppdater
+              brukskonto</button>
         </form>
         <br>
         <form @submit.prevent="handleSavingSubmit">
             <div class="form-group">
-                <BaseInput :model-value="savingsAccount" @input-change-event="handleSavingInputEvent" id="firstNameInputChange" input-id="first-name-new" type="Number"
+                <BaseInput data-cy="savings-account-input" :model-value="savingsAccount"
+                           @input-change-event="handleSavingInputEvent" id="firstNameInputChange" input-id="first-name-new" type="Number"
                     label="Sparekonto" placeholder="Skriv inn din sparekonto"
                     invalid-message="Vennligst skriv inn din sparekonto" />
             </div>
             <br>
-            <button type="submit" class="btn btn-primary">Oppdater sparekonto</button>
+            <button data-cy="update-savings-btn" type="submit" class="btn btn-primary">Oppdater
+              sparekonto</button>
         </form>
         <hr>
         <div class="form-group mb-0">

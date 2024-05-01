@@ -55,14 +55,16 @@ onMounted(() => {
       <hr>
       <form  @submit.prevent="handleSubmit">
           <div class="form-group">
-              <BaseInput :model-value="emailRef" @input-change-event="handleEmailInputEvent" id="emailInput-change"
+              <BaseInput data-cy="email-input" :model-value="emailRef"
+                         @input-change-event="handleEmailInputEvent" id="emailInput-change"
                   input-id="email-new" type="email" label="E-post" placeholder="Skriv inn din e-post"
                   invalid-message="Ugyldig e-post"/>
           </div>
-          <p class="text-danger">{{ errorMsg }}</p>
-          <p class="text-success">{{ confirmationMsg }}</p>
+          <p data-cy="change-email-msg-error" class="text-danger">{{ errorMsg }}</p>
+          <p data-cy="change-email-msg-confirm" class="text-success">{{ confirmationMsg }}</p>
           <br>
-          <button type="submit" class="btn btn-primary">Endre Informasjon</button>
+          <button data-cy="change-email-btn" type="submit" class="btn btn-primary">Endre
+            Informasjon</button>
           <hr>
           <div class="form-group">
               <label class="d-block text-danger">Slett Bruker</label>

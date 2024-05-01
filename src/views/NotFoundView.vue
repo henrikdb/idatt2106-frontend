@@ -5,13 +5,13 @@
                 <div class="error-template text-center">
                     <h1>
                         Oi!</h1>
-                    <h2>
+                    <h2 data-cy="404-error">
                         404 Ikke funnet</h2>
                     <div class="error-details">
                         Beklager, det har oppstått en feil. Forespurt side ikke funnet!
                     </div>
                     <div class="error-actions">
-                        <Button1 button-text="Ta meg hjem" @click="home" />
+                        <Button1 data-cy="to-home" button-text="Ta meg hjem" @click="home" />
                     </div>
                 </div>
             </div>
