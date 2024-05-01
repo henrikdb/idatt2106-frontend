@@ -5,13 +5,13 @@
                 <div class="error-template text-center"> <!-- 'text-center' for centering text content -->
                     <h1>
                         Oops!</h1>
-                    <h2>
+                    <h2 data-cy="404-error">
                         404 Not Found</h2>
                     <div class="error-details">
                         Sorry, an error has occurred, Requested page not found!
                     </div>
                     <div class="error-actions">
-                        <Button1 button-text="Take Me Home" @click="home" />
+                        <Button1 data-cy="to-home" button-text="Take Me Home" @click="home" />
                     </div>
                 </div>
             </div>
