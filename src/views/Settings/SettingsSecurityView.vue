@@ -5,23 +5,28 @@
         <form @submit.prevent="handleSubmit" novalidate>
             <div class="form-group">
                 <label class="d-block">Endre passord</label>
-                <BaseInput :model-value="oldPasswordRef" @input-change-event="handleOldPasswordInputEvent"
+                <BaseInput data-cy="old-password-input" :model-value="oldPasswordRef"
+                            @input-change-event="handleOldPasswordInputEvent"
                     id="passwordInput-change" input-id="password-old" type="password"
                     pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,16}" label="Gammelt passord" placeholder="Skriv inn passord"
                     invalid-message="Passordet må være mellom 4 og 16 tegn og inneholde en stor bokstav, en liten bokstav og et tall" />
 
-                <BaseInput :model-value="newPasswordRef" @input-change-event="handleNewPasswordInputEvent"
+                <BaseInput data-cy="new-password-input" :model-value="newPasswordRef"
+                            @input-change-event="handleNewPasswordInputEvent"
                     id="passwordInput-change" input-id="password-new" type="password"
                     pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,16}" label="Nytt passord" placeholder="Skriv inn passord"
                     invalid-message="Passordet må være mellom 4 og 16 tegn og inneholde en stor bokstav, en liten bokstav og et tall" />
 
-                <BaseInput :model-value="confirmPasswordRef" @input-change-event="handleConfirmPasswordInputEvent"
+                <BaseInput data-cy="confirm-password-input" :model-value="confirmPasswordRef"
+                            @input-change-event="handleConfirmPasswordInputEvent"
                     id="passwordInput-change" input-id="password-confirm" type="password"
                     pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,16}" label="Bekreft nytt passord" placeholder="Skriv inn passord"
                     invalid-message="Passordet må være mellom 4 og 16 tegn og inneholde en stor bokstav, en liten bokstav og et tall" />
             </div>
-            <button type="submit" class="btn btn-primary">Oppdater passord</button>
-            <button type="reset" class="btn btn-light">Tilbakestill endringer</button>
+            <button data-cy="update-password-btn" type="submit" class="btn btn-primary">Oppdater
+              passord</button>
+            <button data-cy="reset-fields-btn" type="reset" class="btn btn-light">Tilbakestill
+              endringer</button>
         </form>
         <hr>
     </div>

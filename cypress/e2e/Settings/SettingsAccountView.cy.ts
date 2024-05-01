@@ -9,7 +9,7 @@ describe('SettingsAccount Test', () => {
     cy.wait(1000)
   });
 
-  it('update email of user', () => {
+  it('updates email of user', () => {
     cy.get('[data-cy="email-input"]').find('[data-cy="bi-input"]')
     .should('have.value','user@example.com')
     cy.get('[data-cy="email-input"]').find('[data-cy="bi-input"]').clear()
