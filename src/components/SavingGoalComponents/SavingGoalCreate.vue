@@ -24,7 +24,6 @@ const createGoalClick = async () => {
     targetDate: date.value + " 00:00:00.000000000",
   };
 
-  console.log(createGoalPayload)
 
   try {
     let response = await GoalService.createGoal({ requestBody: createGoalPayload });
@@ -85,5 +84,7 @@ const createGoalClick = async () => {
 .col-lg-8 {
   width: 63%;
   margin-top: 50px;
+  padding-right: 56px;
+  padding-bottom: 28px;
 }
 </style>
