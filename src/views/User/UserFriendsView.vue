@@ -21,9 +21,9 @@
                                     <img :src="'../src/assets/userprofile.png'" alt="">
                                 </div>
                             </div>
-                            <h3><a href="#" class="btn stretched-link" id="profileName"
-                                    @click="navigateToFriend(friend.id)">{{
-                friend.firstName }}</a></h3>
+                            <h3><router-link to="" data-cy="navigateToFriend" href="#" class="btn stretched-link"
+                                    id="profileName" @click="navigateToFriend(friend.id)">{{
+                friend.firstName }}</router-link></h3>
                             <div class="desc">{{ friend.firstName }} {{ friend.lastName }}</div>
                             <div class="contacts">
                                 <a class="text removeFriend" data-bs-toggle="collapse"
@@ -91,11 +91,12 @@
                                         </div>
                                         <div class="col-md-7 col-sm-7">
                                             <h5><a href="#" class="profile-link" @click="toUserProfile(user.id)">{{
-                                                    user.firstName }}</a>
+                user.firstName }}</a>
                                             </h5>
                                         </div>
                                         <div class="col-md-3 col-sm-3">
-                                            <button class="btn btn-primary pull-right" @click="addFriend(user.id)">Legg til venn</button>
+                                            <button class="btn btn-primary pull-right" @click="addFriend(user.id)">Legg
+                                                til venn</button>
                                         </div>
                                     </div>
                                 </div>
