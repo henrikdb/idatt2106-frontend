@@ -114,15 +114,19 @@ onMounted(() => {
         </div>
       </div>
       <div class="form-group">
-        <BaseInput :model-value="firstNameRef" @input-change-event="handleFirstNameInputEvent" id="firstNameInputChange"
-          input-id="first-name-new" type="text" label="Fornavn" placeholder="Skriv inn ditt fornavn"
-          invalid-message="Vennligst skriv inn ditt fornavn" />
+        <BaseInput data-cy="first-name" :model-value="firstNameRef"
+                   @input-change-event="handleFirstNameInputEvent" id="firstNameInputChange"
+                   input-id="first-name-new" type="text" label="Fornavn" placeholder="Skriv inn ditt fornavn"
+                   invalid-message="Vennligst skriv inn ditt fornavn" />
       </div>
       <br>
       <div class="form-group">
-        <BaseInput :model-value="surnameRef" @input-change-event="handleSurnameInputEvent" id="surnameInput-change"
-          input-id="surname-new" type="text" label="Etternavn" placeholder="Skriv inn ditt etternavn"
-          invalid-message="Vennligst skriv inn ditt etternavn" />
+        <BaseInput data-cy="last-name" :model-value="surnameRef"
+                   @input-change-event="handleSurnameInputEvent"
+                    id="surnameInput-change"
+                   input-id="surname-new" type="text" label="Etternavn"
+                   placeholder="Skriv inn ditt etternavn"
+                   invalid-message="Vennligst skriv inn ditt etternavn" />
       </div>
       <br>
       <button type="submit" class="btn btn-primary">Oppdater profil</button>
