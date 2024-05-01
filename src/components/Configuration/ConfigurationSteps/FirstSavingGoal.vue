@@ -3,6 +3,7 @@ import BaseInput from '@/components/InputFields/BaseInput.vue'
 import { ref } from 'vue'
 import Button1 from '@/components/Buttons/Button1.vue'
 import { useRouter } from 'vue-router'
+import {type CreateGoalDTO, GoalService} from "@/api";
 
 const router = useRouter();
 const emit = defineEmits(['changeRouterEvent'])
@@ -13,8 +14,9 @@ const titleRef = ref<string>()
 let descriptionRef = ref<string>()
 const sumRef = ref<number>()
 const dateRef = ref<string>()
+const errorMessage = ref("")
 
-const handleSubmit = () => {
+const handleSubmit = async () => {
   formRef.value.classList.add("was-validated")
   const form = formRef.value
   if (!form.checkValidity()) {
@@ -22,7 +24,20 @@ const handleSubmit = () => {
   }
 
   // TODO integrate user creation and goal creation with backend.
+  const createGoalPayload: CreateGoalDTO = {
+    name: titleRef.value,
+    description: descriptionRef.value,
+    targetAmount: sumRef.value,
+    targetDate: dateRef.value + " 00:00:00.000000000",
+  };
 
+  try {
+    await GoalService.createGoal({ requestBody: createGoalPayload });
+    await router.push("/")
+  } catch (error: any) {
+    console.log(error.message);
+    errorMessage.value = error.message;
+  }
 }
 
 const getTodayDate = () => {
@@ -97,6 +112,9 @@ const handleSumInputEvent = (newSum: number) => {
 
     <div class="confirm-button-container">
       <button1 id="confirmButton" @click="handleSubmit" button-text="Continue"></button1>
+    </div>
+    <div style="color: red">
+      {{ errorMessage }}
     </div>
   </div>
 
