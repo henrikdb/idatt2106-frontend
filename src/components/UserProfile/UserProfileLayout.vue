@@ -50,23 +50,23 @@ const toUpdateUserSettings = () => {
             <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
               <img :src="imageUrl" alt="Generic placeholder image"
                 class="img-fluid img-thumbnail mt-4 mb-2" style="width: 150px; z-index: 1">
-              <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary"
+              <button data-cy="toUpdate" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary"
                 data-mdb-ripple-color="dark" style="z-index: 1;" id="toUpdate" @click="toUpdateUserSettings">
                 Edit profile
               </button>
             </div>
             <div class="ms-3" style="margin-top: 130px;">
-              <h1>{{ firstname }} {{ lastname }}</h1>
+              <h1 data-cy="firstname">{{ firstname }} {{ lastname }}</h1>
             </div>
           </div>
           <div class="p-4 text-black" style="background-color: #f8f9fa;">
             <div class="d-flex justify-content-end text-center py-1">
               <div>
-                <p class="mb-1 h2">253 <img src="@/assets/items/pigcoin.png" style="width: 4rem"></p>
+                <p class="mb-1 h2" data-cy="points">253 <img src="@/assets/items/pigcoin.png" style="width: 4rem"></p>
                 <p class="small text-muted mb-0">Points</p>
               </div>
               <div class="px-3">
-                <p class="mb-1 h2">1026 <img src="@/assets/icons/fire.png" style="width: 4rem"></p>
+                <p class="mb-1 h2" data-cy="streak">1026 <img src="@/assets/icons/fire.png" style="width: 4rem"></p>
                 <p class="small text-muted mb-0">Streak</p>
               </div>
             </div>
