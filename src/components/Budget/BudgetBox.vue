@@ -91,7 +91,7 @@ const onBudgetDeleted = () => {
       </i>
       <div class="expenses-container">
         <h5>{{expenses}} kr</h5>
-        <p>Expenses</p>
+        <p>Utgifter</p>
       </div>
     </div>
 
@@ -101,7 +101,7 @@ const onBudgetDeleted = () => {
       </i>
       <div class="balance-container">
         <h5>{{balance}} kr</h5>
-        <p>Balance</p>
+        <p>Saldo</p>
       </div>
     </div>
   </div>

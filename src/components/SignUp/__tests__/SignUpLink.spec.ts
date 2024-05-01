@@ -41,7 +41,7 @@ describe('LoginPrompt', () => {
             },
         });
 
-        const loginLink = getByText('Sign up');
+        const loginLink = getByText('Registrer deg');
         expect(loginLink).toBeDefined(); // Check if the 'Login' link is rendered
     });
 

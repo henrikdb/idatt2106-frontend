@@ -39,9 +39,9 @@ describe('Menu and Router Tests', () => {
                 },
             });
 
-            expect(wrapper.text()).toContain('First name');
-            expect(wrapper.text()).toContain('Surname');
-            expect(wrapper.text()).toContain('Email');
+            expect(wrapper.text()).toContain('Fornavn');
+            expect(wrapper.text()).toContain('Etternavn');
+            expect(wrapper.text()).toContain('E-post');
         });
     });
 
@@ -71,10 +71,10 @@ describe('Menu and Router Tests', () => {
         it('updates user credentials correctly', async () => {
             const { getByPlaceholderText } = render(MyComponent);
 
-            const firstInput = getByPlaceholderText('Enter your first name') as HTMLInputElement;
-            const lastInput = getByPlaceholderText('Enter your surname') as HTMLInputElement;
-            const emailInput = getByPlaceholderText('Enter your email') as HTMLInputElement;
-            const passwordInput = getByPlaceholderText('Enter password') as HTMLInputElement;
+            const firstInput = getByPlaceholderText('Skriv inn ditt fornavn') as HTMLInputElement;
+            const lastInput = getByPlaceholderText('Skriv inn ditt etternavn') as HTMLInputElement;
+            const emailInput = getByPlaceholderText('Skriv inn din e-post') as HTMLInputElement;
+            const passwordInput = getByPlaceholderText('Skriv inn passord') as HTMLInputElement;
 
             await fireEvent.update(firstInput, 'Alice');
             await fireEvent.update(lastInput, 'Alicon');
@@ -96,7 +96,7 @@ describe('Menu and Router Tests', () => {
             });
 
             const errorMsg = container.querySelector('#invalid'); // Use the actual ID here
-            expect(errorMsg?.textContent === "Password must be between 4 and 16 characters and contain one capital letter, small letter and a number")
+            expect(errorMsg?.textContent === "Passordet må være mellom 4 og 16 tegn og inneholde én stor bokstav, liten bokstav og et tall")
         });
 
         it('logout should have empty store at application start', () => {

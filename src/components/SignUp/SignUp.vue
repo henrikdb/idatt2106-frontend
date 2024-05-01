@@ -1,10 +1,10 @@
 <script setup lang="ts">
-
 import SignUpForm from '@/components/SignUp/SignUpForm.vue'
 </script>
 
 <template>
   <div class="containers">
+    <h1 class="title">Sparesti</h1>
     <div class="box">
       <SignUpForm />
     </div>
@@ -13,18 +13,28 @@ import SignUpForm from '@/components/SignUp/SignUpForm.vue'
 
 <style scoped>
 .containers {
-  background-color: #A2CC99;
+  background: url('@/assets/wave.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
   height: 100vh;
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .box {
-  width: 450px;
-  margin: 2rem;
   background-color: white;
-  border-radius: 3rem;
-  padding: 1rem 4rem;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  border-radius: 1rem;
+  max-width: 750px;
+  padding: 0 3rem 1rem 3rem;
+  box-shadow: rgba(57, 57, 63, 0.5) 0px 1px 20px 0px;
+}
+
+.title {
+  font-size: 60px;
+  color: white;
+  margin-bottom: 40px;
+  font-weight: 700;
 }
 </style>

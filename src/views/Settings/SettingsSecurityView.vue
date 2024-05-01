@@ -1,31 +1,32 @@
 <template>
     <div class="tab-pane active" id="security">
-        <h6>SECURITY SETTINGS</h6>
+        <h6>SIKKERHETSINNSTILLINGER</h6>
         <hr>
         <form @submit.prevent="handleSubmit" novalidate>
             <div class="form-group">
-                <label class="d-block">Change Password</label>
+                <label class="d-block">Endre passord</label>
                 <BaseInput :model-value="oldPasswordRef" @input-change-event="handleOldPasswordInputEvent"
                     id="passwordInput-change" input-id="password-old" type="password"
-                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,16}" label="Old Password" placeholder="Enter password"
-                    invalid-message="Password must be between 4 and 16 characters and contain one capital letter, small letter and a number" />
+                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,16}" label="Gammelt passord" placeholder="Skriv inn passord"
+                    invalid-message="Passordet må være mellom 4 og 16 tegn og inneholde en stor bokstav, en liten bokstav og et tall" />
 
                 <BaseInput :model-value="newPasswordRef" @input-change-event="handleNewPasswordInputEvent"
                     id="passwordInput-change" input-id="password-new" type="password"
-                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,16}" label="New Password" placeholder="Enter password"
-                    invalid-message="Password must be between 4 and 16 characters and contain one capital letter, small letter and a number" />
+                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,16}" label="Nytt passord" placeholder="Skriv inn passord"
+                    invalid-message="Passordet må være mellom 4 og 16 tegn og inneholde en stor bokstav, en liten bokstav og et tall" />
 
                 <BaseInput :model-value="confirmPasswordRef" @input-change-event="handleConfirmPasswordInputEvent"
                     id="passwordInput-change" input-id="password-confirm" type="password"
-                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,16}" label="Confirm New Password" placeholder="Enter password"
-                    invalid-message="Password must be between 4 and 16 characters and contain one capital letter, small letter and a number" />
+                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,16}" label="Bekreft nytt passord" placeholder="Skriv inn passord"
+                    invalid-message="Passordet må være mellom 4 og 16 tegn og inneholde en stor bokstav, en liten bokstav og et tall" />
             </div>
-            <button type="submit" class="btn btn-primary">Update Password</button>
-            <button type="reset" class="btn btn-light">Reset Changes</button>
+            <button type="submit" class="btn btn-primary">Oppdater passord</button>
+            <button type="reset" class="btn btn-light">Tilbakestill endringer</button>
         </form>
         <hr>
     </div>
 </template>
+
 
 <script setup lang="ts">
     import { ref } from 'vue'

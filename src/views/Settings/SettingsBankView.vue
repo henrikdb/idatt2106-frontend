@@ -1,34 +1,34 @@
 <template>
     <div class="tab-pane active" id="billing">
-        <h6>BANK SETTINGS</h6>
+        <h6>BANKKONTO INNSTILLINGER</h6>
         <hr>
         <form @submit.prevent="handleSpendingSubmit">
             <div class="form-group">
                 <BaseInput :model-value="spendingAccount" @input-change-event="handleSpendingInputEvent" id="firstNameInputChange" input-id="first-name-new"
-                    type="Number" label="Spending Account" placeholder="Enter your spending account"
-                    invalid-message="Please enter your spending account" />
+                    type="Number" label="Brukskonto" placeholder="Skriv inn din brukskonto"
+                    invalid-message="Vennligst skriv inn din brukskonto" />
             </div>
             <br>
-            <button type="submit" class="btn btn-primary">Update Spending Account</button>
+            <button type="submit" class="btn btn-primary">Oppdater brukskonto</button>
         </form>
         <br>
         <form @submit.prevent="handleSavingSubmit">
             <div class="form-group">
                 <BaseInput :model-value="savingsAccount" @input-change-event="handleSavingInputEvent" id="firstNameInputChange" input-id="first-name-new" type="Number"
-                    label="Savings Account" placeholder="Enter your Savings account"
-                    invalid-message="Please enter your Savings account" />
+                    label="Sparekonto" placeholder="Skriv inn din sparekonto"
+                    invalid-message="Vennligst skriv inn din sparekonto" />
             </div>
             <br>
-            <button type="submit" class="btn btn-primary">Update Savings Account</button>
+            <button type="submit" class="btn btn-primary">Oppdater sparekonto</button>
         </form>
         <hr>
         <div class="form-group mb-0">
-            <label class="d-block">Payment History</label>
-            <div class="border border-gray-500 bg-gray-200 p-3 text-center font-size-sm">You
-                have not made any payment.</div>
+            <label class="d-block">Betalingshistorikk</label>
+            <div class="border border-gray-500 bg-gray-200 p-3 text-center font-size-sm">Du har ikke foretatt noen betaling.</div>
         </div>
     </div>
 </template>
+
 
 <script setup lang="ts">
 import { ref } from 'vue';
