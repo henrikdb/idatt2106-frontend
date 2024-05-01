@@ -9,6 +9,7 @@ describe("Leaderboard Test", () => {
   });
 
   it('loads global leaderboards', () => {
+    cy.wait(5000)
     cy.get('[data-cy="total-points-board"]')
     .find('[data-cy="top-leaderboard-tablerow"]')
     .should('have.length', 10);
