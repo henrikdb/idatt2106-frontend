@@ -93,9 +93,28 @@
 
 <script setup lang="ts">
 import ShopButton from '@/components/Buttons/ShopButton.vue';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { UserService } from '@/api';
 import { useUserInfoStore } from '@/stores/UserStore';
+import { ItemService } from '@/api';
+
+const products = ref([] as any);
+
+const getStore = () => {
+    const response = ItemService.getStore();
+    const response1 = ItemService.getInventory();
+    console.log(response);
+    console.log(response1);
+}
+
+const buyItem = async (itemId: number) => {
+    try {
+        const response = await ItemService.buyItem({ itemId: itemId});
+        console.log(response);
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 const buyPremium = async () => {
     try {
@@ -118,6 +137,10 @@ const buyNoAds = async () => {
         console.log(error);
     }
 }
+
+onMounted(() => {
+    getStore();
+})
 </script>
 
 <style scoped>
