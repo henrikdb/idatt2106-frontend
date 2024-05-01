@@ -50,26 +50,25 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="tab-pane active" id="account">
-        <h6>ACCOUNT SETTINGS</h6>
-        <hr>
-        <form  @submit.prevent="handleSubmit">
-            <div class="form-group">
-                <BaseInput :model-value="emailRef" @input-change-event="handleEmailInputEvent" id="emailInput-change"
-                    input-id="email-new" type="email" label="Email" placeholder="Enter your email"
-                    invalid-message="Invalid email"/>
-            </div>
-            <p class="text-danger">{{ errorMsg }}</p>
-            <p class="text-success">{{ confirmationMsg }}</p>
-            <br>
-            <button type="submit" class="btn btn-primary">Update Profile</button>
-            <hr>
-            <div class="form-group">
-                <label class="d-block text-danger">Delete Account</label>
-                <p class="text-muted font-size-sm">Once you delete your account, there is no going
-                    back. Please be certain.</p>
-            </div>
-            <button class="btn btn-danger" type="button">Delete Account</button>
-        </form>
-    </div>
+  <div class="tab-pane active" id="account">
+      <h6>KONTO INNSTILLINGER</h6>
+      <hr>
+      <form  @submit.prevent="handleSubmit">
+          <div class="form-group">
+              <BaseInput :model-value="emailRef" @input-change-event="handleEmailInputEvent" id="emailInput-change"
+                  input-id="email-new" type="email" label="E-post" placeholder="Skriv inn din e-post"
+                  invalid-message="Ugyldig e-post"/>
+          </div>
+          <p class="text-danger">{{ errorMsg }}</p>
+          <p class="text-success">{{ confirmationMsg }}</p>
+          <br>
+          <button type="submit" class="btn btn-primary">Endre Informasjon</button>
+          <hr>
+          <div class="form-group">
+              <label class="d-block text-danger">Slett Bruker</label>
+              <p class="text-muted font-size-sm">Når du først har slettet kontoen din, er det ingen vei tilbake. Vennligst vær sikker.</p>
+          </div>
+          <button class="btn btn-danger" type="button">Slett Bruker</button>
+      </form>
+  </div>
 </template>

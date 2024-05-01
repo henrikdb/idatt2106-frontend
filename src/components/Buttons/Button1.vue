@@ -12,4 +12,21 @@ defineProps<{ buttonText: string }>();
         font-size: 1.5rem;
         font-weight: 600;
     }
+
+    .btn-primary {
+      background-color: #003A58;
+      border-color: #003A58;
+      font-weight: 600;
+    }
+
+    .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+      background-color: #004a72 !important;
+      border-color: #004a72 !important;
+    }
+
+    .btn-primary:disabled {
+      background-color: rgba(0, 74, 114, 0.56) !important;
+      border-color: rgba(0, 74, 114, 0.56) !important;
+    }
+
 </style>

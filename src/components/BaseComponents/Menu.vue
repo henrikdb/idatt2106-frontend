@@ -7,70 +7,180 @@
             </router-link>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
+                aria-label="Bytt navigasjon">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 ui-menu">
                     <li class="nav-item">
-                      <router-link class="nav-link text-white" :to="toSavingGoals()"><img
-                                src="@/assets/icons/saving.svg">Saving goals</router-link>
+                      <router-link data-cy="savingGoals" class="nav-link text-white"
+                                   :to="toSavingGoals()"><img
+                                src="@/assets/icons/saving.svg">Sparemål</router-link>
                     </li>
                     <li class="nav-item">
-                      <router-link class="nav-link text-white" :to="toLeaderboard()"><img
+                      <router-link data-cy="leaderboard" class="nav-link text-white"
+                                   :to="toLeaderboard()"><img
                                 src="@/assets/icons/leaderboard.svg">Leaderboard</router-link>
                     </li>
                     <li class="nav-item">
-                      <router-link class="nav-link text-white" :to="toNews()"><img
-                          src="@/assets/icons/newsletter.svg">News</router-link>
+                      <router-link data-cy="news" class="nav-link text-white" :to="toNews()"><img
+                          src="@/assets/icons/newsletter.svg">Nyheter</router-link>
                     </li>
                     <li class="nav-item">
-                      <router-link class="nav-link text-white" :to="toStore()"><img
-                          src="@/assets/icons/storefront.svg">Store</router-link>
+                      <router-link data-cy="store" class="nav-link text-white" :to="toStore()"><img
+                          src="@/assets/icons/storefront.svg">Butikk</router-link>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a data-mdb-dropdown-init class=" nav-link me-3 dropdown-toggle hidden-arrow notification" href="#" id="navbarDropdownMenuLink"
+                           role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          <i class="fas fa-bell text-white"></i>
+                          <span class="badge rounded-pill badge-notification bg-danger">{{counter}}</span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                          <li v-for="(array,key) in notifMap" :key="key" >
+                            <div class="d-flex align-items-center">
+                              <div v-if="array[1][0] === '1'" class="flex-shrink-0">
+                                <img src="/src/assets/icons/medal.png" alt="Varslingsikon" class="notification-icon" style="height: 20px; width: 20px">
+                              </div>
+                              <div v-if="array[1][0] === '2'" class="flex-shrink-0">
+                                <img src="/src/assets/userprofile.png" alt="Varslingsikon" class="notification-icon" style="height: 20px; width: 20px">
+                              </div>
+                              <div v-if="array[1][0] === '3'" class="flex-shrink-0">
+                                <img src="/src/assets/icons/piggybank.svg" alt="Varslingsikon" class="notification-icon" style="height: 20px; width: 20px">
+                              </div>
+                              <div class="flex-grow-1 ms-3">
+                                <router-link class="not-item dropdown-item text-white"   :to="getPath(array[1][0])">{{array[1][1]}}</router-link>
+                              </div>
+                            </div>
+
+
+                          </li>
+                        </ul>
                     </li>
                     <li v-if="userStore.isLoggedIn" class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle username-text text-white " href="#" role="button"
+                        <a data-cy="user"
+                           class="nav-link dropdown-toggle username-text text-white "
+                           href="#" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="@/assets/icons/person.svg">{{ useUserInfoStore().firstname}}
+                            <img :src="useUserInfoStore().profileImage ? 'http://localhost:8080/api/images/' + useUserInfoStore().profileImage : 'src/assets/userprofile.png'"
+                                style="width: 50px; border: 2px solid black; border-radius: 50%">{{
+                useUserInfoStore().firstname }}
                         </a>
                         <ul class="dropdown-menu dropdown-username-content">
-                            <li><router-link class="dropdown-item text-white dropdown-username-link" :to="toUserProfile()"><img
-                                  src="@/assets/icons/person.svg">User Profile</router-link></li>
-                            <li><router-link class="dropdown-item text-white dropdown-username-link" :to="toBudget()"><img>Budget</router-link></li>
-                            <li><router-link class="dropdown-item text-white dropdown-username-link" :to="toFriends()"><img
-                                src="@/assets/icons/friends.svg">Friends</router-link></li>
-                            <li><router-link class="dropdown-item text-white dropdown-username-link" :to="toSetting()"><img
-                                src="@/assets/icons/settings.svg">Settings</router-link></li>
-                            <li><router-link class="dropdown-item text-white dropdown-username-link" :to="toFeedback()"><img
-                                src="@/assets/icons/feedback.svg">Feedback</router-link></li>
-                            <li><router-link class="dropdown-item text-white dropdown-username-link" :to="toSetting()"><img
+                            <li><router-link data-cy="profile"
+                              class="dropdown-item text-white dropdown-username-link" :to="toUserProfile()"><img
+                                  src="@/assets/icons/person.svg">Brukerprofil</router-link></li>
+                            <li v-if="useUserInfoStore().isPremium"><router-link data-cy="budget"
+                              class="dropdown-item text-white dropdown-username-link" :to="toBudget()"><img>Budjsett</router-link></li>
+                            <li><router-link data-cy="friends"
+                              class="dropdown-item text-white dropdown-username-link" :to="toFriends()"><img
+                                src="@/assets/icons/friends.svg">Venner</router-link></li>
+                            <li><router-link data-cy="settings"
+                              class="dropdown-item text-white dropdown-username-link" :to="toSetting()"><img
+                                src="@/assets/icons/settings.svg">Innstillinger</router-link></li>
+                            <li><router-link data-cy="feedback"
+                              class="dropdown-item text-white dropdown-username-link" :to="toFeedback()"><img
+                                src="@/assets/icons/feedback.svg">Tilbakemelding</router-link></li>
+                            <li><router-link data-cy="admin"
+                              class="dropdown-item text-white dropdown-username-link" :to="toSetting()"><img
                                 src="@/assets/icons/admin.svg">Admin</router-link></li>
                             <li><a data-testid="logout" class="dropdown-item text-white dropdown-username-link" ref="#" @click="toLogout()"><img
-                                src="@/assets/icons/logout.svg">Log out</a></li>
+                                src="@/assets/icons/logout.svg">Logg ut</a></li>
                         </ul>
                     </li>
                     <li v-else class="nav-item">
-                        <a class="nav-link text-white" href="#" @click="toLogout">Login</a>
+                        <a class="nav-link text-white" href="#" @click="toLogout">Logg inn</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 </template>
+
 <script setup lang="ts">
 import { useRouter } from "vue-router";
 import { useUserInfoStore } from '@/stores/UserStore';
+import {onMounted, ref} from "vue";
+
+
 
 const router = useRouter();
 
-const userStore : any = useUserInfoStore();
+const userStore: any = useUserInfoStore();
+
+let profileImage: any = ref('');
+
+if (useUserInfoStore().profileImage !== 0) {
+    profileImage = 'http://localhost:8080/api/images/' + useUserInfoStore().profileImage;
+} else {
+    profileImage = 'src/assets/userprofile.png';
+}
+
+//Hashmap that contains the path to the Badges, The Friend, The dashboard etc.
+//The key value pair is the message of the notification and the path of the route
+let notifMap = ref (new Map<number, any[]>);
+
+let notifId = ref(0);
+
+let path = ref('#');
+
+let counter = ref(0)
+
+
+/* id: 0 -> /roadmap
+   id: 1 -> /profile
+   id: 2 -> /friend
+ */
+
+
+
+function getNotification(){
+  //axios call
+  let response: any = ref( ['1', 'You have recived a award for getting 200 points'])
+  let response2: any = ref( ['2', 'You have recived a friend request from Jens Aanestad'])
+  let response3: any = ref( ['3', 'You have lost your streak. Come back to try again'])
+  notifMap.value.set(notifId.value,response.value)
+  notifId.value++
+  notifMap.value.set(notifId.value,response2.value)
+  notifId.value++
+  notifMap.value.set(notifId.value,response3.value)
+  notifId.value++
+
+  counter.value = notifMap.value.size
+}
+function toBadges(){
+
+}
+
+function getPath(id : string){
+  if(id === '1'){
+    return path.value = '/profile'
+  }
+  if(id === '2'){
+    return path.value = '/friends'
+  }
+  if(id === '3'){
+    return path.value = '/roadmap'
+  }
+
+  return '#';
+}
+
+function updateNotification(){
+  //Axios get request to the getFunction
+}
+
+function removeNotification() {
+
+}
+
 
 function toHome() {
     return '/'
 }
 
 function toBudget() {
-  return '/budget-overview'
+    return '/budget-overview'
 }
 
 function toSavingGoals() {
@@ -102,14 +212,16 @@ function toFriends() {
 }
 
 function toUserProfile() {
-   return '/profile'
+    return '/profile'
 }
 
 function toLogout() {
     userStore.clearUserInfo();
     router.push('login')
 }
-
+onMounted(() => {
+  getNotification()
+})
 
 </script>
 <style scoped>
@@ -129,6 +241,9 @@ function toLogout() {
 
 .nav-item:hover {
     background-color: #2b6ac7;
+}
+.not-item:hover {
+  background-color: #2b6ac7;
 }
 
 .nav-item .dropdown {
@@ -151,6 +266,16 @@ function toLogout() {
 .dropdown-menu {
     background-color: #0A58CA;
     right: -0.5rem;
+}
+
+#notifyBtn  {
+  background-color: #0A58CA;
+  border: #0A58CA;
+}
+
+#notifyBtn:hover {
+  background-color: #2b6ac7;
+  border: #2b6ac7;
 }
 
 .dropdown-menu[data-bs-popper] {
@@ -195,4 +320,9 @@ function toLogout() {
     height: auto;
     aspect-ratio: 1.3/1;
 }
+.notification.hidden-arrow::after{
+  display: none;
+}
+
+
 </style>

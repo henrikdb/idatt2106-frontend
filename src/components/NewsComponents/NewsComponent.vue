@@ -49,7 +49,7 @@ export default {
         <div class="content">
           <h3>{{ article.title }}</h3>
           <p>{{ article.description }}</p>
-          <a :href="article.url" target="_blank">Read more</a>
+          <a :href="article.url" target="_blank">Les mer</a>
         </div>
         <div class="image">
           <img :src="article.urlToImage" alt="Article Image"/>

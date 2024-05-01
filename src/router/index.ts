@@ -5,7 +5,7 @@ import { useUserInfoStore } from '@/stores/UserStore';
 import UserProfileView from "@/views/User/UserProfileView.vue";
 import SignUp from '@/components/SignUp/SignUp.vue'
 import UpdateUserView from "@/views/UpdateUser/UpdateUserView.vue";
-
+import RedirectView from '@/views/RedirectView.vue';
 
 const routes = [
   {
@@ -95,11 +95,13 @@ const routes = [
         path: '/budget-overview',
         name: 'budget overview',
         component: () => import('@/views/Budget/BudgetOverview.vue'),
+        meta: { requiresPremium: true },
       },
       {
         path: '/budget',
         name: 'budget',
         component: () => import('@/views/Budget/BudgetView.vue'),
+        meta: { requiresPremium: true },
       },
       {
         path: '/profile/:id',
@@ -155,6 +157,11 @@ const routes = [
     component: () => import('@/views/Authentication/SignUpView.vue'),
   },
   {
+    path: '/redirect',
+    name: 'redirect',
+    component: () => RedirectView,
+  },
+  {
     path: '/configuration',
     name: 'configuration',
     component: () => import('@/views/ConfigurationView.vue'),
@@ -203,14 +210,18 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
   const requiresAdmin = to.matched.some(record => record.meta.requiresAdmin);
-  const user= useUserInfoStore();
+  const requiresPremium = to.matched.some(record => record.meta.requiresPremium);
+  const user = useUserInfoStore();
   const userRole = user.role;
+  const userSubscription = user.subscriptionLevel;
   const isAuthenticated = user.isLoggedIn;
 
   if (requiresAuth && !isAuthenticated) {
     next({ name: 'login', query: { redirect: to.fullPath } });
   } else if (requiresAdmin && userRole !== 'admin') {
     next({ name: 'unauthorized' });
+  } else if (requiresPremium && userSubscription !== 'PREMIUM') {
+    next({ name: 'home' });
   } else {
     next();
   }

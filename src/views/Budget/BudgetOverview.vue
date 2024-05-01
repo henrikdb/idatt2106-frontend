@@ -4,7 +4,7 @@ import BudgetBox from '@/components/Budget/BudgetBox.vue'
 import { onMounted, ref } from 'vue'
 import handleUnknownError from '@/components/Exceptions/unkownErrorHandler'
 import { useBudgetStore } from '@/stores/BudgetStore'
-import { type BudgetRequestDTO, type BudgetResponseDTO, UserService } from '@/api'
+import { type BudgetRequestDTO, type BudgetResponseDTO, BudgetService } from '@/api'
 import { useRouter } from 'vue-router'
 
 const router = useRouter();
@@ -23,7 +23,7 @@ let budgetListKey = ref(0);
  */
 onMounted(async () => {
   try {
-    budgetList.value = await UserService.getBudgetsByUser()
+    budgetList.value = await BudgetService.getBudgetsByUser()
     console.log(budgetList.value)
   } catch (error) {
     errorMsg.value = handleUnknownError(error);
@@ -42,7 +42,7 @@ const createNewBudget = async() => {
       expenseAmount: 0
     }
     // Creates new budget with the budget request body
-    await UserService.createBudget({requestBody: request})
+    await BudgetService.createBudget({requestBody: request})
     // Updates displayed budget list after creation
     await updateBudgetList()
   } catch (error) {
@@ -54,7 +54,7 @@ const createNewBudget = async() => {
  * Updates the displayed budget list.
  */
 const updateBudgetList = async () => {
-  budgetList.value = await UserService.getBudgetsByUser()
+  budgetList.value = await BudgetService.getBudgetsByUser()
   budgetListKey.value++
 }
 
@@ -71,20 +71,17 @@ const goToBudget = (id: number) => {
 
 <template>
   <div class="container">
-    <h1 class="text-center">Your Budgets</h1>
-    <button1 id="createBudgetButton" button-text="Create new budget" class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"/>
-
+    <h1 class="text-center">Dine Budsjetter</h1>
+    <button1 id="createBudgetButton" button-text="Opprett nytt budsjett" class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"/>
     <div class="collapse" id="collapseExample">
       <div class="container collapse-container">
         <div class="input-group">
-          <input id="collapseInput" class="form-control" type="text" placeholder="Enter name of budget" v-model="budgetNameInput">
-          <button1 id="collapseButton" button-text="Create" data-bs-dismiss="modal" @click="createNewBudget"/>
+          <input id="collapseInput" class="form-control" type="text" placeholder="Skriv inn navn på budsjettet" v-model="budgetNameInput">
+          <button1 id="collapseButton" button-text="Opprett" data-bs-dismiss="modal" @click="createNewBudget"/>
         </div>
       </div>
     </div>
-
     <p class="text-danger">{{ errorMsg }}</p>
-
     <ul class="budgetContainer" :key="budgetListKey">
       <li v-for="(item, index) in budgetList">
         <budget-box
@@ -99,11 +96,10 @@ const goToBudget = (id: number) => {
         ></budget-box>
       </li>
     </ul>
-
-    <nav id="navbar" aria-label="Page navigation example">
+    <nav id="navbar" aria-label="Sidenavigasjon eksempel">
       <ul class="pagination">
         <li class="page-item">
-          <a class="page-link" href="#" aria-label="Previous">
+          <a class="page-link" href="#" aria-label="Forrige">
             <span aria-hidden="true">&laquo;</span>
           </a>
         </li>
@@ -111,16 +107,15 @@ const goToBudget = (id: number) => {
         <li class="page-item"><a class="page-link" href="#">2</a></li>
         <li class="page-item"><a class="page-link" href="#">3</a></li>
         <li class="page-item">
-          <a class="page-link" href="#" aria-label="Next">
+          <a class="page-link" href="#" aria-label="Neste">
             <span aria-hidden="true">&raquo;</span>
           </a>
         </li>
       </ul>
     </nav>
-
   </div>
-
 </template>
+
 
 <style scoped>
 .collapse-container {

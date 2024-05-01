@@ -29,22 +29,30 @@ const cookiesStorage: Storage = {
 };
 
 export type UserStoreInfo = {
+  id?: number;
   email?: string;
   firstname?: string;
   lastname?: string;
   password?: string;
   accessToken?: string;
   role?: string;
+  subscriptionLevel?: string;
+  roadBackground?: number;
+  profileImage?: number;
 };
-//todo Fix if there is time
+
 export const useUserInfoStore = defineStore('UserInfoStore', {
   state: () => ({
+    id: 0,
     email: '',
     firstname: '',
     lastname: '',
     password: '',
     accessToken: '',
     role: '',
+    subscriptionLevel: '',
+    roadBackground: 0,
+    profileImage: 0,
   }),
   persist: {
     storage: cookiesStorage,
@@ -57,19 +65,27 @@ export const useUserInfoStore = defineStore('UserInfoStore', {
       this.password = ''
     },
     setUserInfo(userinfo: UserStoreInfo) {
+      userinfo.id && (this.$state.id = userinfo.id);
       userinfo.email && (this.$state.email = userinfo.email);
       userinfo.firstname && (this.$state.firstname = userinfo.firstname);
       userinfo.lastname && (this.$state.lastname = userinfo.lastname);
       userinfo.accessToken && (this.$state.accessToken = userinfo.accessToken);
       userinfo.accessToken && (OpenAPI.TOKEN = this.$state.accessToken);
       userinfo.role && (this.$state.role = userinfo.role);
+      userinfo.subscriptionLevel && (this.$state.subscriptionLevel = userinfo.subscriptionLevel);
+      userinfo.roadBackground && (this.$state.roadBackground = userinfo.roadBackground);
+      userinfo.profileImage && (this.$state.profileImage = userinfo.profileImage);
     },
     clearUserInfo() {
+      this.$state.id = 0;
       this.$state.email = '';
       this.$state.firstname = '';
       this.$state.lastname = '';
       this.$state.accessToken = '';
       this.$state.role = '';
+      this.$state.subscriptionLevel = '';
+      this.$state.roadBackground = 0;
+      this.$state.profileImage = 0;
       OpenAPI.TOKEN = undefined;
     },
   },
@@ -89,5 +105,11 @@ export const useUserInfoStore = defineStore('UserInfoStore', {
     isLoggedIn(): boolean {
       return this.accessToken !== '';
     },
+    isPremium(): boolean {
+      return this.subscriptionLevel === 'PREMIUM';
+    },
+    isNoAds(): boolean {
+      return this.subscriptionLevel === 'NO_ADS';
+    }
   },
 });

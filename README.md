@@ -1,6 +1,11 @@
-# frontend
+# SpareSti
 
-This template should help get you started developing with Vue 3 in Vite.
+## Description
+The frontend of sparesti.app. SpareSti is designed to make saving fun. The app is integrated with your online bank, therefore it has an overview of what your money is being spent on and can provide you with personalized saving tips based on this information. The app is suitable for all saving goals and offers motivation and tips tailored to your desires. Since we know that saving money can be difficult, SpareSti automatically deposits money into your savings account when you complete challenges. Based on your saved funds, the feed will give you personalized tips on how your money can be invested, and you will be able to set up a budget that provides you with the overview you need to make informed choices.
+
+## Links
+
+- **Backend**: [https://gitlab.stud.idi.ntnu.no/idatt2106-2024-07/backend](https://gitlab.stud.idi.ntnu.no/idatt2106-2024-07/backend)
 
 ## Recommended IDE Setup
 
@@ -14,7 +19,7 @@ TypeScript cannot handle type information for `.vue` imports by default, so we r
 
 See [Vite Configuration Reference](https://vitejs.dev/config/).
 
-## Project Setup
+## Getting Started
 
 ```sh
 npm install
@@ -59,3 +64,13 @@ npm run test:e2e
 ```sh
 npm run lint
 ```
+
+## Contributors
+The individuals who contributed to the project:
+- Anders Høvik
+- Andreas Kluge Svendsrud 
+- Henrik Dybdal 
+- Henrik Teksle Sandok 
+- Jens Christian Aanestad 
+- Victor Kaste 
+- Viktor Grevskott
