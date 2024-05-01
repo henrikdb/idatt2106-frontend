@@ -2,8 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type ParticipantUserDTO = {
-    firstName?: string;
-    lastName?: string;
+export type FeedbackRequestDTO = {
+    email?: string;
+    message?: string;
 };
 

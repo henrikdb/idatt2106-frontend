@@ -2,9 +2,10 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type DailyChallengeProgressDTO = {
-    id?: number;
-    challengeDay?: number;
-    completedAt?: string;
+export type FeedbackResponseDTO = {
+    id?: string;
+    email?: string;
+    message?: string;
+    createdAt?: string;
 };
 

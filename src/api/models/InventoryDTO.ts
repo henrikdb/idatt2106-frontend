@@ -2,10 +2,10 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type CreateGoalDTO = {
-    name?: string;
-    description?: string;
-    targetAmount?: number;
-    targetDate?: string;
+export type InventoryDTO = {
+    id?: number;
+    itemName?: string;
+    imageId?: number;
+    boughtAt?: string;
 };
 
