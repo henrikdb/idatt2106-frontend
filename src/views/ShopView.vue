@@ -1,7 +1,7 @@
 <template>
     <br>
     <div id="dropdownContainer">
-        <h1 class="box">Shop</h1>
+        <h1 class="box">Marked</h1>
     </div>
     <div class="container">
         <div class="row">

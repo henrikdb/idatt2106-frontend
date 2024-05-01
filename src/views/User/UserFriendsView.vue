@@ -1,11 +1,11 @@
 <template>
     <div class="container">
-        <h1>Your Friends</h1>
+        <h1>Dine venner</h1>
         <div>
-            <button class="btn btn-primary pull-right" @click="addNewFriends">+ Add Friend</button>
+            <button class="btn btn-primary pull-right" @click="addNewFriends">+ Legg til venn</button>
             <div class="my-3">
-                <button class="btn pages" @click="setupFriends">Your Friends</button>
-                <button class="btn pages" @click="requestFriend">Friend Requests</button>
+                <button class="btn pages" @click="setupFriends">Dine venner</button>
+                <button class="btn pages" @click="requestFriend">Venneforespørsler</button>
             </div>
         </div>
         <div v-if="showFriends">
@@ -29,12 +29,11 @@
                                 <a class="text removeFriend" data-bs-toggle="collapse"
                                     :href="'#collapseExample' + friend.id" role="button" aria-expanded="false"
                                     :aria-controls="'collapseExample' + friend.id">
-                                    See more
+                                    Se mer
                                 </a>
                                 <div class="collapse" :id="'collapseExample' + friend.id">
                                     <button class="btn btn-danger" @click="removeFriend(friend.id)">
-                                        <h5><img src="@/assets/icons/remove-white.svg" style="width: 30px"> Remove
-                                            friend
+                                        <h5><img src="@/assets/icons/remove-white.svg" style="width: 30px"> Fjern venn
                                         </h5>
                                     </button>
                                 </div>
@@ -43,23 +42,23 @@
                     </div>
                 </div>
             </div>
-            <div v-else>No Friends</div>
+            <div v-else>Ingen venner</div>
         </div>
         <div v-else-if="showRequests" class="row">
             <div class="content-body">
                 <div v-if="elementsInFriendRequest" id="requests">
                     <div class="request" v-for="(friend) in friendRequests" :key="friend.id">
                         <div v-if="friend.profileImage !== null"><img id="profilePicture"
-                                :src="'http://localhost:8080/api/images/' + friend.profileImage" alt="user"
+                                :src="'http://localhost:8080/api/images/' + friend.profileImage" alt="bruker"
                                 class="profile-photo-lg"></div>
-                        <div v-else><img id="profilePicture" :src="'../src/assets/userprofile.png'" alt="user"
+                        <div v-else><img id="profilePicture" :src="'../src/assets/userprofile.png'" alt="bruker"
                                 class="profile-photo-lg"></div>
                         <h2>{{ friend.firstName }}</h2> - <button class="btn btn-success mx-2"
-                            @click="acceptRequest(friend.id)">Accept</button>
-                        <button class="btn btn-danger" @click="rejectRequest(friend.id)">Reject</button>
+                            @click="acceptRequest(friend.id)">Godta</button>
+                        <button class="btn btn-danger" @click="rejectRequest(friend.id)">Avslå</button>
                     </div>
                 </div>
-                <div v-else>No friend requests</div>
+                <div v-else>Ingen venneforespørsler</div>
             </div>
         </div>
         <div v-if="showAddFriend" class="modal" tabindex="-1" role="dialog"
@@ -67,7 +66,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Add Friend</h5>
+                        <h5 class="modal-title">Legg til venn</h5>
                         <button type="button" class="close" @click="showAddFriend = false">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -75,9 +74,9 @@
                     <div class="modal-body d-flex justify-content-center align-items-center flex-column">
                         <form class="col-md-10 d-flex justify-content-center align-items-center flex-row my-4"
                             id="searchBox" role="search" @submit.prevent="searchProfile(searchWord)">
-                            <input class="form-control me-2 custom-border" type="search" placeholder="Search"
-                                aria-label="Search" v-model="searchWord">
-                            <button class="btn btn-success" type="submit">Search</button>
+                            <input class="form-control me-2 custom-border" type="search" placeholder="Søk"
+                                aria-label="Søk" v-model="searchWord">
+                            <button class="btn btn-success" type="submit">Søk</button>
                         </form>
                         <div class="col-md-12">
                             <div class="people-nearby">
@@ -86,10 +85,9 @@
                                         <div class="col-md-2 col-sm-2">
                                             <div v-if="user.profileImage !== null"><img id="profilePicture"
                                                     :src="'http://localhost:8080/api/images/' + user.profileImage"
-                                                    alt="user" class="profile-photo-lg"></div>
+                                                    alt="bruker" class="profile-photo-lg"></div>
                                             <div v-else><img id="profilePicture" :src="'../src/assets/userprofile.png'"
-                                                    alt="user" class="profile-photo-lg"></div>
-
+                                                    alt="bruker" class="profile-photo-lg"></div>
                                         </div>
                                         <div class="col-md-7 col-sm-7">
                                             <h5><a href="#" class="profile-link" @click="toUserProfile(user.id)">{{
@@ -97,8 +95,7 @@
                                             </h5>
                                         </div>
                                         <div class="col-md-3 col-sm-3">
-                                            <button class="btn btn-primary pull-right" @click="addFriend(user.id)">Add
-                                                Friend</button>
+                                            <button class="btn btn-primary pull-right" @click="addFriend(user.id)">Legg til venn</button>
                                         </div>
                                     </div>
                                 </div>
@@ -110,6 +107,7 @@
         </div>
     </div>
 </template>
+
 
 
 

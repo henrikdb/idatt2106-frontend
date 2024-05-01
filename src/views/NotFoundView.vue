@@ -1,23 +1,24 @@
 <template>
-    <div class="container-fluid"> <!-- Changed from 'container' to 'container-fluid' -->
+    <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <div class="error-template text-center"> <!-- 'text-center' for centering text content -->
+                <div class="error-template text-center">
                     <h1>
-                        Oops!</h1>
+                        Oi!</h1>
                     <h2 data-cy="404-error">
-                        404 Not Found</h2>
+                        404 Ikke funnet</h2>
                     <div class="error-details">
-                        Sorry, an error has occurred, Requested page not found!
+                        Beklager, det har oppstått en feil. Forespurt side ikke funnet!
                     </div>
                     <div class="error-actions">
-                        <Button1 data-cy="to-home" button-text="Take Me Home" @click="home" />
+                        <Button1 data-cy="to-home" button-text="Ta meg hjem" @click="home" />
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </template>
+
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
