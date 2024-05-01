@@ -18,6 +18,10 @@
   ],
   "tags": [
     {
+      "name": "Item",
+      "description": "Endpoints for managing store and user inventory."
+    },
+    {
       "name": "Friend",
       "description": "API for managing friend relationships"
     }
@@ -345,6 +349,47 @@
         "security": []
       }
     },
+    "/api/item/{itemId}": {
+      "post": {
+        "tags": [
+          "Item"
+        ],
+        "summary": "Purchase an item",
+        "description": "Performs a purchase of the item by the user. Points will be deducted from the user.",
+        "operationId": "buyItem",
+        "parameters": [
+          {
+            "name": "itemId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "403": {
+            "description": "Insufficient points to purchase the item",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Item purchased and added to inventory successfully",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/images": {
       "post": {
         "tags": [
@@ -386,11 +431,36 @@
         }
       }
     },
-    "/api/goal/createGoal": {
+    "/api/goals": {
+      "get": {
+        "tags": [
+          "Goal"
+        ],
+        "summary": "Get goals",
+        "description": "Get the goals of the authenticated user",
+        "operationId": "getGoals",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the goals",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GoalDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "post": {
         "tags": [
-          "goal"
+          "Goal"
         ],
+        "summary": "Create a goal",
+        "description": "Create a new goal",
         "operationId": "createGoal",
         "requestBody": {
           "content": {
@@ -403,15 +473,75 @@
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "OK",
+          "201": {
+            "description": "Successfully created a goal",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/GoalDTO"
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/goals/update-challenge": {
+      "post": {
+        "tags": [
+          "Goal"
+        ],
+        "summary": "Update a challenge",
+        "description": "Update a challenge day as completed",
+        "operationId": "updateChallenge",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarkChallengeDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "401": {
+            "description": "Day is already completed or day outside of range",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Successfully updated the challenge"
+          }
+        }
+      }
+    },
+    "/api/goals/update-challenge-amount": {
+      "post": {
+        "tags": [
+          "Goal"
+        ],
+        "summary": "Update challenge saving amount",
+        "description": "Update the challenge saving amount",
+        "operationId": "updateChallengeAmount",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarkChallengeDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated the challenge"
           }
         }
       }
@@ -599,22 +729,22 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Email is valid",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "type": "object"
-                }
-              }
-            }
-          },
           "409": {
             "description": "Email already exists",
             "content": {
               "*/*": {
                 "schema": {
                   "$ref": "#/components/schemas/ExceptionResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Email is valid",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
                 }
               }
             }
@@ -642,22 +772,22 @@
           "required": true
         },
         "responses": {
-          "201": {
-            "description": "Successfully signed up",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AuthenticationResponse"
-                }
-              }
-            }
-          },
           "409": {
             "description": "Email already exists",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ExceptionResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Successfully signed up",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthenticationResponse"
                 }
               }
             }
@@ -695,8 +825,8 @@
               }
             }
           },
-          "404": {
-            "description": "User not found",
+          "401": {
+            "description": "Invalid credentials",
             "content": {
               "application/json": {
                 "schema": {
@@ -705,8 +835,8 @@
               }
             }
           },
-          "401": {
-            "description": "Invalid credentials",
+          "404": {
+            "description": "User not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -1176,6 +1306,56 @@
         }
       }
     },
+    "/api/item/store": {
+      "get": {
+        "tags": [
+          "Item"
+        ],
+        "summary": "Get available store items",
+        "description": "Retrieves all items available in the store and a flag indicating whether the user has purchased each item.",
+        "operationId": "getStore",
+        "responses": {
+          "200": {
+            "description": "List of store items fetched successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ItemDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/item/inventory": {
+      "get": {
+        "tags": [
+          "Item"
+        ],
+        "summary": "Get user inventory items",
+        "description": "Retrieves a list of all items currently in the inventory of the user.",
+        "operationId": "getInventory",
+        "responses": {
+          "200": {
+            "description": "List of inventory items fetched successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InventoryDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/images/{id}": {
       "get": {
         "tags": [
@@ -1196,16 +1376,6 @@
           }
         ],
         "responses": {
-          "404": {
-            "description": "Image not found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExceptionResponse"
-                }
-              }
-            }
-          },
           "200": {
             "description": "Successfully retrieved the image",
             "content": {
@@ -1216,52 +1386,19 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "Image not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResponse"
+                }
+              }
+            }
           }
         },
         "security": []
-      }
-    },
-    "/api/goal/getGoals": {
-      "get": {
-        "tags": [
-          "goal"
-        ],
-        "operationId": "getGoals",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/GoalDTO"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/goal/getGoal": {
-      "get": {
-        "tags": [
-          "goal"
-        ],
-        "operationId": "getGoal",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/GoalDTO"
-                }
-              }
-            }
-          }
-        }
       }
     },
     "/api/friends": {
@@ -1673,19 +1810,17 @@
       "CreateGoalDTO": {
         "type": "object",
         "properties": {
-          "goalName": {
+          "name": {
             "type": "string"
           },
           "description": {
             "type": "string"
           },
           "targetAmount": {
-            "type": "integer",
-            "format": "int32"
+            "type": "number"
           },
           "targetDate": {
-            "type": "string",
-            "format": "date-time"
+            "type": "string"
           }
         }
       },
@@ -1696,44 +1831,73 @@
             "type": "integer",
             "format": "int64"
           },
-          "potentialSavingAmount": {
-            "type": "integer",
-            "format": "int32"
+          "amount": {
+            "type": "number"
           },
           "points": {
             "type": "integer",
             "format": "int32"
           },
-          "days": {
+          "checkDays": {
             "type": "integer",
             "format": "int32"
           },
-          "createdAt": {
+          "totalDays": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "startDate": {
             "type": "string",
             "format": "date-time"
           },
-          "dailyChallengeProgressList": {
+          "endDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "challengeTemplate": {
+            "$ref": "#/components/schemas/ChallengeTemplateDTO"
+          },
+          "progressList": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/DailyChallengeProgressDTO"
+              "$ref": "#/components/schemas/ProgressDTO"
             }
           }
         }
       },
-      "DailyChallengeProgressDTO": {
+      "ChallengeTemplateDTO": {
         "type": "object",
         "properties": {
           "id": {
             "type": "integer",
             "format": "int64"
           },
-          "challengeDay": {
-            "type": "integer",
-            "format": "int32"
+          "text": {
+            "type": "string"
           },
-          "completedAt": {
+          "amount": {
+            "type": "number"
+          },
+          "type": {
             "type": "string",
-            "format": "date-time"
+            "enum": [
+              "NO_COFFEE",
+              "NO_CAR",
+              "SHORTER_SHOWER",
+              "SPEND_LESS_ON_FOOD",
+              "BUY_USED_CLOTHES",
+              "LESS_SHOPPING",
+              "DROP_SUBSCRIPTION",
+              "SELL_SOMETHING",
+              "BUY_USED",
+              "EAT_PACKED_LUNCH",
+              "STOP_SHOPPING",
+              "ZERO_SPENDING",
+              "RENT_YOUR_STUFF",
+              "MEATLESS",
+              "SCREEN_TIME_LIMIT",
+              "UNPLUGGED_ENTERTAINMENT"
+            ]
           }
         }
       },
@@ -1744,21 +1908,16 @@
             "type": "integer",
             "format": "int64"
           },
-          "goalName": {
+          "name": {
             "type": "string"
           },
           "description": {
             "type": "string"
           },
           "targetAmount": {
-            "type": "integer",
-            "format": "int32"
+            "type": "number"
           },
           "targetDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "completedAt": {
             "type": "string",
             "format": "date-time"
           },
@@ -1772,36 +1931,87 @@
               "$ref": "#/components/schemas/ChallengeDTO"
             }
           },
-          "participants": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ParticipantDTO"
-            }
-          }
-        }
-      },
-      "ParticipantDTO": {
-        "type": "object",
-        "properties": {
-          "role": {
-            "type": "string",
-            "enum": [
-              "CREATOR",
-              "CONTRIBUTOR"
-            ]
-          },
           "user": {
-            "$ref": "#/components/schemas/ParticipantUserDTO"
+            "$ref": "#/components/schemas/UserDTO"
           }
         }
       },
-      "ParticipantUserDTO": {
+      "ProgressDTO": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "day": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "completedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "UserDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
           "firstName": {
             "type": "string"
           },
           "lastName": {
+            "type": "string"
+          },
+          "profileImage": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "email": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "role": {
+            "type": "string"
+          },
+          "subscriptionLevel": {
+            "type": "string"
+          }
+        }
+      },
+      "MarkChallengeDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "day": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "amount": {
+            "type": "number"
+          }
+        }
+      },
+      "ExceptionResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
             "type": "string"
           }
         }
@@ -1832,18 +2042,6 @@
           },
           "amount": {
             "type": "number"
-          }
-        }
-      },
-      "ExceptionResponse": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "message": {
-            "type": "string"
           }
         }
       },
@@ -1947,38 +2145,6 @@
           }
         }
       },
-      "UserDTO": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "firstName": {
-            "type": "string"
-          },
-          "lastName": {
-            "type": "string"
-          },
-          "profileImage": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "email": {
-            "type": "string"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "role": {
-            "type": "string"
-          },
-          "subscriptionLevel": {
-            "type": "string"
-          }
-        }
-      },
       "BankAccountDTO": {
         "type": "object",
         "properties": {
@@ -2073,6 +2239,49 @@
           "rank": {
             "type": "integer",
             "format": "int64"
+          }
+        }
+      },
+      "ItemDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "itemName": {
+            "type": "string"
+          },
+          "price": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "imageId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "alreadyBought": {
+            "type": "boolean"
+          }
+        }
+      },
+      "InventoryDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "itemName": {
+            "type": "string"
+          },
+          "imageId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "boughtAt": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },

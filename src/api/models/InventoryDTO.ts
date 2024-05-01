@@ -2,9 +2,10 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type DailyChallengeProgressDTO = {
+export type InventoryDTO = {
     id?: number;
-    challengeDay?: number;
-    completedAt?: string;
+    itemName?: string;
+    imageId?: number;
+    boughtAt?: string;
 };
 

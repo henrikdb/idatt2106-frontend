@@ -37,6 +37,7 @@ export type UserStoreInfo = {
   accessToken?: string;
   role?: string;
   subscriptionLevel?: string;
+  roadBackground?: number;
   profileImage?: number;
 };
 
@@ -50,6 +51,7 @@ export const useUserInfoStore = defineStore('UserInfoStore', {
     accessToken: '',
     role: '',
     subscriptionLevel: '',
+    roadBackground: 0,
     profileImage: 0,
   }),
   persist: {
@@ -71,6 +73,7 @@ export const useUserInfoStore = defineStore('UserInfoStore', {
       userinfo.accessToken && (OpenAPI.TOKEN = this.$state.accessToken);
       userinfo.role && (this.$state.role = userinfo.role);
       userinfo.subscriptionLevel && (this.$state.subscriptionLevel = userinfo.subscriptionLevel);
+      userinfo.roadBackground && (this.$state.roadBackground = userinfo.roadBackground);
       userinfo.profileImage && (this.$state.profileImage = userinfo.profileImage);
     },
     clearUserInfo() {
@@ -81,6 +84,7 @@ export const useUserInfoStore = defineStore('UserInfoStore', {
       this.$state.accessToken = '';
       this.$state.role = '';
       this.$state.subscriptionLevel = '';
+      this.$state.roadBackground = 0;
       this.$state.profileImage = 0;
       OpenAPI.TOKEN = undefined;
     },
