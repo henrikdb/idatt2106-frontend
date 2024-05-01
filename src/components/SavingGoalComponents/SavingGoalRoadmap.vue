@@ -236,7 +236,7 @@ export default {
 
     disableAllChecksThatNotCurrent() {
       this.selectedGoal.challenges.forEach((challenge: ChallengeDTO, index: number) => {
-        if (index != this.currentChallengeIndex) {
+        if (index !== this.currentChallengeIndex && challenge.checkDays !== undefined) {
           for (let i = 1; i < challenge.checkDays + 1; i++) {
             this.lockCheckBox(challenge, i)
           }
