@@ -236,16 +236,4 @@ export class UserService {
             url: '/api/users/get-feedback',
         });
     }
-    /**
-     * Get the list of budgets
-     * Get all budgets related to the authenticated user
-     * @returns BudgetResponseDTO Successfully got budgets
-     * @throws ApiError
-     */
-    public static getFeedback(): CancelablePromise<Array<FeedbackResponseDTO>> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/users/get-feedback',
-        });
-    }
 }
