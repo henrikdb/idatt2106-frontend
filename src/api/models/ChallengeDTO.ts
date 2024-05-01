@@ -2,13 +2,17 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { DailyChallengeProgressDTO } from './DailyChallengeProgressDTO';
+import type { ChallengeTemplateDTO } from './ChallengeTemplateDTO';
+import type { ProgressDTO } from './ProgressDTO';
 export type ChallengeDTO = {
     id?: number;
-    potentialSavingAmount?: number;
+    amount?: number;
     points?: number;
-    days?: number;
-    createdAt?: string;
-    dailyChallengeProgressList?: Array<DailyChallengeProgressDTO>;
+    checkDays?: number;
+    totalDays?: number;
+    startDate?: string;
+    endDate?: string;
+    challengeTemplate?: ChallengeTemplateDTO;
+    progressList?: Array<ProgressDTO>;
 };
 

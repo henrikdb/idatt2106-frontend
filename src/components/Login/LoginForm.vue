@@ -13,6 +13,7 @@ const emailRef = ref('')
 const passwordRef = ref('')
 const formRef = ref()
 let errorMsg = ref('');
+const isSubmitting = ref(false);
 
 const errorStore = useErrorStore();
 const router = useRouter();
@@ -20,23 +21,23 @@ const userStore = useUserInfoStore();
 
 const handleEmailInputEvent = (newValue: any) => {
   emailRef.value = newValue
-  console.log(emailRef.value)
 }
 
 const handlePasswordInputEvent = (newValue: any) => {
   passwordRef.value = newValue
-  console.log(passwordRef.value)
 }
 
 const handleSubmit = async () => {
   console.log(emailRef.value)
   console.log(passwordRef.value)
-
+  if (isSubmitting.value) return;
+  isSubmitting.value = true;
 
   formRef.value.classList.add("was-validated")
 
   const form = formRef.value;
   if (!form.checkValidity()) {
+    isSubmitting.value = false;
     return;
   }
 
@@ -49,6 +50,7 @@ const handleSubmit = async () => {
     let response = await AuthenticationService.login({ requestBody: loginUserPayload });
     if (response.token == null || response.token == undefined) {
       errorMsg.value = 'A valid token could not be created';
+      isSubmitting.value = false;
       return;
     }
 
@@ -64,9 +66,13 @@ const handleSubmit = async () => {
       subscriptionLevel: response.subscriptionLevel,
       profileImage: response.profileImage
     });
+
+    console.log(response.token)
+
     await router.push({ name: 'home' });
   } catch (error: any) {
     errorMsg.value = handleUnknownError(error);
+    isSubmitting.value = false;
   }
 }
 
@@ -75,8 +81,7 @@ const handleSubmit = async () => {
 <template>
   <div class="container-fluid">
     <div class="container-fluid d-flex justify-content-center align-items-center flex-column mt-5">
-      <img src="@/assets/Sparesti-logo.png" style="width: 300px">
-      <h1>Sparesti.no</h1>
+      <h1>Logg inn</h1>
     </div>
     <form ref="formRef" id="loginForm" @submit.prevent="handleSubmit" novalidate>
 
@@ -85,10 +90,9 @@ const handleSubmit = async () => {
                  id="emailInput"
                  input-id="email"
                  type="email"
-                 label="Email"
-                 placeholder="Enter your email"
-                 valid-message="Valid email"
-                 invalid-message="Invalid email"
+                 label="E-post"
+                 placeholder="Skriv inn din e-post"
+                 invalid-message="Ugyldig e-post"
       />
 
       <BaseInput :model-value="passwordRef"
@@ -97,15 +101,23 @@ const handleSubmit = async () => {
                  input-id="password"
                  type="password"
                  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,16}"
-                 label="Password"
-                 placeholder="Enter password"
-                 valid-message="Valid password"
-                 invalid-message="Password must be between 4 and 16 characters and contain one capital letter, small letter and a number"
+                 label="Passord"
+                 placeholder="Skriv inn ditt passord"
+                 invalid-message="Passordet må være mellom 4 og 16 tegn og inneholde én stor bokstav, liten bokstav og et tall"
       />
-      <p>Forgotten password? <RouterLink to="/forgotten-password">Reset password</RouterLink></p>
+
+      <div class="password-reset-link">
+        <RouterLink to="/forgotten-password">Glemt passord?</RouterLink>
+      </div>
 
       <p class="text-danger" data-cy="error">{{ errorMsg }}</p>
-      <button1 id="confirmButton" type="submit" @click="handleSubmit" button-text="Login"></button1>
+      <button1 id="confirmButton" type="submit" @click="handleSubmit" :disabled="isSubmitting" button-text="Logg inn"></button1>
+
+      <a class="btn bankid-btn" href="https://preprod.signicat.com/oidc/authorize?response_type=code&scope=openid+profile+signicat.national_id&client_id=demo-preprod&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fredirect&acr_values=urn:signicat:oidc:method:nbid&state=nbid:auth_demo_bankid:123456789">
+        <img src="/src/assets/bankid.svg" width="26" height="26">
+        Fortsett med BankID
+      </a>
+
       <SignUpLink/>
     </form>
   </div>
@@ -119,16 +131,30 @@ const handleSubmit = async () => {
 #loginForm {
   display: flex;
   flex-direction: column;
-  justify-items: center;
+  align-items: center;
 }
 
 #emailInput,
 #passwordInput,
 #confirmButton {
-  margin: 1rem 0;
+  margin: 1rem 10rem;
+  width: 100%;
 }
 
 h1 {
-  font-size: 4rem;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.bankid-btn {
+  margin: 15px;
+  font-weight: 500;
+}
+
+.password-reset-link {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  font-size: 14px;
 }
 </style>

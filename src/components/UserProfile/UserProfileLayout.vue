@@ -3,16 +3,17 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useUserInfoStore } from "../../stores/UserStore";
 import { UserService } from "@/api";
+import { ItemService } from "@/api";
 
 let numberOfHistory = 6;
-
 let cardTitles = ["Spain tour", "Food waste", "Coffee", "Concert", "New book", "Pretty clothes"]
-
 let firstname = ref();
 let lastname = ref();
 const imageUrl = ref(`../src/assets/userprofile.png`);
 
 const router = useRouter();
+const inventory = ref([] as any);
+const backgroundName = ref("");
 
 async function setupForm() {
   try {
@@ -22,9 +23,26 @@ async function setupForm() {
     firstname.value = response.firstName;
     lastname.value = response.lastName;
     imageUrl.value = "http://localhost:8080/api/images/" + response.profileImage;
+    getInventory();
   } catch (err) {
     console.error(err)
   }
+}
+
+const getInventory = async () => {
+  try {
+    const response = await ItemService.getInventory();
+    inventory.value = response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const selectItem = (item: any) => {
+  backgroundName.value = item.itemName;
+  useUserInfoStore().setUserInfo({
+    roadBackground: item.imageId,
+  })
 }
 
 onMounted(() => {
@@ -48,11 +66,12 @@ const toUpdateUserSettings = () => {
         <div class="card">
           <div class="rounded-top text-white d-flex flex-row bg-primary" style="height:200px;">
             <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
-              <img :src="imageUrl" alt="Generic placeholder image"
-                class="img-fluid img-thumbnail mt-4 mb-2" style="width: 150px; z-index: 1">
-              <button data-cy="toUpdate" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary"
+
+              <img :src="imageUrl" alt="Generisk plassholderbilde" class="img-fluid img-thumbnail mt-4 mb-2"
+                style="width: 150px; z-index: 1">
+              <button  data-cy="toUpdate" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary"
                 data-mdb-ripple-color="dark" style="z-index: 1;" id="toUpdate" @click="toUpdateUserSettings">
-                Edit profile
+                Rediger profil
               </button>
             </div>
             <div class="ms-3" style="margin-top: 130px;">
@@ -62,8 +81,9 @@ const toUpdateUserSettings = () => {
           <div class="p-4 text-black" style="background-color: #f8f9fa;">
             <div class="d-flex justify-content-end text-center py-1">
               <div>
+
                 <p class="mb-1 h2" data-cy="points">253 <img src="@/assets/items/pigcoin.png" style="width: 4rem"></p>
-                <p class="small text-muted mb-0">Points</p>
+                <p class="small text-muted mb-0">Poeng</p>
               </div>
               <div class="px-3">
                 <p class="mb-1 h2" data-cy="streak">1026 <img src="@/assets/icons/fire.png" style="width: 4rem"></p>
@@ -75,7 +95,27 @@ const toUpdateUserSettings = () => {
             <div class="row">
               <div class="col">
                 <div class="container-fluid">
-                  <h1 class="mt-5 text-start badges-text">Badges</h1>
+                  <h1 class="mt-5 text-start badges-text">Lageret ditt</h1>
+                  <div class="scrolling-wrapper-badges row flex-row flex-nowrap mt-4 pb-4 pt-2">
+                    <div v-for="product in inventory" :key="product.id" class="card text-center"
+                        style="width: 12rem; border: none; cursor: pointer; margin: 1rem; border: 2px solid black" @click="selectItem(product)">
+                        <img :src="`http://localhost:8080/api/images/${product.imageId}`" class="card-img-top"
+                            alt="..." />
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.itemName }}</h5>
+                        </div>
+                    </div>
+                  </div>
+                  <div v-if="backgroundName" class="text-success">You selected the background: <strong>{{ backgroundName }}!</strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body p-1 text-black">
+            <div class="row">
+              <div class="col">
+                <div class="container-fluid">
+                  <h1 class="mt-5 text-start badges-text">Merker</h1>
                   <div class="scrolling-wrapper-badges row flex-row flex-nowrap mt-4 pb-4 pt-2">
 
                     <div class="col-5">
@@ -114,9 +154,9 @@ const toUpdateUserSettings = () => {
             </div>
             <div class="row">
               <div class="col">
-                <!-- Here is the history of saving target -->
+                <!-- Her er historikken over lagrede mål -->
                 <div class="container-fluid mb-5">
-                  <h1 class="mt-5 text-start history-text">History</h1>
+                  <h1 class="mt-5 text-start history-text">Historie</h1>
                   <div class="row scrolling-wrapper-history">
                     <div v-for="index in numberOfHistory" :key="index"
                       class="col-md-4 col-sm-4 col-lg-4 col-xs-4 col-xl-4 control-label">
@@ -130,8 +170,9 @@ const toUpdateUserSettings = () => {
                             <div class="col-md-8">
                               <div class="card-body">
                                 <h5 class="card-title">{{ cardTitles[index - 1] }}</h5>
-                                <p class="card-text">Money saved: 200 <br />You are one challenge: 21</p>
-                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                <p class="card-text">Penger spart: 200 <br />Du har fullført en utfordring: 21</p>
+                                <p class="card-text"><small class="text-muted">Sist oppdatert for 3 minutter
+                                    siden</small></p>
                                 <a href="#" class="btn  stretched-link" @click="toRoadmap"></a>
                               </div>
                             </div>
@@ -150,6 +191,7 @@ const toUpdateUserSettings = () => {
     </div>
   </div>
 </template>
+
 
 <style scoped>
 .scrolling-wrapper-badges {

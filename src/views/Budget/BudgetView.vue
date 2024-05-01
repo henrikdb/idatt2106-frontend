@@ -4,8 +4,7 @@ import Button1 from '@/components/Buttons/Button1.vue'
 import ExpenseBox from '@/components/Budget/ExpenseBox.vue'
 import { useRouter } from 'vue-router'
 import { useBudgetStore } from '@/stores/BudgetStore'
-import type { BudgetResponseDTO, ExpenseRequestDTO, ExpenseResponseDTO } from '@/api'
-import { UserService } from '@/api'
+import { type BudgetResponseDTO, BudgetService, type ExpenseRequestDTO, type ExpenseResponseDTO } from '@/api'
 import handleUnknownError from '@/components/Exceptions/unkownErrorHandler'
 import ConfirmDeleteModal from '@/components/Budget/Modal/ConfirmDeleteModal.vue'
 import ImportBudgetModal from '@/components/Budget/Modal/ImportBudgetModal.vue'
@@ -43,7 +42,7 @@ onMounted(async () => {
     await updateExpenses();
     await updateBalance();
     // Gets budgets which can be imported
-    budgetDTOList.value = await UserService.getBudgetsByUser();
+    budgetDTOList.value = await BudgetService.getBudgetsByUser();
     budgetDTOList.value = budgetDTOList.value.filter(item => item.id !== useBudgetStore().getActiveBudgetId);
   } catch (error) {
     errorMsg.value = handleUnknownError(error);
@@ -56,7 +55,7 @@ onMounted(async () => {
  * budget amount, and expense amount accordingly.
  */
 const updateHeader = async () => {
-  const budgetResponse: BudgetResponseDTO = await UserService.getBudget({budgetId: useBudgetStore().getActiveBudgetId});
+  const budgetResponse: BudgetResponseDTO = await BudgetService.getBudget({budgetId: useBudgetStore().getActiveBudgetId});
   if (budgetResponse.budgetName != null) {
     title.value = budgetResponse.budgetName;
   }
@@ -73,7 +72,7 @@ const updateHeader = async () => {
  * Fetches the expenses associated with the active budget using the UserService.
  */
 const updateExpenses = async () => {
-  expenseDTOList.value = await UserService.getExpenses({budgetId: useBudgetStore().getActiveBudgetId});
+  expenseDTOList.value = await BudgetService.getExpenses({budgetId: useBudgetStore().getActiveBudgetId});
   // Resets expenses and then re-calculates it
   expenses.value = 0;
   for (let expenseDTO of expenseDTOList.value) {
@@ -113,7 +112,7 @@ const updateBudget = async (newBudget: number, newBudgetName: string) => {
       expenseAmount: expenses.value
     }
     // Send request to update budget information
-    await UserService.updateBudget({budgetId: useBudgetStore().getActiveBudgetId, requestBody: request})
+    await BudgetService.updateBudget({budgetId: useBudgetStore().getActiveBudgetId, requestBody: request})
   } catch (error) {
     errorMsg.value = handleUnknownError(error)
   }
@@ -135,7 +134,7 @@ const addNewExpense = async (expenseDescription: string, expenseValue: number) =
       amount: expenseValue
     }
     // Send request to update expense information
-    await UserService.updateExpense({budgetId: useBudgetStore().getActiveBudgetId, requestBody: request});
+    await BudgetService.updateExpense({budgetId: useBudgetStore().getActiveBudgetId, requestBody: request});
     // Trigger updates of expenses and balance and budget
     await updateExpenses();
     await updateBudget(budget.value, title.value)
@@ -154,7 +153,7 @@ const addNewExpense = async (expenseDescription: string, expenseValue: number) =
  */
 const deleteExpense = async (id: number) => {
   try {
-    await UserService.deleteExpense({expenseId: id});
+    await BudgetService.deleteExpense({expenseId: id});
     await updateExpenses();
     await updateBudget(budget.value, title.value)
     await updateBalance();
@@ -181,7 +180,7 @@ const editExpense = async (id: number, newDescription: string, newAmount: number
       amount: newAmount
     }
     // Send request to update the expense using the UserService
-    await UserService.updateExpense({budgetId: useBudgetStore().getActiveBudgetId, requestBody: request});
+    await BudgetService.updateExpense({budgetId: useBudgetStore().getActiveBudgetId, requestBody: request});
     await updateExpenses();
     await updateBudget(budget.value, title.value)
     await updateBalance();
@@ -198,18 +197,18 @@ const editExpense = async (id: number, newDescription: string, newAmount: number
 const importBudget = async (budgetId: number) => {
   try {
     // Update current budget value from the imported budget
-    const budgetResponse: BudgetResponseDTO = await UserService.getBudget({budgetId: budgetId});
+    const budgetResponse: BudgetResponseDTO = await BudgetService.getBudget({budgetId: budgetId});
     if (budgetResponse.budgetAmount != null) {
       budget.value += budgetResponse.budgetAmount;
     }
     // Get all the expenses from imported budget, and copy them to current budget
-    const expenses: ExpenseResponseDTO[] = await UserService.getExpenses({budgetId: budgetId})
+    const expenses: ExpenseResponseDTO[] = await BudgetService.getExpenses({budgetId: budgetId})
     for (let expense of expenses) {
       const expenseRequest: ExpenseRequestDTO = {
         description: expense.description,
         amount: Number(expense.amount) || 0
       }
-      await UserService.updateExpense({budgetId: useBudgetStore().getActiveBudgetId, requestBody: expenseRequest});
+      await BudgetService.updateExpense({budgetId: useBudgetStore().getActiveBudgetId, requestBody: expenseRequest});
     }
     // Update display and budget
     await updateExpenses();

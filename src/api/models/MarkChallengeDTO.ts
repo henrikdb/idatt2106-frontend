@@ -2,8 +2,9 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type ParticipantUserDTO = {
-    firstName?: string;
-    lastName?: string;
+export type MarkChallengeDTO = {
+    id?: number;
+    day?: number;
+    amount?: number;
 };
 

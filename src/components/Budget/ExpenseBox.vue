@@ -50,11 +50,11 @@ const emitEditEvent = () => {
     <p>{{amount}} kr</p>
     <button class="btn btn-success" data-bs-toggle="collapse" :data-bs-target="'#' + index" aria-expanded="false" aria-controls="editBudgetCollapse">
       <img src="../../assets/icons/edit-button.svg" alt="Edit" height="18" width="18">
-      Edit
+      Endre
     </button>
     <button class="btn btn-danger" @click="emitDeleteEvent">
       <img src="../../assets/icons/trash-can.svg" alt="Edit" height="18" width="18">
-      Delete
+      Slett
     </button>
   </div>
 
@@ -62,10 +62,10 @@ const emitEditEvent = () => {
     <div class="container collapse-container">
       <form @submit.prevent="emitEditEvent">
         <div class="input-group">
-          <span class="input-group-text">Edit expense {{ index+1 }} </span>
-          <input type="text" class="form-control" placeholder="Expense description" required v-model="editDescription">
+          <span class="input-group-text">Endre utgift {{ index+1 }} </span>
+          <input type="text" class="form-control" placeholder="Utgift beskrivelse" required v-model="editDescription">
           <input type="number" min="0" class="form-control" placeholder="Amount (kr)" required v-model="editAmount">
-          <button type="submit" class="btn btn-primary" data-bs-toggle="collapse" :data-bs-target="'#' + index">Confirm</button>
+          <button type="submit" class="btn btn-primary" data-bs-toggle="collapse" :data-bs-target="'#' + index">Bekreft</button>
         </div>
       </form>
     </div>

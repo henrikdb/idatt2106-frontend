@@ -31,6 +31,18 @@ export class LeaderboardService {
         });
     }
     /**
+     * Get sum of total points globally
+     * Get the sum of the total points of all users globally
+     * @returns number Successfully retrieved total points
+     * @throws ApiError
+     */
+    public static getTotalPoints(): CancelablePromise<number> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/leaderboard/total-points',
+        });
+    }
+    /**
      * @returns LeaderboardDTO OK
      * @throws ApiError
      */

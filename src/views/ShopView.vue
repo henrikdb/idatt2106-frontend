@@ -12,7 +12,8 @@
                         <img src="@/assets/items/adfree.png" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">Adfree</h5>
-                            <button type="button" class="btn btn-primary" id="buttonStyle" @click="buyNoAds"> +35kr</button>
+                            <button type="button" class="btn btn-primary" id="buttonStyle" @click="buyNoAds">
+                                +35kr</button>
                         </div>
                     </div>
                     <div class="card text-center" style="width: 16rem; border: none">
@@ -26,38 +27,19 @@
                 </div>
             </div>
             <div class="col-md-12">
-                <h1>Fantacy</h1>
+                <h1>Items</h1>
                 <div class="category row justify-content-between mb-5 m-2">
-                    <!--<div class="col-md-4" v-for="product in products" :key="product.id">-->
-                    <div class="card text-center" style="width: 16rem; border: none">
-                        <img src="@/assets/items/galaxy.jpg" class="card-img-top" alt="...">
+                    <div v-for="product in products" :key="product.id" class="card text-center"
+                        style="width: 16rem; border: none">
+                        <img :src="`http://localhost:8080/api/images/${product.imageId}`" class="card-img-top"
+                            alt="..." />
                         <div class="card-body">
-                            <h5 class="card-title">The panda</h5>
-                            <ShopButton button-text="100"></ShopButton>
+                            <h5 class="card-title">{{ product.itemName }}</h5>
+                            <ShopButton v-if="!product.alreadyBought" :button-text="product.price"
+                                @click="buyItem(product.id)"></ShopButton>
+                            <p v-else>Owned</p>
                         </div>
                     </div>
-                    <div class="card text-center" style="width: 16rem; border: none">
-                        <img src="@/assets/items/galaxy.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">The panda</h5>
-                            <ShopButton button-text="100"></ShopButton>
-                        </div>
-                    </div>
-                    <div class="card text-center" style="width: 16rem; border: none">
-                        <img src="@/assets/items/galaxy.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">The panda</h5>
-                            <ShopButton button-text="100"></ShopButton>
-                        </div>
-                    </div>
-                    <div class="card text-center" style="width: 16rem; border: none">
-                        <img src="@/assets/items/galaxy.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">The panda</h5>
-                            <ShopButton button-text="100"></ShopButton>
-                        </div>
-                    </div>
-                    <!--</div>-->
                 </div>
             </div>
             <div class="col-md-12">
@@ -93,9 +75,29 @@
 
 <script setup lang="ts">
 import ShopButton from '@/components/Buttons/ShopButton.vue';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { UserService } from '@/api';
 import { useUserInfoStore } from '@/stores/UserStore';
+import { ItemService } from '@/api';
+
+const products = ref([] as any);
+
+const getStore = async () => {
+    const response = await ItemService.getStore();
+    products.value = response;
+    console.log(response);
+}
+
+const buyItem = async (itemId: number) => {
+    try {
+        const response = await ItemService.buyItem({ itemId: itemId });
+        console.log(response);
+        const responseStore = await ItemService.getStore();
+        products.value = responseStore;
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 const buyPremium = async () => {
     try {
@@ -118,6 +120,10 @@ const buyNoAds = async () => {
         console.log(error);
     }
 }
+
+onMounted(() => {
+    getStore();
+})
 </script>
 
 <style scoped>

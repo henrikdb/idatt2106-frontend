@@ -23,7 +23,7 @@ let errorMsg = ref();
  * and navigates to the '/suitable challenges' route. If form validation fails, displays
  * an error message prompting the user to select an option before continuing.
  */
-const onClick = () => {
+const handleSubmit = () => {
   const form = formRef.value;
   if (form.checkValidity()) {
     let choice = ''
@@ -48,7 +48,7 @@ const onClick = () => {
       </h3>
     </div>
 
-    <form class="btn-group-vertical" ref="formRef" @submit.prevent="onClick">
+    <form class="btn-group-vertical" ref="formRef">
 
       <input ref="beginnerRef" type="radio" class="btn-check" name="experience" id="btn-check-outlined" autocomplete="off" required>
       <label class="btn btn-outline-primary d-flex align-items-center justify-content-center" for="btn-check-outlined">Beginner</label>
@@ -61,7 +61,7 @@ const onClick = () => {
     </form>
     <p class="text-danger">{{ errorMsg }}</p>
     <div class="confirm-button-container">
-      <button1 id="confirmButton" @click="onClick" button-text="Continue"></button1>
+      <button1 id="confirmButton" @click="handleSubmit" button-text="Continue"/>
     </div>
 </div>
 </template>

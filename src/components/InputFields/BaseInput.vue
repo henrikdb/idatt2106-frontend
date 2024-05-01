@@ -19,8 +19,6 @@ const props = defineProps({
     required: true
   },
   modelValue: {
-    type: String,
-    default: ""
   },
   min: {
     type: String,
@@ -41,6 +39,10 @@ const props = defineProps({
   required: {
     type: Boolean,
     default: true
+  },
+  inputClass: {
+    type: String,
+    default: "form-control"
   }
 });
 
@@ -55,7 +57,7 @@ const onInputEvent = (event: any) => {
     <input :value="modelValue"
            @input="onInputEvent"
            :type="type"
-           class="form-control"
+           :class="inputClass"
            :placeholder="placeholder"
            :id="inputId"
            :min="min"

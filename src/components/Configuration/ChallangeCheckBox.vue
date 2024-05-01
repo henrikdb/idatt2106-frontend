@@ -10,6 +10,10 @@ const props = defineProps({
     type: String,
     default: ''
   },
+  enumValue: {
+    type: String,
+    default: ''
+  },
   modelValue: {
     type: Boolean,
     default: false
@@ -24,21 +28,24 @@ const props = defineProps({
  */
 const onChallengeChanged = (event: any) => {
   const value = event.target.checked
-  const data = [props.text, value]
+  const data = [props.enumValue, value]
   emit('challengeChangedEvent', data)
 }
 
 </script>
 
 <template>
-  <span>
+  <div class="col-auto">
     <input @change="onChallengeChanged" type="checkbox" class="btn-check" :id="props.id" autocomplete="off">
     <label class="btn btn-outline-primary align-items-center justify-content-center" :for="props.id">{{ props.text }}</label>
-  </span>
+  </div>
 </template>
 
 <style scoped>
 label {
   margin: 5px
+}
+div.col-auto {
+  padding: 0;
 }
 </style>
