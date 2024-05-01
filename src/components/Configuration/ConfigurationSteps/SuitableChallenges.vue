@@ -5,7 +5,7 @@ import Button1 from '@/components/Buttons/Button1.vue'
 import { ref } from 'vue'
 import { useConfigurationStore } from '@/stores/ConfigurationStore'
 import { useUserInfoStore } from '@/stores/UserStore'
-import { AuthenticationService, OpenAPI} from '@/api'
+import { AuthenticationService, Configuration, OpenAPI, type SignUpRequest } from '@/api'
 import handleUnknownError from '@/components/Exceptions/unkownErrorHandler'
 
 const router = useRouter();
@@ -15,12 +15,11 @@ const emit = defineEmits(['changeRouterEvent'])
 emit('changeRouterEvent', '/suitable-challenges')
 
 // Reactive variables for chosen challenges and error message.
-let chosenChallenges = ref([])
+let chosenChallenges = ref<string[]>([])
 let errorMsg = ref('')
 
 // Represents a list of available challenges.
-const challenges = ['Make packed lunch', 'Stop shopping', 'Drop coffee',
-  'Quit subscription', 'Drop car', 'Short showers', 'Exercise outside', 'Make budget']
+const challenges: string[] = ['NO_COFFEE' , 'NO_CAR' , 'SHORTER_SHOWER' , 'SPEND_LESS_ON_FOOD' , 'BUY_USED_CLOTHES' , 'LESS_SHOPPING' , 'DROP_SUBSCRIPTION' , 'SELL_SOMETHING' , 'BUY_USED' , 'EAT_PACKED_LUNCH' , 'STOP_SHOPPING' , 'ZERO_SPENDING' , 'RENT_YOUR_STUFF' , 'MEATLESS' , 'SCREEN_TIME_LIMIT' , 'UNPLUGGED_ENTERTAINMENT']
 
 /**
  * Handles the event when a challenge is selected or deselected.
@@ -40,38 +39,29 @@ const onChangedChallengeEvent = (value: never) => {
   console.log(chosenChallenges.value)
 }
 
+const convertEnumToText = (enumValue: String) => {
+  return enumValue.charAt(0).toUpperCase() + enumValue.slice(1).replace(/_/g, ' ').toLowerCase();
+}
+
 /**
  * Retrieves user configuration and signup information, sends a signup request to the backend.
  *
  * @throws {Error} Throws an error if signup fails.
  */
-const onClick = async () => {
+const signUpUser = async () => {
   try {
     // Saves the chosen challenges to the configuration store
     useConfigurationStore().setChallenges(chosenChallenges.value)
 
-    /*
-    TODO: 'changeWilling' are updated to 'commitment' in backend, must update it in frontend
-    const signUpPayLoad: SignUpRequest = {
-      changeWilling: useConfigurationStore().getCommitment,
-      experience: useConfigurationStore().getExperience,
-      challenges: useConfigurationStore().getChallenges,
+    const signUpPayLoad: SignUpRequest  = {
       firstName: useUserInfoStore().getFirstName,
       lastName: useUserInfoStore().getLastname,
       email: useUserInfoStore().getEmail,
       password: useUserInfoStore().getPassword,
-    };
-     */
-
-    const signUpPayLoad = {
-      "firstName": useUserInfoStore().getFirstName,
-      "lastName": useUserInfoStore().getLastname,
-      "email": useUserInfoStore().getEmail,
-      "password": useUserInfoStore().getPassword,
-      "configuration": {
-        "commitment": useConfigurationStore().getCommitment,
-        "experience": useConfigurationStore().getExperience,
-        "challenges": useConfigurationStore().getChallenges
+      configuration: {
+        commitment: useConfigurationStore().getCommitment,
+        experience: useConfigurationStore().getExperience,
+        challengeTypes: useConfigurationStore().getChallenges
       }
     };
 
@@ -93,6 +83,15 @@ const onClick = async () => {
   }
 }
 
+const handleSubmit = () => {
+  if (chosenChallenges.value.length === 0) {
+    chosenChallenges.value = challenges
+  }
+  useConfigurationStore().setChallenges(chosenChallenges.value)
+  console.log(useConfigurationStore().getChallenges)
+  router.push("/first-saving-goal")
+}
+
 </script>
 
 <template>
@@ -103,16 +102,18 @@ const onClick = async () => {
       </h3>
     </div>
 
-    <div class="challenge-container">
-      <ChallangeCheckBox v-for="(item, index) in challenges" :id="String(index)" :text="item"
-                         @challengeChangedEvent="onChangedChallengeEvent"
-      />
+    <div class="challenge-container row justify-content-center">
+      <ChallangeCheckBox v-for="(item, index) in challenges"
+                         :id="String(index)"
+                         :text="convertEnumToText(item)"
+                         :enum-value="item"
+                         @challengeChangedEvent="onChangedChallengeEvent"/>
     </div>
 
     <p class="text-danger">{{ errorMsg }}</p>
 
     <div class="confirm-button-container">
-      <button1 id="confirmButton" @click="onClick" button-text="Finish configuration"></button1>
+      <button1 id="confirmButton" @click="handleSubmit" button-text="Continue"/>
     </div>
   </div>
 </template>
@@ -126,10 +127,12 @@ const onClick = async () => {
 #confirmButton {
   margin-bottom: 2rem;
   width: 300px;
+  height: 38px;
 }
 
 .confirm-button-container {
   display: flex;
   justify-content: center;
 }
+
 </style>
