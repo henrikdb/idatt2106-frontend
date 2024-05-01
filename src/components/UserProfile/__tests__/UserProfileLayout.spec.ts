@@ -36,7 +36,7 @@ describe('MyComponent and Router Tests', () => {
           plugins: [mockRouter],
         },
       });
-      expect(wrapper.text()).toContain('Edit profile');
+      expect(wrapper.text()).toContain('Rediger profil');
     });
   });
 
