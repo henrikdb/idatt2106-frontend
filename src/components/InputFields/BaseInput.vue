@@ -51,7 +51,7 @@ const onInputEvent = (event: any) => {
 
 <template>
   <div>
-    <label :for="inputId">{{ label }}</label>
+    <label :for="inputId" data-cy="bi-label">{{ label }}</label>
     <input :value="modelValue"
            @input="onInputEvent"
            :type="type"
@@ -61,9 +61,10 @@ const onInputEvent = (event: any) => {
            :min="min"
            :pattern="pattern"
            :required="required"
+           data-cy="bi-input"
     />
-    <div class="valid-feedback">{{ validMessage }}</div>
-    <div class="invalid-feedback" id="invalid">{{ invalidMessage }}</div>
+    <div data-cy="bi-valid-msg" class="valid-feedback">{{ validMessage }}</div>
+    <div data-cy="bi-invalid-msg" class="invalid-feedback" id="invalid">{{ invalidMessage }}</div>
   </div>
 </template>
 

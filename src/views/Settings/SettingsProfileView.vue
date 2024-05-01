@@ -129,7 +129,8 @@ onMounted(() => {
                    invalid-message="Vennligst skriv inn ditt etternavn" />
       </div>
       <br>
-      <button type="submit" class="btn btn-primary">Oppdater profil</button>
+      <button data-cy="profile-submit-btn" type="submit" class="btn btn-primary">Oppdater
+        profil</button>
     </form>
   </div>
 </template>
