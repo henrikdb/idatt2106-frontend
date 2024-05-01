@@ -101,34 +101,35 @@ onMounted(() => {
 
 <template>
   <div class="tab-pane active" id="profile">
-    <h6>YOUR PROFILE INFORMATION</h6>
+    <h6>DIN PROFILINFORMASJON</h6>
     <hr>
     <form @submit.prevent="handleSubmit" novalidate>
       <div class="user-avatar">
         <input type="file" ref="fileInputRef" @change="handleFileChange" accept=".jpg, .jpeg, .png"
           style="display: none;" />
-        <img :src="iconSrc" alt="User Avatar" style="width: 300px">
+        <img :src="iconSrc" alt="Brukeravatar" style="width: 300px">
         <div class="mt-2">
           <button type="button" class="btn btn-primary" @click="triggerFileUpload"><img
-              src="@/assets/icons/download.svg"> Upload Image</button>
+              src="@/assets/icons/download.svg"> Last opp bilde</button>
         </div>
       </div>
       <div class="form-group">
         <BaseInput :model-value="firstNameRef" @input-change-event="handleFirstNameInputEvent" id="firstNameInputChange"
-          input-id="first-name-new" type="text" label="First name" placeholder="Enter your first name"
-          invalid-message="Please enter your first name" />
+          input-id="first-name-new" type="text" label="Fornavn" placeholder="Skriv inn ditt fornavn"
+          invalid-message="Vennligst skriv inn ditt fornavn" />
       </div>
       <br>
       <div class="form-group">
         <BaseInput :model-value="surnameRef" @input-change-event="handleSurnameInputEvent" id="surnameInput-change"
-          input-id="surname-new" type="text" label="Surname" placeholder="Enter your surname"
-          invalid-message="Please enter your surname" />
+          input-id="surname-new" type="text" label="Etternavn" placeholder="Skriv inn ditt etternavn"
+          invalid-message="Vennligst skriv inn ditt etternavn" />
       </div>
       <br>
-      <button type="submit" class="btn btn-primary">Update Profile</button>
+      <button type="submit" class="btn btn-primary">Oppdater profil</button>
     </form>
   </div>
 </template>
+
 
 <style scoped>
 #icon {

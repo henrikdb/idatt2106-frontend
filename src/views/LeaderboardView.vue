@@ -1,40 +1,41 @@
 <template>
     <br>
     <div id="dropdownContainer">
-        <h1 class="box">Leaderboard</h1>
+        <h1 class="box">Poengtavle</h1>
     </div>
-    <div id = "content">
+    <div id="content">
         <div id="dropdownContainer">
-        <div class="box">
-            <div class="btn-group-vertical" id="radioContainer" role="group"
-            aria-label="Vertical radio toggle button group">
-            <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio1" autocomplete="off" checked>
-            <label class="btn btn-outline-primary" for="vbtn-radio1" @click="global"><img src="@/assets/globe.png" style="width: 60px" alt="globe">  Global</label>
-            <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio2" autocomplete="off">
-            <label class="btn btn-outline-primary" for="vbtn-radio2" @click="friends"><img src="@/assets/friends.png" style="width: 60px" alt="friends">  Friends</label>
+            <div class="box">
+                <div class="btn-group-vertical" id="radioContainer" role="group"
+                     aria-label="Vertikal radio knappgruppe">
+                    <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio1" autocomplete="off" checked>
+                    <label class="btn btn-outline-primary" for="vbtn-radio1" @click="global"><img src="@/assets/globe.png" style="width: 60px" alt="globus"> Global</label>
+                    <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio2" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="vbtn-radio2" @click="friends"><img src="@/assets/friends.png" style="width: 60px" alt="venner"> Venner</label>
+                </div>
+            </div>
         </div>
-        </div>
-    </div>
-    <main>
-        <div id="leaderboard">
-            <h1><img src="@/assets/items/pigcoin.png" style="width: 2rem" alt="pig coin"> Total points</h1>
-            <Leaderboard :leaderboard="pointsLeaderboardData" :leaderboardExtra="pointsLeaderboardDataExtra" @navigateToUserProfile="navigateToUserProfile" />
-        </div>
-        <div id="leaderboard">
-            <h1><img src="@/assets/icons/fire.png" style="width: 2rem" alt="fire"> Current streak</h1>
-            <Leaderboard :leaderboard="currentLeaderboardData" :leaderboardExtra="currentLeaderboardDataExtra" @navigateToUserProfile="navigateToUserProfile" />
-        </div>
-        <div id="leaderboard">
-            <h1><img src="@/assets/icons/fire.png" style="width: 2rem" alt="fire"> Highest streak</h1>
-            <Leaderboard :leaderboard="streakLeaderboardData" :leaderboardExtra="streakLeaderboardDataExtra" @navigateToUserProfile="navigateToUserProfile" />
-        </div>
-    </main>
+        <main>
+            <div id="leaderboard">
+                <h1><img src="@/assets/items/pigcoin.png" style="width: 2rem" alt="pig coin"> Totale poeng</h1>
+                <Leaderboard :leaderboard="pointsLeaderboardData" :leaderboardExtra="pointsLeaderboardDataExtra" @navigateToUserProfile="navigateToUserProfile" />
+            </div>
+            <div id="leaderboard">
+                <h1><img src="@/assets/icons/fire.png" style="width: 2rem" alt="ild"> Nåværende rekke</h1>
+                <Leaderboard :leaderboard="currentLeaderboardData" :leaderboardExtra="currentLeaderboardDataExtra" @navigateToUserProfile="navigateToUserProfile" />
+            </div>
+            <div id="leaderboard">
+                <h1><img src="@/assets/icons/fire.png" style="width: 2rem" alt="ild"> Høyeste rekke</h1>
+                <Leaderboard :leaderboard="streakLeaderboardData" :leaderboardExtra="streakLeaderboardDataExtra" @navigateToUserProfile="navigateToUserProfile" />
+            </div>
+        </main>
     </div>
     <div id="communityContainer">
-        <h1>Total points earned as a community</h1>
+        <h1>Totale poeng opptjent som et fellesskap</h1>
         <h2>1000000 <img src="@/assets/items/v-buck.png" style="width: 2rem" alt="alt"></h2>
     </div>
 </template>
+
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
