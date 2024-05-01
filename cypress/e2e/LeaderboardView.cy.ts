@@ -42,4 +42,15 @@ describe("Leaderboard Test", () => {
     .should('have.length', 3);
   })
 
+  it('redirects to profile-page when clicking user', () => {
+    cy.get('[data-cy="total-points-board"]')
+    .find('[data-cy="top-leaderboard-tablerow"]')
+    .first()
+    .within(() => {
+      cy.get('td:nth-child(2)').click();
+    })
+    cy.wait(1000);
+    cy.url().should('include', '/profile/15');
+  })
+
 })
