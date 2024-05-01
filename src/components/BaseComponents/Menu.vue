@@ -7,7 +7,7 @@
             </router-link>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
+                aria-label="Bytt navigasjon">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -15,7 +15,7 @@
                     <li class="nav-item">
                       <router-link data-cy="savingGoals" class="nav-link text-white"
                                    :to="toSavingGoals()"><img
-                                src="@/assets/icons/saving.svg">Saving goals</router-link>
+                                src="@/assets/icons/saving.svg">Sparemål</router-link>
                     </li>
                     <li class="nav-item">
                       <router-link data-cy="leaderboard" class="nav-link text-white"
@@ -24,11 +24,11 @@
                     </li>
                     <li class="nav-item">
                       <router-link data-cy="news" class="nav-link text-white" :to="toNews()"><img
-                          src="@/assets/icons/newsletter.svg">News</router-link>
+                          src="@/assets/icons/newsletter.svg">Nyheter</router-link>
                     </li>
                     <li class="nav-item">
                       <router-link data-cy="store" class="nav-link text-white" :to="toStore()"><img
-                          src="@/assets/icons/storefront.svg">Store</router-link>
+                          src="@/assets/icons/storefront.svg">Butikk</router-link>
                     </li>
                     <li class="nav-item dropdown">
                         <a data-mdb-dropdown-init class=" nav-link me-3 dropdown-toggle hidden-arrow notification" href="#" id="navbarDropdownMenuLink"
@@ -40,13 +40,13 @@
                           <li v-for="(array,key) in notifMap" :key="key" >
                             <div class="d-flex align-items-center">
                               <div v-if="array[1][0] === '1'" class="flex-shrink-0">
-                                <img src="/src/assets/icons/medal.png" alt="Notification Icon" class="notification-icon" style="height: 20px; width: 20px">
+                                <img src="/src/assets/icons/medal.png" alt="Varslingsikon" class="notification-icon" style="height: 20px; width: 20px">
                               </div>
                               <div v-if="array[1][0] === '2'" class="flex-shrink-0">
-                                <img src="/src/assets/userprofile.png" alt="Notification Icon" class="notification-icon" style="height: 20px; width: 20px">
+                                <img src="/src/assets/userprofile.png" alt="Varslingsikon" class="notification-icon" style="height: 20px; width: 20px">
                               </div>
                               <div v-if="array[1][0] === '3'" class="flex-shrink-0">
-                                <img src="/src/assets/icons/piggybank.svg" alt="Notification Icon" class="notification-icon" style="height: 20px; width: 20px">
+                                <img src="/src/assets/icons/piggybank.svg" alt="Varslingsikon" class="notification-icon" style="height: 20px; width: 20px">
                               </div>
                               <div class="flex-grow-1 ms-3">
                                 <router-link class="not-item dropdown-item text-white"   :to="getPath(array[1][0])">{{array[1][1]}}</router-link>
@@ -69,33 +69,34 @@
                         <ul class="dropdown-menu dropdown-username-content">
                             <li><router-link data-cy="profile"
                               class="dropdown-item text-white dropdown-username-link" :to="toUserProfile()"><img
-                                  src="@/assets/icons/person.svg">User Profile</router-link></li>
+                                  src="@/assets/icons/person.svg">Brukerprofil</router-link></li>
                             <li v-if="useUserInfoStore().isPremium"><router-link data-cy="budget"
-                              class="dropdown-item text-white dropdown-username-link" :to="toBudget()"><img>Budget</router-link></li>
+                              class="dropdown-item text-white dropdown-username-link" :to="toBudget()"><img>Budjsett</router-link></li>
                             <li><router-link data-cy="friends"
                               class="dropdown-item text-white dropdown-username-link" :to="toFriends()"><img
-                                src="@/assets/icons/friends.svg">Friends</router-link></li>
+                                src="@/assets/icons/friends.svg">Venner</router-link></li>
                             <li><router-link data-cy="settings"
                               class="dropdown-item text-white dropdown-username-link" :to="toSetting()"><img
-                                src="@/assets/icons/settings.svg">Settings</router-link></li>
+                                src="@/assets/icons/settings.svg">Innstillinger</router-link></li>
                             <li><router-link data-cy="feedback"
                               class="dropdown-item text-white dropdown-username-link" :to="toFeedback()"><img
-                                src="@/assets/icons/feedback.svg">Feedback</router-link></li>
+                                src="@/assets/icons/feedback.svg">Tilbakemelding</router-link></li>
                             <li><router-link data-cy="admin"
                               class="dropdown-item text-white dropdown-username-link" :to="toSetting()"><img
                                 src="@/assets/icons/admin.svg">Admin</router-link></li>
                             <li><a data-testid="logout" class="dropdown-item text-white dropdown-username-link" ref="#" @click="toLogout()"><img
-                                src="@/assets/icons/logout.svg">Log out</a></li>
+                                src="@/assets/icons/logout.svg">Logg ut</a></li>
                         </ul>
                     </li>
                     <li v-else class="nav-item">
-                        <a class="nav-link text-white" href="#" @click="toLogout">Login</a>
+                        <a class="nav-link text-white" href="#" @click="toLogout">Logg inn</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 </template>
+
 <script setup lang="ts">
 import { useRouter } from "vue-router";
 import { useUserInfoStore } from '@/stores/UserStore';

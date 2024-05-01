@@ -43,26 +43,27 @@ const onClick = () => {
 <template>
   <div class="container">
     <h3 id="commitmentText" class="align-items-center justify-content-center">
-      In which degree are you willing to make changes?
+      I hvilken grad er du villig til å gjøre endringer?
     </h3>
     <form class="btn-group-vertical" ref="formRef" @submit.prevent="onClick">
 
       <input ref="lowRef" type="radio" class="btn-check" name="commitment" id="btn-check-outlined" autocomplete="off" required>
-      <label class="btn btn-outline-primary d-flex align-items-center justify-content-center" for="btn-check-outlined">Low</label>
+      <label class="btn btn-outline-primary d-flex align-items-center justify-content-center" for="btn-check-outlined">Lav</label>
 
       <input ref="mediumRef" type="radio" class="btn-check" name="commitment" id="btn-check2-outlined" autocomplete="off" required>
-      <label class="btn btn-outline-primary d-flex align-items-center justify-content-center" for="btn-check2-outlined">Medium</label>
+      <label class="btn btn-outline-primary d-flex align-items-center justify-content-center" for="btn-check2-outlined">Middels</label>
 
       <input ref="highRef" type="radio" class="btn-check" name="commitment" id="btn-check3-outlined" autocomplete="off" required>
-      <label class="btn btn-outline-primary d-flex align-items-center justify-content-center" for="btn-check3-outlined">High</label>
+      <label class="btn btn-outline-primary d-flex align-items-center justify-content-center" for="btn-check3-outlined">Høy</label>
 
     </form>
     <p class="text-danger">{{ errorMsg }}</p>
     <div class="confirm-button-container">
-      <button1 id="confirmButton" @click="onClick" button-text="Continue"></button1>
+      <button1 id="confirmButton" @click="onClick" button-text="Fortsett"></button1>
     </div>
   </div>
 </template>
+
 
 <style scoped>
 div.container {
