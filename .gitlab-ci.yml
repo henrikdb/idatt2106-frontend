@@ -52,7 +52,7 @@ cypress_e2e-tests:
   stage: test
   script:
     - npm ci
-    - npm run test:e2e:ci
+    - npm run RunTCOnChrome
   dependencies:
     - install_dependencies
   cache:
