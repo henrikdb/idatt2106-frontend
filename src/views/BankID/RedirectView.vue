@@ -35,11 +35,3 @@ async function exchangeCodeForToken(code: string, state: string) {
     });
 }
 </script>
-
-<template>
-
-</template>
-
-<style scoped>
-
-</style>
