@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import {ref, onMounted, type Ref, type UnwrapRef} from "vue";
+import {ref, onMounted} from "vue";
 import { useRouter } from "vue-router";
-import { useUserInfoStore } from "../../stores/UserStore";
-import {UserService, BadgeService, GoalService, type GoalDTO} from "@/api";
+import { useUserInfoStore } from "@/stores/UserStore";
+import {UserService, BadgeService, GoalService, type GoalDTO, type BadgeDTO} from "@/api";
 import { ItemService } from "@/api";
 
 let numberOfHistory = 6;
@@ -15,7 +15,7 @@ let hasHistory = ref(true)
 
 const router = useRouter();
 const inventory = ref([] as any);
-const badges = ref([] as any);
+const badges = ref<BadgeDTO[]>([]);
 const backgroundName = ref("");
 
 
@@ -27,17 +27,18 @@ let createdAt = ref('');
 let goals = ref<GoalDTO[]>([])
 
 async function getGoals() {
-  goals.value = await GoalService.getGoals();
-  console.log("number of goals: ", goals.value.length )
-  console.log('The id of a goal: ', goals.value[0])
-  if(goals.value.length > 0) {
-    hasHistory.value = true
-
-
-
-  }else{
-    hasHistory.value = false
-    console.log('No history')
+  try {
+    goals.value = await GoalService.getGoals();
+    console.log("number of goals: ", goals.value.length)
+    console.log('The id of a goal: ', goals.value[0])
+    if (goals.value.length > 0) {
+      hasHistory.value = true
+    } else {
+      hasHistory.value = false
+      console.log('No history')
+    }
+  }catch (error){
+    console.error("Something went wrong", error)
   }
 }
 
@@ -85,6 +86,7 @@ const selectItem = (item: any) => {
 
 onMounted(() => {
   setupForm()
+  getGoals()
 })
 
 const toRoadmap = () => {
@@ -98,9 +100,6 @@ const toUpdateUserSettings = () => {
   router.push('/settings/profile');
 };
 
-onMounted(()=>{
-  getGoals()
-})
 
 
 </script>
@@ -279,7 +278,7 @@ onMounted(()=>{
 }
 
 #banner {
-  background-image: url('../src/assets/banners/stacked.svg');
+  background-image: url('/src/assets/banners/stacked.svg');
 }
 
 .card-1 {
