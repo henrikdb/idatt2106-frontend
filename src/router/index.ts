@@ -3,7 +3,6 @@ import { createRouter, createWebHistory } from 'vue-router';
 import LoginView from '../views/Authentication/LoginView.vue';
 import { useUserInfoStore } from '@/stores/UserStore';
 import UserProfileView from "@/views/User/UserProfileView.vue";
-import SignUp from '@/components/SignUp/SignUp.vue'
 import UpdateUserView from "@/views/UpdateUser/UpdateUserView.vue";
 import RedirectView from '@/views/RedirectView.vue';
 
@@ -30,11 +29,6 @@ const routes = [
         component: () => import('@/views/LeaderboardView.vue'),
       },
       {
-        path: 'test',
-        name: 'test',
-        component: () => import('@/views/TestView.vue'),
-      },
-      {
         path: 'profile',
         name: 'profile',
         component: UserProfileView
@@ -47,32 +41,32 @@ const routes = [
       {
         path: '/settings',
         name: 'settings',
-        component: () => import('@/views/SettingsView.vue'),
+        component: () => import('@/views/Settings/SettingsView.vue'),
         children: [
           {
             path: '/settings/account',
             name: 'account',
-            component: () => import('@/views/Settings/SettingsAccountView.vue'),
+            component: () => import('@/components/Settings/SettingsAccount.vue'),
           },
           {
             path: '/settings/profile',
             name: 'profilesettings',
-            component: () => import('@/views/Settings/SettingsProfileView.vue'),
+            component: () => import('@/components/Settings/SettingsProfile.vue'),
           },
           {
             path: '/settings/security',
             name: 'security',
-            component: () => import('@/views/Settings/SettingsSecurityView.vue'),
+            component: () => import('@/components/Settings/SettingsSecurity.vue'),
           },
           {
             path: '/settings/notification',
             name: 'notification',
-            component: () => import('@/views/Settings/SettingsNotificationView.vue'),
+            component: () => import('@/components/Settings/SettingsNotification.vue'),
           },
           {
             path: '/settings/bank',
             name: 'bank',
-            component: () => import('@/views/Settings/SettingsBankView.vue'),
+            component: () => import('@/components/Settings/SettingsBank.vue'),
           },
         ]
       },
@@ -117,12 +111,6 @@ const routes = [
         path: 'add-friend',
         name: 'add-friend',
         component: () => import('@/views/User/UserAddFriend.vue'),
-      },
-      {
-        path: 'admin',
-        name: 'admin',
-        component: () => import('@/views/TestView.vue'),
-        meta: { requiresAdmin: true },
       },
       {
         path: 'unauthorized',
