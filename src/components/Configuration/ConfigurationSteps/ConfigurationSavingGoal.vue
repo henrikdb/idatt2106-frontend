@@ -4,6 +4,7 @@ import { ref } from 'vue'
 import BaseButton from '@/components/BaseComponents/Buttons/BaseButton.vue'
 import { useRouter } from 'vue-router'
 import {type CreateGoalDTO, GoalService} from "@/api";
+import handleUnknownError from '@/components/Exceptions/unkownErrorHandler';
 
 const router = useRouter();
 const emit = defineEmits(['changeRouterEvent'])
@@ -35,6 +36,7 @@ const handleSubmit = async () => {
     await GoalService.createGoal({ requestBody: createGoalPayload });
     await router.push("/")
   } catch (error: any) {
+    handleUnknownError(error);
     console.log(error.message);
     errorMessage.value = error.message;
   }

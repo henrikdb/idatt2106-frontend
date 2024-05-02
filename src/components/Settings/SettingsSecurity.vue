@@ -37,6 +37,7 @@
     import { ref } from 'vue'
     import BaseInput from '@/components/BaseComponents/Input/BaseInput.vue'
     import { type PasswordUpdateDTO, UserService } from '@/api'
+    import handleUnknownError from '@/components/Exceptions/unkownErrorHandler';
 
     const oldPasswordRef = ref('');
     const newPasswordRef = ref('');
@@ -71,13 +72,8 @@ const handleSubmit = async () => {
         const response = UserService.updatePassword({ requestBody: updateUserPayload })
         console.log(response)
     } catch (err) {
+        handleUnknownError(err);
         console.error(err)
     }
 }
-
-
-
-
 </script>
-
-<style scoped></style>
