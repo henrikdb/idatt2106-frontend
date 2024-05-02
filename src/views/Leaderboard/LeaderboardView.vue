@@ -45,7 +45,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import Leaderboard from '@/components/LeaderboardComponents/Leaderboard.vue';
+import Leaderboard from '@/components/Leaderboard/Leaderboard.vue';
 import { LeaderboardService } from '@/api';
 
 let streakLeaderboardData = ref([] as  any);

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import SavingGoal from "@/components/SavingGoalComponents/SavingGoal.vue";
+import SavingGoal from "@/components/SavingGoal/SavingGoal.vue";
 </script>
 
 <template>

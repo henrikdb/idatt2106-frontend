@@ -2,9 +2,9 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import { createRouter, createMemoryHistory } from 'vue-router';
 import { createPinia, setActivePinia } from 'pinia';
-import Leaderboard from '@/components/LeaderboardComponents/Leaderboard.vue';
-import { useUserInfoStore } from '@/stores/UserStore';
-import router from '@/router/index';
+import Leaderboard from '../Leaderboard.vue';
+import { useUserInfoStore } from '../../../stores/UserStore';
+import router from '../../../router';
 
 describe('Leaderboard', () => {
 

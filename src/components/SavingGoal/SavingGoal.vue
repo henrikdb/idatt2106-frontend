@@ -1,7 +1,7 @@
 <script lang="ts">
-import SavingGoalList from "@/components/SavingGoalComponents/SavingGoalList.vue";
-import SavingGoalRoadmap from "@/components/SavingGoalComponents/SavingGoalRoadmap.vue";
-import SavingGoalCreate from "@/components/SavingGoalComponents/SavingGoalCreate.vue";
+import SavingGoalList from "@/components/SavingGoal/SavingGoalList.vue";
+import SavingGoalRoadmap from "@/components/SavingGoal/SavingGoalRoadmap.vue";
+import SavingGoalCreate from "@/components/SavingGoal/SavingGoalCreate.vue";
 import type {GoalDTO} from "@/api";
 import {GoalService} from "@/api";
 
