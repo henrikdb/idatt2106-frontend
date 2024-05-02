@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import {useRoute, useRouter} from "vue-router";
 
-import {onMounted, ref} from "vue";
-import {UserService, type ProfileDTO, GoalService} from "@/api";
+import {onMounted, type Ref, ref, type UnwrapRef} from "vue";
+import {UserService, type ProfileDTO, GoalService, type GoalDTO} from "@/api";
 
 let numberOfHistory = 6;
 
@@ -12,7 +12,7 @@ let cardTitles = ["Spain tour", "Food waste", "Coffee", "Concert", "New book", "
 let hasHistory = ref(true)
 let firstname = ref();
 let lastname = ref();
-let goals = ref([]);
+let goals: Ref<UnwrapRef<GoalDTO[]>> = ref([]);
 
 let username = ref()
 
@@ -41,7 +41,7 @@ function toRoadmap(){
 //todo Make a store of a friend-instance
 onMounted(async () => {
   try {
-    goals = await UserService.getProfile({
+    let response = await UserService.getProfile({
       userId: id.value.id
     })
     profile = response;
@@ -62,13 +62,17 @@ function addFriend() {
 
 }
 async function getGoals() {
-  let response = await GoalService.getGoals();
-  console.log("number of goals: ", response.length )
-  if(response.length > 0) {
-    hasHistory.value = true
-  }else{
-    hasHistory.value = false
-    console.log('No history')
+  try {
+    goals.value = await GoalService.getGoals();
+    console.log("number of goals: ", goals.value.length)
+    if (goals.value.length > 0) {
+      hasHistory.value = true
+    } else {
+      hasHistory.value = false
+      console.log('No history')
+    }
+  }catch (error){
+    console.error("Something went wrong getting the goals: " , error)
   }
 }
 
