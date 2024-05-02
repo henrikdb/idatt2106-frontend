@@ -11,17 +11,17 @@ const routes = [
       {
         path: '',
         name: 'home',
-        component: () => import('../views/SavingGoalView/RoadmapView.vue'),
+        component: () => import('@/views/SavingGoal/RoadmapView.vue'),
       },
       {
         path: 'news',
         name: 'news',
-        component: () => import('@/views/NewsView.vue'),
+        component: () => import('@/views/News/NewsView.vue'),
       },
       {
         path: 'leaderboard',
         name: 'leaderboard',
-        component: () => import('@/views/LeaderboardView.vue'),
+        component: () => import('@/views/Leaderboard/LeaderboardView.vue'),
       },
       {
         path: 'profile',
@@ -31,7 +31,7 @@ const routes = [
       {
         path: '/settings',
         name: 'settings',
-        component: () => import('@/views/Settings/SettingsView.vue'),
+        component: () => import('@/views/User/UserSettingsView.vue'),
         children: [
           {
             path: '/settings/account',
@@ -63,17 +63,17 @@ const routes = [
       {
         path: 'roadmap',
         name: 'roadmap',
-        component: () => import('@/views/SavingGoalView/RoadmapView.vue'),
+        component: () => import('@/views/SavingGoal/RoadmapView.vue'),
       },
       {
         path: 'feedback',
         name: 'feedback',
-        component: () => import('@/views/FeedbackView.vue'),
+        component: () => import('@/views/User/UserFeedbackView.vue'),
       },
       {
         path: 'shop',
         name: 'shop',
-        component: () => import('@/views/ShopView.vue'),
+        component: () => import('@/views/Shop/ShopView.vue'),
       },
       {
         path: '/budget-overview',
@@ -100,12 +100,12 @@ const routes = [
       {
         path: 'unauthorized',
         name: 'unauthorized',
-        component: () => import('@/views/UnauthorizedView.vue'),
+        component: () => import('@/views/Exception/UnauthorizedView.vue'),
       },
       {
         path: '/:pathMatch(.*)*',
         name: 'not-found',
-        component: () => import('@/views/NotFoundView.vue'),
+        component: () => import('@/views/Exception/NotFoundView.vue'),
       },
     ]
   },
@@ -132,12 +132,12 @@ const routes = [
   {
     path: '/redirect',
     name: 'redirect',
-    component: () => import('@/views/RedirectView.vue'),
+    component: () => import('@/views/BankID/RedirectView.vue'),
   },
   {
     path: '/configuration',
     name: 'configuration',
-    component: () => import('@/views/ConfigurationView.vue'),
+    component: () => import('@/views/Configuration/ConfigurationView.vue'),
     children: [
       {
         path: '/commitment',
