@@ -1,5 +1,8 @@
 image: node:alpine # Much smaller than other variants, faster and more resource effective
 
+variables:
+  DOCKER_TLS_CERTDIR: ""
+
 cache:
   key: "${CI_COMMIT_REF_SLUG}" # Branch-specific cache keys to have separate caches across branches.
   paths:
