@@ -71,7 +71,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Legg til venn</h5>
-                        <button type="button" class="close btn-close" @click="showAddFriend = false"></button>
+                        <button type="button" class="close btn-close" @click="showAddFriend = false" aria-label="Close"></button>
                     </div>
                     <div class="modal-body d-flex justify-content-center align-items-center flex-column">
                         <form class="col-md-10 d-flex justify-content-center align-items-center flex-row my-4"
