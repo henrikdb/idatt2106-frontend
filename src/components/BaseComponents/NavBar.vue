@@ -36,6 +36,30 @@
               <img src="@/assets/icons/storefront.svg">Butikk
             </router-link>
           </li>
+          <li class="nav-item dropdown">
+                        <a data-mdb-dropdown-init class=" nav-link dropdown-toggle hidden-arrow notification" href="#" id="navbarDropdownMenuLink"
+                           role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          <img src="/src/assets/icons/bell-white.svg">
+                          <span v-if="notificationListRef.length > 0" class="badge rounded-pill badge-notification bg-danger">{{ notificationListRef.length }}</span>
+                        </a>
+                        <ul v-if="notificationListRef.length > 0" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                          <li v-for="(item, index) in notificationListRef" :key="index" >
+                            <router-link :to="notificationPathMapper[String(item.notificationType)]"
+                                         class="d-flex align-items-center"
+                                         @click="readNotification(item)">
+                              <div class="flex-shrink-0">
+                                <img :src="notificationImageMapper[String(item.notificationType)]" alt="Varslingsikon"          class="notification-icon">
+                              </div>
+                              <div class="flex-grow-1 ms-3">
+                                <div class="not-item dropdown-item">{{item.message}}</div>
+                              </div>
+                            </router-link>
+                          </li>
+                        </ul>
+                        <ul v-else class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                          <li>Ingen varslinger</li>
+                        </ul>
+                    </li>
           <li v-if="userStore.isLoggedIn" class="nav-item dropdown">
 
 
@@ -134,6 +158,8 @@
 import { useRouter, useRoute } from "vue-router";
 import { useUserInfoStore } from '@/stores/UserStore';
 import {onMounted, ref} from "vue";
+import { type NotificationDTO, NotificationService } from '@/api'
+import { afterWrite } from '@popperjs/core'
 
 
 
@@ -150,21 +176,11 @@ if (useUserInfoStore().profileImage !== 0) {
     profileImage = 'src/assets/userprofile.png';
 }
 
-//Hashmap that contains the path to the Badges, The Friend, The dashboard etc.
-//The key value pair is the message of the notification and the path of the route
-let notifMap = ref (new Map<number, any[]>);
-
-let notifId = ref(0);
 
 let path = ref('#');
 
-let counter = ref(0)
+let notificationListRef = ref<NotificationDTO[]>([]);
 
-
-/* id: 0 -> /roadmap
-   id: 1 -> /profile
-   id: 2 -> /friend
- */
 
  function isAnyActivePage() {
   const activeRoutes = ['/roadmap', '/leaderboard', '/news', '/shop']; // Add other pages here
@@ -178,20 +194,36 @@ function toggleDropdown(event: any) {
   }
 }
 
-function getNotification(){
-  //axios call
-  let response: any = ref( ['1', 'You have recived a award for getting 200 points'])
-  let response2: any = ref( ['2', 'You have recived a friend request from Jens Aanestad'])
-  let response3: any = ref( ['3', 'You have lost your streak. Come back to try again'])
-  notifMap.value.set(notifId.value,response.value)
-  notifId.value++
-  notifMap.value.set(notifId.value,response2.value)
-  notifId.value++
-  notifMap.value.set(notifId.value,response3.value)
-  notifId.value++
 
-  counter.value = notifMap.value.size
+const notificationImageMapper: any = {
+  "FRIEND_REQUEST": "/src/assets/userprofile.png",
+  "BADGE": "/src/assets/icons/medal.png",
+  "COMPLETED_GOAL": "/src/assets/icons/piggybank.svg"
 }
+
+const notificationPathMapper: any = {
+  "FRIEND_REQUEST": "/friends",
+  "BADGE": "/profile",
+  "COMPLETED_GOAL": "/roadmap"
+}
+const getNotifications = async () => {
+  try {
+    notificationListRef.value = await NotificationService.getUnreadNotificationByUser()
+  } catch (error) {
+    notificationListRef.value = []
+  }
+}
+
+const readNotification = async (notification: NotificationDTO) => {
+  try {
+    notification.unread = false;
+    await NotificationService.updateNotification({requestBody: notification});
+    notificationListRef.value = await NotificationService.getUnreadNotificationByUser()
+  } catch (error) {
+    notificationListRef.value = [];
+  }
+}
+
 function toBadges(){
 
 }
@@ -264,7 +296,7 @@ function toLogout() {
     router.push('login')
 }
 onMounted(() => {
-  getNotification()
+  getNotifications()
 })
 
 </script>

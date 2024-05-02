@@ -79,8 +79,8 @@
           }
         ],
         "responses": {
-          "404": {
-            "description": "Friend request not found",
+          "200": {
+            "description": "Friend request successfully accepted",
             "content": {
               "*/*": {
                 "schema": {
@@ -89,8 +89,8 @@
               }
             }
           },
-          "200": {
-            "description": "Friend request successfully accepted",
+          "404": {
+            "description": "Friend request not found",
             "content": {
               "*/*": {
                 "schema": {
@@ -120,8 +120,8 @@
           }
         ],
         "responses": {
-          "404": {
-            "description": "Friend or friend request not found",
+          "200": {
+            "description": "Friend successfully deleted or friend request cancelled",
             "content": {
               "*/*": {
                 "schema": {
@@ -130,8 +130,8 @@
               }
             }
           },
-          "200": {
-            "description": "Friend successfully deleted or friend request cancelled",
+          "404": {
+            "description": "Friend or friend request not found",
             "content": {
               "*/*": {
                 "schema": {
@@ -162,8 +162,8 @@
           "required": true
         },
         "responses": {
-          "404": {
-            "description": "Bank profile id does not exist",
+          "200": {
+            "description": "No accounts associated with a bank user",
             "content": {
               "*/*": {
                 "schema": {
@@ -172,8 +172,8 @@
               }
             }
           },
-          "200": {
-            "description": "No accounts associated with a bank user",
+          "404": {
+            "description": "Bank profile id does not exist",
             "content": {
               "*/*": {
                 "schema": {
@@ -204,8 +204,8 @@
           "required": true
         },
         "responses": {
-          "400": {
-            "description": "Could not create profile",
+          "200": {
+            "description": "Successfully created a bank profile",
             "content": {
               "*/*": {
                 "schema": {
@@ -214,8 +214,8 @@
               }
             }
           },
-          "200": {
-            "description": "Successfully created a bank profile",
+          "400": {
+            "description": "Could not create profile",
             "content": {
               "*/*": {
                 "schema": {
@@ -246,8 +246,8 @@
           "required": true
         },
         "responses": {
-          "404": {
-            "description": "Provided bank profile id could not be found",
+          "200": {
+            "description": "Successfully created account",
             "content": {
               "*/*": {
                 "schema": {
@@ -256,8 +256,8 @@
               }
             }
           },
-          "200": {
-            "description": "Successfully created account",
+          "404": {
+            "description": "Provided bank profile id could not be found",
             "content": {
               "*/*": {
                 "schema": {
@@ -339,11 +339,11 @@
           "required": true
         },
         "responses": {
-          "403": {
-            "description": "Invalid token"
-          },
           "204": {
             "description": "Password was reset successfully"
+          },
+          "403": {
+            "description": "Invalid token"
           }
         },
         "security": []
@@ -368,8 +368,8 @@
           "required": true
         },
         "responses": {
-          "500": {
-            "description": "User is not found",
+          "200": {
+            "description": "Successfully updated notification",
             "content": {
               "*/*": {
                 "schema": {
@@ -378,8 +378,8 @@
               }
             }
           },
-          "200": {
-            "description": "Successfully updated notification",
+          "500": {
+            "description": "User is not found",
             "content": {
               "*/*": {
                 "schema": {
@@ -411,6 +411,12 @@
           }
         ],
         "responses": {
+          "201": {
+            "description": "Item purchased and added to inventory successfully",
+            "content": {
+              "application/json": {}
+            }
+          },
           "403": {
             "description": "Insufficient points to purchase the item",
             "content": {
@@ -418,14 +424,6 @@
                 "schema": {
                   "type": "string"
                 }
-              }
-            }
-          },
-          "201": {
-            "description": "Item purchased and added to inventory successfully",
-            "content": {
-              "application/json": {
-
               }
             }
           }
@@ -547,6 +545,9 @@
           "required": true
         },
         "responses": {
+          "200": {
+            "description": "Successfully updated the challenge"
+          },
           "401": {
             "description": "Day is already completed or day outside of range",
             "content": {
@@ -556,9 +557,6 @@
                 }
               }
             }
-          },
-          "200": {
-            "description": "Successfully updated the challenge"
           }
         }
       }
@@ -594,7 +592,7 @@
           "Friend"
         ],
         "summary": "Send a friend request",
-        "description": "Sends a new friend request to another user.",
+        "description": "Sends a new friend request to another user. A notification is sent to this user",
         "operationId": "addFriendRequest",
         "parameters": [
           {
@@ -644,8 +642,8 @@
           "required": true
         },
         "responses": {
-          "500": {
-            "description": "Budget is not found",
+          "200": {
+            "description": "Successfully updated budget",
             "content": {
               "application/json": {
                 "schema": {
@@ -654,8 +652,8 @@
               }
             }
           },
-          "200": {
-            "description": "Successfully updated budget",
+          "500": {
+            "description": "Budget is not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -697,8 +695,8 @@
           "required": true
         },
         "responses": {
-          "500": {
-            "description": "Error updating expense",
+          "200": {
+            "description": "Successfully updated budget",
             "content": {
               "application/json": {
                 "schema": {
@@ -707,8 +705,8 @@
               }
             }
           },
-          "200": {
-            "description": "Successfully updated budget",
+          "500": {
+            "description": "Error updating expense",
             "content": {
               "application/json": {
                 "schema": {
@@ -771,22 +769,22 @@
           }
         ],
         "responses": {
-          "409": {
-            "description": "Email already exists",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExceptionResponse"
-                }
-              }
-            }
-          },
           "200": {
             "description": "Email is valid",
             "content": {
               "*/*": {
                 "schema": {
                   "type": "object"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Email already exists",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResponse"
                 }
               }
             }
@@ -814,22 +812,22 @@
           "required": true
         },
         "responses": {
-          "409": {
-            "description": "Email already exists",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExceptionResponse"
-                }
-              }
-            }
-          },
           "201": {
             "description": "Successfully signed up",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/AuthenticationResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Email already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResponse"
                 }
               }
             }
@@ -1112,8 +1110,8 @@
           }
         ],
         "responses": {
-          "404": {
-            "description": "Bank profile id does not exist",
+          "200": {
+            "description": "No accounts associated with a bank user",
             "content": {
               "*/*": {
                 "schema": {
@@ -1125,8 +1123,8 @@
               }
             }
           },
-          "200": {
-            "description": "No accounts associated with a bank user",
+          "404": {
+            "description": "Bank profile id does not exist",
             "content": {
               "*/*": {
                 "schema": {
@@ -1741,8 +1739,8 @@
           }
         ],
         "responses": {
-          "500": {
-            "description": "Budget is not found",
+          "200": {
+            "description": "Successfully got budget",
             "content": {
               "application/json": {
                 "schema": {
@@ -1751,8 +1749,8 @@
               }
             }
           },
-          "200": {
-            "description": "Successfully got budget",
+          "500": {
+            "description": "Budget is not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -1863,8 +1861,8 @@
           }
         ],
         "responses": {
-          "500": {
-            "description": "Budget is not found",
+          "200": {
+            "description": "Successfully deleted budget",
             "content": {
               "application/json": {
                 "schema": {
@@ -1873,8 +1871,8 @@
               }
             }
           },
-          "200": {
-            "description": "Successfully deleted budget",
+          "500": {
+            "description": "Budget is not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -1974,8 +1972,8 @@
           }
         ],
         "responses": {
-          "500": {
-            "description": "Badge is not found",
+          "200": {
+            "description": "Successfully got budget",
             "content": {
               "application/json": {
                 "schema": {
@@ -1984,8 +1982,8 @@
               }
             }
           },
-          "200": {
-            "description": "Successfully got budget",
+          "500": {
+            "description": "Badge is not found",
             "content": {
               "application/json": {
                 "schema": {

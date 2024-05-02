@@ -79,9 +79,7 @@ export class GoalService {
         });
     }
     /**
-     * Update a challenge
-     * Update a challenge day as completed
-     * @returns any Successfully updated the challenge
+     * @returns GoalDTO OK
      * @throws ApiError
      */
     public static getGoal({
