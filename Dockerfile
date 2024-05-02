@@ -9,8 +9,5 @@ RUN npm run build
 # Step 2: Setup the server with Nginx
 FROM nginx:stable-alpine as production-stage
 COPY --from=build-stage /app/dist /usr/share/nginx/html
-COPY web/nginx.conf /etc/nginx/nginx.conf
-COPY web/nginx-selfsigned.crt /etc/ssl/certs/nginx-selfsigned.crt
-COPY web/nginx-selfsigned.key /etc/ssl/private/nginx-selfsigned.key
 
 CMD ["nginx", "-g", "daemon off;"]
