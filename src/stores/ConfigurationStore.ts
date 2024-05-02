@@ -9,7 +9,7 @@ export const useConfigurationStore = defineStore('ConfigurationStore', {
   }),
   actions: {
     setSpendingAccount(newValue: number) {
-      this.spendingAccount = newValue
+      this.spendingAccount = newValue;
     },
     setSavingsAccount(newValue: number) {
       this.savingsAccount = newValue

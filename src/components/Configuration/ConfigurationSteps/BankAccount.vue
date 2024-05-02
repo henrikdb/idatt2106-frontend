@@ -8,8 +8,8 @@ import { useConfigurationStore } from '@/stores/ConfigurationStore'
 const router = useRouter();
 
 const formRef = ref();
-const spendingAccount = ref<number>();
-const savingsAccount = ref<number>();
+const spendingAccount = ref<string>('');
+const savingsAccount = ref<string>('');
 let errorMsg = ref('');
 
 // Updates progress bar in the parent Configuration component.
@@ -27,8 +27,8 @@ const handleSubmit = () => {
   formRef.value.classList.add("was-validated")
   const form = formRef.value;
   if (form.checkValidity()) {
-    useConfigurationStore().setSpendingAccount(spendingAccount.value)
-    useConfigurationStore().setSavingsAccount(savingsAccount.value)
+    useConfigurationStore().setSpendingAccount(Number(spendingAccount.value))
+    useConfigurationStore().setSavingsAccount(Number(savingsAccount.value))
     router.push("/commitment")
   }
 }
