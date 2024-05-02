@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "SpareSti API",
-    "description": "The SpareSti API",
+    "title": "Sparesti API",
+    "description": "The Sparesti API",
     "version": "3.0"
   },
   "servers": [
@@ -79,8 +79,8 @@
           }
         ],
         "responses": {
-          "404": {
-            "description": "Friend request not found",
+          "200": {
+            "description": "Friend request successfully accepted",
             "content": {
               "*/*": {
                 "schema": {
@@ -89,8 +89,8 @@
               }
             }
           },
-          "200": {
-            "description": "Friend request successfully accepted",
+          "404": {
+            "description": "Friend request not found",
             "content": {
               "*/*": {
                 "schema": {
@@ -120,8 +120,8 @@
           }
         ],
         "responses": {
-          "404": {
-            "description": "Friend or friend request not found",
+          "200": {
+            "description": "Friend successfully deleted or friend request cancelled",
             "content": {
               "*/*": {
                 "schema": {
@@ -130,8 +130,8 @@
               }
             }
           },
-          "200": {
-            "description": "Friend successfully deleted or friend request cancelled",
+          "404": {
+            "description": "Friend or friend request not found",
             "content": {
               "*/*": {
                 "schema": {
@@ -162,8 +162,8 @@
           "required": true
         },
         "responses": {
-          "404": {
-            "description": "Bank profile id does not exist",
+          "200": {
+            "description": "No accounts associated with a bank user",
             "content": {
               "*/*": {
                 "schema": {
@@ -172,8 +172,8 @@
               }
             }
           },
-          "200": {
-            "description": "No accounts associated with a bank user",
+          "404": {
+            "description": "Bank profile id does not exist",
             "content": {
               "*/*": {
                 "schema": {
@@ -204,8 +204,8 @@
           "required": true
         },
         "responses": {
-          "400": {
-            "description": "Could not create profile",
+          "200": {
+            "description": "Successfully created a bank profile",
             "content": {
               "*/*": {
                 "schema": {
@@ -214,8 +214,8 @@
               }
             }
           },
-          "200": {
-            "description": "Successfully created a bank profile",
+          "400": {
+            "description": "Could not create profile",
             "content": {
               "*/*": {
                 "schema": {
@@ -246,8 +246,8 @@
           "required": true
         },
         "responses": {
-          "404": {
-            "description": "Provided bank profile id could not be found",
+          "200": {
+            "description": "Successfully created account",
             "content": {
               "*/*": {
                 "schema": {
@@ -256,8 +256,8 @@
               }
             }
           },
-          "200": {
-            "description": "Successfully created account",
+          "404": {
+            "description": "Provided bank profile id could not be found",
             "content": {
               "*/*": {
                 "schema": {
@@ -339,14 +339,56 @@
           "required": true
         },
         "responses": {
-          "403": {
-            "description": "Invalid token"
-          },
           "204": {
             "description": "Password was reset successfully"
+          },
+          "403": {
+            "description": "Invalid token"
           }
         },
         "security": []
+      }
+    },
+    "/api/notification/update": {
+      "post": {
+        "tags": [
+          "Notification"
+        ],
+        "summary": "Updates a notification",
+        "description": "Updates a notification based on the request",
+        "operationId": "updateNotification",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotificationDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated notification",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "User is not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/item/{itemId}": {
@@ -369,6 +411,12 @@
           }
         ],
         "responses": {
+          "201": {
+            "description": "Item purchased and added to inventory successfully",
+            "content": {
+              "application/json": {}
+            }
+          },
           "403": {
             "description": "Insufficient points to purchase the item",
             "content": {
@@ -376,14 +424,6 @@
                 "schema": {
                   "type": "string"
                 }
-              }
-            }
-          },
-          "201": {
-            "description": "Item purchased and added to inventory successfully",
-            "content": {
-              "application/json": {
-
               }
             }
           }
@@ -505,6 +545,9 @@
           "required": true
         },
         "responses": {
+          "200": {
+            "description": "Successfully updated the challenge"
+          },
           "401": {
             "description": "Day is already completed or day outside of range",
             "content": {
@@ -514,9 +557,6 @@
                 }
               }
             }
-          },
-          "200": {
-            "description": "Successfully updated the challenge"
           }
         }
       }
@@ -552,7 +592,7 @@
           "Friend"
         ],
         "summary": "Send a friend request",
-        "description": "Sends a new friend request to another user.",
+        "description": "Sends a new friend request to another user. A notification is sent to this user",
         "operationId": "addFriendRequest",
         "parameters": [
           {
@@ -575,7 +615,7 @@
     "/api/budget/update/{budgetId}": {
       "post": {
         "tags": [
-          "User"
+          "Budget"
         ],
         "summary": "Updates a budget",
         "description": "Updates a budget based on the budget request",
@@ -602,8 +642,8 @@
           "required": true
         },
         "responses": {
-          "500": {
-            "description": "Budget is not found",
+          "200": {
+            "description": "Successfully updated budget",
             "content": {
               "application/json": {
                 "schema": {
@@ -612,8 +652,8 @@
               }
             }
           },
-          "200": {
-            "description": "Successfully updated budget",
+          "500": {
+            "description": "Budget is not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -628,7 +668,7 @@
     "/api/budget/update/expense/{budgetId}": {
       "post": {
         "tags": [
-          "User"
+          "Budget"
         ],
         "summary": "Created/Updates an expense",
         "description": "Creates/Updates a budget based on the budget request",
@@ -655,8 +695,8 @@
           "required": true
         },
         "responses": {
-          "500": {
-            "description": "Error updating expense",
+          "200": {
+            "description": "Successfully updated budget",
             "content": {
               "application/json": {
                 "schema": {
@@ -665,8 +705,8 @@
               }
             }
           },
-          "200": {
-            "description": "Successfully updated budget",
+          "500": {
+            "description": "Error updating expense",
             "content": {
               "application/json": {
                 "schema": {
@@ -681,7 +721,7 @@
     "/api/budget/create": {
       "post": {
         "tags": [
-          "User"
+          "Budget"
         ],
         "summary": "Create a new budget",
         "description": "Create a new budget with based on the budget request",
@@ -729,22 +769,22 @@
           }
         ],
         "responses": {
-          "409": {
-            "description": "Email already exists",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExceptionResponse"
-                }
-              }
-            }
-          },
           "200": {
             "description": "Email is valid",
             "content": {
               "*/*": {
                 "schema": {
                   "type": "object"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Email already exists",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResponse"
                 }
               }
             }
@@ -772,22 +812,22 @@
           "required": true
         },
         "responses": {
-          "409": {
-            "description": "Email already exists",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExceptionResponse"
-                }
-              }
-            }
-          },
           "201": {
             "description": "Successfully signed up",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/AuthenticationResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Email already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResponse"
                 }
               }
             }
@@ -841,6 +881,39 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ExceptionResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/auth/bank-id": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Authenticate a BankID request",
+        "description": "Authenticate a BankID request",
+        "operationId": "bankIdAuthentication",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BankIDRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "If the authentication is successful",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthenticationResponse"
                 }
               }
             }
@@ -945,6 +1018,29 @@
         }
       }
     },
+    "/redirect": {
+      "get": {
+        "tags": [
+          "Redirect"
+        ],
+        "operationId": "consumeCallback",
+        "parameters": [
+          {
+            "name": "state",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/bank/v1/account/accounts/ssn/{ssn}": {
       "get": {
         "tags": [
@@ -1014,8 +1110,8 @@
           }
         ],
         "responses": {
-          "404": {
-            "description": "Bank profile id does not exist",
+          "200": {
+            "description": "No accounts associated with a bank user",
             "content": {
               "*/*": {
                 "schema": {
@@ -1027,8 +1123,8 @@
               }
             }
           },
-          "200": {
-            "description": "No accounts associated with a bank user",
+          "404": {
+            "description": "Bank profile id does not exist",
             "content": {
               "*/*": {
                 "schema": {
@@ -1210,6 +1306,99 @@
         }
       }
     },
+    "/api/notification": {
+      "get": {
+        "tags": [
+          "Notification"
+        ],
+        "summary": "Get the list of notifications",
+        "description": "Get all notifications to a user",
+        "operationId": "getNotificationByUser",
+        "responses": {
+          "200": {
+            "description": "Successfully got notifications",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NotificationDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/notification/{notificationId}": {
+      "get": {
+        "tags": [
+          "Notification"
+        ],
+        "summary": "Get the notification",
+        "description": "Get notification by its id ",
+        "operationId": "getNotification",
+        "parameters": [
+          {
+            "name": "notificationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully got notification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificationDTO"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Notification is not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificationDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/notification/unread": {
+      "get": {
+        "tags": [
+          "Notification"
+        ],
+        "summary": "Get the list of unread notifications",
+        "description": "Get all unread notifications to a user",
+        "operationId": "getUnreadNotificationByUser",
+        "responses": {
+          "200": {
+            "description": "Successfully got notifications",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NotificationDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/leaderboard": {
       "get": {
         "tags": [
@@ -1251,6 +1440,29 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/LeaderboardDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/leaderboard/total-points": {
+      "get": {
+        "tags": [
+          "Leaderboard"
+        ],
+        "summary": "Get sum of total points globally",
+        "description": "Get the sum of the total points of all users globally",
+        "operationId": "getTotalPoints",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved total points",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
                 }
               }
             }
@@ -1401,6 +1613,37 @@
         "security": []
       }
     },
+    "/api/goals/{id}": {
+      "get": {
+        "tags": [
+          "Goal"
+        ],
+        "operationId": "getGoal",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GoalDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/friends": {
       "get": {
         "tags": [
@@ -1454,7 +1697,7 @@
     "/api/budget": {
       "get": {
         "tags": [
-          "User"
+          "Budget"
         ],
         "summary": "Get the list of budgets",
         "description": "Get all budgets related to the authenticated user",
@@ -1479,7 +1722,7 @@
     "/api/budget/{budgetId}": {
       "get": {
         "tags": [
-          "User"
+          "Budget"
         ],
         "summary": "Get the budget",
         "description": "Get budget by its id ",
@@ -1496,8 +1739,8 @@
           }
         ],
         "responses": {
-          "500": {
-            "description": "Budget is not found",
+          "200": {
+            "description": "Successfully got budget",
             "content": {
               "application/json": {
                 "schema": {
@@ -1506,8 +1749,8 @@
               }
             }
           },
-          "200": {
-            "description": "Successfully got budget",
+          "500": {
+            "description": "Budget is not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -1522,7 +1765,7 @@
     "/api/budget/expenses/{budgetId}": {
       "get": {
         "tags": [
-          "User"
+          "Budget"
         ],
         "summary": "Get the list of budgets",
         "description": "Get all budgets related to the authenticated user",
@@ -1558,7 +1801,7 @@
     "/api/budget/expense/{expenseId}": {
       "get": {
         "tags": [
-          "User"
+          "Budget"
         ],
         "summary": "Get the expense",
         "description": "Get expense by its id ",
@@ -1601,7 +1844,7 @@
     "/api/budget/delete/{budgetId}": {
       "get": {
         "tags": [
-          "User"
+          "Budget"
         ],
         "summary": "Deletes a budget",
         "description": "Deletes a budget based on provided budget id",
@@ -1618,8 +1861,8 @@
           }
         ],
         "responses": {
-          "500": {
-            "description": "Budget is not found",
+          "200": {
+            "description": "Successfully deleted budget",
             "content": {
               "application/json": {
                 "schema": {
@@ -1628,8 +1871,8 @@
               }
             }
           },
-          "200": {
-            "description": "Successfully deleted budget",
+          "500": {
+            "description": "Budget is not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -1644,7 +1887,7 @@
     "/api/budget/delete/expense/{expenseId}": {
       "get": {
         "tags": [
-          "User"
+          "Budget"
         ],
         "summary": "Deletes an expense",
         "description": "Deletes an expense based on provided expense id",
@@ -1677,6 +1920,146 @@
               "application/json": {
                 "schema": {
                   "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/badge": {
+      "get": {
+        "tags": [
+          "Badge"
+        ],
+        "summary": "Get the list of badges",
+        "description": "Get all badges stored in the database",
+        "operationId": "getAllBadges",
+        "responses": {
+          "200": {
+            "description": "Successfully got badges",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BadgeDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/badge/{badgeId}": {
+      "get": {
+        "tags": [
+          "Badge"
+        ],
+        "summary": "Get the budget",
+        "description": "Get budget by its id ",
+        "operationId": "getBadge",
+        "parameters": [
+          {
+            "name": "badgeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully got budget",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadgeDTO"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Badge is not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadgeDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/badge/update": {
+      "get": {
+        "tags": [
+          "Badge"
+        ],
+        "summary": "Updates unlocked badges",
+        "description": "Checks if a user has met the criteria for unlocking badges",
+        "operationId": "updateUnlockedBadges",
+        "responses": {
+          "200": {
+            "description": "Successfully updated badges",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/badge/unlocked": {
+      "get": {
+        "tags": [
+          "Badge"
+        ],
+        "summary": "Get the list of badges",
+        "description": "Get all badges unlocked by the user",
+        "operationId": "getBadgesUnlockedByUser",
+        "responses": {
+          "200": {
+            "description": "Successfully got badges",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BadgeDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/badge/locked": {
+      "get": {
+        "tags": [
+          "Badge"
+        ],
+        "summary": "Get the list of badges",
+        "description": "Get all badges not unlocked by the user",
+        "operationId": "getBadgesNotUnlockedByUser",
+        "responses": {
+          "200": {
+            "description": "Successfully got badges",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BadgeDTO"
+                  }
                 }
               }
             }
@@ -1804,6 +2187,33 @@
           },
           "password": {
             "type": "string"
+          }
+        }
+      },
+      "NotificationDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "message": {
+            "type": "string"
+          },
+          "unread": {
+            "type": "boolean"
+          },
+          "notificationType": {
+            "type": "string",
+            "enum": [
+              "BADGE",
+              "FRIEND_REQUEST",
+              "COMPLETED_GOAL"
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
@@ -2124,6 +2534,17 @@
           }
         }
       },
+      "BankIDRequest": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          }
+        }
+      },
       "UserUpdateDTO": {
         "type": "object",
         "properties": {
@@ -2323,6 +2744,26 @@
           },
           "amount": {
             "type": "string"
+          }
+        }
+      },
+      "BadgeDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "badgeName": {
+            "type": "string"
+          },
+          "criteria": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "imageId": {
+            "type": "integer",
+            "format": "int64"
           }
         }
       }
