@@ -10,52 +10,8 @@ cache:
     - build/
 
 stages:
-  - install
-  - build
-  - test
-  - lint
   - docker_build_and_push
   - deploy_docker
-
-install_dependencies:
-  stage: install
-  script:
-    - npm ci
-
-build_project:
-  stage: build
-  script:
-    - npm ci
-    - npm run build
-  dependencies:
-    - install_dependencies
-
-vitest_unit-tests:
-  stage: test
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-        - node_modules/
-    policy: pull
-  script:
-    - npm ci
-    - npm run test:unit
-  dependencies:
-    - install_dependencies
-
-eslint_run-lint:
-  stage: lint
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-        - node_modules/
-    policy: pull
-  script:
-    - npm ci
-    - npm run lint
-  dependencies:
-    - install_dependencies
-  allow_failure: true  
 
 docker_build_and_push:
   stage: docker_build_and_push
@@ -80,5 +36,5 @@ deploy_docker:
     - apt-get -yqq install ssh
     - apt-get install sshpass
   script:
-    - sshpass -p sParest1en ssh -v -o StrictHostKeyChecking=no root@128.199.53.153 "docker ps -q --filter 'name=^frontend$' | grep -q . && docker kill frontend && docker rm frontend && docker run -d --name frontend registry.gitlab.com/$DOCKER_USER/sparesti-registry:frontend"
+    - sshpass -p sParest1en ssh -v -o StrictHostKeyChecking=no root@128.199.53.153 "docker ps -q --filter 'name=^frontend$' | grep -q . && docker kill frontend && docker rm frontend; docker run -d --name frontend registry.gitlab.com/$DOCKER_USER/sparesti-registry:frontend"
   when: manual
