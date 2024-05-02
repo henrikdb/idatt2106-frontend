@@ -76,8 +76,6 @@ docker_build_and_push:
     - docker build -t registry.gitlab.com/$DOCKER_USER/sparesti-registry:frontend .
     - docker push registry.gitlab.com/$DOCKER_USER/sparesti-registry:frontend
   when: manual
-  only:
-    - master
 
 deploy_docker:
   stage: deploy_docker
@@ -91,5 +89,3 @@ deploy_docker:
   script:
     - sshpass -p sParest1en ssh -v -o StrictHostKeyChecking=no root@128.199.53.153 "docker ps -q --filter 'name=^frontend$' | grep -q . && docker kill frontend && docker rm frontend; docker run -d --name frontend registry.gitlab.com/$DOCKER_USER/sparesti-registry:frontend"
   when: manual
-  only:
-    - master
