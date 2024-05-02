@@ -5,7 +5,3 @@ import SignUp from '@/components/SignUp/SignUp.vue'
 <template>
   <SignUp/>
 </template>
-
-<style scoped>
-
-</style>
