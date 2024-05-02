@@ -11,6 +11,8 @@ stages:
   - build
   - test
   - lint
+  - docker_build_and_push
+  - deploy_docker
 
 install_dependencies:
   stage: install
@@ -62,9 +64,32 @@ eslint_run-lint:
     - install_dependencies
   allow_failure: true  
 
+docker_build_and_push:
+  stage: docker_build_and_push
+  image: docker:latest
+  services:
+    - docker:dind
+  tags:
+    - dind
+  script:
+    - docker login -u $DOCKER_USER -p $DOCKER_PAT registry.gitlab.com
+    - docker build -t registry.gitlab.com/$DOCKER_USER/sparesti-registry:frontend .
+    - docker push registry.gitlab.com/$DOCKER_USER/sparesti-registry:frontend
+  when: manual
+  only:
+    - master
 
-
-    
-
-
-    
+deploy_docker:
+  stage: deploy
+  image: ubuntu:latest
+  dependencies:
+    - docker_build_and_push
+  before_script:
+    - apt-get -yq update
+    - apt-get -yqq install ssh
+    - apt-get install sshpass
+  script:
+    - sshpass -p sParest1en ssh -v -o StrictHostKeyChecking=no root@128.199.53.153 "docker ps -q --filter 'name=^frontend$' | grep -q . && docker kill frontend && docker rm frontend; docker run -d --name frontend registry.gitlab.com/$DOCKER_USER/sparesti-registry:frontend"
+  when: manual
+  only:
+    - master
