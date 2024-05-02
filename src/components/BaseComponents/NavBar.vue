@@ -38,7 +38,9 @@
                         </a>
                         <ul v-if="notificationListRef.length > 0" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                           <li v-for="(item, index) in notificationListRef" :key="index" >
-                            <router-link :to="notificationPathMapper[String(item.notificationType)]" class="d-flex align-items-center">
+                            <router-link :to="notificationPathMapper[String(item.notificationType)]"
+                                         class="d-flex align-items-center"
+                                         @click="readNotification(item)">
                               <div class="flex-shrink-0">
                                 <img :src="notificationImageMapper[String(item.notificationType)]" alt="Varslingsikon" class="notification-icon">
                               </div>
@@ -129,8 +131,8 @@ const notificationImageMapper: any = {
 }
 
 const notificationPathMapper: any = {
-  "FRIEND_REQUEST": "/profile",
-  "BADGE": "/friends",
+  "FRIEND_REQUEST": "/friends",
+  "BADGE": "/profile",
   "COMPLETED_GOAL": "/roadmap"
 }
 const getNotifications = async () => {
@@ -140,6 +142,17 @@ const getNotifications = async () => {
     notificationListRef.value = []
   }
 }
+
+const readNotification = async (notification: NotificationDTO) => {
+  try {
+    notification.unread = false;
+    await NotificationService.updateNotification({requestBody: notification});
+    notificationListRef.value = await NotificationService.getUnreadNotificationByUser()
+  } catch (error) {
+    notificationListRef.value = [];
+  }
+}
+
 function toBadges(){
 
 }
