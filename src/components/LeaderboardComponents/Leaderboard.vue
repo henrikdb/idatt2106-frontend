@@ -1,11 +1,12 @@
 <template>
   <div id="leaderboard">
-    
+
     <table>
       <tbody data-cy="top-leaderboard-table">
-        <tr data-cy="top-leaderboard-tablerow" v-for="(entry, index) in leaderboard"
-            :key="entry.user?.id" :class="{ 'is-user-5':
-        entry.user?.id === userStore.id }">
+        <tr data-cy="top-leaderboard-tablerow" v-for="(entry, index) in leaderboard" :key="entry.user?.id" :class="{
+          'is-user-5':
+            entry.user?.id === userStore.id
+        }">
           <td class="number">{{ entry.rank }}</td>
           <td class="name" @click="navigateToUserProfile(entry.user?.id ?? 0)">{{ entry.user?.firstName }}</td>
           <td class="points" v-if="index === 0">
@@ -15,16 +16,9 @@
         </tr>
       </tbody>
       <tbody id="line">`</tbody>
-<<<<<<< HEAD
-      <tbody v-if="!userInLeaderboard">
-        <tr v-for="(entry, index) in leaderboardExtra" :key="entry.user?.id" :class="{ 'is-user-5': entry.user?.id === userStore.id }">
-=======
       <tbody data-cy="surrounding-user-leaderboard-table" v-if="!userInLeaderboard">
-        <tr></tr>
-        <tr data-cy="surrounding-user-leaderboard-tablerow" v-for="(entry, index) in
-        leaderboardExtra" :key="entry.user?.id" :class="{
-          'is-user-5': entry.user?.id === userStore.id }">
->>>>>>> e50d5c050dfc8dc2ff7931c3a05f22c024a70e31
+        <tr data-cy="surrounding-user-leaderboard-tablerow" v-for="(entry, index) in leaderboardExtra" :key="entry.user?.id"
+          :class="{ 'is-user-5': entry.user?.id === userStore.id }">
           <td class="number">{{ entry.rank }}</td>
           <td class="name" @click="navigateToUserProfile(entry.user?.id ?? 0)">{{ entry.user?.firstName }}</td>
           <td class="points">{{ entry.score }}</td>
@@ -66,7 +60,6 @@ const navigateToUserProfile = (id: number) => {
 </script>
 
 <style scoped>
-
 #leaderboard {
   max-width: 80%;
   position: relative;
