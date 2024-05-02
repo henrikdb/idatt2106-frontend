@@ -38,9 +38,9 @@
                         </a>
                         <ul v-if="notificationListRef.length > 0" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                           <li v-for="(item, index) in notificationListRef" :key="index" >
-                            <router-link :to="notificationPathMapper(item.notificationType)" class="d-flex align-items-center">
+                            <router-link :to="notificationPathMapper[String(item.notificationType)]" class="d-flex align-items-center">
                               <div class="flex-shrink-0">
-                                <img :src="notificationImageMapper(item.notificationType)" alt="Varslingsikon" class="notification-icon">
+                                <img :src="notificationImageMapper[String(item.notificationType)]" alt="Varslingsikon" class="notification-icon">
                               </div>
                               <div class="flex-grow-1 ms-3">
                                 <div class="not-item dropdown-item">{{item.message}}</div>
