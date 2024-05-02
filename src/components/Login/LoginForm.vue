@@ -69,7 +69,7 @@ const handleSubmit = async () => {
 
     console.log(response.token)
 
-    await router.push({ name: 'home' });
+    await router.push({ name: 'roadmap' });
   } catch (error: any) {
     errorMsg.value = handleUnknownError(error);
     isSubmitting.value = false;

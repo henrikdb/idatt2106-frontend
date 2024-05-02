@@ -12,6 +12,8 @@ const passwordRef = ref('')
 const formRef = ref()
 let samePasswords = ref(true)
 
+const imageRange = ref([10, 11, 12, 13, 14, 15]);
+
 const iconSrc = ref('../src/assets/userprofile.png');
 const fileInputRef = ref();
 
@@ -58,13 +60,11 @@ async function setupForm() {
   try {
     const response = await UserService.getUser();
     console.log(response.firstName)
-
     firstNameRef.value = response.firstName;
     if (response.lastName != null) {
       surnameRef.value = response.lastName;
     }
-    console.log(response.profileImage)
-    if(response.profileImage != null){
+    if (response.profileImage != null) {
       iconSrc.value = "http://localhost:8080/api/images/" + response.profileImage;
     } else {
       iconSrc.value = "../src/assets/userprofile.png";
@@ -107,31 +107,36 @@ onMounted(() => {
       <div class="user-avatar">
         <input type="file" ref="fileInputRef" @change="handleFileChange" accept=".jpg, .jpeg, .png"
           style="display: none;" />
-        <img :src="iconSrc" alt="Brukeravatar" style="width: 300px">
+        <img :src="iconSrc" alt="Brukeravatar" style="width: 200px; height: 200px;">
         <div class="mt-2">
           <button type="button" class="btn btn-primary" @click="triggerFileUpload"><img
               src="../../assets/icons/download.svg"> Last opp bilde</button>
         </div>
       </div>
       <div class="form-group">
-        <BaseInput data-cy="first-name" :model-value="firstNameRef"
-                   @input-change-event="handleFirstNameInputEvent" id="firstNameInputChange"
-                   input-id="first-name-new" type="text" label="Fornavn" placeholder="Skriv inn ditt fornavn"
-                   invalid-message="Vennligst skriv inn ditt fornavn" />
+        <BaseInput data-cy="first-name" :model-value="firstNameRef" @input-change-event="handleFirstNameInputEvent"
+          id="firstNameInputChange" input-id="first-name-new" type="text" label="Fornavn"
+          placeholder="Skriv inn ditt fornavn" invalid-message="Vennligst skriv inn ditt fornavn" />
       </div>
       <br>
       <div class="form-group">
-        <BaseInput data-cy="last-name" :model-value="surnameRef"
-                   @input-change-event="handleSurnameInputEvent"
-                    id="surnameInput-change"
-                   input-id="surname-new" type="text" label="Etternavn"
-                   placeholder="Skriv inn ditt etternavn"
-                   invalid-message="Vennligst skriv inn ditt etternavn" />
+        <BaseInput data-cy="last-name" :model-value="surnameRef" @input-change-event="handleSurnameInputEvent"
+          id="surnameInput-change" input-id="surname-new" type="text" label="Etternavn"
+          placeholder="Skriv inn ditt etternavn" invalid-message="Vennligst skriv inn ditt etternavn" />
       </div>
       <br>
       <button data-cy="profile-submit-btn" type="submit" class="btn btn-primary">Oppdater
         profil</button>
     </form>
+    <hr>
+    <div>
+      <h6>Stilsett din profil banner</h6>
+      <div class="bannerHolder">
+        <div v-for="x in imageRange" :key="x">
+          <img :src="'http://localhost:8080/api/images/' + x" style="width: 400px; height: 40px; margin: 10px">
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -143,5 +148,12 @@ onMounted(() => {
   -webkit-border-radius: 100px;
   -moz-border-radius: 100px;
   border-radius: 100px;
+}
+
+.bannerHolder {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-top: 20px;
 }
 </style>

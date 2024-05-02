@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import {useRoute} from 'vue-router'
 
 const router = useRouter();
+
+const url = useRoute().path;
 
 const activeLink = ref('/settings/profile');  // Default active link
 
@@ -42,7 +45,7 @@ function toBilling() {
                         <nav class="nav flex-column nav-pills nav-gap-y-1">
 
                             <a @click.prevent="setActive('/settings/profile')" @click="toProfile"
-                                :class="['nav-item nav-link has-icon', { 'nav-link-faded': activeLink !== '/settings/profile', 'active': activeLink === '/settings/profile' }]">
+                                :class="['nav-item nav-link has-icon', { 'nav-link-faded': useRoute().path !== '/settings/profile', 'active': useRoute().path === '/settings/profile' }]">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-user mr-2">
@@ -54,7 +57,7 @@ function toBilling() {
 
 
                             <a @click.prevent="setActive('/settings/account')" @click="toAccount"
-                                :class="['nav-item nav-link has-icon', { 'nav-link-faded': activeLink !== '/settings/account', 'active': activeLink === '/settings/account' }]">
+                                :class="['nav-item nav-link has-icon', { 'nav-link-faded': useRoute().path !== '/settings/account', 'active': useRoute().path === '/settings/account' }]">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-settings mr-2">
@@ -68,7 +71,7 @@ function toBilling() {
 
 
                             <a @click.prevent="setActive('/settings/security')" @click="toSecurity"
-                                :class="['nav-item nav-link has-icon', { 'nav-link-faded': activeLink !== '/settings/security', 'active': activeLink === '/settings/security' }]">
+                                :class="['nav-item nav-link has-icon', { 'nav-link-faded': useRoute().path !== '/settings/security', 'active': useRoute().path === '/settings/security' }]">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-shield mr-2">
@@ -79,7 +82,7 @@ function toBilling() {
 
 
                             <a @click.prevent="setActive('/settings/notification')" @click="toNotification"
-                                :class="['nav-item nav-link has-icon', { 'nav-link-faded': activeLink !== '/settings/notification', 'active': activeLink === '/settings/notification' }]">
+                                :class="['nav-item nav-link has-icon', { 'nav-link-faded': useRoute().path !== '/settings/notification', 'active': useRoute().path === '/settings/notification' }]">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-bell mr-2">
@@ -89,7 +92,7 @@ function toBilling() {
                             </a>
                             <a>
                                 <a @click.prevent="setActive('/settings/bank')" @click="toBilling"
-                                    :class="['nav-item nav-link has-icon', { 'nav-link-faded': activeLink !== '/settings/bank', 'active': activeLink === '/settings/bank' }]">
+                                    :class="['nav-item nav-link has-icon', { 'nav-link-faded': useRoute().path !== '/settings/bank', 'active': useRoute().path === '/settings/bank' }]">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round" class="feather feather-credit-card mr-2">

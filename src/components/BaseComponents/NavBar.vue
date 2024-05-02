@@ -1,36 +1,42 @@
 <template>
-    <nav id="navBar" class="navbar navbar-expand-xl">
-        <div class="container-fluid">
-          <router-link class="navbar-brand" id="home" :to="toSavingGoals()">
-                <img id="logoImg" src="/src/assets/Sparesti-logo.png" alt="Sparesti-logo" width="60">
-                <span id="logo" class="text-white">SpareSti</span>
+  <nav id="navBar" class="navbar navbar-expand-xl">
+    <div class="container-fluid">
+      <router-link class="navbar-brand" id="home" :to="toSavingGoals()">
+        <img id="logoImg" src="/src/assets/Sparesti-logo.png" alt="Sparesti-logo" width="60">
+        <span id="logo" class="text-white">SpareSti</span>
+      </router-link>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+        aria-expanded="false" aria-label="Bytt navigasjon">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 ui-menu">
+          <li class="nav-item">
+            <router-link data-cy="savingGoals" class="nav-link text-white"
+              :to="toSavingGoals()" exact-active-class="active-nav">
+              <img src="@/assets/icons/saving.svg">Sparemål
             </router-link>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Bytt navigasjon">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 ui-menu">
-                    <li class="nav-item">
-                      <router-link data-cy="savingGoals" class="nav-link text-white"
-                                   :to="toSavingGoals()"><img
-                                src="@/assets/icons/saving.svg">Sparemål</router-link>
-                    </li>
-                    <li class="nav-item">
-                      <router-link data-cy="leaderboard" class="nav-link text-white"
-                                   :to="toLeaderboard()"><img
-                                src="@/assets/icons/leaderboard.svg">Ledertavle</router-link>
-                    </li>
-                    <li class="nav-item">
-                      <router-link data-cy="news" class="nav-link text-white" :to="toNews()"><img
-                          src="@/assets/icons/newsletter.svg">Nyheter</router-link>
-                    </li>
-                    <li class="nav-item">
-                      <router-link data-cy="store" class="nav-link text-white" :to="toStore()"><img
-                          src="@/assets/icons/storefront.svg">Butikk</router-link>
-                    </li>
-                    <li class="nav-item dropdown">
+          </li>
+          <li class="nav-item">
+            <router-link data-cy="leaderboard" class="nav-link text-white"
+              :to="toLeaderboard()" exact-active-class="active-nav">
+              <img src="@/assets/icons/leaderboard.svg">Ledertavle
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link data-cy="news" class="nav-link text-white"
+              :to="toNews()" exact-active-class="active-nav">
+              <img src="@/assets/icons/newsletter.svg">Nyheter
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link data-cy="store" class="nav-link text-white"
+              :to="toStore()" exact-active-class="active-nav">
+              <img src="@/assets/icons/storefront.svg">Butikk
+            </router-link>
+          </li>
+          <li class="nav-item dropdown">
                         <a data-mdb-dropdown-init class=" nav-link dropdown-toggle hidden-arrow notification" href="#" id="navbarDropdownMenuLink"
                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
                           <img src="/src/assets/icons/bell-white.svg">
@@ -42,7 +48,7 @@
                                          class="d-flex align-items-center"
                                          @click="readNotification(item)">
                               <div class="flex-shrink-0">
-                                <img :src="notificationImageMapper[String(item.notificationType)]" alt="Varslingsikon" class="notification-icon">
+                                <img :src="notificationImageMapper[String(item.notificationType)]" alt="Varslingsikon"          class="notification-icon">
                               </div>
                               <div class="flex-grow-1 ms-3">
                                 <div class="not-item dropdown-item">{{item.message}}</div>
@@ -54,47 +60,102 @@
                           <li>Ingen varslinger</li>
                         </ul>
                     </li>
-                    <li v-if="userStore.isLoggedIn" class="nav-item dropdown">
-                        <a data-cy="user"
-                           class="nav-link dropdown-toggle username-text text-white "
-                           href="#" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="@/assets/icons/person.svg">{{useUserInfoStore().firstname }}
-                        </a>
-                        <ul class="dropdown-menu dropdown-username-content">
-                            <li><router-link data-cy="profile"
-                              class="dropdown-item dropdown-username-link" :to="toUserProfile()"><img
-                                  src="@/assets/icons/black_person.svg">Min profil</router-link></li>
-                            <li v-if="useUserInfoStore().isPremium"><router-link data-cy="budget"
-                              class="dropdown-item dropdown-username-link" :to="toBudget()"><img
-                              src="@/assets/icons/budget.svg">Budjsett</router-link></li>
-                            <li><router-link data-cy="friends"
-                              class="dropdown-item dropdown-username-link" :to="toFriends()"><img
-                                src="@/assets/icons/black_friends.svg">Venner</router-link></li>
-                            <li><router-link data-cy="settings"
-                              class="dropdown-item dropdown-username-link" :to="toSetting()"><img
-                                src="@/assets/icons/settings.svg">Innstillinger</router-link></li>
-                            <li><router-link data-cy="feedback"
-                              class="dropdown-item dropdown-username-link" :to="toFeedback()"><img
-                                src="@/assets/icons/feedback.svg">Tilbakemelding</router-link></li>
-                            <li><router-link data-cy="admin"
-                              class="dropdown-item dropdown-username-link" :to="toSetting()"><img
-                                src="@/assets/icons/admin.svg">Admin</router-link></li>
-                            <li style="cursor: pointer"><a data-testid="logout" class="dropdown-item dropdown-username-link" ref="#" @click="toLogout()"><img
-                                src="@/assets/icons/logout.svg">Logg ut</a></li>
-                        </ul>
-                    </li>
-                    <li v-else class="nav-item">
-                        <a class="nav-link" style="cursor: pointer;" href="#" @click="toLogout">Logg inn</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+          <li v-if="userStore.isLoggedIn" class="nav-item dropdown">
+
+
+            <a
+  data-cy="user"
+  :class="['nav-link', 'dropdown-toggle', 'username-text', 'text-white', { 'underline-active': !isAnyActivePage() }]"
+  href="#"
+  role="button"
+  data-bs-toggle="dropdown"
+  aria-expanded="false">
+  <img src="@/assets/icons/person.svg">{{ useUserInfoStore().firstname }}
+</a>
+
+            <ul class="dropdown-menu dropdown-username-content">
+
+
+              <li>
+                <router-link data-cy="profile"
+                  class="dropdown-item dropdown-username-link"
+                  :to="toUserProfile()"
+                  exact-active-class="active-link"
+                  @click="toggleDropdown">
+                  <img src="@/assets/icons/black_person.svg">Min profil
+                </router-link>
+              </li>
+              <li v-if="useUserInfoStore().isPremium">
+                <router-link data-cy="budget"
+                  class="dropdown-item dropdown-username-link"
+                  :to="toBudget()"
+                  exact-active-class="active-link"
+                  @click="toggleDropdown">
+                  <img src="@/assets/icons/budget.svg">Budjsett
+                </router-link>
+              </li>
+              <li>
+                <router-link data-cy="friends"
+                  class="dropdown-item dropdown-username-link"
+                  :to="toFriends()"
+                  exact-active-class="active-link"
+                  @click="toggleDropdown">
+                  <img src="@/assets/icons/black_friends.svg">Venner
+                </router-link>
+              </li>
+              <li>
+                <router-link data-cy="settings"
+                  class="dropdown-item dropdown-username-link"
+                  :to="toSetting()"
+                  exact-active-class="active-link"
+                  @click="toggleDropdown">
+                  <img src="@/assets/icons/settings.svg">Innstillinger
+                </router-link>
+              </li>
+              <li>
+                <router-link data-cy="feedback"
+                  class="dropdown-item dropdown-username-link"
+                  :to="toFeedback()"
+                  exact-active-class="active-link"
+                  @click="toggleDropdown">
+                  <img src="@/assets/icons/feedback.svg">Tilbakemelding
+                </router-link>
+              </li>
+              <li>
+                <router-link data-cy="admin"
+                  class="dropdown-item dropdown-username-link"
+                  :to="toSetting()"
+                  exact-active-class="active-link"
+                  @click="toggleDropdown">
+                  <img src="@/assets/icons/admin.svg">Admin
+                </router-link>
+              </li>
+              <li style="cursor: pointer">
+                <a data-testid="logout"
+                   class="dropdown-item dropdown-username-link"
+                   href="#"
+                   @click="toLogout()">
+                  <img src="@/assets/icons/logout.svg">Logg ut
+                </a>
+              </li>
+
+              
+            </ul>
+          </li>
+          <li v-else class="nav-item">
+            <a class="nav-link" style="cursor: pointer;" href="#"
+               @click="toLogout">Logg inn
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 </template>
 
+
 <script setup lang="ts">
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { useUserInfoStore } from '@/stores/UserStore';
 import {onMounted, ref} from "vue";
 import { type NotificationDTO, NotificationService } from '@/api'
@@ -103,6 +164,7 @@ import { afterWrite } from '@popperjs/core'
 
 
 const router = useRouter();
+const route = useRoute();
 
 const userStore: any = useUserInfoStore();
 
@@ -114,15 +176,24 @@ if (useUserInfoStore().profileImage !== 0) {
     profileImage = 'src/assets/userprofile.png';
 }
 
-//Hashmap that contains the path to the Badges, The Friend, The dashboard etc.
-//The key value pair is the message of the notification and the path of the route
-/*
-
- */
 
 let path = ref('#');
 
 let notificationListRef = ref<NotificationDTO[]>([]);
+
+
+ function isAnyActivePage() {
+  const activeRoutes = ['/roadmap', '/leaderboard', '/news', '/shop']; // Add other pages here
+  return activeRoutes.includes(route.path);
+}
+
+function toggleDropdown(event: any) {
+  const dropdownMenu = event.target.closest('.dropdown-menu');
+  if (dropdownMenu) {
+    dropdownMenu.classList.remove('show');
+  }
+}
+
 
 const notificationImageMapper: any = {
   "FRIEND_REQUEST": "/src/assets/userprofile.png",
@@ -245,6 +316,26 @@ onMounted(() => {
     align-items: center;
     padding: 0.1rem 0.3rem;
     font-size: 1.7rem;
+}
+
+.active-nav {
+  border-radius: 0rem;
+  border-bottom: 4px solid #f3f3f3;
+}
+
+.active-link {
+  background-color: #f3f3f6;
+  border-bottom: 3px solid #01476b;
+}
+
+.underline-active {
+  border-bottom: 4px solid white;
+}
+
+.dropdown-item img {
+  height: 35px;
+  width: 35px;
+  margin-right: 5px;
 }
 
 .nav-item:hover {
