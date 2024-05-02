@@ -1,8 +1,9 @@
 <script lang="ts">
 import {CategoryScale, Chart as ChartJS, Legend, LinearScale, LineElement, PointElement, Title, Tooltip} from 'chart.js'
 import {Line} from 'vue-chartjs'
-import type {ChallengeDTO, GoalDTO, MarkChallengeDTO} from "@/api";
+import type {ChallengeDTO, CreateGoalDTO, GoalDTO, MarkChallengeDTO} from "@/api";
 import {GoalService} from '@/api'
+import {useUserInfoStore} from "@/stores/UserStore";
 
 ChartJS.register(
     CategoryScale,
@@ -23,6 +24,8 @@ export default {
     return {
       image: 'https://th.bing.com/th/id/OIG3.NMbdxmKYKVnxYGLOa0Z0?w=1024&h=1024&rs=1&pid=ImgDetMain' as string,
       altImage: 'https://th.bing.com/th/id/OIG4.gVWUC.rwCb8faTNx31yU?w=1024&h=1024&rs=1&pid=ImgDetMain' as string,
+      failedImage: 'https://cdn-icons-png.flaticon.com/512/6659/6659895.png' as string,
+      successImage: 'https://static-00.iconduck.com/assets.00/checkmark-running-icon-1024x1024-aakqv1qi.png' as string,
       title: 'Spain trip' as string,
       bluePanelMaxHeight: 'auto' as string,
       roadmapSelected: true as boolean,
@@ -50,12 +53,14 @@ export default {
       newPrice: 0,
       savedSoFar: 0 as number,
       currentChallengeIndex: 0,
+      feedback: "" as string,
     };
   },
   async mounted() {
     setTimeout(() => {
       this.findCurrentChallenge()
       this.disableAllChecksThatNotCurrent()
+      this.checkIfToAmbitious()
       this.togglePanel(this.selectedGoal.challenges[this.currentChallengeIndex])
       this.calculateSavedSoFar()
       this.onLoadDisableChecks(this.selectedGoal)
@@ -65,8 +70,18 @@ export default {
   },
   computed: {
     computeImageFilter() {
-      return (challenge: ChallengeDTO) => {
-        return challenge ? 'none' : 'grayscale(100%)';
+      return (challenge: any) => {
+        const today = new Date()
+        const startDate = new Date(challenge.startDate)
+
+        // Check if the challenge is in the past or future
+        if (today < startDate) {
+          // Challenge is in the future, apply grayscale
+          return 'grayscale(100%)'
+        } else {
+          // Challenge is currently active, no grayscale
+          return 'none';
+        }
       };
     }
   },
@@ -115,7 +130,7 @@ export default {
     convertTemplateTextToChallengeText(challenge: ChallengeDTO) {
       let challengeText: any
       challengeText = challenge.challengeTemplate?.text
-      challengeText = challengeText.replace('{unit_amount}', challenge.challengeTemplate?.amount?.toString())
+      challengeText = challengeText.replace('{unit_amount}', challenge.amount?.toString())
       challengeText = challengeText.replace('{checkDays}', challenge.checkDays?.toString())
       challengeText = challengeText.replace('{totalDays}', challenge.totalDays?.toString())
       let totalAmount: any
@@ -132,7 +147,7 @@ export default {
     calculateTotalAmountFromChallenges() {
       let totalAmountFromChallenges = 0
       for (const challenge of this.selectedGoal.challenges) {
-        totalAmountFromChallenges += challenge.amount
+        totalAmountFromChallenges += challenge.amount * challenge.checkDays
       }
       return totalAmountFromChallenges
     },
@@ -231,6 +246,12 @@ export default {
 
         if (today >= startDate && today <= endDate) {
           this.currentChallengeIndex = index
+        } else {
+          if (today >= endDate) {
+            console.log("In the past")
+          } else {
+            console.log("In the future")
+          }
         }
       })
     },
@@ -251,15 +272,10 @@ export default {
     },
 
     calculateSavedSoFarPerChallengeInPercent(challenge: ChallengeDTO) {
-      let savedSoFarOnChallenge = 0
+      let savedSoFarOnChallenge = this.calculateSavedSoFarPerChallenge(challenge)
       let targetAmount = 1
-      challenge.progressList?.forEach(progress => {
-        if(progress.amount) {
-          savedSoFarOnChallenge += progress.amount
-        }
-      })
-      if(challenge.amount) {
-        targetAmount = challenge.amount
+      if(challenge.amount && challenge.checkDays) {
+        targetAmount = challenge.amount * challenge.checkDays
       }
 
       return (savedSoFarOnChallenge / targetAmount) * 100
@@ -273,7 +289,54 @@ export default {
         }
       })
       return savedSoFar
-    }
+    },
+
+    async updateUnitPrice (challenge: ChallengeDTO) {
+      const createGoalPayload: MarkChallengeDTO = {
+        id: challenge.id,
+        amount: this.newPrice
+      };
+      try {
+        await GoalService.updateChallengeAmount({requestBody: createGoalPayload})
+      } catch (e) {
+        console.log(e.message)
+      }
+    },
+
+    checkIfToAmbitious() {
+      let possibleSaving = this.calculateTotalAmountFromChallenges()
+      let wantedSaving = this.selectedGoal.targetAmount
+
+      console.log(possibleSaving + "," + wantedSaving)
+      if(wantedSaving > possibleSaving) {
+        this.feedback = "Vi beundrer din ambisjon, men å oppnå den ettertraktede" +
+            " summen er ikke lett. Men disse utfordringene tar deg på god vei!"
+      }
+    },
+
+    getImageSource(challenge: ChallengeDTO) {
+      const today = new Date();
+      const endDate = new Date(challenge.endDate as any);
+
+      // Check if the challenge is in the past
+      if (today > endDate) {
+        // Challenge is in the past, return alternative image source
+        if(challenge.progressList) {
+          if(challenge.checkDays == challenge.progressList.length) {
+            return this.successImage
+          } else {
+            return this.failedImage;
+          }
+        }
+      } else {
+        // Challenge is currently active or in the future, return default image source
+        return this.image;
+      }
+    },
+
+    transferMoney(amount: number) {
+      //need users bank accounts
+    },
   },
 };
 </script>
@@ -298,17 +361,19 @@ export default {
       <ul class="timeline">
         <li v-for="(challenge, index) in selectedGoal.challenges" :key="index" :class="{ 'timeline-inverted': index % 2 !== 0 }">
           <div class="timeline-image z-1" @click="togglePanel(challenge)">
-            <img class="circular-image" :src="challenge.showPanel ? altImage : image" :style="{ filter: computeImageFilter(challenge) }" alt="">
+            <img class="circular-image" :src="challenge.showPanel ? altImage : getImageSource(challenge)" :style="{ filter: computeImageFilter(challenge) }" alt="">
           </div>
           <div class="timeline-panel z-3" :id="'panel-' + index" v-show="challenge.showPanel">
             <div class="timeline-heading">
+              <h5 style="margin-top: 12px">{{challenge.points}}<img src="../../assets/items/pigcoin.png" alt="pig coint" style="width: 2rem"></h5>
               <h4>Utfordring {{ index +1 }}</h4>
+              <p style="font-size: 12px">{{formatDate(challenge.startDate)}} til {{formatDate(challenge.endDate)}}</p>
               <h4 class="subheading">{{convertTemplateTextToChallengeText(challenge)}}</h4>
             </div>
             <div class="timeline-body">
               <br>
               <p>
-                Pris per enhet: {{challenge.challengeTemplate.amount}} kr <img src="../../assets/icons/edit-button.svg" alt="editIcon" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="exampleModal">
+                Pris per enhet: {{challenge.amount}} kr <img src="../../assets/icons/edit-button.svg" alt="editIcon" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="exampleModal">
               </p>
               <br>
               <div class="collapse" id="collapseExample" style="background-color: white; padding: 12px; border-radius: 5px">
@@ -319,11 +384,12 @@ export default {
                   </div>
                 </div>
                 <br>
-                <button class="btn btn-success">Bekreft endring</button>
+                <button @click="updateUnitPrice(challenge)" class="btn btn-success">Bekreft endring</button>
               </div>
               <br>
+              <p>Spart: {{ calculateSavedSoFarPerChallenge(challenge)}} Kr</p>
               <div class="progress">
-                <div class="progress-bar" role="progressbar" :style="{ width: calculateSavedSoFarPerChallengeInPercent(challenge) + '%' }" :aria-valuenow="calculateSavedSoFarPerChallengeInPercent(challenge)" aria-valuemin="0" aria-valuemax="100">{{ calculateSavedSoFarPerChallenge(challenge)}} Kr</div>
+                <div class="progress-bar" role="progressbar" :style="{ width: calculateSavedSoFarPerChallengeInPercent(challenge) + '%' }" :aria-valuenow="calculateSavedSoFarPerChallengeInPercent(challenge)" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
               <br>
               <div class="checkbox-row">
@@ -341,6 +407,10 @@ export default {
     <div v-else>
 
       <div class="row">
+        <div v-if="feedback != ''" class="feedbackBox">
+          <h3>Oops!</h3>
+          <h5 class="">{{ feedback }}</h5>
+        </div>
         <div class="col-sm-3">
           <div class="card-box tilebox-one"><i class="icon-layers float-right text-muted"></i>
             <h6 class="text-muted text-uppercase mt-0">Du ønsker å spare</h6>
@@ -384,7 +454,7 @@ export default {
   margin-bottom:40px;
   padding-bottom: 10px;
   color: white;
-  border-radius: 1em;
+  border-radius: 20px;
   background-color: #003A58;
 }
 
@@ -393,6 +463,7 @@ export default {
   padding:4px 0 0 0;
   margin-top:22px;
   list-style: none;
+  margin-bottom: 300px;
 }
 
 .timeline>li:nth-child(even) {
@@ -428,7 +499,8 @@ export default {
   text-align: right;
   background-color: #003A58;
   border-radius: 1em;
-  margin-left: 110px;
+  margin-left: 100px;
+  color: white;
 }
 
 .timeline>li .timeline-panel:before {
@@ -451,7 +523,6 @@ export default {
   left: 50%;
   border: 7px solid #003A58;
   border-radius: 100%;
-  background-color: #00ffff;
   box-shadow: 0 0 5px #00e1ff;
   width: 100px;
   height: 100px;
@@ -469,7 +540,7 @@ export default {
   float: right;
   padding: 0 30px 20px 20px;
   text-align: left;
-  margin-right: 110px;
+  margin-right: 100px;
 }
 
 .timeline>li.timeline-inverted>.timeline-panel:before {
@@ -491,7 +562,7 @@ export default {
 }
 
 .timeline .timeline-heading h4 {
-  margin-top:22px;
+  margin-top:0px;
   margin-bottom: 4px;
   padding:0;
   color: white;
@@ -704,4 +775,11 @@ export default {
   margin-right: 10px; /* Adjust as needed */
 }
 
+.feedbackBox {
+  box-shadow: rgba(255, 0, 0, 0.2) 0px 7px 29px 0px;
+  border-radius: 1em;
+  margin-bottom: 40px;
+  margin-top: 10px;
+  padding: 12px;
+}
 </style>
