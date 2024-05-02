@@ -100,7 +100,7 @@ const getStore = async () => {
 const getPoints = async () => {
     try {
         const response = await UserService.getUser();
-        points.value = response.point.currentPoints;
+        points.value = response.point?.currentPoints;
     } catch (error) {
         console.log(error);
     }
