@@ -3,6 +3,9 @@
         <br>
     <div id="dropdownContainer">
         <h1 class="box">Butikk</h1>
+        <div>
+            <p class="mb-1 h2" data-cy="points">{{points}}<img src="@/assets/items/pigcoin.png" style="width: 4rem"></p>
+        </div>
     </div>
     <div class="container d-flex justify-content-center">
         <div class="row col-md-10">
@@ -83,19 +86,32 @@ import { useUserInfoStore } from '@/stores/UserStore';
 import { ItemService } from '@/api';
 
 const products = ref([] as any);
+const points = ref();
 
 const getStore = async () => {
-    const response = await ItemService.getStore();
-    products.value = response;
-    console.log(response);
+    try {
+        const response = await ItemService.getStore();
+        products.value = response;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const getPoints = async () => {
+    try {
+        const response = await UserService.getUser();
+        points.value = response.point?.currentPoints;
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 const buyItem = async (itemId: number) => {
     try {
         const response = await ItemService.buyItem({ itemId: itemId });
         console.log(response);
-        const responseStore = await ItemService.getStore();
-        products.value = responseStore;
+        getStore();
+        getPoints();
     } catch (error) {
         console.log(error);
     }
@@ -125,6 +141,7 @@ const buyNoAds = async () => {
 
 onMounted(() => {
     getStore();
+    getPoints();
 })
 </script>
 
@@ -164,6 +181,7 @@ onMounted(() => {
     justify-content: center;
     align-items: center;
     margin-bottom: 2rem;
+    flex-direction: column;
 }
 
 #background {

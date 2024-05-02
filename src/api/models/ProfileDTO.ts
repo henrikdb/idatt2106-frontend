@@ -2,6 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { PointDTO } from './PointDTO';
+import type { StreakDTO } from './StreakDTO';
 export type ProfileDTO = {
     id?: number;
     firstName?: string;
@@ -9,7 +11,7 @@ export type ProfileDTO = {
     profileImage?: number;
     bannerImage?: number;
     createdAt?: string;
-    totalPoints?: number;
-    currentStreak?: number;
+    point?: PointDTO;
+    streak?: StreakDTO;
 };
 
