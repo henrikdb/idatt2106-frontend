@@ -95,7 +95,7 @@
                                         </div>
                                         <div class="col-md-7 col-sm-7">
                                             <h5><a href="#" class="profile-link" @click="toUserProfile(user.id)">{{
-                user.firstName }}</a>
+                user.firstName }} {{ user.lastName }}</a>
                                             </h5>
                                         </div>
                                         <div class="col-md-3 col-sm-3">

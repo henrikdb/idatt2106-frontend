@@ -37,7 +37,7 @@
     </div>
     <div id="communityContainer">
         <h1>Totale poeng opptjent som et fellesskap</h1>
-        <h2>1000000 <img src="../../assets/items/v-buck.png" style="width: 2rem" alt="alt"></h2>
+        <h2>{{communityPoints}} <img src="../../assets/items/pigcoin.png" style="width: 2rem" alt="alt"></h2>
     </div>
 </template>
 
@@ -56,10 +56,15 @@ let streakLeaderboardDataExtra = ref([] as any);
 let currentLeaderboardDataExtra = ref([] as any);
 let pointsLeaderboardDataExtra = ref([] as any);
 
+let communityPoints = ref(0);
+
 const router = useRouter();
 
 async function fetchQuizData() {
     await global();
+
+    const response = await LeaderboardService.getTotalPoints();
+    communityPoints.value = response;
 }
 
 onMounted(() => {

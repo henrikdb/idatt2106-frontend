@@ -2,7 +2,7 @@
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useUserInfoStore } from "../../stores/UserStore";
-import { UserService } from "@/api";
+import { UserService, BadgeService } from "@/api";
 import { ItemService } from "@/api";
 
 let numberOfHistory = 6;
@@ -13,6 +13,7 @@ const imageUrl = ref(`../src/assets/userprofile.png`);
 
 const router = useRouter();
 const inventory = ref([] as any);
+const badges = ref([] as any);
 const backgroundName = ref("");
 
 async function setupForm() {
@@ -26,6 +27,7 @@ async function setupForm() {
       imageUrl.value = "http://localhost:8080/api/images/" + response.profileImage;
     }
     getInventory();
+    getBadges();
   } catch (err) {
     console.error(err)
   }
@@ -35,6 +37,15 @@ const getInventory = async () => {
   try {
     const response = await ItemService.getInventory();
     inventory.value = response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const getBadges = async () => {
+  try {
+    const responseBadge = await BadgeService.getBadgesUnlockedByUser();
+    badges.value = responseBadge;
   } catch (error) {
     console.log(error);
   }
@@ -54,6 +65,8 @@ onMounted(() => {
 const toRoadmap = () => {
   router.push('/');
 };
+
+
 
 // Function to navigate to update user settings
 const toUpdateUserSettings = () => {
@@ -80,7 +93,7 @@ const toUpdateUserSettings = () => {
                 data-mdb-ripple-color="dark" style="z-index: 1; height: 40px; margin-left: 17px" id="toUpdate" @click="toUpdateUserSettings">
                 Rediger profil
               </button>
-
+            
               </div>
               <div>
                 <p class="mb-1 h2" data-cy="points">253 <img src="@/assets/items/pigcoin.png" style="width: 4rem"></p>
@@ -92,12 +105,13 @@ const toUpdateUserSettings = () => {
               </div>
             </div>
           </div>
+          <hr>
           <div class="card-body p-1 text-black">
             <div class="row">
               <div class="col">
                 <div class="container-fluid">
-                  <h1 class="mt-5 text-start badges-text">Lageret ditt</h1>
-                  <div class="scrolling-wrapper-badges row flex-row flex-nowrap mt-4 pb-4 pt-2">
+                  <h1 class="mt-1 text-start badges-text">Lageret ditt</h1>
+                  <div class="scrolling-wrapper-badges row flex-row flex-nowrap mt-2 pb-2 pt-2">
                     <div v-for="product in inventory" :key="product.id" class="card text-center"
                         style="width: 12rem; border: none; cursor: pointer; margin: 1rem; border: 2px solid black" @click="selectItem(product)">
                         <img :src="`http://localhost:8080/api/images/${product.imageId}`" class="card-img-top"
@@ -112,52 +126,35 @@ const toUpdateUserSettings = () => {
               </div>
             </div>
           </div>
+          <hr>
           <div class="card-body p-1 text-black">
             <div class="row">
               <div class="col">
                 <div class="container-fluid">
-                  <h1 class="mt-5 text-start badges-text">Merker</h1>
-                  <div class="scrolling-wrapper-badges row flex-row flex-nowrap mt-4 pb-4 pt-2">
+                  <h1 class="mt-1 text-start badges-text">Merker</h1>
+                  <div class="scrolling-wrapper-badges row flex-row flex-nowrap mt-2 pb-2 pt-2">
 
-                    <div class="col-5">
-                      <div class="card badges-block card-1"></div>
+                    <div v-for="badge in badges" :key="badge.id" class="card text-center"
+                        style="width: 12rem; border: none; cursor: pointer; margin: 1rem; 
+                        border: 2px solid black" data-bs-toggle="tooltip" data-bs-placement="top" 
+                        data-bs-custom-class="custom-tooltip" :data-bs-title="badge.criteria">
+                        <img :src="`http://localhost:8080/api/images/${badge.imageId}`" class="card-img-top"
+                            alt="..." />
+                        <div class="card-body">
+                            <h5 class="card-title">{{ badge.badgeName }}</h5>
+                        </div>
                     </div>
-                    <div class="col-5">
-                      <div class="card badges-block card-2"></div>
-                    </div>
-                    <div class="col-5">
-                      <div class="card badges-block card-3"></div>
-                    </div>
-                    <div class="col-5">
-                      <div class="card badges-block card-4"></div>
-                    </div>
-                    <div class="col-5">
-                      <div class="card badges-block card-5"></div>
-                    </div>
-                    <div class="col-5">
-                      <div class="card badges-block card-6"></div>
-                    </div>
-                    <div class="col-5">
-                      <div class="card badges-block card-7"></div>
-                    </div>
-                    <div class="col-5">
-                      <div class="card badges-block card-8"></div>
-                    </div>
-                    <div class="col-5">
-                      <div class="card badges-block card-9"></div>
-                    </div>
-                    <div class="col-5">
-                      <div class="card badges-block card-10"></div>
-                    </div>
+
                   </div>
                 </div>
               </div>
             </div>
+            <hr>
             <div class="row">
               <div class="col">
                 <!-- Her er historikken over lagrede mål -->
                 <div class="container-fluid mb-5">
-                  <h1 class="mt-5 text-start history-text">Historie</h1>
+                  <h1 class="mt-1 text-start history-text">Historie</h1>
                   <div class="row scrolling-wrapper-history">
                     <div v-for="index in numberOfHistory" :key="index"
                       class="col-md-4 col-sm-4 col-lg-4 col-xs-4 col-xl-4 control-label">
@@ -203,8 +200,6 @@ const toUpdateUserSettings = () => {
   max-height: 300px;
   overflow: auto;
 }
-
-
 
 .badges-text {
   font-weight: 500;
