@@ -2,18 +2,21 @@
 import SavingGoalList from "@/components/SavingGoal/SavingGoalList.vue";
 import SavingGoalRoadmap from "@/components/SavingGoal/SavingGoalRoadmap.vue";
 import SavingGoalCreate from "@/components/SavingGoal/SavingGoalCreate.vue";
+import SavingGoalDefault from "@/components/SavingGoal/SavingGoalDefault.vue";
 import type {GoalDTO} from "@/api";
 import {GoalService} from "@/api";
 
 export default {
-  components: {SavingGoalCreate, SavingGoalRoadmap, SavingGoalList},
+  components: {SavingGoalDefault, SavingGoalCreate, SavingGoalRoadmap, SavingGoalList},
   data() {
     return {
       bluePanelMaxHeight: 'auto' as string,
-      createClicked: true as boolean,
+      createClicked: false as boolean,
+      savingGoalClicked: false as boolean,
       selectedGoal: [] as any,
       createdGoal: [] as any,
       key: 0 as number,
+      keyForList: 0 as number,
     };
   },
   mounted() {
@@ -26,7 +29,8 @@ export default {
       if (timelineElement instanceof HTMLElement) {
         // Calculate the max-height based on the height of the timeline
         const timelineHeight = timelineElement.offsetHeight;
-        this.bluePanelMaxHeight = '700px';
+        console.log(timelineHeight)
+        this.bluePanelMaxHeight = (timelineHeight * 1.5)+'px';
       } else {
         this.bluePanelMaxHeight = '700px';
       }
@@ -36,16 +40,24 @@ export default {
     },
     async goToSavingGoal(savingGoal: GoalDTO) {
       this.$emit('goToSavingGoal', savingGoal);
-      let response = await GoalService.getGoal({id: savingGoal.id as number});
-      console.log(response)
-      this.selectedGoal = response
+      this.selectedGoal = await GoalService.getGoal({id: savingGoal.id as number})
       this.createClicked = false;
+      this.savingGoalClicked = true;
       this.key++
+      setTimeout(() => {
+        this.calculateBluePanelMaxHeight()
+      }, 500);
     },
-    createSavingGoal(savingGoal: GoalDTO) {
-      this.$emit('createSavingGoal', savingGoal)
-      this.createdGoal = savingGoal;
-      this.createClicked = false;
+    async handleCreateGoalClicked(savingGoal: GoalDTO) {
+      this.$emit('goToSavingGoal', savingGoal);
+      let response = await GoalService.getGoal({id: savingGoal.id as number});
+      setTimeout(() => {
+        this.selectedGoal = response
+        this.createClicked = false;
+        this.key++
+        this.savingGoalClicked = true;
+        this.keyForList++
+      }, 100);
     }
   },
 };
@@ -55,15 +67,16 @@ export default {
   <div class="cont">
     <div class="row">
       <div class="col-lg-4 blue-background overflow-scroll" :style="{ 'max-height': bluePanelMaxHeight }">
-        <h3 style="color: white; margin-bottom: 16px">Your saving goals</h3>
+        <h2>Dine sparemål</h2>
         <div>
-          <button class="btn btn-success btn-lg" style="font-weight: 600; margin-bottom: 20px" @click="createGoal">Create new saving goal</button>
+          <button class="btn btn-success btn-lg" style="font-weight: 600; margin-bottom: 20px" @click="createGoal">+ Lag et nytt sparemål</button>
         </div>
-        <saving-goal-list @goToSavingGoal="goToSavingGoal"></saving-goal-list>
+        <saving-goal-list :key="keyForList" @goToSavingGoal="goToSavingGoal"></saving-goal-list>
       </div>
       <div class="spacer"/>
-      <saving-goal-create @createGoalClick="createSavingGoal" v-if="createClicked"></saving-goal-create>
-      <saving-goal-roadmap :key="key" :selected-goal="selectedGoal" v-else></saving-goal-roadmap>
+      <saving-goal-create @createGoalClicked="handleCreateGoalClicked" v-if="createClicked"></saving-goal-create>
+      <saving-goal-roadmap :key="key" :selected-goal="selectedGoal" v-else-if="savingGoalClicked"></saving-goal-roadmap>
+      <saving-goal-default v-else></saving-goal-default>
     </div>
   </div>
 </template>
@@ -82,11 +95,18 @@ export default {
   padding: 12px;
   background-color: #003A58;
   width: 27%;
-  border-radius: 0 2em 2em 0;
+  border-radius: 0 1em 1em 0;
 }
 
 .spacer {
   width: 10%;
   background-color: transparent;
+}
+
+h2 {
+  color: white;
+  margin-bottom: 16px;
+  font-weight: 600;
+
 }
 </style>

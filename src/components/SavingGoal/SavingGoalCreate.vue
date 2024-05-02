@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import {GoalService, type CreateGoalDTO, type GoalDTO} from "@/api"
-import {ref} from "vue";
+import {ref, defineProps, defineEmits} from "vue";
+
+const emits = defineEmits(['createGoalClicked']);
 
 const name = ref("")
 const desc = ref("")
@@ -10,13 +12,6 @@ const createdConfirm = ref("");
 const errorMessage = ref("")
 
 const createGoalClick = async () => {
-  console.log("create goal clicked")
-  console.log(name.value)
-  console.log(desc.value)
-  console.log(date.value)
-  console.log(amount.value)
-
-
   const createGoalPayload: CreateGoalDTO = {
     name: name.value,
     description: desc.value,
@@ -28,8 +23,9 @@ const createGoalClick = async () => {
   try {
     let response = await GoalService.createGoal({ requestBody: createGoalPayload });
     if(response.name != "") {
-      createdConfirm.value = "Your goal has been created! Refresh the page to se it in the list"
+      createdConfirm.value = "Your goal has been created!"
       errorMessage.value = ""
+      emits('createGoalClicked', response)
     }
   } catch (error: any) {
     console.log(error.message);
@@ -41,36 +37,37 @@ const createGoalClick = async () => {
 
 <template>
   <div class="col-lg-8">
-    <h1>Create a new saving goal!</h1>
+    <h1>Lag et nytt sparemål!</h1>
     <br>
-    <p>Create a name for this saving goal </p>
+    <p>Gi sparemålet et navn </p>
     <div class="input-group mb-3">
-      <span class="input-group-text" id="basic-addon1">Name</span>
-      <input v-model="name" type="text" class="form-control" placeholder="Name of Saving Goal" aria-label="Username" aria-describedby="basic-addon1" required>
+      <span class="input-group-text" id="basic-addon1">Navn</span>
+      <input v-model="name" type="text" class="form-control" placeholder="Navn på sparemålet"
+             aria-label="Username" aria-describedby="basic-addon1" required>
     </div>
 
-    <p>Add a description to this saving goal </p>
+    <p>Legg til en beskrivelse for sparemålet </p>
     <div class="input-group mb-3">
-      <span class="input-group-text" id="basic-addon2">Description</span>
+      <span class="input-group-text" id="basic-addon2">Beskrivelse</span>
       <textarea v-model="desc" class="form-control" aria-label="With textarea"></textarea>
     </div>
 
     <!--Change this to date picker?-->
-    <p>When should this saving goal end?</p>
+    <p>Når skal pengene være spart?</p>
     <div class="input-group mb-3">
-      <input v-model="date" type="date" class="form-control" aria-label="Amount of days" placeholder="Amount of days (as number)" required>
+      <input v-model="date" type="date" class="form-control" aria-label="Amount of days" required>
     </div>
 
-    <p>How much do you want to save during this saving goal? </p>
+    <p>Hvor mye vil du spare?</p>
     <div class="input-group">
-      <input v-model="amount" type="number" class="form-control" aria-label="" placeholder="NOK (as number)" required>
+      <input v-model="amount" type="number" class="form-control" aria-label="NOK" required>
       <span class="input-group-text">NOK</span>
     </div>
 
     <br>
     <button class="btn btn-primary btn-lg" @click="createGoalClick">Create goal!</button>
 
-    <div style="color: green; font-size: 32px">
+    <div class="confirmMessage">
       {{ createdConfirm }}
     </div>
 
@@ -86,5 +83,11 @@ const createGoalClick = async () => {
   margin-top: 50px;
   padding-right: 56px;
   padding-bottom: 28px;
+}
+
+.confirmMessage {
+  color: green;
+  font-size: 32px;
+  min-height: 100px;
 }
 </style>
