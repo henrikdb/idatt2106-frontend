@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Button1 from '@/components/Buttons/Button1.vue'
+import BaseButton from '@/components/BaseComponents/Buttons/BaseButton.vue'
 import BudgetBox from '@/components/Budget/BudgetBox.vue'
 import { onMounted, ref } from 'vue'
 import handleUnknownError from '@/components/Exceptions/unkownErrorHandler'
@@ -72,12 +72,12 @@ const goToBudget = (id: number) => {
 <template>
   <div class="container">
     <h1 class="text-center">Dine Budsjetter</h1>
-    <button1 id="createBudgetButton" button-text="Opprett nytt budsjett" class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"/>
+    <BaseButton id="createBudgetButton" button-text="Opprett nytt budsjett" class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"/>
     <div class="collapse" id="collapseExample">
       <div class="container collapse-container">
         <div class="input-group">
           <input id="collapseInput" class="form-control" type="text" placeholder="Skriv inn navn på budsjettet" v-model="budgetNameInput">
-          <button1 id="collapseButton" button-text="Opprett" data-bs-dismiss="modal" @click="createNewBudget"/>
+          <BaseButton id="collapseButton" button-text="Opprett" data-bs-dismiss="modal" @click="createNewBudget"/>
         </div>
       </div>
     </div>

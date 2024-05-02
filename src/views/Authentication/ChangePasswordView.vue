@@ -31,7 +31,7 @@
 
             <p class="text-danger" data-cy="error">{{ errorMsg }}</p>
             <p v-if="!samePasswords" class="text-danger">Passordene er ikke like</p>
-            <button1 id="confirmButton" type="submit" @click="handleSubmit" :disabled="isSubmitting" button-text="Oppdater passordet"></button1>
+            <BaseButton id="confirmButton" type="submit" @click="handleSubmit" :disabled="isSubmitting" button-text="Oppdater passordet"></BaseButton>
 
             <SignUpLink/>
           </form>
@@ -75,11 +75,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import axios from 'axios';
 import { UserService } from '@/api';
 import SignUpLink from '@/components/SignUp/SignUpLink.vue'
-import Button1 from '@/components/Buttons/Button1.vue'
-import BaseInput from '@/components/InputFields/BaseInput.vue'
+import BaseButton from '@/components/BaseComponents/Buttons/BaseButton.vue'
+import BaseInput from '@/components/BaseComponents/Input/BaseInput.vue'
 import handleUnknownError from '@/components/Exceptions/unkownErrorHandler'
 
 const router = useRouter();

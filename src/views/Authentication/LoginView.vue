@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import Footer from '@/components/BaseComponents/FooterComponent.vue'
-import Menu from '@/components/BaseComponents/MenuComponent.vue'
-import Login from '@/components/Login/Login.vue'
+import Footer from '@/components/BaseComponents/BaseFooter.vue'
+import Menu from '@/components/BaseComponents/NavBar.vue'
+import Login from '@/components/Login/LoginParent.vue'
 </script>
 
 <template>

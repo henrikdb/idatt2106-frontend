@@ -16,7 +16,7 @@
         <div v-else class="text-success">
           {{ confirmationMessage }}
         </div>
-        <button1 id="confirmButton" type="submit" :disabled="isSubmitting" button-text="Send e-post"></button1>
+        <BaseButton id="confirmButton" type="submit" :disabled="isSubmitting" button-text="Send e-post"></BaseButton>
 
         <div class="login-link">
           <Router-Link to="/login" class="small">Gå tilbake</Router-Link>
@@ -29,8 +29,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { UserService } from '@/api';
-import BaseInput from '@/components/InputFields/BaseInput.vue'
-import Button1 from '@/components/Buttons/Button1.vue'
+import BaseButton from '@/components/BaseComponents/Buttons/BaseButton.vue'
 
 const formRef = ref()
 const form = formRef.value;

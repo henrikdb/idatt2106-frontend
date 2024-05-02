@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import BaseInput from '@/components/InputFields/BaseInput.vue'
-import Button1 from '@/components/Buttons/Button1.vue'
+import BaseInput from '@/components/BaseComponents/Input/BaseInput.vue'
+import BaseButton from '@/components/BaseComponents/Buttons/BaseButton.vue'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { AuthenticationService } from '@/api'
@@ -129,7 +129,7 @@ const handleSubmit = async () => {
       </div>
       <p class="text-danger">{{ errorMsg }}</p>
       <p v-if="!samePasswords" class="text-danger">Passordene er ikke like</p>
-      <button1 id="confirmButton" @click="handleSubmit" :disabled="isSubmitting" button-text="Registrer deg"></button1>
+      <BaseButton id="confirmButton" @click="handleSubmit" :disabled="isSubmitting" button-text="Registrer deg"></BaseButton>
       <LoginLink/>
     </form>
   </div>

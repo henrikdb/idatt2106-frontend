@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import Button1 from '@/components/Buttons/Button1.vue'
+import BaseButton from '@/components/BaseComponents/Buttons/BaseButton.vue'
 import ExpenseBox from '@/components/Budget/ExpenseBox.vue'
 import { useRouter } from 'vue-router'
 import { useBudgetStore } from '@/stores/BudgetStore'
@@ -225,8 +225,8 @@ const importBudget = async (budgetId: number) => {
     <h1 class="text-center">{{ title }}</h1>
 
     <div class="button-container">
-      <button1 id="goBack" @click="router.push('/budsjett-oversikt')" button-text="Gå tilbake"/>
-      <button1 id="optionButton" button-text="Alternativer" data-bs-toggle="modal" data-bs-target="#modal"/>
+      <BaseButton id="goBack" @click="router.push('/budsjett-oversikt')" button-text="Gå tilbake"/>
+      <BaseButton id="optionButton" button-text="Alternativer" data-bs-toggle="modal" data-bs-target="#modal"/>
     </div>
 
     <p class="text-danger">{{ errorMsg }}</p>
@@ -246,7 +246,7 @@ const importBudget = async (budgetId: number) => {
                 <form ref="renameFormRef" @submit.prevent="updateBudget(budget, budgetTitle)">
                   <div class="input-group">
                     <input id="collapseInput" class="col-5 form-control" type="text" required minlength="1" placeholder="Skriv inn nytt navn på budsjettet" v-model="budgetTitle">
-                    <button1 id="collapseButton" type="submit" button-text="Bekreft" data-bs-dismiss="modal"/>
+                    <BaseButton id="collapseButton" type="submit" button-text="Bekreft" data-bs-dismiss="modal"/>
                   </div>
                 </form>
               </div>

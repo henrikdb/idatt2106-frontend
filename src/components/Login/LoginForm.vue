@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import BaseInput from '@/components/InputFields/BaseInput.vue'
-import Button1 from '@/components/Buttons/Button1.vue'
+import BaseInput from '@/components/BaseComponents/Input/BaseInput.vue'
+import BaseButton from '@/components/BaseComponents/Buttons/BaseButton.vue'
 import { ref } from 'vue'
 import { useUserInfoStore } from '@/stores/UserStore';
 import { AuthenticationService, OpenAPI, type LoginRequest } from '@/api';
@@ -111,7 +111,7 @@ const handleSubmit = async () => {
       </div>
 
       <p class="text-danger" data-cy="error">{{ errorMsg }}</p>
-      <button1 id="confirmButton" type="submit" @click="handleSubmit" :disabled="isSubmitting" button-text="Logg inn"></button1>
+      <BaseButton id="confirmButton" type="submit" @click="handleSubmit" :disabled="isSubmitting" button-text="Logg inn"></BaseButton>
 
       <a class="btn bankid-btn" href="https://preprod.signicat.com/oidc/authorize?response_type=code&scope=openid+profile+signicat.national_id&client_id=demo-preprod&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fredirect&acr_values=urn:signicat:oidc:method:nbid&state=nbid:auth_demo_bankid:123456789">
         <img src="/src/assets/bankid.svg" width="26" height="26">
