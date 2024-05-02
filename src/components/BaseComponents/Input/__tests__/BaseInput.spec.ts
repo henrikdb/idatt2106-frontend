@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils';
-import InputField from '@/components/InputFields/BaseInput.vue';
+import InputField from '../BaseInput.vue';
 
 describe('InputField.vue', () => {
   it('emits inputChangeEvent when input event is triggered', async () => {
