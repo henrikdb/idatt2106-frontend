@@ -867,8 +867,8 @@
               }
             }
           },
-          "404": {
-            "description": "User not found",
+          "401": {
+            "description": "Invalid credentials",
             "content": {
               "application/json": {
                 "schema": {
@@ -877,8 +877,8 @@
               }
             }
           },
-          "401": {
-            "description": "Invalid credentials",
+          "404": {
+            "description": "User not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -2236,6 +2236,18 @@
           }
         }
       },
+      "BankAccountResponseDTO": {
+        "type": "object",
+        "properties": {
+          "bban": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "balance": {
+            "type": "number"
+          }
+        }
+      },
       "ChallengeDTO": {
         "type": "object",
         "properties": {
@@ -2445,12 +2457,10 @@
             "type": "string"
           },
           "checkingAccountBBAN": {
-            "type": "integer",
-            "format": "int64"
+            "$ref": "#/components/schemas/BankAccountResponseDTO"
           },
           "savingsAccountBBAN": {
-            "type": "integer",
-            "format": "int64"
+            "$ref": "#/components/schemas/BankAccountResponseDTO"
           },
           "point": {
             "$ref": "#/components/schemas/PointDTO"

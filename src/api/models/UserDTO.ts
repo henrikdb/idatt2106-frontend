@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { BankAccountResponseDTO } from './BankAccountResponseDTO';
 import type { PointDTO } from './PointDTO';
 import type { StreakDTO } from './StreakDTO';
 export type UserDTO = {
@@ -14,8 +15,8 @@ export type UserDTO = {
     createdAt?: string;
     role?: string;
     subscriptionLevel?: string;
-    checkingAccountBBAN?: number;
-    savingsAccountBBAN?: number;
+    checkingAccountBBAN?: BankAccountResponseDTO;
+    savingsAccountBBAN?: BankAccountResponseDTO;
     point?: PointDTO;
     streak?: StreakDTO;
 };
