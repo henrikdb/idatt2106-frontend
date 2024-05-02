@@ -69,7 +69,7 @@ npm run lint
 The individuals who contributed to the project:
 - Anders Høvik
 - Andreas Kluge Svendsrud 
-- Henrik Dybdal 
+- Henrik Dybdahl Berg
 - Henrik Teksle Sandok 
 - Jens Christian Aanestad 
 - Victor Kaste 
