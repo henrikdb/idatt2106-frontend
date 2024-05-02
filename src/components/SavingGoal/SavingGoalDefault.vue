@@ -7,9 +7,8 @@
     <div class="col-lg-8">
       <div class="container text-center">
         <div class="d-flex flex-column justify-content-center align-items-center">
-          <h1 class="">Velkommen til <span>SpareSti</span></h1>
-          <br>
-          <p class="">Kom i økonomisk form: Ta på deg våre spareutfordringer!<br></p>
+          <h1>Velkommen til <span>SpareSti</span></h1>
+          <p style="margin-top: 32px">Kom i økonomisk form: Ta på deg våre spareutfordringer!<br></p>
           <img src="../../assets/savingPigRun.png" alt="SpareSti-logo">
         </div>
       </div>
