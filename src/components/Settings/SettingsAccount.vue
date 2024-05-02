@@ -4,6 +4,7 @@ import BaseInput from '@/components/BaseComponents/Input/BaseInput.vue';
 import { useUserInfoStore } from "@/stores/UserStore";
 import { UserService } from '@/api';
 import type { UserUpdateDTO } from '@/api';
+import handleUnknownError from '@/components/Exceptions/unkownErrorHandler';
 
 const emailRef = ref('')
 const errorMsg = ref('')
@@ -22,6 +23,7 @@ async function setupForm() {
     confirmationMsg.value = '';
     errorMsg.value = '';
   } catch (err) {
+    handleUnknownError(err);
     errorMsg.value = 'Error fetching email, try again!'
     confirmationMsg.value = ''
   }
@@ -40,6 +42,7 @@ const handleSubmit = async () => {
     confirmationMsg.value = 'Email updated successfully!'
     errorMsg.value = '';
   } catch (err) {
+    handleUnknownError(err);
     errorMsg.value = "Error updating email, try again!";
     confirmationMsg.value = ''
   }

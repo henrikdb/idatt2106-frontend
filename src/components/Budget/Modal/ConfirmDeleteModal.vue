@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { BudgetService } from '@/api'
+import handleUnknownError from '@/components/Exceptions/unkownErrorHandler';
 
 const emit = defineEmits(['errorEvent', 'deletedEvent'])
 const props = defineProps({
@@ -25,6 +26,7 @@ const deleteBudget = async () => {
     await BudgetService.deleteBudget({budgetId: props.budgetId})
     emit('deletedEvent')
   } catch (error) {
+    handleUnknownError(error);
     emit('errorEvent', error)
   }
 }

@@ -46,6 +46,7 @@
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import Leaderboard from '@/components/Leaderboard/LeaderboardTable.vue';
+import handleUnknownError from '@/components/Exceptions/unkownErrorHandler';
 import { LeaderboardService } from '@/api';
 
 let streakLeaderboardData = ref([] as  any);
@@ -72,44 +73,49 @@ onMounted(() => {
 });
 
 async function global() {
-    let globalPoints = await LeaderboardService.getLeaderboard({
-        type: "TOTAL_POINTS",
-        filter: "GLOBAL",
-    });
-    let globalStreak = await LeaderboardService.getLeaderboard({
-        type: "TOP_STREAK",
-        filter: "GLOBAL",
-    });
-    let globalCurrentStreak = await LeaderboardService.getLeaderboard({
-        type: "CURRENT_STREAK",
-        filter: "GLOBAL",
-    });
-    let globalPointsYou = await LeaderboardService.getSurrounding({
-        type: "TOTAL_POINTS",
-        filter: "GLOBAL",
-        entryCount: 2,
-    });
-    let globalStreakYou = await LeaderboardService.getSurrounding({
-        type: "TOP_STREAK",
-        filter: "GLOBAL",
-        entryCount: 2,
-    });
-    let globalCurrentStreakYou = await LeaderboardService.getSurrounding({
-        type: "CURRENT_STREAK",
-        filter: "GLOBAL",
-        entryCount: 2,
-    });
-    
-    pointsLeaderboardData.value = globalPoints.entries;
-    currentLeaderboardData.value = globalCurrentStreak.entries;
-    streakLeaderboardData.value = globalStreak.entries;
+    try {
+        let globalPoints = await LeaderboardService.getLeaderboard({
+            type: "TOTAL_POINTS",
+            filter: "GLOBAL",
+        });
+        let globalStreak = await LeaderboardService.getLeaderboard({
+            type: "TOP_STREAK",
+            filter: "GLOBAL",
+        });
+        let globalCurrentStreak = await LeaderboardService.getLeaderboard({
+            type: "CURRENT_STREAK",
+            filter: "GLOBAL",
+        });
+        let globalPointsYou = await LeaderboardService.getSurrounding({
+            type: "TOTAL_POINTS",
+            filter: "GLOBAL",
+            entryCount: 2,
+        });
+        let globalStreakYou = await LeaderboardService.getSurrounding({
+            type: "TOP_STREAK",
+            filter: "GLOBAL",
+            entryCount: 2,
+        });
+        let globalCurrentStreakYou = await LeaderboardService.getSurrounding({
+            type: "CURRENT_STREAK",
+            filter: "GLOBAL",
+            entryCount: 2,
+        });
+        
+        pointsLeaderboardData.value = globalPoints.entries;
+        currentLeaderboardData.value = globalCurrentStreak.entries;
+        streakLeaderboardData.value = globalStreak.entries;
 
-    pointsLeaderboardDataExtra.value = globalPointsYou.entries;
-    currentLeaderboardDataExtra.value = globalCurrentStreakYou.entries;
-    streakLeaderboardDataExtra.value = globalStreakYou.entries;
+        pointsLeaderboardDataExtra.value = globalPointsYou.entries;
+        currentLeaderboardDataExtra.value = globalCurrentStreakYou.entries;
+        streakLeaderboardDataExtra.value = globalStreakYou.entries;
+    } catch (error) {
+        handleUnknownError(error);
+    }
 }
 
 async function friends() {
+    try {
     let friendsPoints = await LeaderboardService.getLeaderboard({
         type: "TOTAL_POINTS",
         filter: "FRIENDS",
@@ -146,6 +152,9 @@ async function friends() {
     pointsLeaderboardDataExtra.value = friendsPointsYou.entries;
     currentLeaderboardDataExtra.value = friendsStreakYou.entries;
     streakLeaderboardDataExtra.value = friendsCurrentStreakYou.entries;
+    } catch (error) {
+        handleUnknownError(error);
+    }
 }
 
 const navigateToUserProfile = (userId: number) => {
