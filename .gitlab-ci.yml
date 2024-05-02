@@ -80,7 +80,7 @@ docker_build_and_push:
     - master
 
 deploy_docker:
-  stage: deploy
+  stage: deploy_docker
   image: ubuntu:latest
   dependencies:
     - docker_build_and_push
