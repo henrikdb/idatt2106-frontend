@@ -80,5 +80,5 @@ deploy_docker:
     - apt-get -yqq install ssh
     - apt-get install sshpass
   script:
-    - sshpass -p sParest1en ssh -v -o StrictHostKeyChecking=no root@128.199.53.153 "docker ps -q --filter 'name=^frontend$' | grep -q . && docker kill frontend && docker rm frontend; docker run -d --name frontend registry.gitlab.com/$DOCKER_USER/sparesti-registry:frontend"
+    - sshpass -p sParest1en ssh -v -o StrictHostKeyChecking=no root@128.199.53.153 "docker ps -q --filter 'name=^frontend$' | grep -q . && docker kill frontend && docker rm frontend && docker run -d --name frontend registry.gitlab.com/$DOCKER_USER/sparesti-registry:frontend"
   when: manual
