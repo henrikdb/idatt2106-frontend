@@ -12,6 +12,7 @@ let cardTitles = ["Spain tour", "Food waste", "Coffee", "Concert", "New book", "
 let hasHistory = ref(true)
 let firstname = ref();
 let lastname = ref();
+let goals = ref([]);
 
 let username = ref()
 
@@ -40,7 +41,7 @@ function toRoadmap(){
 //todo Make a store of a friend-instance
 onMounted(async () => {
   try {
-    let response = await UserService.getProfile({
+    goals = await UserService.getProfile({
       userId: id.value.id
     })
     profile = response;
@@ -186,9 +187,9 @@ onMounted(() =>{
                             </div>
                             <div class="col-md-8">
                               <div class="card-body">
-                                <h5 class="card-title">{{ cardTitles[index - 1] }}</h5>
-                                <p class="card-text">Penger spart: 200 <br />Du har fullført en utfordring: 21</p>
-                                <p class="card-text"><small class="text-muted">Sist oppdatert for 3 minutter siden</small></p>
+                                <h5 class="card-title">{{ goals[index]['name'] }}</h5>
+                                <p class="card-text">{{goals[index]['description']}}</p>
+                                <p class="card-text"><small class="text-muted">{{goals[index]['targetAmount']}}</small></p>
                                 <a href="#" class="btn  stretched-link" @click="toRoadmap"></a>
                               </div>
                             </div>

@@ -19,12 +19,20 @@ const badges = ref([] as any);
 const backgroundName = ref("");
 
 
+let goalName = ref('');
+let goalDescription = ref('');
+let targetAmount = ref('');
+let targetDate = ref('');
+let createdAt = ref('');
+let goals = ref([])
+
 async function getGoals() {
-  let response = await GoalService.getGoals();
-  console.log("number of goals: ", response.length )
-  console.log('The id of a goal: ', response[0])
-  if(response.length > 0) {
+  goals = await GoalService.getGoals();
+  console.log("number of goals: ", goals.length )
+  console.log('The id of a goal: ', goals[0])
+  if(goals.length > 0) {
     hasHistory.value = true
+    goalName.value = goals
 
 
 
@@ -180,8 +188,8 @@ onMounted(()=>{
                 <div class="container-fluid mb-5">
                   <h1 class="mt-1 text-start history-text">Historie</h1>
                   <div v-if="hasHistory" class="row scrolling-wrapper-history">
-                    <div v-for="index in numberOfHistory" :key="index"
-                      class="col-md-4 col-sm-4 col-lg-4 col-xs-4 col-xl-4 control-label">
+                    <div v-for="index in goals" :key="index"
+                         class="col-md-4 col-sm-4 col-lg-4 col-xs-4 col-xl-4 control-label">
                       <div class="card history-block">
                         <div class="card mb-3" style="max-width: 540px;">
                           <div class="row g-0">
@@ -191,10 +199,9 @@ onMounted(()=>{
                             </div>
                             <div class="col-md-8">
                               <div class="card-body">
-                                <h5 class="card-title">{{ cardTitles[index - 1] }}</h5>
-                                <p class="card-text">Penger spart: 200 <br />Du har fullført en utfordring: 21</p>
-                                <p class="card-text"><small class="text-muted">Sist oppdatert for 3 minutter
-                                    siden</small></p>
+                                <h5 class="card-title">{{ goals[index]['name'] }}</h5>
+                                <p class="card-text">{{goals[index]['description']}}</p>
+                                <p class="card-text"><small class="text-muted">{{goals[index]['targetAmount']}}</small></p>
                                 <a href="#" class="btn  stretched-link" @click="toRoadmap"></a>
                               </div>
                             </div>
