@@ -1,6 +1,11 @@
-# frontend
+# SpareSti
 
-This template should help get you started developing with Vue 3 in Vite.
+## Description
+The frontend of sparesti.app. SpareSti is designed to make saving fun. The app is integrated with your online bank, therefore it has an overview of what your money is being spent on and can provide you with personalized saving tips based on this information. The app is suitable for all saving goals and offers motivation and tips tailored to your desires. Since we know that saving money can be difficult, SpareSti automatically deposits money into your savings account when you complete challenges. Based on your saved funds, the feed will give you personalized tips on how your money can be invested, and you will be able to set up a budget that provides you with the overview you need to make informed choices.
+
+## Links
+
+- **Backend**: [https://gitlab.stud.idi.ntnu.no/idatt2106-2024-07/backend](https://gitlab.stud.idi.ntnu.no/idatt2106-2024-07/backend)
 
 ## Recommended IDE Setup
 
@@ -14,7 +19,7 @@ TypeScript cannot handle type information for `.vue` imports by default, so we r
 
 See [Vite Configuration Reference](https://vitejs.dev/config/).
 
-## Project Setup
+## Getting Started
 
 ```sh
 npm install
@@ -59,3 +64,48 @@ npm run test:e2e
 ```sh
 npm run lint
 ```
+
+## Using test data
+For easy use of the web application we have provided a set of test users that can be used.
+
+#### Regular user
+- **Email**
+    ```sh
+    user@example.com
+    ```
+- **Password**
+    ```sh
+    John1
+    ```
+#### Admin user
+- **Email**
+    ```sh
+    admin@example.com
+    ```
+- **Password**
+    ```sh
+    John1
+    ```
+#### BankID user
+The BankID service uses a set of pre-generated test users provided by Signicat. Make sure you have the updated test-users [here](https://developer.signicat.com/identity-methods/nbid/test.html#test-norwegian-bankid).
+- **Social Security Number**
+    ```sh
+    29090816894
+    ```
+- **One time password**
+    ```sh
+    otp
+    ```
+- **Password**
+    ```sh
+    qwer1234
+    ```
+## Contributors
+The individuals who contributed to the project:
+- Anders Høvik
+- Andreas Kluge Svendsrud 
+- Henrik Dybdahl Berg
+- Henrik Teksle Sandok 
+- Jens Christian Aanestad 
+- Victor Kaste 
+- Viktor Grevskott

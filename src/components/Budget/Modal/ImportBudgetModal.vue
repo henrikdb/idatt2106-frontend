@@ -30,7 +30,7 @@ const emitImportBudgetEvent = (budgetId: number) => {
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h3>Choose a budget you would like to import</h3>
+          <h3>Velg et budget du vil importere</h3>
           <button class="btn btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
@@ -41,7 +41,7 @@ const emitImportBudgetEvent = (budgetId: number) => {
                          :budget-amount="Number(item.budgetAmount)"
                          :expense-amount="Number(item.expenseAmount)"
                          @importBudgetEvent="emitImportBudgetEvent"
-          >
+                         data-bs-dismiss="modal">
           </MiniBudgetBox>
         </div>
       </div>

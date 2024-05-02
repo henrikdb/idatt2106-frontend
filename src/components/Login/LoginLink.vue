@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <p>Already have an account? <RouterLink to="/login" id="login">Login</RouterLink></p>
+  <p>Har du en bruker? <RouterLink to="/login" id="login">Logg inn</RouterLink></p>
 </template>
 
 <style scoped>

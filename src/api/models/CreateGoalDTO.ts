@@ -3,7 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type CreateGoalDTO = {
-    goalName?: string;
+    name?: string;
     description?: string;
     targetAmount?: number;
     targetDate?: string;

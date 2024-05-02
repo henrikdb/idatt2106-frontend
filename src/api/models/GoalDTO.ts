@@ -3,16 +3,15 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { ChallengeDTO } from './ChallengeDTO';
-import type { ParticipantDTO } from './ParticipantDTO';
+import type { UserDTO } from './UserDTO';
 export type GoalDTO = {
     id?: number;
-    goalName?: string;
+    name?: string;
     description?: string;
     targetAmount?: number;
     targetDate?: string;
-    completedAt?: string;
     createdAt?: string;
     challenges?: Array<ChallengeDTO>;
-    participants?: Array<ParticipantDTO>;
+    user?: UserDTO;
 };
 

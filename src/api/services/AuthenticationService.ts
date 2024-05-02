@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { AuthenticationResponse } from '../models/AuthenticationResponse';
+import type { BankIDRequest } from '../models/BankIDRequest';
 import type { LoginRequest } from '../models/LoginRequest';
 import type { SignUpRequest } from '../models/SignUpRequest';
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -72,6 +73,24 @@ export class AuthenticationService {
                 401: `Invalid credentials`,
                 404: `User not found`,
             },
+        });
+    }
+    /**
+     * Authenticate a BankID request
+     * Authenticate a BankID request
+     * @returns AuthenticationResponse If the authentication is successful
+     * @throws ApiError
+     */
+    public static bankIdAuthentication({
+        requestBody,
+    }: {
+        requestBody: BankIDRequest,
+    }): CancelablePromise<AuthenticationResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/auth/bank-id',
+            body: requestBody,
+            mediaType: 'application/json',
         });
     }
 }

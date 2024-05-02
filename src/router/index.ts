@@ -1,12 +1,6 @@
 // Import necessary dependencies from Vue Router and your views
 import { createRouter, createWebHistory } from 'vue-router';
-import LoginView from '../views/Authentication/LoginView.vue';
 import { useUserInfoStore } from '@/stores/UserStore';
-import UserProfileView from "@/views/User/UserProfileView.vue";
-import SignUp from '@/components/SignUp/SignUp.vue'
-import UpdateUserView from "@/views/UpdateUser/UpdateUserView.vue";
-
-
 const routes = [
   {
     path: '/',
@@ -17,79 +11,69 @@ const routes = [
       {
         path: '',
         name: 'home',
-        component: () => import('../views/SavingGoalView/RoadmapView.vue'),
+        component: () => import('@/views/SavingGoal/RoadmapView.vue'),
       },
       {
         path: 'news',
         name: 'news',
-        component: () => import('@/views/NewsView.vue'),
+        component: () => import('@/views/News/NewsView.vue'),
       },
       {
         path: 'leaderboard',
         name: 'leaderboard',
-        component: () => import('@/views/LeaderboardView.vue'),
-      },
-      {
-        path: 'test',
-        name: 'test',
-        component: () => import('@/views/TestView.vue'),
+        component: () => import('@/views/Leaderboard/LeaderboardView.vue'),
       },
       {
         path: 'profile',
         name: 'profile',
-        component: UserProfileView
-      },
-      {
-        path: 'update-user',
-        name: 'update-user',
-        component: UpdateUserView
+        component: () => import('@/views/User/MyProfileView.vue'),
       },
       {
         path: '/settings',
         name: 'settings',
-        component: () => import('@/views/SettingsView.vue'),
+        component: () => import('@/views/User/UserSettingsView.vue'),
         children: [
           {
             path: '/settings/account',
             name: 'account',
-            component: () => import('@/views/Settings/SettingsAccountView.vue'),
+            component: () => import('@/components/Settings/SettingsAccount.vue'),
           },
           {
             path: '/settings/profile',
             name: 'profilesettings',
-            component: () => import('@/views/Settings/SettingsProfileView.vue'),
+            component: () => import('@/components/Settings/SettingsProfile.vue'),
           },
           {
             path: '/settings/security',
             name: 'security',
-            component: () => import('@/views/Settings/SettingsSecurityView.vue'),
+            component: () => import('@/components/Settings/SettingsSecurity.vue'),
           },
           {
             path: '/settings/notification',
             name: 'notification',
-            component: () => import('@/views/Settings/SettingsNotificationView.vue'),
+            component: () => import('@/components/Settings/SettingsNotification.vue'),
           },
           {
             path: '/settings/bank',
             name: 'bank',
-            component: () => import('@/views/Settings/SettingsBankView.vue'),
+            component: () => import('@/components/Settings/SettingsBank.vue'),
           },
         ]
       },
       {
         path: 'roadmap',
         name: 'roadmap',
-        component: () => import('@/views/SavingGoalView/RoadmapView.vue'),
+        component: () => import('@/views/SavingGoal/RoadmapView.vue'),
       },
       {
         path: 'feedback',
         name: 'feedback',
-        component: () => import('@/views/FeedbackView.vue'),
+        component: () => import('@/views/User/UserFeedbackView.vue'),
       },
       {
         path: 'shop',
         name: 'shop',
-        component: () => import('@/views/ShopView.vue'),
+        component: () => import('@/views/Shop/ShopView.vue'),
       },
       {
         path: '/budget-overview',
@@ -106,7 +90,7 @@ const routes = [
       {
         path: '/profile/:id',
         name: 'friend-profile',
-        component: () => import('@/views/User/UserProfileForeignView.vue'),
+        component: () => import('@/views/User/ExternalProfileView.vue'),
       },
       {
         path: 'friends',
@@ -114,32 +98,21 @@ const routes = [
         component: () => import('@/views/User/UserFriendsView.vue'),
       },
       {
-        path: 'add-friend',
-        name: 'add-friend',
-        component: () => import('@/views/User/UserAddFriend.vue'),
-      },
-      {
-        path: 'admin',
-        name: 'admin',
-        component: () => import('@/views/TestView.vue'),
-        meta: { requiresAdmin: true },
-      },
-      {
         path: 'unauthorized',
         name: 'unauthorized',
-        component: () => import('@/views/UnauthorizedView.vue'),
+        component: () => import('@/views/Exception/UnauthorizedView.vue'),
       },
       {
         path: '/:pathMatch(.*)*',
         name: 'not-found',
-        component: () => import('@/views/NotFoundView.vue'),
+        component: () => import('@/views/Exception/NotFoundView.vue'),
       },
     ]
   },
   {
     path: '/login',
     name: 'login',
-    component: LoginView,
+    component: () => import('@/views/Authentication/LoginView.vue'),
   },
   {
     path: '/forgotten-password',
@@ -157,24 +130,29 @@ const routes = [
     component: () => import('@/views/Authentication/SignUpView.vue'),
   },
   {
+    path: '/redirect',
+    name: 'redirect',
+    component: () => import('@/views/BankID/RedirectView.vue'),
+  },
+  {
     path: '/configuration',
     name: 'configuration',
-    component: () => import('@/views/ConfigurationView.vue'),
+    component: () => import('@/views/Configuration/ConfigurationView.vue'),
     children: [
       {
-        path: '/bank-id',
-        name: 'bankId',
-        component: () => import('@/components/Configuration/ConfigurationSteps/BankId.vue'),
+        path: '/bank-account',
+        name: 'bank account',
+        component: () => import('@/components/Configuration/ConfigurationSteps/BankAccount.vue'),
       },
       {
         path: '/commitment',
         name: 'commitment',
-        component: () => import('@/components/Configuration/ConfigurationSteps/Commitment.vue'),
+        component: () => import('@/components/Configuration/ConfigurationSteps/ConfigurationCommitment.vue'),
       },
       {
         path: '/experience',
         name: 'experience',
-        component: () => import('@/components/Configuration/ConfigurationSteps/Experience.vue'),
+        component: () => import('@/components/Configuration/ConfigurationSteps/ConfigurationExperience.vue'),
       },
       {
         path: '/suitable-challenges',
@@ -184,7 +162,7 @@ const routes = [
       {
         path: '/first-saving-goal',
         name: 'first saving goal',
-        component: () => import('@/components/Configuration/ConfigurationSteps/FirstSavingGoal.vue'),
+        component: () => import('@/components/Configuration/ConfigurationSteps/ConfigurationSavingGoal.vue'),
       }
     ]
   },
