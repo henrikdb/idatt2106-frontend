@@ -56,22 +56,20 @@
                             </router-link>
                           </li>
                         </ul>
-                        <ul v-else class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <ul v-else-if="notificationListRef.length === 0" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                           <li>Ingen varslinger</li>
                         </ul>
                     </li>
           <li v-if="userStore.isLoggedIn" class="nav-item dropdown">
-
-
             <a
-  data-cy="user"
-  :class="['nav-link', 'dropdown-toggle', 'username-text', 'text-white', { 'underline-active': !isAnyActivePage() }]"
-  href="#"
-  role="button"
-  data-bs-toggle="dropdown"
-  aria-expanded="false">
-  <img src="@/assets/icons/person.svg">{{ useUserInfoStore().firstname }}
-</a>
+              data-cy="user"
+              :class="['nav-link', 'dropdown-toggle', 'username-text', 'text-white', { 'underline-active': !isAnyActivePage() }]"
+              href="#"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false">
+              <img src="@/assets/icons/person.svg">{{ useUserInfoStore().firstname }}
+            </a>
 
             <ul class="dropdown-menu dropdown-username-content">
 
@@ -158,10 +156,7 @@
 import { useRouter, useRoute } from "vue-router";
 import { useUserInfoStore } from '@/stores/UserStore';
 import {onMounted, ref} from "vue";
-import { type NotificationDTO, NotificationService } from '@/api'
-import { afterWrite } from '@popperjs/core'
-
-
+import { BadgeService, type NotificationDTO, NotificationService } from '@/api'
 
 const router = useRouter();
 const route = useRoute();
@@ -206,8 +201,10 @@ const notificationPathMapper: any = {
   "BADGE": "/profile",
   "COMPLETED_GOAL": "/roadmap"
 }
+
 const getNotifications = async () => {
   try {
+    await BadgeService.updateUnlockedBadges();
     notificationListRef.value = await NotificationService.getUnreadNotificationByUser()
   } catch (error) {
     notificationListRef.value = []
