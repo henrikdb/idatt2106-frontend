@@ -79,8 +79,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Friend request successfully accepted",
+          "404": {
+            "description": "Friend request not found",
             "content": {
               "*/*": {
                 "schema": {
@@ -89,8 +89,8 @@
               }
             }
           },
-          "404": {
-            "description": "Friend request not found",
+          "200": {
+            "description": "Friend request successfully accepted",
             "content": {
               "*/*": {
                 "schema": {
@@ -120,8 +120,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Friend successfully deleted or friend request cancelled",
+          "404": {
+            "description": "Friend or friend request not found",
             "content": {
               "*/*": {
                 "schema": {
@@ -130,8 +130,8 @@
               }
             }
           },
-          "404": {
-            "description": "Friend or friend request not found",
+          "200": {
+            "description": "Friend successfully deleted or friend request cancelled",
             "content": {
               "*/*": {
                 "schema": {
@@ -162,8 +162,8 @@
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "No accounts associated with a bank user",
+          "404": {
+            "description": "Bank profile id does not exist",
             "content": {
               "*/*": {
                 "schema": {
@@ -172,8 +172,8 @@
               }
             }
           },
-          "404": {
-            "description": "Bank profile id does not exist",
+          "200": {
+            "description": "No accounts associated with a bank user",
             "content": {
               "*/*": {
                 "schema": {
@@ -204,8 +204,8 @@
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "Successfully created a bank profile",
+          "400": {
+            "description": "Could not create profile",
             "content": {
               "*/*": {
                 "schema": {
@@ -214,8 +214,8 @@
               }
             }
           },
-          "400": {
-            "description": "Could not create profile",
+          "200": {
+            "description": "Successfully created a bank profile",
             "content": {
               "*/*": {
                 "schema": {
@@ -246,8 +246,8 @@
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "Successfully created account",
+          "404": {
+            "description": "Provided bank profile id could not be found",
             "content": {
               "*/*": {
                 "schema": {
@@ -256,8 +256,8 @@
               }
             }
           },
-          "404": {
-            "description": "Provided bank profile id could not be found",
+          "200": {
+            "description": "Successfully created account",
             "content": {
               "*/*": {
                 "schema": {
@@ -339,11 +339,11 @@
           "required": true
         },
         "responses": {
-          "204": {
-            "description": "Password was reset successfully"
-          },
           "403": {
             "description": "Invalid token"
+          },
+          "204": {
+            "description": "Password was reset successfully"
           }
         },
         "security": []
@@ -368,8 +368,8 @@
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "Successfully updated notification",
+          "500": {
+            "description": "User is not found",
             "content": {
               "*/*": {
                 "schema": {
@@ -378,8 +378,8 @@
               }
             }
           },
-          "500": {
-            "description": "User is not found",
+          "200": {
+            "description": "Successfully updated notification",
             "content": {
               "*/*": {
                 "schema": {
@@ -411,12 +411,6 @@
           }
         ],
         "responses": {
-          "201": {
-            "description": "Item purchased and added to inventory successfully",
-            "content": {
-              "application/json": {}
-            }
-          },
           "403": {
             "description": "Insufficient points to purchase the item",
             "content": {
@@ -424,6 +418,14 @@
                 "schema": {
                   "type": "string"
                 }
+              }
+            }
+          },
+          "201": {
+            "description": "Item purchased and added to inventory successfully",
+            "content": {
+              "application/json": {
+
               }
             }
           }
@@ -545,9 +547,6 @@
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "Successfully updated the challenge"
-          },
           "401": {
             "description": "Day is already completed or day outside of range",
             "content": {
@@ -557,6 +556,9 @@
                 }
               }
             }
+          },
+          "200": {
+            "description": "Successfully updated the challenge"
           }
         }
       }
@@ -642,8 +644,8 @@
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "Successfully updated budget",
+          "500": {
+            "description": "Budget is not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -652,8 +654,8 @@
               }
             }
           },
-          "500": {
-            "description": "Budget is not found",
+          "200": {
+            "description": "Successfully updated budget",
             "content": {
               "application/json": {
                 "schema": {
@@ -695,8 +697,8 @@
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "Successfully updated budget",
+          "500": {
+            "description": "Error updating expense",
             "content": {
               "application/json": {
                 "schema": {
@@ -705,8 +707,8 @@
               }
             }
           },
-          "500": {
-            "description": "Error updating expense",
+          "200": {
+            "description": "Successfully updated budget",
             "content": {
               "application/json": {
                 "schema": {
@@ -769,22 +771,22 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Email is valid",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "type": "object"
-                }
-              }
-            }
-          },
           "409": {
             "description": "Email already exists",
             "content": {
               "*/*": {
                 "schema": {
                   "$ref": "#/components/schemas/ExceptionResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Email is valid",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
                 }
               }
             }
@@ -812,22 +814,22 @@
           "required": true
         },
         "responses": {
-          "201": {
-            "description": "Successfully signed up",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AuthenticationResponse"
-                }
-              }
-            }
-          },
           "409": {
             "description": "Email already exists",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ExceptionResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Successfully signed up",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthenticationResponse"
                 }
               }
             }
@@ -865,8 +867,8 @@
               }
             }
           },
-          "401": {
-            "description": "Invalid credentials",
+          "404": {
+            "description": "User not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -875,8 +877,8 @@
               }
             }
           },
-          "404": {
-            "description": "User not found",
+          "401": {
+            "description": "Invalid credentials",
             "content": {
               "application/json": {
                 "schema": {
@@ -1110,8 +1112,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "No accounts associated with a bank user",
+          "404": {
+            "description": "Bank profile id does not exist",
             "content": {
               "*/*": {
                 "schema": {
@@ -1123,8 +1125,8 @@
               }
             }
           },
-          "404": {
-            "description": "Bank profile id does not exist",
+          "200": {
+            "description": "No accounts associated with a bank user",
             "content": {
               "*/*": {
                 "schema": {
@@ -1739,8 +1741,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Successfully got budget",
+          "500": {
+            "description": "Budget is not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -1749,8 +1751,8 @@
               }
             }
           },
-          "500": {
-            "description": "Budget is not found",
+          "200": {
+            "description": "Successfully got budget",
             "content": {
               "application/json": {
                 "schema": {
@@ -1861,8 +1863,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Successfully deleted budget",
+          "500": {
+            "description": "Budget is not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -1871,8 +1873,8 @@
               }
             }
           },
-          "500": {
-            "description": "Budget is not found",
+          "200": {
+            "description": "Successfully deleted budget",
             "content": {
               "application/json": {
                 "schema": {
@@ -1972,8 +1974,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Successfully got budget",
+          "500": {
+            "description": "Badge is not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -1982,8 +1984,8 @@
               }
             }
           },
-          "500": {
-            "description": "Badge is not found",
+          "200": {
+            "description": "Successfully got budget",
             "content": {
               "application/json": {
                 "schema": {
@@ -2346,6 +2348,19 @@
           }
         }
       },
+      "PointDTO": {
+        "type": "object",
+        "properties": {
+          "currentPoints": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalEarnedPoints": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
       "ProgressDTO": {
         "type": "object",
         "properties": {
@@ -2361,6 +2376,35 @@
             "type": "number"
           },
           "completedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "StreakDTO": {
+        "type": "object",
+        "properties": {
+          "currentStreak": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "currentStreakCreatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "currentStreakUpdatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "highestStreak": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "highestStreakCreatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "highestStreakEndedAt": {
             "type": "string",
             "format": "date-time"
           }
@@ -2407,6 +2451,12 @@
           "savingsAccountBBAN": {
             "type": "integer",
             "format": "int64"
+          },
+          "point": {
+            "$ref": "#/components/schemas/PointDTO"
+          },
+          "streak": {
+            "$ref": "#/components/schemas/StreakDTO"
           }
         }
       },
@@ -2626,13 +2676,11 @@
             "type": "string",
             "format": "date-time"
           },
-          "totalPoints": {
-            "type": "integer",
-            "format": "int32"
+          "point": {
+            "$ref": "#/components/schemas/PointDTO"
           },
-          "currentStreak": {
-            "type": "integer",
-            "format": "int32"
+          "streak": {
+            "$ref": "#/components/schemas/StreakDTO"
           }
         }
       },
