@@ -7,9 +7,12 @@ export type UserDTO = {
     firstName?: string;
     lastName?: string;
     profileImage?: number;
+    bannerImage?: number;
     email?: string;
     createdAt?: string;
     role?: string;
     subscriptionLevel?: string;
+    checkingAccountBBAN?: number;
+    savingsAccountBBAN?: number;
 };
 

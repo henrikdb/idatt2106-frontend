@@ -2383,6 +2383,10 @@
             "type": "integer",
             "format": "int64"
           },
+          "bannerImage": {
+            "type": "integer",
+            "format": "int64"
+          },
           "email": {
             "type": "string"
           },
@@ -2395,6 +2399,14 @@
           },
           "subscriptionLevel": {
             "type": "string"
+          },
+          "checkingAccountBBAN": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "savingsAccountBBAN": {
+            "type": "integer",
+            "format": "int64"
           }
         }
       },
@@ -2606,9 +2618,21 @@
             "type": "integer",
             "format": "int64"
           },
+          "bannerImage": {
+            "type": "integer",
+            "format": "int64"
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time"
+          },
+          "totalPoints": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "currentStreak": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },
