@@ -4,7 +4,7 @@ import LoginForm from '@/components/Login/LoginForm.vue'
 
 <template>
   <div class="containers">
-    <h1 class="title">Sparesti</h1>
+    <h1 class="title">SpareSti</h1>
     <div class="box">
       <LoginForm/>
     </div>
