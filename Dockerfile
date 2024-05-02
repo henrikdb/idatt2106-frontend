@@ -10,7 +10,7 @@ RUN npm run build
 FROM nginx:stable-alpine as production-stage
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 COPY web/nginx.conf /etc/nginx/nginx.conf
-COPY web/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
-COPY web/nginx-selfsigned.crt /etc/ssl/private/selfsigned.crt
+COPY web/ca-certificates.crt /etc/ssl/private/ca-certificates.crt
+COPY web/nginx-selfsigned.crt /etc/ssl/certs/selfsigned.crt
 
 CMD ["nginx", "-g", "daemon off;"]
