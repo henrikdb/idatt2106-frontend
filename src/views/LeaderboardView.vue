@@ -19,18 +19,6 @@
         </div>
         <main>
             <div id="leaderboard">
-<<<<<<< HEAD
-                <h1><img src="@/assets/items/pigcoin.png" style="width: 2rem" alt="pig coin"> Poeng</h1>
-                <Leaderboard :leaderboard="pointsLeaderboardData" :leaderboardExtra="pointsLeaderboardDataExtra" @navigateToUserProfile="navigateToUserProfile" />
-            </div>
-            <div id="leaderboard">
-                <h1><img src="@/assets/icons/fire.png" style="width: 2rem" alt="ild"> Streak</h1>
-                <Leaderboard :leaderboard="currentLeaderboardData" :leaderboardExtra="currentLeaderboardDataExtra" @navigateToUserProfile="navigateToUserProfile" />
-            </div>
-            <div id="leaderboard">
-                <h1><img src="@/assets/icons/fire.png" style="width: 2rem" alt="ild"> Streak</h1>
-                <Leaderboard :leaderboard="streakLeaderboardData" :leaderboardExtra="streakLeaderboardDataExtra" @navigateToUserProfile="navigateToUserProfile" />
-=======
                 <h1><img src="@/assets/items/pigcoin.png" style="width: 2rem" alt="pig coin"> Totale poeng</h1>
                 <Leaderboard data-cy="total-points-board" :leaderboard="pointsLeaderboardData"
                               :leaderboardExtra="pointsLeaderboardDataExtra" @navigateToUserProfile="navigateToUserProfile" />
@@ -44,7 +32,6 @@
                 <h1><img src="@/assets/icons/fire.png" style="width: 2rem" alt="ild"> Høyeste rekke</h1>
                 <Leaderboard data-cy="streak-board" :leaderboard="streakLeaderboardData"
                               :leaderboardExtra="streakLeaderboardDataExtra" @navigateToUserProfile="navigateToUserProfile" />
->>>>>>> e50d5c050dfc8dc2ff7931c3a05f22c024a70e31
             </div>
         </main>
     </div>

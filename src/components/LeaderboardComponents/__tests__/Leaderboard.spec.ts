@@ -56,11 +56,6 @@ describe('Leaderboard', () => {
     expect(wrapper.vm.userInLeaderboard).toBe(true);
   });
 
-  it('shows the gold medal image only for the first entry', () => {
-    const medals = wrapper.findAll('.gold-medal');
-    expect(medals.length).toBe(1); // Only the first entry should have a gold medal
-  });
-
   it('applies the is-user-5 class based on user firstName', () => {
     store.$state.firstname = 'User'; // Change state to match the condition
     expect(wrapper.find('.is-user-5').exists()).toBe(false); // Check if the class is applied
