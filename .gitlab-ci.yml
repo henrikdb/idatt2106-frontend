@@ -48,6 +48,19 @@ vitest_unit-tests:
   dependencies:
     - install_dependencies
 
+cypress_e2e-tests:
+  stage: test
+  script:
+    - npm ci
+    - npm run test:e2e:ci
+  dependencies:
+    - install_dependencies
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+        - node_modules/
+    policy: pull
+
 eslint_run-lint:
   stage: lint
   cache:
