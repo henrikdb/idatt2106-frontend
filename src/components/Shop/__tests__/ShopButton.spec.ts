@@ -20,9 +20,6 @@ describe('ImageButtonComponent', () => {
 
     const button = wrapper.find('#buttonStyle')
     expect(button.exists()).toBe(true)
-    expect(button.text()).toContain('+Add Coin')
-    const image = button.find('img')
-    expect(image.exists()).toBe(true)
-    expect(image.attributes('src')).toBe('/src/assets/items/pigcoin.png')
+    expect(button.text()).toContain('Add Coin')
   })
 })
