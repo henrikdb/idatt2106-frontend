@@ -1,11 +1,6 @@
 // Import necessary dependencies from Vue Router and your views
 import { createRouter, createWebHistory } from 'vue-router';
-import LoginView from '../views/Authentication/LoginView.vue';
 import { useUserInfoStore } from '@/stores/UserStore';
-import UserProfileView from "@/views/User/UserProfileView.vue";
-import UpdateUserView from "@/views/UpdateUser/UpdateUserView.vue";
-import RedirectView from '@/views/RedirectView.vue';
-
 const routes = [
   {
     path: '/',
@@ -31,12 +26,7 @@ const routes = [
       {
         path: 'profile',
         name: 'profile',
-        component: UserProfileView
-      },
-      {
-        path: 'update-user',
-        name: 'update-user',
-        component: UpdateUserView
+        component: () => import('@/views/User/UserProfileView.vue'),
       },
       {
         path: '/settings',
@@ -108,11 +98,6 @@ const routes = [
         component: () => import('@/views/User/UserFriendsView.vue'),
       },
       {
-        path: 'add-friend',
-        name: 'add-friend',
-        component: () => import('@/views/User/UserAddFriend.vue'),
-      },
-      {
         path: 'unauthorized',
         name: 'unauthorized',
         component: () => import('@/views/UnauthorizedView.vue'),
@@ -127,7 +112,7 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: LoginView,
+    component: () => import('@/views/Authentication/LoginView.vue'),
   },
   {
     path: '/forgotten-password',
@@ -147,18 +132,13 @@ const routes = [
   {
     path: '/redirect',
     name: 'redirect',
-    component: () => RedirectView,
+    component: () => import('@/views/RedirectView.vue'),
   },
   {
     path: '/configuration',
     name: 'configuration',
     component: () => import('@/views/ConfigurationView.vue'),
     children: [
-      {
-        path: '/bank-id',
-        name: 'bankId',
-        component: () => import('@/components/Configuration/ConfigurationSteps/BankId.vue'),
-      },
       {
         path: '/commitment',
         name: 'commitment',
