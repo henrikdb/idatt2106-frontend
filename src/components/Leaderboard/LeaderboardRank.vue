@@ -144,7 +144,6 @@ async function friends() {
         entryCount: 2,
     });
 
-
     pointsLeaderboardData.value = friendsPoints.entries;
     currentLeaderboardData.value = friendsCurrentStreak.entries;
     streakLeaderboardData.value = friendsStreak.entries;
