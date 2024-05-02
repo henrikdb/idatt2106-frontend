@@ -22,7 +22,9 @@ async function setupForm() {
 
     firstname.value = response.firstName;
     lastname.value = response.lastName;
-    imageUrl.value = "http://localhost:8080/api/images/" + response.profileImage;
+    if (response.profileImage) {
+      imageUrl.value = "http://localhost:8080/api/images/" + response.profileImage;
+    }
     getInventory();
   } catch (err) {
     console.error(err)
@@ -64,24 +66,23 @@ const toUpdateUserSettings = () => {
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col 12">
         <div class="card">
-          <div class="rounded-top text-white d-flex flex-row bg-primary" style="height:200px;">
-            <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
-
-              <img :src="imageUrl" alt="Generisk plassholderbilde" class="img-fluid img-thumbnail mt-4 mb-2"
-                style="width: 150px; z-index: 1">
-              <button  data-cy="toUpdate" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary"
-                data-mdb-ripple-color="dark" style="z-index: 1;" id="toUpdate" @click="toUpdateUserSettings">
+          <div class="rounded-top text-white d-flex flex-row bg-primary" style="height:200px;" id="banner">
+            <div class=" d-flex flex-column align-items-center justify-content-center">
+              <img :src="imageUrl" alt="Generisk plassholderbilde" class="img-fluid img-thumbnail"
+                style="width: 150px; height:150px; margin-left: 25px; margin-right: 15px;">
+            </div>
+              <h1 data-cy="firstname" style="display: flex; align-items: end; margin-bottom: 20px;">{{ firstname }} {{ lastname }}</h1>
+          </div>
+          <div class="p-3 text-black" style="background-color: #f8f9fa;">
+            <div class="d-flex justify-content-end text-center py-1">
+              <div style="width: 100%; display: flex; justify-content: start">
+                <button  data-cy="toUpdate" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary"
+                data-mdb-ripple-color="dark" style="z-index: 1; height: 40px; margin-left: 17px" id="toUpdate" @click="toUpdateUserSettings">
                 Rediger profil
               </button>
-            </div>
-            <div class="ms-3" style="margin-top: 130px;">
-              <h1 data-cy="firstname">{{ firstname }} {{ lastname }}</h1>
-            </div>
-          </div>
-          <div class="p-4 text-black" style="background-color: #f8f9fa;">
-            <div class="d-flex justify-content-end text-center py-1">
-              <div>
 
+              </div>
+              <div>
                 <p class="mb-1 h2" data-cy="points">253 <img src="@/assets/items/pigcoin.png" style="width: 4rem"></p>
                 <p class="small text-muted mb-0">Poeng</p>
               </div>
@@ -247,6 +248,10 @@ const toUpdateUserSettings = () => {
     box-shadow: none;
     opacity: 0.9;
   }
+}
+
+#banner {
+  background-image: url('../src/assets/banners/stacked.svg');
 }
 
 .card-1 {

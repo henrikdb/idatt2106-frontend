@@ -1,11 +1,15 @@
 <template>
-    <div class="container">
-        <h1>Dine venner</h1>
+    <div class="container" style="margin-bottom: 3rem;">
+        <h1 class="my-3">Dine venner</h1>
         <div>
-            <button class="btn btn-primary pull-right" @click="addNewFriends">+ Legg til venn</button>
+            <button class="btn pull-right" @click="addNewFriends" id="addFriend">+ Legg til venn</button>
             <div class="my-3">
-                <button class="btn pages" @click="setupFriends">Dine venner</button>
-                <button class="btn pages" @click="requestFriend">Venneforespørsler</button>
+                <button class="btn pages" @click="setupFriends" :class="{ 'active-tab': showFriends }">
+                    Dine venner
+                </button>
+                <button class="btn pages" @click="requestFriend" :class="{ 'active-tab': showRequests }">
+                    Venneforespørsler
+                </button>
             </div>
         </div>
         <div v-if="showFriends">
@@ -23,7 +27,7 @@
                             </div>
                             <h3><router-link to="" data-cy="navigateToFriend" href="#" class="btn stretched-link"
                                     id="profileName" @click="navigateToFriend(friend.id)">{{
-                friend.firstName }}</router-link></h3>
+                friend.firstName }} {{ friend.lastName }}</router-link></h3>
                             <div class="desc">{{ friend.firstName }} {{ friend.lastName }}</div>
                             <div class="contacts">
                                 <a class="text removeFriend" data-bs-toggle="collapse"
@@ -432,7 +436,7 @@ ul.friend-list .right p {
     position: relative;
     width: 100%;
     height: 60px;
-    background-color: #3afe;
+    background-color: rgba(7, 46, 74, 0.895);
 }
 
 .card-one .header::before,
@@ -565,5 +569,26 @@ ul.friend-list .right p {
     border-bottom: 1px solid #000;
     border-radius: 0px;
     margin: 0px 5px;
+}
+
+.pages {
+    border-bottom: 2px solid #000;
+    /* default border */
+    border-radius: 0px;
+    margin: 0px 5px;
+}
+
+.active-tab {
+    border-bottom: 4px solid #000;
+    /* thicker border when active */
+}
+
+#addFriend {
+    background-color: #084766;
+    color: white;
+}
+
+#addFriend:hover {
+    background-color: #003b58f5;
 }
 </style>

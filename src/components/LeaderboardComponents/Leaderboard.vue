@@ -1,6 +1,6 @@
 <template>
   <div id="leaderboard">
-    <div class="ribbon"></div>
+    
     <table>
       <tbody>
         <tr v-for="(entry, index) in leaderboard" :key="entry.user?.id" :class="{ 'is-user-5': entry.user?.id === userStore.id }">
@@ -8,18 +8,12 @@
           <td class="name" @click="navigateToUserProfile(entry.user?.id ?? 0)">{{ entry.user?.firstName }}</td>
           <td class="points" v-if="index === 0">
             {{ entry.score }}
-            <div class="medal">
-              <img class="gold-medal"
-                src="https://github.com/malunaridev/Challenges-iCodeThis/blob/master/4-leaderboard/assets/gold-medal.png?raw=true"
-                alt="gold medal" />
-            </div>
           </td>
           <td v-else class="points">{{ entry.score }}</td>
         </tr>
       </tbody>
       <tbody id="line">`</tbody>
       <tbody v-if="!userInLeaderboard">
-        <tr></tr>
         <tr v-for="(entry, index) in leaderboardExtra" :key="entry.user?.id" :class="{ 'is-user-5': entry.user?.id === userStore.id }">
           <td class="number">{{ entry.rank }}</td>
           <td class="name" @click="navigateToUserProfile(entry.user?.id ?? 0)">{{ entry.user?.firstName }}</td>
@@ -62,9 +56,11 @@ const navigateToUserProfile = (id: number) => {
 </script>
 
 <style scoped>
+
 #leaderboard {
-  width: 100%;
+  max-width: 80%;
   position: relative;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
 table {
@@ -84,7 +80,7 @@ tr {
   height: 4rem;
 }
 
-tr:not(:first-child):hover {
+tr:hover {
   background-color: #fff;
   transform: scale(1.1);
   -webkit-box-shadow: 0px 5px 15px 8px #e4e7fb;
@@ -93,10 +89,6 @@ tr:not(:first-child):hover {
 
 tr:nth-child(even) {
   background-color: #f9f9f9;
-}
-
-tr:nth-child(1) {
-  color: #fff;
 }
 
 td {
@@ -109,7 +101,7 @@ td {
 
 .number {
   width: 1rem;
-  font-size: 2.2rem;
+  font-size: 1.4rem;
   font-weight: bold;
   text-align: left;
   display: flex;
@@ -117,7 +109,7 @@ td {
 }
 
 .name {
-  font-size: 1.3rem;
+  font-size: 1rem;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -125,7 +117,7 @@ td {
 
 .points {
   font-weight: bold;
-  font-size: 1.3rem;
+  font-size: 1rem;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -155,7 +147,7 @@ td {
   width: 106%;
   height: 4.5rem;
   top: -0.5rem;
-  background-color: #0A58CA;
+  background-color: #003A58;
   position: absolute;
   /**left: -1rem;*/
   box-shadow: 0px 15px 11px -6px #7a7a7d;
@@ -168,7 +160,7 @@ td {
   bottom: -0.8rem;
   left: 0.35rem;
   transform: rotate(45deg);
-  background-color: #0A58CA;
+  background-color: #003A58;
   position: absolute;
   z-index: -1;
 }
@@ -180,7 +172,7 @@ td {
   bottom: -0.8rem;
   right: 0.35rem;
   transform: rotate(45deg);
-  background-color: #0A58CA;
+  background-color: #003A58;
   position: absolute;
   z-index: -1;
 }
@@ -188,7 +180,7 @@ td {
 #line {
   width: 100%;
   height: 0.01rem;
-  border-top: 8px solid #0A58CA;
+  border-top: 8px solid #003A58
 }
 
 tr.is-user-5 {

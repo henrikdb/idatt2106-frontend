@@ -1,10 +1,11 @@
 <template>
-    <br>
+    <div id="background">
+        <br>
     <div id="dropdownContainer">
-        <h1 class="box">Marked</h1>
+        <h1 class="box">Butikk</h1>
     </div>
-    <div class="container">
-        <div class="row">
+    <div class="container d-flex justify-content-center">
+        <div class="row col-md-10">
             <div class="col-md-12">
                 <h1>Stash</h1>
                 <div class="category row justify-content-between mb-5 m-2">
@@ -70,6 +71,7 @@
             </div>
 
         </div>
+    </div>
     </div>
 </template>
 
@@ -138,6 +140,10 @@ onMounted(() => {
 
 .box {
     width: 90%;
+    justify-content: center;
+    text-align: center;
+    font-size: 5rem;
+    font-weight: 700;
 }
 
 .card:hover {
@@ -156,6 +162,10 @@ onMounted(() => {
 #dropdownContainer {
     display: flex;
     justify-content: center;
+    align-items: center;
     margin-bottom: 2rem;
+}
+
+#background {
 }
 </style>

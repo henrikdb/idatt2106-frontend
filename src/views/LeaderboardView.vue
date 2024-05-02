@@ -17,15 +17,15 @@
         </div>
         <main>
             <div id="leaderboard">
-                <h1><img src="@/assets/items/pigcoin.png" style="width: 2rem" alt="pig coin"> Totale poeng</h1>
+                <h1><img src="@/assets/items/pigcoin.png" style="width: 2rem" alt="pig coin"> Poeng</h1>
                 <Leaderboard :leaderboard="pointsLeaderboardData" :leaderboardExtra="pointsLeaderboardDataExtra" @navigateToUserProfile="navigateToUserProfile" />
             </div>
             <div id="leaderboard">
-                <h1><img src="@/assets/icons/fire.png" style="width: 2rem" alt="ild"> Nåværende rekke</h1>
+                <h1><img src="@/assets/icons/fire.png" style="width: 2rem" alt="ild"> Streak</h1>
                 <Leaderboard :leaderboard="currentLeaderboardData" :leaderboardExtra="currentLeaderboardDataExtra" @navigateToUserProfile="navigateToUserProfile" />
             </div>
             <div id="leaderboard">
-                <h1><img src="@/assets/icons/fire.png" style="width: 2rem" alt="ild"> Høyeste rekke</h1>
+                <h1><img src="@/assets/icons/fire.png" style="width: 2rem" alt="ild"> Streak</h1>
                 <Leaderboard :leaderboard="streakLeaderboardData" :leaderboardExtra="streakLeaderboardDataExtra" @navigateToUserProfile="navigateToUserProfile" />
             </div>
         </main>
@@ -175,7 +175,7 @@ main {
 }
 
 h1 {
-    font-weight: 500;
+    font-weight: 700;
     margin-bottom: 1rem;
 }
 
