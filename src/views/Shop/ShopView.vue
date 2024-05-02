@@ -10,7 +10,7 @@
                 <h1>Stash</h1>
                 <div class="category row justify-content-between mb-5 m-2">
                     <div class="card text-center" style="width: 16rem; border: none">
-                        <img src="@/assets/items/adfree.png" class="card-img-top" alt="...">
+                        <img src="../../assets/items/adfree.png" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">Adfree</h5>
                             <button type="button" class="btn btn-primary" id="buttonStyle" @click="buyNoAds">
@@ -18,7 +18,7 @@
                         </div>
                     </div>
                     <div class="card text-center" style="width: 16rem; border: none">
-                        <img src="@/assets/items/piggybank.webp" class="card-img-top" alt="...">
+                        <img src="../../assets/items/piggybank.webp" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">Premium</h5>
                             <button type="button" class="btn btn-primary" id="buttonStyle"
@@ -47,21 +47,21 @@
                 <h1>Stash</h1>
                 <div class="category row justify-content-between mb-5 m-2">
                     <div class="card text-center" style="width: 16rem; border: none">
-                        <img src="@/assets/items/coffee.jpg" class="card-img-top" alt="...">
+                        <img src="../../assets/items/coffee.jpg" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">Free Coffee</h5>
                             <ShopButton button-text="500"></ShopButton>
                         </div>
                     </div>
                     <div class="card text-center" style="width: 16rem; border: none">
-                        <img src="@/assets/items/viaplay.jpg" class="card-img-top" alt="...">
+                        <img src="../../assets/items/viaplay.jpg" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">1 Month Viaplay</h5>
                             <ShopButton button-text="10000"></ShopButton>
                         </div>
                     </div>
                     <div class="card text-center" style="width: 16rem; border: none">
-                        <img src="@/assets/items/pirbad.png" class="card-img-top" alt="...">
+                        <img src="../../assets/items/pirbad.png" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">-10% rabatt</h5>
                             <ShopButton button-text="1000"></ShopButton>

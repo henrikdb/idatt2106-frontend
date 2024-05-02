@@ -3,7 +3,7 @@
         <div class="container py-5">
             <div class="row">
                 <div class="col-md-2 text-center">
-                    <p><img src="@/assets/icons/danger.svg" alt="fare"> <br/>Statuskode: 403</p>
+                    <p><img src="../../assets/icons/danger.svg" alt="fare"> <br/>Statuskode: 403</p>
                 </div>
                 <div class="col-md-10">
                     <h3>OOPS!!! Beklager...</h3>
