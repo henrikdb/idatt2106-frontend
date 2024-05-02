@@ -298,7 +298,7 @@ export default {
       };
       try {
         await GoalService.updateChallengeAmount({requestBody: createGoalPayload})
-      } catch (e) {
+      } catch (e: any) {
         console.log(e.message)
       }
     },
