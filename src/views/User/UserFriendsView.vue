@@ -99,8 +99,11 @@
                                             </h5>
                                         </div>
                                         <div class="col-md-3 col-sm-3">
-                                            <button class="btn btn-primary pull-right" @click="addFriend(user.id)">Legg
-                                                til venn</button>
+                                            <button class="btn btn-primary pull-right" @click="addFriend(user.id)"
+                                                :disabled="friendRequestsSent[user.id]"
+                                                v-if="!friendRequestsSent[user.id]">Legg til venn</button>
+                                            <button class="btn btn-secondary pull-right" disabled
+                                                v-if="friendRequestsSent[user.id]">Forespørsel sendt</button>
                                         </div>
                                     </div>
                                 </div>
@@ -117,7 +120,7 @@
 
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { type Ref, ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { FriendService, UserService } from '@/api';
 import type { UserDTO } from '@/api';
@@ -130,6 +133,8 @@ const showAddFriend = ref(false);
 const friendRequests = ref([] as any);
 const addFriends = ref([] as any);
 const searchedUsers = ref([] as any);
+
+const friendRequestsSent: Ref<Record<number, boolean>> = ref({});
 
 const searchWord = ref("");
 
@@ -169,7 +174,13 @@ const addNewFriends = async () => {
 };
 
 async function addFriend(friendID: number) {
-    const response = await FriendService.addFriendRequest({ userId: friendID });
+    try {
+        await FriendService.addFriendRequest({ userId: friendID });
+        // Use a spread to update the state and keep immutability
+        friendRequestsSent.value = { ...friendRequestsSent.value, [friendID]: true };
+    } catch (error) {
+        console.error('Failed to send friend request', error);
+    }
 }
 
 async function requestFriend() {
