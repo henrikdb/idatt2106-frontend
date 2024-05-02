@@ -65,6 +65,41 @@ npm run test:e2e
 npm run lint
 ```
 
+## Using test data
+For easy use of the web application we have provided a set of test users that can be used.
+
+#### Regular user
+- **Email**
+    ```sh
+    user@example.com
+    ```
+- **Password**
+    ```sh
+    John1
+    ```
+#### Admin user
+- **Email**
+    ```sh
+    admin@example.com
+    ```
+- **Password**
+    ```sh
+    John1
+    ```
+#### BankID user
+The BankID service uses a set of pre-generated test users provided by Signicat. Make sure you have the updated test-users [here](https://developer.signicat.com/identity-methods/nbid/test.html#test-norwegian-bankid).
+- **Social Security Number**
+    ```sh
+    29090816894
+    ```
+- **One time password**
+    ```sh
+    otp
+    ```
+- **Password**
+    ```sh
+    qwer1234
+    ```
 ## Contributors
 The individuals who contributed to the project:
 - Anders Høvik
