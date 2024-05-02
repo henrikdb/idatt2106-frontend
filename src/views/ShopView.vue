@@ -76,7 +76,7 @@
 </template>
 
 <script setup lang="ts">
-import ShopButton from '@/components/Buttons/ShopButton.vue';
+import ShopButton from '@/components/Shop/ShopButton.vue';
 import { ref, onMounted } from 'vue';
 import { UserService } from '@/api';
 import { useUserInfoStore } from '@/stores/UserStore';

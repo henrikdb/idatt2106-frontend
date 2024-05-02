@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import ImageButtonComponent from '@/components/Buttons/ShopButton.vue'
+import ImageButtonComponent from '../ShopButton.vue'
 
 describe('ImageButtonComponent', () => {
   it('renders the button with the correct text and image', () => {
