@@ -1,5 +1,7 @@
 <script setup lang="ts">
 
+import { ref } from 'vue'
+
 const emit = defineEmits(['inputChangeEvent']);
 const props = defineProps({
   label: {
@@ -21,6 +23,10 @@ const props = defineProps({
   modelValue: {
   },
   min: {
+    type: String,
+    required: false
+  },
+  max: {
     type: String,
     required: false
   },
@@ -46,13 +52,16 @@ const props = defineProps({
   }
 });
 
+const formRef = ref();
+
 const onInputEvent = (event: any) => {
+  formRef.value.classList.add("was-validated")
   emit('inputChangeEvent', event.target.value)
 }
 </script>
 
 <template>
-  <div>
+  <div ref="formRef">
     <label :for="inputId" data-cy="bi-label">{{ label }}</label>
     <input :value="modelValue"
            @input="onInputEvent"
@@ -61,6 +70,7 @@ const onInputEvent = (event: any) => {
            :placeholder="placeholder"
            :id="inputId"
            :min="min"
+           :max="max"
            :pattern="pattern"
            :required="required"
            data-cy="bi-input"
