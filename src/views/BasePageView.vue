@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-import Footer from '@/components/BaseComponents/Footer.vue'
-import Menu from '@/components/BaseComponents/Menu.vue'
-import FooterAlternative from "@/components/BaseComponents/FooterAlternative.vue";
+import Footer from '@/components/BaseComponents/FooterComponent.vue'
+import Menu from '@/components/BaseComponents/MenuComponent.vue'
 import { useUserInfoStore } from '@/stores/UserStore';
 </script>
 
@@ -11,11 +10,17 @@ import { useUserInfoStore } from '@/stores/UserStore';
     <div v-if="!useUserInfoStore().isPremium && !useUserInfoStore().isNoAds" style="display: flex; flex-direction: row;">
       <img v-for="item in 7" src="@/assets/coca.webp" style="width: 100%; height: 100px; margin: 5px; border-radius: 1rem;" alt="picture">
     </div>
-    <div>
+    <div id="minHeight">
       <RouterView />
     </div>
    <div v-if="!useUserInfoStore().isPremium && !useUserInfoStore().isNoAds" style="display: flex; flex-direction: row;">
       <img v-for="item in 7" src="@/assets/coca.webp" style="width: 100%; height: 100px; margin: 5px; border-radius: 1rem;" alt="picture">
     </div>
-    <FooterAlternative></FooterAlternative>
+  <Footer></Footer>
 </template>
+
+<style scoped>
+#minHeight {
+  min-height: 700px;
+}
+</style>

@@ -31,7 +31,7 @@ const ifLoggedInReset = () => {
 </script>
 
 <template>
-  <div class="footer-wrapper" style="background-color: #3B71CA">
+  <div class="footer footer-wrapper fixed-bottom" style="background-color: #3B71CA">
 
     <div class="links-wrapper">
       <p class="links-header">Links</p>
