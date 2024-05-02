@@ -15,8 +15,8 @@ export type UserDTO = {
     createdAt?: string;
     role?: string;
     subscriptionLevel?: string;
-    checkingAccountBBAN?: BankAccountResponseDTO;
-    savingsAccountBBAN?: BankAccountResponseDTO;
+    checkingAccount?: BankAccountResponseDTO;
+    savingsAccount?: BankAccountResponseDTO;
     point?: PointDTO;
     streak?: StreakDTO;
 };
