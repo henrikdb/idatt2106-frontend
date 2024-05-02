@@ -110,7 +110,7 @@
                 <a data-testid="logout"
                    class="dropdown-item dropdown-username-link"
                    href="#"
-                   @click="() => { toggleDropdown(); toLogout(); }">
+                   @click="toLogout()">
                   <img src="@/assets/icons/logout.svg">Logg ut
                 </a>
               </li>
@@ -171,7 +171,7 @@ let counter = ref(0)
   return activeRoutes.includes(route.path);
 }
 
-function toggleDropdown(event) {
+function toggleDropdown(event: any) {
   const dropdownMenu = event.target.closest('.dropdown-menu');
   if (dropdownMenu) {
     dropdownMenu.classList.remove('show');
