@@ -28,12 +28,12 @@ export default {
       roadmapSelected: true as boolean,
       statsSelected: false as boolean,
       chartData: {
-        labels: [1, 2, 3, 4, 5, 6, '7'],
+        labels: ["start"],
         datasets: [
           {
             label: this.selectedGoal.name,
             backgroundColor: '#003A58',
-            data: [11, 24, 30, 47, 53, 62, 79]
+            data: [0]
           }
         ]
       },
@@ -60,6 +60,7 @@ export default {
       this.calculateSavedSoFar()
       this.onLoadDisableChecks(this.selectedGoal)
       this.onLoadAddDataToGraph(this.selectedGoal)
+      console.log()
     }, 500);
   },
   computed: {
@@ -242,6 +243,36 @@ export default {
           }
         }
       })
+    },
+
+    formatDate(date: string) {
+      const date1 = new Date(date);
+      return date1.toISOString().split('T')[0]
+    },
+
+    calculateSavedSoFarPerChallengeInPercent(challenge: ChallengeDTO) {
+      let savedSoFarOnChallenge = 0
+      let targetAmount = 1
+      challenge.progressList?.forEach(progress => {
+        if(progress.amount) {
+          savedSoFarOnChallenge += progress.amount
+        }
+      })
+      if(challenge.amount) {
+        targetAmount = challenge.amount
+      }
+
+      return (savedSoFarOnChallenge / targetAmount) * 100
+    },
+
+    calculateSavedSoFarPerChallenge(challenge: ChallengeDTO) {
+      let savedSoFar = 0
+      challenge.progressList?.forEach(progress => {
+        if(progress.amount) {
+          savedSoFar += progress.amount
+        }
+      })
+      return savedSoFar
     }
   },
 };
@@ -292,7 +323,7 @@ export default {
               </div>
               <br>
               <div class="progress">
-                <div class="progress-bar" role="progressbar" :style="{ width: challenge.percentFinished + '%' }" :aria-valuenow="challenge.percentFinished" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar" role="progressbar" :style="{ width: calculateSavedSoFarPerChallengeInPercent(challenge) + '%' }" :aria-valuenow="calculateSavedSoFarPerChallengeInPercent(challenge)" aria-valuemin="0" aria-valuemax="100">{{ calculateSavedSoFarPerChallenge(challenge)}} Kr</div>
               </div>
               <br>
               <div class="checkbox-row">
@@ -308,9 +339,33 @@ export default {
       </ul>
     </div>
     <div v-else>
-      <h3 style="font-weight: 600;">Du har så langt spart {{ savedSoFar }} kr</h3>
-      <h3 style="font-weight: 600;">Ditt penge mål er: {{selectedGoal.targetAmount}} kr</h3>
-      <h3 style="font-weight: 600;">Utfordringene i denne sparestien vil spare deg {{ calculateTotalAmountFromChallenges() }} kr</h3>
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="card-box tilebox-one"><i class="icon-layers float-right text-muted"></i>
+            <h6 class="text-muted text-uppercase mt-0">Du ønsker å spare</h6>
+            <h2 class="" data-plugin="counterup">Kr {{ selectedGoal.targetAmount }}</h2></div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="card-box tilebox-one"><i class="icon-rocket float-right text-muted"></i>
+            <h6 class="text-muted text-uppercase mt-0">Du kan spare</h6>
+            <h2 class="" data-plugin="counterup">Kr {{ calculateTotalAmountFromChallenges() }}</h2></div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="card-box tilebox-one"><i class="icon-paypal float-right text-muted"></i>
+            <h6 class="text-muted text-uppercase mt-0">Du har spart</h6>
+            <h2 class="">Kr <span data-plugin="counterup">{{ savedSoFar }}</span></h2></div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="card-box tilebox-one"><i class="icon-rocket float-right text-muted"></i>
+            <h6 class="text-muted text-uppercase mt-0">Sparemålet ender </h6>
+            <h2 class="" data-plugin="counterup">{{ formatDate(selectedGoal.targetDate) }}</h2></div>
+        </div>
+      </div>
+      <br>
       <Line ref="chart" :data="chartData" :options="chartOptions" />
     </div>
   </div>
@@ -648,4 +703,5 @@ export default {
   flex: 0 0 calc(25% - 10px); /* 20% width for each checkbox, adjust margin accordingly */
   margin-right: 10px; /* Adjust as needed */
 }
+
 </style>
