@@ -53,7 +53,7 @@ export class FriendService {
     }
     /**
      * Send a friend request
-     * Sends a new friend request to another user.
+     * Sends a new friend request to another user. A notification is sent to this user
      * @returns any Friend request successfully created
      * @throws ApiError
      */
