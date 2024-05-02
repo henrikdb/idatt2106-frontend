@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import BaseInput from '@/components/InputFields/BaseInput.vue'
+import BaseInput from '@/components/BaseComponents/Input/BaseInput.vue'
 import { ref } from 'vue'
-import Button1 from '@/components/Buttons/Button1.vue'
+import BaseButton from '@/components/BaseComponents/Buttons/BaseButton.vue'
 import { useRouter } from 'vue-router'
 import {type CreateGoalDTO, GoalService} from "@/api";
 
@@ -111,7 +111,7 @@ const handleSumInputEvent = (newSum: number) => {
     </form>
 
     <div class="confirm-button-container">
-      <button1 id="confirmButton" @click="handleSubmit" button-text="Continue"></button1>
+      <BaseButton id="confirmButton" @click="handleSubmit" button-text="Continue"></BaseButton>
     </div>
     <div style="color: red">
       {{ errorMessage }}

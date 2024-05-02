@@ -9,7 +9,7 @@
         <label for="feedback">Din tilbakemelding:</label>
         <textarea v-model="message" placeholder="Write here" rows="5" name="comment[text]" id="comment_text" cols="33"
           required></textarea>
-        <Button1 button-text="Send" @click="submitForm">Send inn</Button1>
+        <BaseButton button-text="Send" @click="submitForm">Send inn</BaseButton>
         <p v-if="submissionStatus">{{ submissionStatus }}</p>
       </form>
     </div>
@@ -19,8 +19,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import BaseInput from '@/components/InputFields/BaseInput.vue';
-import Button1 from '@/components/Buttons/Button1.vue';
+import BaseInput from '@/components/BaseComponents/Input/BaseInput.vue';
+import BaseButton from '@/components/BaseComponents/Buttons/BaseButton.vue';
 
 const email = ref("");
 const message = ref("");

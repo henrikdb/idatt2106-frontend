@@ -11,7 +11,7 @@
                         Beklager, det har oppstått en feil. Forespurt side ikke funnet!
                     </div>
                     <div class="error-actions">
-                        <Button1 data-cy="to-home" button-text="Ta meg hjem" @click="home" />
+                        <BaseButton data-cy="to-home" button-text="Ta meg hjem" @click="home" />
                     </div>
                 </div>
             </div>
@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-import Button1 from '@/components/Buttons/Button1.vue';
+import BaseButton from '@/components/BaseComponents/Buttons/BaseButton.vue';
 
 const router = useRouter();
 

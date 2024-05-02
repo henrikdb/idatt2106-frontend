@@ -8,7 +8,7 @@
                 <div class="col-md-10">
                     <h3>OOPS!!! Beklager...</h3>
                     <p>Beklager, din tilgang er nektet av sikkerhetsgrunner på serveren vår og også våre sensitive data.<br/>Vennligst gå tilbake til startsiden for å fortsette å surfe.</p>
-                    <Button1 :button-text="'Ta meg hjem'" @click="home" />
+                    <BaseButton :button-text="'Ta meg hjem'" @click="home" />
                 </div>
             </div>
         </div>
@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-import Button1 from '@/components/Buttons/Button1.vue';
+import BaseButton from '@/components/BaseComponents/Buttons/BaseButton.vue';
 
 const router = useRouter();
 

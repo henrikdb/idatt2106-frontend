@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import ButtonComponent from '@/components/Buttons/Button1.vue'
+import ButtonComponent from '../BaseButton.vue'
 
 describe('ButtonComponent', () => {
   it('displays the passed buttonText prop', () => {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Button1 from '@/components/Buttons/Button1.vue'
+import BaseButton from '@/components/BaseComponents/Buttons/BaseButton.vue'
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 import { useConfigurationStore } from '@/stores/ConfigurationStore'
@@ -61,7 +61,7 @@ const handleSubmit = () => {
     </form>
     <p class="text-danger">{{ errorMsg }}</p>
     <div class="confirm-button-container">
-      <button1 id="confirmButton" @click="handleSubmit" button-text="Continue"/>
+      <BaseButton id="confirmButton" @click="handleSubmit" button-text="Continue"/>
     </div>
 </div>
 </template>
