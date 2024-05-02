@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Configuration from '@/components/Configuration/Configuration.vue'
+import Configuration from '@/components/Configuration/ConfigurationParent.vue'
 </script>
 
 <template>

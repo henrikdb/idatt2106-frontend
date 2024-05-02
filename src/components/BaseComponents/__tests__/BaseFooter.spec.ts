@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import FooterComponent from '../FooterComponent.vue'
+import FooterComponent from '../BaseFooter.vue'
 
 describe('FooterComponent', () => {
   it('renders properly and includes the correct copyright notice', () => {

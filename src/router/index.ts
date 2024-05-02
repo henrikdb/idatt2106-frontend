@@ -26,7 +26,7 @@ const routes = [
       {
         path: 'profile',
         name: 'profile',
-        component: () => import('@/views/User/UserProfileView.vue'),
+        component: () => import('@/views/User/MyProfileView.vue'),
       },
       {
         path: '/settings',
@@ -90,7 +90,7 @@ const routes = [
       {
         path: '/profile/:id',
         name: 'friend-profile',
-        component: () => import('@/views/User/UserProfileForeignView.vue'),
+        component: () => import('@/views/User/ExternalProfileView.vue'),
       },
       {
         path: 'friends',
@@ -142,12 +142,12 @@ const routes = [
       {
         path: '/commitment',
         name: 'commitment',
-        component: () => import('@/components/Configuration/ConfigurationSteps/Commitment.vue'),
+        component: () => import('@/components/Configuration/ConfigurationSteps/ConfigurationCommitment.vue'),
       },
       {
         path: '/experience',
         name: 'experience',
-        component: () => import('@/components/Configuration/ConfigurationSteps/Experience.vue'),
+        component: () => import('@/components/Configuration/ConfigurationSteps/ConfigurationExperience.vue'),
       },
       {
         path: '/suitable-challenges',
@@ -157,7 +157,7 @@ const routes = [
       {
         path: '/first-saving-goal',
         name: 'first saving goal',
-        component: () => import('@/components/Configuration/ConfigurationSteps/FirstSavingGoal.vue'),
+        component: () => import('@/components/Configuration/ConfigurationSteps/ConfigurationSavingGoal.vue'),
       }
     ]
   },

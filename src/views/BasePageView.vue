@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-import Footer from '@/components/BaseComponents/FooterComponent.vue'
-import Menu from '@/components/BaseComponents/MenuComponent.vue'
+import Footer from '@/components/BaseComponents/BaseFooter.vue'
+import Menu from '@/components/BaseComponents/NavBar.vue'
 import { useUserInfoStore } from '@/stores/UserStore';
 </script>
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import NewsComponent from "@/components/News/NewsComponent.vue";
+import NewsComponent from "@/components/News/NewsFeed.vue";
 </script>
 
 

@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import { createRouter, createMemoryHistory } from 'vue-router';
 import { createPinia, setActivePinia } from 'pinia';
-import Leaderboard from '../Leaderboard.vue';
+import Leaderboard from '../LeaderboardTable.vue';
 import { useUserInfoStore } from '../../../stores/UserStore';
 import router from '../../../router';
 

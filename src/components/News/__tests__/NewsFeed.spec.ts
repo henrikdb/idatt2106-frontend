@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { mount } from '@vue/test-utils';
-import MyComponent from '../NewsComponent.vue'; // Adjust the import path according to your setup
+import MyComponent from '../NewsFeed.vue'; // Adjust the import path according to your setup
 
 global.fetch = vi.fn(() =>
   Promise.resolve(

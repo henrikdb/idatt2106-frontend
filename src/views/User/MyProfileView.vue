@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import UserProfileLayout from "@/components/UserProfile/UserProfileLayout.vue";
+import UserProfileLayout from "@/components/UserProfile/MyProfile.vue";
 </script>
 
 <template>

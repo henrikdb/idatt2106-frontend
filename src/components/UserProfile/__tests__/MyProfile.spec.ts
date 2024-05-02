@@ -3,7 +3,7 @@ import { mount } from '@vue/test-utils';
 import { createRouter, createMemoryHistory } from 'vue-router';
 import { createPinia, setActivePinia } from 'pinia';
 import { useUserInfoStore } from '@/stores/UserStore';
-import MyComponent from '@/components/UserProfile/UserProfileLayout.vue'; // Adjust path as needed
+import MyComponent from '../MyProfile.vue'; // Adjust path as needed
 import router from '@/router/index'; // Adjust path as needed
 
 describe('MyComponent and Router Tests', () => {
