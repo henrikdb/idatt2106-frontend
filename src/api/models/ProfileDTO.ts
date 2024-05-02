@@ -7,6 +7,9 @@ export type ProfileDTO = {
     firstName?: string;
     lastName?: string;
     profileImage?: number;
+    bannerImage?: number;
     createdAt?: string;
+    totalPoints?: number;
+    currentStreak?: number;
 };
 
