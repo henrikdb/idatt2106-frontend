@@ -3,7 +3,7 @@
         <div class="container-fluid">
           <router-link class="navbar-brand" id="home" :to="toSavingGoals()">
                 <img id="logoImg" src="/src/assets/Sparesti-logo.png" alt="Sparesti-logo" width="60">
-                <span id="logo" class="text-white">Sparesti</span>
+                <span id="logo" class="text-white">SpareSti</span>
             </router-link>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -20,7 +20,7 @@
                     <li class="nav-item">
                       <router-link data-cy="leaderboard" class="nav-link text-white"
                                    :to="toLeaderboard()"><img
-                                src="@/assets/icons/leaderboard.svg">Leaderboard</router-link>
+                                src="@/assets/icons/leaderboard.svg">Ledertavle</router-link>
                     </li>
                     <li class="nav-item">
                       <router-link data-cy="news" class="nav-link text-white" :to="toNews()"><img
@@ -31,30 +31,31 @@
                           src="@/assets/icons/storefront.svg">Butikk</router-link>
                     </li>
                     <li class="nav-item dropdown">
-                        <a data-mdb-dropdown-init class=" nav-link me-3 dropdown-toggle hidden-arrow notification" href="#" id="navbarDropdownMenuLink"
+                        <a data-mdb-dropdown-init class=" nav-link dropdown-toggle hidden-arrow notification" href="#" id="navbarDropdownMenuLink"
                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          <i class="fas fa-bell text-white"></i>
-                          <span class="badge rounded-pill badge-notification bg-danger">{{counter}}</span>
+                          <img src="/src/assets/icons/bell-white.svg">
+                          <span v-if="counter > 0" class="badge rounded-pill badge-notification bg-danger">{{counter}}</span>
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <ul v-if="counter > 0" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                           <li v-for="(array,key) in notifMap" :key="key" >
                             <div class="d-flex align-items-center">
                               <div v-if="array[1][0] === '1'" class="flex-shrink-0">
-                                <img src="/src/assets/icons/medal.png" alt="Varslingsikon" class="notification-icon" style="height: 20px; width: 20px">
+                                <img src="/src/assets/icons/medal.png" alt="Varslingsikon" class="notification-icon">
                               </div>
                               <div v-if="array[1][0] === '2'" class="flex-shrink-0">
-                                <img src="/src/assets/userprofile.png" alt="Varslingsikon" class="notification-icon" style="height: 20px; width: 20px">
+                                <img src="/src/assets/userprofile.png" alt="Varslingsikon" class="notification-icon">
                               </div>
                               <div v-if="array[1][0] === '3'" class="flex-shrink-0">
-                                <img src="/src/assets/icons/piggybank.svg" alt="Varslingsikon" class="notification-icon" style="height: 20px; width: 20px">
+                                <img src="/src/assets/icons/piggybank.svg" alt="Varslingsikon" class="notification-icon">
                               </div>
                               <div class="flex-grow-1 ms-3">
-                                <router-link class="not-item dropdown-item text-white"   :to="getPath(array[1][0])">{{array[1][1]}}</router-link>
+                                <router-link class="not-item dropdown-item"   :to="getPath(array[1][0])">{{array[1][1]}}</router-link>
                               </div>
                             </div>
-
-
                           </li>
+                        </ul>
+                        <ul v-else class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                          <li>Ingen varslinger</li>
                         </ul>
                     </li>
                     <li v-if="userStore.isLoggedIn" class="nav-item dropdown">
@@ -62,34 +63,33 @@
                            class="nav-link dropdown-toggle username-text text-white "
                            href="#" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
-                            <img :src="useUserInfoStore().profileImage ? 'http://localhost:8080/api/images/' + useUserInfoStore().profileImage : 'src/assets/userprofile.png'"
-                                style="width: 50px; border: 2px solid black; border-radius: 50%">{{
-                useUserInfoStore().firstname }}
+                            <img src="@/assets/icons/person.svg">{{useUserInfoStore().firstname }}
                         </a>
                         <ul class="dropdown-menu dropdown-username-content">
                             <li><router-link data-cy="profile"
-                              class="dropdown-item text-white dropdown-username-link" :to="toUserProfile()"><img
-                                  src="@/assets/icons/person.svg">Brukerprofil</router-link></li>
+                              class="dropdown-item dropdown-username-link" :to="toUserProfile()"><img
+                                  src="@/assets/icons/black_person.svg">Min profil</router-link></li>
                             <li v-if="useUserInfoStore().isPremium"><router-link data-cy="budget"
-                              class="dropdown-item text-white dropdown-username-link" :to="toBudget()"><img>Budjsett</router-link></li>
+                              class="dropdown-item dropdown-username-link" :to="toBudget()"><img
+                              src="@/assets/icons/budget.svg">Budjsett</router-link></li>
                             <li><router-link data-cy="friends"
-                              class="dropdown-item text-white dropdown-username-link" :to="toFriends()"><img
-                                src="@/assets/icons/friends.svg">Venner</router-link></li>
+                              class="dropdown-item dropdown-username-link" :to="toFriends()"><img
+                                src="@/assets/icons/black_friends.svg">Venner</router-link></li>
                             <li><router-link data-cy="settings"
-                              class="dropdown-item text-white dropdown-username-link" :to="toSetting()"><img
+                              class="dropdown-item dropdown-username-link" :to="toSetting()"><img
                                 src="@/assets/icons/settings.svg">Innstillinger</router-link></li>
                             <li><router-link data-cy="feedback"
-                              class="dropdown-item text-white dropdown-username-link" :to="toFeedback()"><img
+                              class="dropdown-item dropdown-username-link" :to="toFeedback()"><img
                                 src="@/assets/icons/feedback.svg">Tilbakemelding</router-link></li>
                             <li><router-link data-cy="admin"
-                              class="dropdown-item text-white dropdown-username-link" :to="toSetting()"><img
+                              class="dropdown-item dropdown-username-link" :to="toSetting()"><img
                                 src="@/assets/icons/admin.svg">Admin</router-link></li>
-                            <li><a data-testid="logout" class="dropdown-item text-white dropdown-username-link" ref="#" @click="toLogout()"><img
+                            <li style="cursor: pointer"><a data-testid="logout" class="dropdown-item dropdown-username-link" ref="#" @click="toLogout()"><img
                                 src="@/assets/icons/logout.svg">Logg ut</a></li>
                         </ul>
                     </li>
                     <li v-else class="nav-item">
-                        <a class="nav-link text-white" href="#" @click="toLogout">Logg inn</a>
+                        <a class="nav-link" style="cursor: pointer;" href="#" @click="toLogout">Logg inn</a>
                     </li>
                 </ul>
             </div>
@@ -235,15 +235,20 @@ onMounted(() => {
 }
 
 .nav-item {
-    padding: 0.3rem 0.6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.1rem 0.3rem;
     font-size: 1.7rem;
 }
 
 .nav-item:hover {
-    background-color: #2b6ac7;
+    background-color: #01476b;
+  border-radius: 1rem;
 }
+
 .not-item:hover {
-  background-color: #2b6ac7;
+  background-color: #f3f3f3;
 }
 
 .nav-item .dropdown {
@@ -255,27 +260,22 @@ onMounted(() => {
     display: flex;
     align-items: center;
     justify-content: center;
+
 }
 
 .dropdown-item {
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: left;
+}
+
+.dropdown-item:hover {
+  width: 100%;
 }
 
 .dropdown-menu {
-    background-color: #0A58CA;
-    right: -0.5rem;
-}
-
-#notifyBtn  {
-  background-color: #0A58CA;
-  border: #0A58CA;
-}
-
-#notifyBtn:hover {
-  background-color: #2b6ac7;
-  border: #2b6ac7;
+  padding: 5px;
+  right: -0.5rem;
 }
 
 .dropdown-menu[data-bs-popper] {
@@ -289,11 +289,26 @@ onMounted(() => {
 }
 
 .dropdown-username-link:hover {
-    background-color: #2b6ac7;
+    background-color: #f3f3f3;
+}
+
+.dropdown-item img {
+  height: 35px;
+  width: 35px;
+  margin-right: 5px;
 }
 
 #navBar {
-    background-color: #0A58CA;
+    background-color: #003A58;
+}
+
+.notification-icon {
+  height: 35px;
+  width: 35px;
+}
+
+.nav-item a {
+  font-size: 19px;
 }
 
 .navbar {
@@ -312,6 +327,8 @@ onMounted(() => {
 
 .nav-link img {
     margin-right: 5px;
+  height: 35px;
+  width: 35px;
 }
 
 #logoImg {
@@ -320,6 +337,7 @@ onMounted(() => {
     height: auto;
     aspect-ratio: 1.3/1;
 }
+
 .notification.hidden-arrow::after{
   display: none;
 }
