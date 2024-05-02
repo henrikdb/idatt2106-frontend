@@ -1,18 +1,25 @@
 <script setup lang="ts">
 import {useRoute, useRouter} from "vue-router";
 
-import {onMounted, ref} from "vue";
-import {UserService, type ProfileDTO} from "@/api";
+import {onMounted, type Ref, ref, type UnwrapRef} from "vue";
+import {UserService, type ProfileDTO, GoalService, type GoalDTO} from "@/api";
 
 let numberOfHistory = 6;
 
 let cardTitles = ["Spain tour", "Food waste", "Coffee", "Concert", "New book", "Pretty clothes"]
 
+
+let hasHistory = ref(true)
+let firstname = ref();
+let lastname = ref();
+let goals = ref<GoalDTO[]>([]);
+
 let username = ref()
 
 let friend = ref(false)
 
-let profile: ProfileDTO;;
+let profile: ProfileDTO;
+
 
 const imageUrl = ref(`../src/assets/userprofile.png`);
 
@@ -49,12 +56,33 @@ onMounted(async () => {
   }
 })
 
-function addFriend(){
+function addFriend() {
   friend.value = true
   console.log("Added friend")
 
-  //todo Send POST to backend when endpoints is made and add friend
 }
+async function getGoals() {
+  try {
+    goals.value = await GoalService.getGoals();
+    console.log("number of goals: ", goals.value.length)
+    if (goals.value.length > 0) {
+      hasHistory.value = true
+    } else {
+      hasHistory.value = false
+      console.log('No history')
+    }
+  }catch (error){
+    console.error("Something went wrong getting the goals: " , error)
+  }
+}
+
+
+
+// Function to navigate to update user settings
+
+
+  //todo Send POST to backend when endpoints is made and add friend
+
 
 function removeFriend(){
   friend.value = false
@@ -64,10 +92,10 @@ function removeFriend(){
 
 }
 
+onMounted(() =>{
+  getGoals()
+})
 
-function toUpdateUserSettings(){
-  route.push('/update-user')
-}
 </script>
 
 
@@ -151,8 +179,8 @@ function toUpdateUserSettings(){
                 <!-- Her er historikken over lagrede mål -->
                 <div class="container-fluid mb-5">
                   <h1 class="mt-5 text-start history-text">Historie</h1>
-                  <div class="row scrolling-wrapper-history">
-                    <div v-for="index in numberOfHistory" :key="index"
+                  <div v-if="hasHistory" class="row scrolling-wrapper-history">
+                    <div v-for="(item, index) in goals" :key="index"
                          class="col-md-4 col-sm-4 col-lg-4 col-xs-4 col-xl-4 control-label">
                       <div class="card history-block">
                         <div class="card mb-3" style="max-width: 540px;">
@@ -163,9 +191,9 @@ function toUpdateUserSettings(){
                             </div>
                             <div class="col-md-8">
                               <div class="card-body">
-                                <h5 class="card-title">{{ cardTitles[index - 1] }}</h5>
-                                <p class="card-text">Penger spart: 200 <br />Du har fullført en utfordring: 21</p>
-                                <p class="card-text"><small class="text-muted">Sist oppdatert for 3 minutter siden</small></p>
+                                <h5 class="card-title">{{ goals[index]['name'] }}</h5>
+                                <p class="card-text">{{goals[index]['description']}}</p>
+                                <p class="card-text"><small class="text-muted">{{goals[index]['targetAmount']}}</small></p>
                                 <a href="#" class="btn  stretched-link" @click="toRoadmap"></a>
                               </div>
                             </div>
@@ -174,6 +202,7 @@ function toUpdateUserSettings(){
                       </div>
                     </div>
                   </div>
+                  <div v-if="!hasHistory">No History!</div>
 
                 </div>
               </div>
