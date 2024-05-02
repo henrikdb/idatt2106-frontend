@@ -1,11 +1,19 @@
 import { defineStore } from 'pinia'
 export const useConfigurationStore = defineStore('ConfigurationStore', {
   state: () => ({
+    spendingAccount: 0,
+    savingsAccount: 0,
     commitment: '',
     experience: '',
     challenges: [] as Array<string>,
   }),
   actions: {
+    setSpendingAccount(newValue: number) {
+      this.spendingAccount = newValue
+    },
+    setSavingsAccount(newValue: number) {
+      this.savingsAccount = newValue
+    },
     setCommitment(commitment: string) {
       this.commitment = commitment
     },
@@ -22,6 +30,12 @@ export const useConfigurationStore = defineStore('ConfigurationStore', {
     }
   },
   getters: {
+    getSpendingAccount(): number {
+      return this.spendingAccount
+    },
+    getSavingsAccount(): number {
+      return this.savingsAccount
+    },
     getCommitment(): string {
       return this.commitment
     },

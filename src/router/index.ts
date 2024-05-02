@@ -140,6 +140,11 @@ const routes = [
     component: () => import('@/views/Configuration/ConfigurationView.vue'),
     children: [
       {
+        path: '/bank-account',
+        name: 'bank account',
+        component: () => import('@/components/Configuration/ConfigurationSteps/BankAccount.vue'),
+      },
+      {
         path: '/commitment',
         name: 'commitment',
         component: () => import('@/components/Configuration/ConfigurationSteps/ConfigurationCommitment.vue'),
