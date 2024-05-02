@@ -1,70 +1,42 @@
 <script setup lang="ts">
-import {useRoute, useRouter} from "vue-router";
-
-import {onMounted, type Ref, ref, type UnwrapRef} from "vue";
-import {UserService, type ProfileDTO, GoalService, type GoalDTO} from "@/api";
+import {ref, onMounted} from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { useUserInfoStore } from "@/stores/UserStore";
+import {UserService, BadgeService, GoalService, type GoalDTO, type BadgeDTO, FriendService} from "@/api";
+import { ItemService } from "@/api";
+import handleUnknownError from '@/components/Exceptions/unkownErrorHandler'
 
 let numberOfHistory = 6;
-
 let cardTitles = ["Spain tour", "Food waste", "Coffee", "Concert", "New book", "Pretty clothes"]
-
-
-let hasHistory = ref(true)
 let firstname = ref();
 let lastname = ref();
-let goals = ref<GoalDTO[]>([]);
-
-let username = ref()
-
-let friend = ref(false)
-
-let profile: ProfileDTO;
-
-
 const imageUrl = ref(`../src/assets/userprofile.png`);
 
+let hasHistory = ref(true)
+let hasBadges = ref(false)
+let hasInventory = ref(false)
 
-let id = ref()
+const router = useRouter();
+const route = useRoute();
+const inventory = ref([] as any);
+const badges = ref<BadgeDTO[]>([]);
+const backgroundName = ref("");
+const points = ref(0 as any);
+const streak = ref(0 as any);
 
-//Get the id from the url. viktor har eksempel
 
-let user = useRoute()
-id.value = user.params
-console.log(id.value.id)
+let goalName = ref('');
+let goalDescription = ref('');
+let targetAmount = ref('');
+let targetDate = ref('');
+let createdAt = ref('');
+let goals = ref<GoalDTO[]>([])
 
-
-let route = useRouter()
-
-function toRoadmap(){
-  route.push('/roadmap')
-}
-//todo Make a store of a friend-instance
-onMounted(async () => {
-  try {
-    let response = await UserService.getProfile({
-      userId: id.value.id
-    })
-    profile = response;
-    console.log(profile)
-    username.value = profile.firstName
-    if (profile.profileImage){
-      imageUrl.value = `http://localhost:8080/api/images/${profile.profileImage}`
-    }
-    console.log(username)
-  } catch (error) {
-    console.error("Something went wrong getting the profile: ", error)
-  }
-})
-
-function addFriend() {
-  friend.value = true
-  console.log("Added friend")
-
-}
 async function getGoals() {
   try {
     goals.value = await GoalService.getGoals();
     console.log("number of goals: ", goals.value.length)
+    console.log('The id of a goal: ', goals.value[0])
     if (goals.value.length > 0) {
       hasHistory.value = true
     } else {
@@ -72,138 +44,175 @@ async function getGoals() {
       console.log('No history')
     }
   }catch (error){
-    console.error("Something went wrong getting the goals: " , error)
+    handleUnknownError(error)
+    console.error("Something went wrong", error)
   }
 }
 
+async function setupForm() {
+  try {
+    let id = route.params.id as any;
+    let response = await UserService.getProfile({
+      userId: id
+    })
 
-
-// Function to navigate to update user settings
-
-
-  //todo Send POST to backend when endpoints is made and add friend
-
-
-function removeFriend(){
-  friend.value = false
-  console.log("Removed friend")
-
-  //todo Send POST to backend when endpoints is made and remove friend
-
+    firstname.value = response.firstName;
+    lastname.value = response.lastName;
+    if (response.point?.currentPoints) {
+      points.value = response.point?.currentPoints;
+    }
+    if (response.streak?.currentStreak) {
+      streak.value = response.streak?.currentStreak;
+    }
+    if (response.profileImage) {
+      imageUrl.value = "http://localhost:8080/api/images/" + response.profileImage;
+    }
+    getInventory();
+    getBadges();
+  } catch (err) {
+    handleUnknownError(err)
+    console.error(err)
+  }
 }
 
-onMounted(() =>{
+const getInventory = async () => {
+  try {
+    const response = await ItemService.getInventory();
+    inventory.value = response;
+    if (inventory.value.length > 0) {
+      hasInventory.value = true
+    } else {
+      hasInventory.value = false
+      console.log('No history')
+    }
+  } catch (error) {
+    handleUnknownError(error)
+    console.log(error);
+  }
+}
+
+const getBadges = async () => {
+  try {
+    const responseBadge = await BadgeService.getBadgesUnlockedByUser();
+    badges.value = responseBadge;
+    if (badges.value.length > 0) {
+      hasBadges.value = true
+    } else {
+      hasBadges.value = false
+      console.log('No history')
+    }
+  } catch (error) {
+    handleUnknownError(error)
+    console.log(error);
+  }
+}
+
+const selectItem = (item: any) => {
+  backgroundName.value = item.itemName;
+  useUserInfoStore().setUserInfo({
+    roadBackground: item.imageId,
+  })
+}
+
+onMounted(() => {
+  setupForm()
   getGoals()
 })
 
-</script>
+const toRoadmap = () => {
+  router.push('/');
+};
 
+const addFriend = () => {
+  let id = route.params.id as any;
+  const response = FriendService.addFriendRequest({ userId: id });
+};
+
+const removeFriend = () => {
+  let id = route.params.id as any;
+  const response = FriendService.deleteFriendOrFriendRequest({ friendId: id });
+};
+
+
+
+</script>
 
 <template>
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col 12">
         <div class="card">
-          <div class="rounded-top text-white d-flex flex-row bg-primary" style="height:200px;">
-            <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
-              <img :src="imageUrl" alt="Generisk plassholderbilde"
-                   class="img-fluid img-thumbnail mt-4 mb-2" style="width: 150px; z-index: 1">
-              <button v-if="!friend" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary"
-                      data-mdb-ripple-color="dark" style="z-index: 1;" @click="addFriend">
-                Legg til venn
-              </button>
-              <button v-if="friend" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-danger"
-                      data-mdb-ripple-color="dark" style="z-index: 1;" @click="removeFriend">
-                Fjern venn
-              </button>
+          <div class="rounded-top text-white d-flex flex-row bg-primary" style="height:200px;" id="banner">
+            <div class=" d-flex flex-column align-items-center justify-content-center">
+              <img :src="imageUrl" alt="Generisk plassholderbilde" class="img-fluid img-thumbnail"
+                style="width: 150px; height:150px; margin-left: 25px; margin-right: 15px;">
             </div>
-            <div class="ms-3" style="margin-top: 130px;">
-              <h1>{{username}}</h1>
-            </div>
+              <h1 data-cy="firstname" style="display: flex; align-items: end; margin-bottom: 20px;">{{ firstname }} {{ lastname }}</h1>
           </div>
-          <div class="p-4 text-black" style="background-color: #f8f9fa;">
+          <div class="p-3 text-black" style="background-color: #f8f9fa;">
             <div class="d-flex justify-content-end text-center py-1">
+              <div style="width: 100%; display: flex; justify-content: start">
+                <button  data-cy="toUpdate" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary"
+                data-mdb-ripple-color="dark" style="z-index: 1; height: 40px; margin-left: 17px" id="toUpdate" @click="addFriend">
+                Rediger profil
+              </button>
+            
+              </div>
               <div>
-                <p class="mb-1 h2">253 <img src="@/assets/items/pigcoin.png" style="width: 4rem"></p>
+                <p class="mb-1 h2" data-cy="points">{{ points }} <img src="@/assets/items/pigcoin.png" style="width: 4rem"></p>
                 <p class="small text-muted mb-0">Poeng</p>
               </div>
               <div class="px-3">
-                <p class="mb-1 h2">1026 <img src="@/assets/icons/fire.png" style="width: 4rem"></p>
+                <p class="mb-1 h2" data-cy="streak">{{ streak }} <img src="@/assets/icons/fire.png" style="width: 4rem"></p>
                 <p class="small text-muted mb-0">Streak</p>
               </div>
             </div>
           </div>
+          <hr>
           <div class="card-body p-1 text-black">
             <div class="row">
               <div class="col">
                 <div class="container-fluid">
-                  <h1 class="mt-5 text-start badges-text">Merker</h1>
-                  <div class="scrolling-wrapper-badges row flex-row flex-nowrap mt-4 pb-4 pt-2">
-
-                    <div class="col-5">
-                      <div class="card badges-block card-1"></div>
-                    </div>
-                    <div class="col-5">
-                      <div class="card badges-block card-2"></div>
-                    </div>
-                    <div class="col-5">
-                      <div class="card badges-block card-3"></div>
-                    </div>
-                    <div class="col-5">
-                      <div class="card badges-block card-4"></div>
-                    </div>
-                    <div class="col-5">
-                      <div class="card badges-block card-5"></div>
-                    </div>
-                    <div class="col-5">
-                      <div class="card badges-block card-6"></div>
-                    </div>
-                    <div class="col-5">
-                      <div class="card badges-block card-7"></div>
-                    </div>
-                    <div class="col-5">
-                      <div class="card badges-block card-8"></div>
-                    </div>
-                    <div class="col-5">
-                      <div class="card badges-block card-9"></div>
-                    </div>
-                    <div class="col-5">
-                      <div class="card badges-block card-10"></div>
+                  <h1 class="mt-1 text-start badges-text">Lageret ditt</h1>
+                  <div v-if="hasInventory" class="scrolling-wrapper-badges row flex-row flex-nowrap mt-2 pb-2 pt-2">
+                    <div v-for="product in inventory" :key="product.id" class="card text-center"
+                        style="width: 12rem; border: none; cursor: pointer; margin: 1rem; border: 2px solid black" @click="selectItem(product)">
+                        <img :src="`http://localhost:8080/api/images/${product.imageId}`" class="card-img-top"
+                            alt="..." />
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.itemName }}</h5>
+                        </div>
                     </div>
                   </div>
+                  <div v-else>Du har ingen ting på lageret ditt, gå til butikken for å kjøpe!</div>
+                  <div v-if="backgroundName" class="text-success">You selected the background: <strong>{{ backgroundName }}!</strong></div>
                 </div>
               </div>
             </div>
+          </div>
+          <hr>
+          <div class="card-body p-1 text-black">
             <div class="row">
               <div class="col">
-                <!-- Her er historikken over lagrede mål -->
-                <div class="container-fluid mb-5">
-                  <h1 class="mt-5 text-start history-text">Historie</h1>
-                  <div v-if="hasHistory" class="row scrolling-wrapper-history">
-                    <div v-for="(item, index) in goals" :key="index"
-                         class="col-md-4 col-sm-4 col-lg-4 col-xs-4 col-xl-4 control-label">
-                      <div class="card history-block">
-                        <div class="card mb-3" style="max-width: 540px;">
-                          <div class="row g-0">
-                            <div class="col-md-4">
-                              <img src="/src/assets/icons/piggybank.svg"
-                                   class="img-fluid rounded-start h-40 mx-auto d-none d-md-block" alt="...">
-                            </div>
-                            <div class="col-md-8">
-                              <div class="card-body">
-                                <h5 class="card-title">{{ goals[index]['name'] }}</h5>
-                                <p class="card-text">{{goals[index]['description']}}</p>
-                                <p class="card-text"><small class="text-muted">{{goals[index]['targetAmount']}}</small></p>
-                                <a href="#" class="btn  stretched-link" @click="toRoadmap"></a>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div v-if="!hasHistory">No History!</div>
+                <div class="container-fluid">
+                  <h1 class="mt-1 text-start badges-text">Merker</h1>
+                  <div v-if="hasBadges" class="scrolling-wrapper-badges row flex-row flex-nowrap mt-2 pb-2 pt-2">
 
+                    <div v-for="badge in badges" :key="badge.id" class="card text-center"
+                        style="width: 12rem; border: none; cursor: pointer; margin: 1rem; 
+                        border: 2px solid black" data-bs-toggle="tooltip" data-bs-placement="top" 
+                        data-bs-custom-class="custom-tooltip" :data-bs-title="badge.criteria">
+                        <img :src="`http://localhost:8080/api/images/${badge.imageId}`" class="card-img-top"
+                            alt="..." />
+                        <div class="card-body">
+                            <h5 class="card-title">{{ badge.badgeName }}</h5>
+                        </div>
+                    </div>
+
+                  </div>
+                  <div v-else>
+                    Ingen merker
+                  </div>
                 </div>
               </div>
             </div>
@@ -224,8 +233,6 @@ onMounted(() =>{
   max-height: 300px;
   overflow: auto;
 }
-
-
 
 .badges-text {
   font-weight: 500;
@@ -269,6 +276,10 @@ onMounted(() =>{
     box-shadow: none;
     opacity: 0.9;
   }
+}
+
+#banner {
+  background-image: url('/src/assets/banners/stacked.svg');
 }
 
 .card-1 {
