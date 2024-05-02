@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import BaseInput from '@/components/InputFields/BaseInput.vue';
+import BaseInput from '@/components/BaseComponents/Input/BaseInput.vue';
 import { useUserInfoStore } from "@/stores/UserStore";
 import { UserService } from '@/api';
 import type { UserUpdateDTO } from '@/api';

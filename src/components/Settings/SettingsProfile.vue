@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import BaseInput from '@/components/InputFields/BaseInput.vue';
+import BaseInput from '@/components/BaseComponents/Input/BaseInput.vue';
 import { useUserInfoStore } from "@/stores/UserStore";
 import { UserService, ImageService } from '@/api';
 import type { UserUpdateDTO } from '@/api';
@@ -110,7 +110,7 @@ onMounted(() => {
         <img :src="iconSrc" alt="Brukeravatar" style="width: 300px">
         <div class="mt-2">
           <button type="button" class="btn btn-primary" @click="triggerFileUpload"><img
-              src="@/assets/icons/download.svg"> Last opp bilde</button>
+              src="../../assets/icons/download.svg"> Last opp bilde</button>
         </div>
       </div>
       <div class="form-group">

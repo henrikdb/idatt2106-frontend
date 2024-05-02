@@ -35,7 +35,7 @@
 
 <script setup lang="ts">
     import { ref } from 'vue'
-    import BaseInput from '@/components/InputFields/BaseInput.vue'
+    import BaseInput from '@/components/BaseComponents/Input/BaseInput.vue'
     import { type PasswordUpdateDTO, UserService } from '@/api'
 
     const oldPasswordRef = ref('');
