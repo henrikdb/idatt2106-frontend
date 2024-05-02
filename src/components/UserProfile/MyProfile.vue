@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import {ref, onMounted, type Ref, type UnwrapRef} from "vue";
 import { useRouter } from "vue-router";
 import { useUserInfoStore } from "../../stores/UserStore";
-import {UserService, BadgeService, GoalService} from "@/api";
+import {UserService, BadgeService, GoalService, type GoalDTO} from "@/api";
 import { ItemService } from "@/api";
 
 let numberOfHistory = 6;
@@ -24,15 +24,14 @@ let goalDescription = ref('');
 let targetAmount = ref('');
 let targetDate = ref('');
 let createdAt = ref('');
-let goals = ref([])
+let goals = ref<GoalDTO[]>([])
 
 async function getGoals() {
-  goals = await GoalService.getGoals();
-  console.log("number of goals: ", goals.length )
-  console.log('The id of a goal: ', goals[0])
-  if(goals.length > 0) {
+  goals.value = await GoalService.getGoals();
+  console.log("number of goals: ", goals.value.length )
+  console.log('The id of a goal: ', goals.value[0])
+  if(goals.value.length > 0) {
     hasHistory.value = true
-    goalName.value = goals
 
 
 
@@ -188,7 +187,7 @@ onMounted(()=>{
                 <div class="container-fluid mb-5">
                   <h1 class="mt-1 text-start history-text">Historie</h1>
                   <div v-if="hasHistory" class="row scrolling-wrapper-history">
-                    <div v-for="index in goals" :key="index"
+                    <div v-for="(item, index) in goals" :key="index"
                          class="col-md-4 col-sm-4 col-lg-4 col-xs-4 col-xl-4 control-label">
                       <div class="card history-block">
                         <div class="card mb-3" style="max-width: 540px;">

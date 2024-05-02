@@ -12,7 +12,7 @@ let cardTitles = ["Spain tour", "Food waste", "Coffee", "Concert", "New book", "
 let hasHistory = ref(true)
 let firstname = ref();
 let lastname = ref();
-let goals: Ref<UnwrapRef<GoalDTO[]>> = ref([]);
+let goals = ref<GoalDTO[]>([]);
 
 let username = ref()
 
@@ -180,7 +180,7 @@ onMounted(() =>{
                 <div class="container-fluid mb-5">
                   <h1 class="mt-5 text-start history-text">Historie</h1>
                   <div v-if="hasHistory" class="row scrolling-wrapper-history">
-                    <div v-for="index in numberOfHistory" :key="index"
+                    <div v-for="(item, index) in goals" :key="index"
                          class="col-md-4 col-sm-4 col-lg-4 col-xs-4 col-xl-4 control-label">
                       <div class="card history-block">
                         <div class="card mb-3" style="max-width: 540px;">
