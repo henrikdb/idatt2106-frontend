@@ -5,7 +5,7 @@ import BaseButton from '@/components/BaseComponents/Buttons/BaseButton.vue'
 import { ref } from 'vue'
 import { useConfigurationStore } from '@/stores/ConfigurationStore'
 import { useUserInfoStore } from '@/stores/UserStore'
-import { AuthenticationService, type BankAccountDTO, OpenAPI, type SignUpRequest, UserService } from '@/api'
+import { AuthenticationService, OpenAPI, type SignUpRequest, UserService } from '@/api'
 import handleUnknownError from '@/components/Exceptions/unkownErrorHandler'
 
 const router = useRouter();
@@ -61,7 +61,9 @@ const signUpUser = async () => {
       commitment: useConfigurationStore().getCommitment,
       experience: useConfigurationStore().getExperience,
       challengeTypes: useConfigurationStore().getChallenges
-    }
+    },
+    checkingAccountBBAN: useConfigurationStore().getCheckingAccountBBAN,
+    savingsAccountBBAN: useConfigurationStore().getSavingsAccountBBAN,
   };
 
   console.log(signUpPayLoad)
@@ -78,22 +80,6 @@ const signUpUser = async () => {
   });
 }
 
-const updateBankAccounts = async () => {
-
-  const spendingRequest: BankAccountDTO = {
-    bban: useConfigurationStore().getSpendingAccount,
-    bankAccountType: "CHECKING_ACCOUNT"
-  }
-
-  const savingRequest: BankAccountDTO = {
-    bban: useConfigurationStore().getSavingsAccount,
-    bankAccountType: "SAVING_ACCOUNT"
-  }
-
-  await UserService.selectBankAccount({requestBody: spendingRequest})
-  await UserService.selectBankAccount({requestBody: savingRequest})
-}
-
 const handleSubmit = async () => {
   if (chosenChallenges.value.length === 0) {
     chosenChallenges.value = challenges
@@ -102,7 +88,6 @@ const handleSubmit = async () => {
 
   try {
     await signUpUser();
-    await updateBankAccounts();
 
     useUserInfoStore().resetPassword()
     await router.push("/first-saving-goal")

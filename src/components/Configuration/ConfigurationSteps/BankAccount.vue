@@ -4,11 +4,13 @@ import BaseButton from '@/components/BaseComponents/Buttons/BaseButton.vue'
 import { ref } from 'vue'
 import BaseInput from '@/components/BaseComponents/Input/BaseInput.vue'
 import { useConfigurationStore } from '@/stores/ConfigurationStore'
+import { AccountControllerService } from '@/api'
+import handleUnknownError from '@/components/Exceptions/unkownErrorHandler'
 
 const router = useRouter();
 
 const formRef = ref();
-const spendingAccount = ref<string>('');
+const checkingAccount = ref<string>('');
 const savingsAccount = ref<string>('');
 let errorMsg = ref('');
 
@@ -17,19 +19,25 @@ const emit = defineEmits(['changeRouterEvent'])
 emit('changeRouterEvent', '/bank-account')
 
 const handleSpendingInputEvent = (newValue: any) => {
-  spendingAccount.value = newValue
+  checkingAccount.value = newValue
 }
 
 const handleSavingInputEvent = (newValue: any) => {
   savingsAccount.value = newValue
 }
-const handleSubmit = () => {
+const handleSubmit = async () => {
   formRef.value.classList.add("was-validated")
   const form = formRef.value;
   if (form.checkValidity()) {
-    useConfigurationStore().setSpendingAccount(Number(spendingAccount.value))
-    useConfigurationStore().setSavingsAccount(Number(savingsAccount.value))
-    router.push("/commitment")
+    try {
+      await AccountControllerService.getAccountsByBban({bban: Number(checkingAccount.value)})
+      await AccountControllerService.getAccountsByBban({bban: Number(savingsAccount.value)})
+      useConfigurationStore().setChekingAccountBBAN(Number(checkingAccount.value))
+      useConfigurationStore().setSavingsAccountBBAN(Number(savingsAccount.value))
+      await router.push("/commitment")
+    } catch (error) {
+      errorMsg.value = handleUnknownError(error)
+    }
   }
 }
 </script>
@@ -41,7 +49,7 @@ const handleSubmit = () => {
     </h3>
     <form ref="formRef">
       <BaseInput data-cy="spending-account-input"
-                 :model-value="spendingAccount"
+                 :model-value="checkingAccount"
                  @input-change-event="handleSpendingInputEvent"
                  id="spending-account-base-input"
                  input-id="spending-account-input"

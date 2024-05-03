@@ -347,8 +347,8 @@ export default {
 
     async transferMoney(amount: number) {
       let response = await UserService.getUser()
-      let spendingAccount = response.checkingAccount?.bban
-      let savingAccount = response.savingsAccount?.bban
+      let spendingAccount = response.checkingAccountBBAN
+      let savingAccount = response.savingsAccountBBAN
 
       const transactionPayload: TransactionDTO = {
         debtorBBAN: spendingAccount,
