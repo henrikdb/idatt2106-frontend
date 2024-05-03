@@ -4,6 +4,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
+ENV API_URL=backend:80
 RUN npm run build
 
 # Step 2: Setup the server with Nginx
