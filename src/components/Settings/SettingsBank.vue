@@ -10,7 +10,7 @@
                     invalid-message="Vennligst skriv inn din brukskonto" />
             </div>
             <br>
-            <button data-cy="update-spending-btn" type="submit" class="btn btn-primary">Oppdater
+            <button data-cy="update-spending-btn" type="submit" class="btn btn-primary classyButton">Oppdater
               brukskonto</button>
         </form>
         <br>
@@ -22,27 +22,43 @@
                     invalid-message="Vennligst skriv inn din sparekonto" />
             </div>
             <br>
-            <button data-cy="update-savings-btn" type="submit" class="btn btn-primary">Oppdater
+            <button data-cy="update-savings-btn" type="submit" class="btn btn-primary classyButton">Oppdater
               sparekonto</button>
         </form>
         <hr>
         <div class="form-group mb-0">
-            <label class="d-block">Betalingshistorikk</label>
-            <div class="border border-gray-500 bg-gray-200 p-3 text-center font-size-sm">Du har ikke foretatt noen betaling.</div>
+            <label class="d-block">Saldo oversikt</label>
+            <div class="border border-gray-500 bg-gray-200 p-3 text-center font-size-sm">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="card-box tilebox-one"><i class="icon-rocket float-right text-muted"></i>
+                    <h6 class="text-muted text-uppercase mt-0">Brukskonto</h6>
+                    <h2 class="">{{spendingAccountBalance}} Kr</h2></div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="card-box tilebox-one"><i class="icon-rocket float-right text-muted"></i>
+                    <h6 class="text-muted text-uppercase mt-0">Sparekonto</h6>
+                    <h2 class="">{{savingsAccountBalance}} Kr</h2></div>
+                </div>
+              </div>
+            </div>
         </div>
     </div>
 </template>
 
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import BaseInput from '@/components/BaseComponents/Input/BaseInput.vue';
 import type { BankAccountDTO } from '@/api';
 import { UserService } from '@/api';
+import  handleUnknownError from '@/components/Exceptions/unkownErrorHandler'
 
 
 const spendingAccount = ref()
 const savingsAccount = ref()
+const spendingAccountBalance = ref()
+const savingsAccountBalance = ref()
 
 
 const handleSpendingInputEvent = (newValue: any) => {
@@ -66,7 +82,7 @@ const handleSavingSubmit = async () => {
     try {
         UserService.selectBankAccount({ requestBody: updateSaving })
     } catch (err) {
-        console.error(err)
+      handleUnknownError(err)
     }
 }
 
@@ -80,7 +96,35 @@ const handleSpendingSubmit = async () => {
     try {
         UserService.selectBankAccount({ requestBody: updateSaving })
     } catch (err) {
-        console.error(err)
+      handleUnknownError(err)
     }
 }
+
+onMounted(getAccountInfo)
+async function getAccountInfo() {
+  try {
+    let response = await UserService.getUser()
+    savingsAccountBalance.value = response.savingsAccount?.balance
+    spendingAccountBalance.value = response.checkingAccount?.balance
+  } catch (err) {
+    handleUnknownError(err)
+  }
+}
 </script>
+
+<style scoped>
+   .classyButton {
+    background-color: #003A58;
+    border: #003A58;
+  }
+
+  .classyButton:hover {
+    background-color: #003b58ec;
+    border: #003A58;
+  }
+
+  .classyButton:active {
+    background-color: #003b58d6;
+    border: #003A58;
+  }
+</style>

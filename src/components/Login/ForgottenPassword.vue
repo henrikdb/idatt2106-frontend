@@ -30,6 +30,7 @@
   import { ref } from 'vue';
   import { UserService } from '@/api';
   import BaseButton from '@/components/BaseComponents/Buttons/BaseButton.vue'
+  import handleUnknownError from '@/components/Exceptions/unkownErrorHandler';
   
   const formRef = ref()
   const form = formRef.value;
@@ -49,6 +50,7 @@
       confirmationMessage.value = 'An email has been sent to your email address with a link to reset your password.';
       errorMessage.value = '';
     } catch (error) {
+      handleUnknownError(error);
       errorMessage.value = 'Failed to send email. Please try again.';
       confirmationMessage.value = '';
     }

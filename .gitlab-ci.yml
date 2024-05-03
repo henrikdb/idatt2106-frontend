@@ -1,5 +1,8 @@
 image: node:alpine # Much smaller than other variants, faster and more resource effective
 
+variables:
+  DOCKER_TLS_CERTDIR: ""
+
 cache:
   key: "${CI_COMMIT_REF_SLUG}" # Branch-specific cache keys to have separate caches across branches.
   paths:
@@ -11,24 +14,16 @@ stages:
   - build
   - test
   - lint
+  - docker_build_and_push
+  - deploy_docker
 
 install_dependencies:
   stage: install
   script:
     - npm ci
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-        - node_modules/
-    policy: push
 
 build_project:
   stage: build
-  cache:
-    key: "${CI_COMMIT_REF_SLUG}"
-    paths:
-      - node_modules/
-    policy: pull
   script:
     - npm ci
     - npm run build
@@ -40,7 +35,7 @@ vitest_unit-tests:
   cache:
     key: ${CI_COMMIT_REF_SLUG}
     paths:
-        - node_modules/
+      - node_modules/
     policy: pull
   script:
     - npm ci
@@ -66,18 +61,37 @@ eslint_run-lint:
   cache:
     key: ${CI_COMMIT_REF_SLUG}
     paths:
-        - node_modules/
+      - node_modules/
     policy: pull
   script:
     - npm ci
     - npm run lint
   dependencies:
     - install_dependencies
-  allow_failure: true  
+  allow_failure: true
 
+docker_build_and_push:
+  stage: docker_build_and_push
+  image: docker:latest
+  services:
+    - docker:dind
+  tags:
+    - dind
+  script:
+    - docker login -u $DOCKER_USER -p $DOCKER_PAT registry.gitlab.com
+    - docker build -t registry.gitlab.com/$DOCKER_USER/sparesti-registry:frontend .
+    - docker push registry.gitlab.com/$DOCKER_USER/sparesti-registry:frontend
+  when: manual
 
-
-    
-
-
-    
+deploy_docker:
+  stage: deploy_docker
+  image: ubuntu:latest
+  dependencies:
+    - docker_build_and_push
+  before_script:
+    - apt-get -yq update
+    - apt-get -yqq install ssh
+    - apt-get install sshpass
+  script:
+    - sshpass -p sParest1en ssh -v -o StrictHostKeyChecking=no root@128.199.53.153 "docker rm -f frontend || true; docker pull registry.gitlab.com/$DOCKER_USER/sparesti-registry:frontend && docker run -d -p 81:80 --name frontend registry.gitlab.com/$DOCKER_USER/sparesti-registry:frontend"
+  when: manual

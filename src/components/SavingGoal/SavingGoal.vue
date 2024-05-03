@@ -5,6 +5,7 @@ import SavingGoalCreate from "@/components/SavingGoal/SavingGoalCreate.vue";
 import SavingGoalDefault from "@/components/SavingGoal/SavingGoalDefault.vue";
 import type {GoalDTO} from "@/api";
 import {GoalService} from "@/api";
+import {useUserInfoStore} from "@/stores/UserStore";
 
 export default {
   components: {SavingGoalDefault, SavingGoalCreate, SavingGoalRoadmap, SavingGoalList},
@@ -23,6 +24,7 @@ export default {
     this.calculateBluePanelMaxHeight();
   },
   methods: {
+    useUserInfoStore,
     calculateBluePanelMaxHeight() {
       // Query the timeline element
       const timelineElement = document.querySelector('.timeline');
@@ -58,6 +60,15 @@ export default {
         this.savingGoalClicked = true;
         this.keyForList++
       }, 100);
+    },
+    async refreshSpareSti() {
+      try {
+        this.selectedGoal = await GoalService.getGoal({id: this.selectedGoal.id as number})
+        console.log("yessir")
+        this.key++;
+      } catch (error) {
+        console.log(error)
+      }
     }
   },
 };
@@ -73,9 +84,14 @@ export default {
         </div>
         <saving-goal-list :key="keyForList" @goToSavingGoal="goToSavingGoal"></saving-goal-list>
       </div>
-      <div class="spacer"/>
+      <div class="spacer">
+        <div v-if="!useUserInfoStore().isPremium && !useUserInfoStore().isNoAds" v-for="(challenge, index) in 5" :key="index">
+          <img v-if="index % 2 === 0" src="https://www.codefuel.com/wp-content/uploads/2022/10/image1-1.png">
+          <img v-else src="https://www.vaultnetworks.com/wp-content/uploads/2012/11/PROMO-BLOG-AD-YELLOW-VERTICAL.png">
+        </div>
+      </div>
       <saving-goal-create @createGoalClicked="handleCreateGoalClicked" v-if="createClicked"></saving-goal-create>
-      <saving-goal-roadmap :key="key" :selected-goal="selectedGoal" v-else-if="savingGoalClicked"></saving-goal-roadmap>
+      <saving-goal-roadmap @refreshSavingGoal="refreshSpareSti" :key="key" :selected-goal="selectedGoal" v-else-if="savingGoalClicked"></saving-goal-roadmap>
       <saving-goal-default v-else></saving-goal-default>
     </div>
   </div>
@@ -99,8 +115,14 @@ export default {
 }
 
 .spacer {
+  padding-top: 16px;
   width: 10%;
   background-color: transparent;
+  margin-bottom: 12px;
+}
+
+.spacer img {
+  width: 100%;
 }
 
 h2 {

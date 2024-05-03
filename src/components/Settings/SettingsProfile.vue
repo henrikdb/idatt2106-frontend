@@ -5,6 +5,8 @@ import { useUserInfoStore } from "@/stores/UserStore";
 import { UserService, ImageService } from '@/api';
 import type { UserUpdateDTO } from '@/api';
 
+let apiUrl = import.meta.env.VITE_APP_API_URL;
+
 const firstNameRef = ref()
 const surnameRef = ref('')
 const emailRef = ref('')
@@ -42,7 +44,7 @@ const uploadImage = async (file: any) => {
 
   try {
     const response = await ImageService.uploadImage({ formData });
-    iconSrc.value = "http://localhost:8080/api/images/" + response;
+    iconSrc.value = apiUrl + "/api/images/" + response;
 
     const updateUserPayload: UserUpdateDTO = {
       profileImage: response,
@@ -65,7 +67,7 @@ async function setupForm() {
       surnameRef.value = response.lastName;
     }
     if (response.profileImage != null) {
-      iconSrc.value = "http://localhost:8080/api/images/" + response.profileImage;
+      iconSrc.value = apiUrl + "/api/images/" + response.profileImage;
     } else {
       iconSrc.value = "../src/assets/userprofile.png";
     }
@@ -109,7 +111,7 @@ onMounted(() => {
           style="display: none;" />
         <img :src="iconSrc" alt="Brukeravatar" style="width: 200px; height: 200px;">
         <div class="mt-2">
-          <button type="button" class="btn btn-primary" @click="triggerFileUpload"><img
+          <button type="button" class="btn btn-primary classyButton" @click="triggerFileUpload"><img
               src="../../assets/icons/download.svg"> Last opp bilde</button>
         </div>
       </div>
@@ -125,18 +127,9 @@ onMounted(() => {
           placeholder="Skriv inn ditt etternavn" invalid-message="Vennligst skriv inn ditt etternavn" />
       </div>
       <br>
-      <button data-cy="profile-submit-btn" type="submit" class="btn btn-primary">Oppdater
+      <button data-cy="profile-submit-btn" type="submit" class="btn btn-primary classyButton">Oppdater
         profil</button>
     </form>
-    <hr>
-    <div>
-      <h6>Stilsett din profil banner</h6>
-      <div class="bannerHolder">
-        <div v-for="x in imageRange" :key="x">
-          <img :src="'http://localhost:8080/api/images/' + x" style="width: 400px; height: 40px; margin: 10px">
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -156,4 +149,19 @@ onMounted(() => {
   flex-wrap: wrap;
   margin-top: 20px;
 }
+
+.classyButton {
+    background-color: #003A58;
+    border: #003A58;
+  }
+
+  .classyButton:hover {
+    background-color: #003b58ec;
+    border: #003A58;
+  }
+
+  .classyButton:active {
+    background-color: #003b58d6;
+    border: #003A58;
+  }
 </style>

@@ -1,13 +1,39 @@
+<!-- ShopButton.vue -->
 <template>
-    <button type="button" class="btn btn-primary" id="buttonStyle"><img src="../../assets/items/pigcoin.png" style="width: 2rem"> +{{ buttonText }}</button>
+  <button
+    :disabled="disabled"
+    :class="['btn', { 'btn-primary': !disabled, 'btn-secondary': disabled }]"
+    id="buttonStyle"
+    @click="handleClick"
+  >
+    {{ buttonText }}
+  </button>
 </template>
 
 <script setup lang="ts">
-defineProps<{ buttonText: string }>();
+import { defineProps, defineEmits } from 'vue';
+
+const props = defineProps({
+  buttonText: String,
+  disabled: Boolean,
+});
+
+const emit = defineEmits(['click']);
+
+const handleClick = () => {
+  if (!props.disabled) {
+    emit('click');
+  }
+};
 </script>
 
 <style scoped>
-    #buttonStyle {
-        border-radius: 3rem;
-    }
+#buttonStyle {
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+#buttonStyle[disabled] {
+  cursor: not-allowed;
+}
 </style>

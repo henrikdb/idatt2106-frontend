@@ -157,20 +157,12 @@ import { useRouter, useRoute } from "vue-router";
 import { useUserInfoStore } from '@/stores/UserStore';
 import {onMounted, ref} from "vue";
 import { BadgeService, type NotificationDTO, NotificationService } from '@/api'
+import handleUnknownError from '@/components/Exceptions/unkownErrorHandler';
 
 const router = useRouter();
 const route = useRoute();
 
 const userStore: any = useUserInfoStore();
-
-let profileImage: any = ref('');
-
-if (useUserInfoStore().profileImage !== 0) {
-    profileImage = 'http://localhost:8080/api/images/' + useUserInfoStore().profileImage;
-} else {
-    profileImage = 'src/assets/userprofile.png';
-}
-
 
 let path = ref('#');
 
@@ -207,6 +199,7 @@ const getNotifications = async () => {
     await BadgeService.updateUnlockedBadges();
     notificationListRef.value = await NotificationService.getUnreadNotificationByUser()
   } catch (error) {
+    handleUnknownError(error);
     notificationListRef.value = []
   }
 }
@@ -217,6 +210,7 @@ const readNotification = async (notification: NotificationDTO) => {
     await NotificationService.updateNotification({requestBody: notification});
     notificationListRef.value = await NotificationService.getUnreadNotificationByUser()
   } catch (error) {
+    handleUnknownError(error);
     notificationListRef.value = [];
   }
 }

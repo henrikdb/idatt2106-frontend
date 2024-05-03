@@ -23,7 +23,7 @@
                     pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,16}" label="Bekreft nytt passord" placeholder="Skriv inn passord"
                     invalid-message="Passordet må være mellom 4 og 16 tegn og inneholde en stor bokstav, en liten bokstav og et tall" />
             </div>
-            <button data-cy="update-password-btn" type="submit" class="btn btn-primary">Oppdater
+            <button data-cy="update-password-btn" type="submit" class="btn btn-primary classyButton">Oppdater
               passord</button>
             <button data-cy="reset-fields-btn" type="reset" class="btn btn-light">Tilbakestill
               endringer</button>
@@ -37,6 +37,7 @@
     import { ref } from 'vue'
     import BaseInput from '@/components/BaseComponents/Input/BaseInput.vue'
     import { type PasswordUpdateDTO, UserService } from '@/api'
+    import handleUnknownError from '@/components/Exceptions/unkownErrorHandler';
 
     const oldPasswordRef = ref('');
     const newPasswordRef = ref('');
@@ -71,13 +72,25 @@ const handleSubmit = async () => {
         const response = UserService.updatePassword({ requestBody: updateUserPayload })
         console.log(response)
     } catch (err) {
+        handleUnknownError(err);
         console.error(err)
     }
 }
-
-
-
-
 </script>
 
-<style scoped></style>
+<style scoped>
+    .classyButton {
+    background-color: #003A58;
+    border: #003A58;
+  }
+
+  .classyButton:hover {
+    background-color: #003b58ec;
+    border: #003A58;
+  }
+
+  .classyButton:active {
+    background-color: #003b58d6;
+    border: #003A58;
+  }
+</style>

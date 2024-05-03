@@ -65,7 +65,7 @@ npm run test:e2e
 npm run lint
 ```
 
-## Using test data
+## Test users
 For easy use of the web application we have provided a set of test users that can be used.
 
 #### Regular user
@@ -100,6 +100,26 @@ The BankID service uses a set of pre-generated test users provided by Signicat. 
     ```sh
     qwer1234
     ```
+## Test bank accounts
+The current application uses mocked bank data to transfer money between savings and checking accounts. We provide a set of Basic Bank Account Numbers (bban) that can be used:
+
+- **Account 1**
+    ```sh
+    12073650567
+    ```
+- **Account 2**
+    ```sh
+    12097256355
+    ```
+- **Account 3**
+    ```sh
+    12032202452
+    ```
+- **Account 4**
+    ```sh
+    12041281683
+    ```
+
 ## Contributors
 The individuals who contributed to the project:
 - Anders Høvik

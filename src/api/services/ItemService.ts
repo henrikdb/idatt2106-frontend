@@ -43,8 +43,8 @@ export class ItemService {
         });
     }
     /**
-     * Get user inventory items
-     * Retrieves a list of all items currently in the inventory of the user.
+     * Get the active user's inventory items
+     * Retrieves a list of all items currently in the inventory of the active user.
      * @returns InventoryDTO List of inventory items fetched successfully
      * @throws ApiError
      */
@@ -52,6 +52,25 @@ export class ItemService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/item/inventory',
+        });
+    }
+    /**
+     * Get user inventory items
+     * Retrieves a list of all items currently in the inventory of the user.
+     * @returns InventoryDTO List of inventory items fetched successfully
+     * @throws ApiError
+     */
+    public static getInventoryByUserId({
+        userId,
+    }: {
+        userId: number,
+    }): CancelablePromise<Array<InventoryDTO>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/item/inventory/{userId}',
+            path: {
+                'userId': userId,
+            },
         });
     }
 }
