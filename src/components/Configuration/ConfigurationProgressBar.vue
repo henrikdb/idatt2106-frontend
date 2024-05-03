@@ -18,7 +18,7 @@ const props = defineProps({
            aria-valuemin="0"
            aria-valuemax="100"/>
     </div>
-    <label class="row text-info font-bold display-5">{{ Math.round(props.percentage*100) + '%' }} Completed</label>
+    <label class="row text-info font-bold display-5">{{ Math.round(props.percentage*100) + '%' }} Fullført</label>
   </div>
 </template>
 

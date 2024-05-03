@@ -22,6 +22,28 @@ let errorMsg = ref('')
 const challenges: string[] = ['NO_COFFEE' , 'NO_CAR' , 'SHORTER_SHOWER' , 'SPEND_LESS_ON_FOOD' , 'BUY_USED_CLOTHES' , 'LESS_SHOPPING' , 'DROP_SUBSCRIPTION' , 'SELL_SOMETHING' , 'BUY_USED' , 'EAT_PACKED_LUNCH' , 'STOP_SHOPPING' , 'ZERO_SPENDING' , 'RENT_YOUR_STUFF' , 'MEATLESS' , 'SCREEN_TIME_LIMIT' , 'UNPLUGGED_ENTERTAINMENT']
 
 /**
+ * Mapping between challenge enum and norwegian translation.
+ */
+const challengeMapper: any = {
+  "NO_COFFEE": "Droppe kaffe",
+  "NO_CAR": "Droppe bil",
+  "SHORTER_SHOWER": "Ta kortere dusjer",
+  "SPEND_LESS_ON_FOOD": "Bruk mindre penger på mat",
+  "BUY_USED_CLOTHES": "Kjøp brukte klær",
+  "LESS_SHOPPING": "Handle mindre",
+  "DROP_SUBSCRIPTION": "Si opp abonnement",
+  "SELL_SOMETHING": "Selg noe",
+  "BUY_USED": "Kjøp brukt",
+  "EAT_PACKED_LUNCH": "Lag niste",
+  "STOP_SHOPPING": "Shoppestopp",
+  "ZERO_SPENDING": "Null-forbruk",
+  "RENT_YOUR_STUFF": "Lei ut ting",
+  "MEATLESS": "Kjøttfritt",
+  "SCREEN_TIME_LIMIT": "Skjerm tidsgrense",
+  "UNPLUGGED_ENTERTAINMENT": "Strømløs underholdning"
+}
+
+/**
  * Handles the event when a challenge is selected or deselected.
  * @param {Array} value - An array containing the challenge value and its checked status.
  *                        The first element is the challenge value, and the second element
@@ -37,16 +59,6 @@ const onChangedChallengeEvent = (value: never) => {
     chosenChallenges.value = chosenChallenges.value.filter(item => item !== value[0]);
   }
   console.log(chosenChallenges.value)
-}
-
-/**
- * Converts the given enum value to a formatted text representation.
- *
- * @param {string} enumValue the enum value to be converted
- * @return {string} The formatted text representation of the enum value
- */
-const convertEnumToText = (enumValue: String): string => {
-  return enumValue.charAt(0).toUpperCase() + enumValue.slice(1).replace(/_/g, ' ').toLowerCase();
 }
 
 /**
@@ -121,7 +133,7 @@ const handleSubmit = async () => {
     <div class="challenge-container row justify-content-center">
       <ChallangeCheckBox v-for="(item, index) in challenges"
                          :id="String(index)"
-                         :text="convertEnumToText(item)"
+                         :text="challengeMapper[item]"
                          :enum-value="item"
                          @challengeChangedEvent="onChangedChallengeEvent"/>
     </div>
@@ -129,7 +141,7 @@ const handleSubmit = async () => {
     <p class="text-danger">{{ errorMsg }}</p>
 
     <div class="confirm-button-container">
-      <BaseButton id="confirmButton" @click="handleSubmit" button-text="Continue"/>
+      <BaseButton id="confirmButton" @click="handleSubmit" button-text="Fortsett"/>
     </div>
   </div>
 </template>

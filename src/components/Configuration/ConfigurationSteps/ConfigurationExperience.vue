@@ -44,24 +44,24 @@ const handleSubmit = () => {
   <div class="container">
     <div>
       <h3 class="d-flex align-items-center justify-content-center">
-        How much experience do you have with saving money?
+        Hvor mye erfaring har du med å spare penger?
       </h3>
     </div>
 
     <form class="btn-group-vertical" ref="formRef">
 
       <input ref="beginnerRef" type="radio" class="btn-check" name="experience" id="btn-check-outlined" autocomplete="off" required>
-      <label class="btn btn-outline-primary d-flex align-items-center justify-content-center" for="btn-check-outlined">Beginner</label>
+      <label class="btn btn-outline-primary d-flex align-items-center justify-content-center" for="btn-check-outlined">Lite</label>
 
       <input ref="someExperienceRef" type="radio" class="btn-check" name="experience" id="btn-check2-outlined" autocomplete="off" required>
-      <label class="btn btn-outline-primary d-flex align-items-center justify-content-center" for="btn-check2-outlined">Some experience</label>
+      <label class="btn btn-outline-primary d-flex align-items-center justify-content-center" for="btn-check2-outlined">Noe</label>
 
       <input ref="expertRef" type="radio" class="btn-check" name="experience" id="btn-check3-outlined" autocomplete="off" required>
-      <label class="btn btn-outline-primary d-flex align-items-center justify-content-center" for="btn-check3-outlined">Expert</label>
+      <label class="btn btn-outline-primary d-flex align-items-center justify-content-center" for="btn-check3-outlined">Ekspert</label>
     </form>
     <p class="text-danger">{{ errorMsg }}</p>
     <div class="confirm-button-container">
-      <BaseButton id="confirmButton" @click="handleSubmit" button-text="Continue"/>
+      <BaseButton id="confirmButton" @click="handleSubmit" button-text="Fortsett"/>
     </div>
 </div>
 </template>
