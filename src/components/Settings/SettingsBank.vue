@@ -10,7 +10,7 @@
                     invalid-message="Vennligst skriv inn din brukskonto" />
             </div>
             <br>
-            <button data-cy="update-spending-btn" type="submit" class="btn btn-primary">Oppdater
+            <button data-cy="update-spending-btn" type="submit" class="btn btn-primary classyButton">Oppdater
               brukskonto</button>
         </form>
         <br>
@@ -22,7 +22,7 @@
                     invalid-message="Vennligst skriv inn din sparekonto" />
             </div>
             <br>
-            <button data-cy="update-savings-btn" type="submit" class="btn btn-primary">Oppdater
+            <button data-cy="update-savings-btn" type="submit" class="btn btn-primary classyButton">Oppdater
               sparekonto</button>
         </form>
         <hr>
@@ -111,3 +111,20 @@ async function getAccountInfo() {
   }
 }
 </script>
+
+<style scoped>
+   .classyButton {
+    background-color: #003A58;
+    border: #003A58;
+  }
+
+  .classyButton:hover {
+    background-color: #003b58ec;
+    border: #003A58;
+  }
+
+  .classyButton:active {
+    background-color: #003b58d6;
+    border: #003A58;
+  }
+</style>

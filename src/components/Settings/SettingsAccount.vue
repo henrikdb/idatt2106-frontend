@@ -66,7 +66,7 @@ onMounted(() => {
           <p data-cy="change-email-msg-error" class="text-danger">{{ errorMsg }}</p>
           <p data-cy="change-email-msg-confirm" class="text-success">{{ confirmationMsg }}</p>
           <br>
-          <button data-cy="change-email-btn" type="submit" class="btn btn-primary">Endre
+          <button data-cy="change-email-btn" type="submit" class="btn btn-primary classyButton">Endre
             Informasjon</button>
           <hr>
           <div class="form-group">
@@ -77,3 +77,20 @@ onMounted(() => {
       </form>
   </div>
 </template>
+
+<style scoped>
+  .classyButton {
+    background-color: #003A58;
+    border: #003A58;
+  }
+
+  .classyButton:hover {
+    background-color: #003b58ec;
+    border: #003A58;
+  }
+
+  .classyButton:active {
+    background-color: #003b58d6;
+    border: #003A58;
+  }
+</style>

@@ -62,6 +62,10 @@ async function setupForm() {
     if (response.profileImage) {
       imageUrl.value = apiUrl + "/api/images/" + response.profileImage;
     }
+    if (response.bannerImage != 0 && response.bannerImage !== null) {
+      console.log(response.bannerImage)
+      bannerImageUrl.value = apiUrl + "/api/images/" + response.bannerImage;
+    }
     getInventory();
     getBadges();
   } catch (err) {
@@ -103,14 +107,20 @@ const getBadges = async () => {
 }
 
 const selectItem = (item: any) => {
+  try {
   backgroundName.value = item.itemName;
   let imageId = item.imageId;
-  //const bannerImagePayload: UserUpdateDTO = {
-   //   bannerImage: imageId as any,
-   // };
-  //UserService.update({ requestBody: bannerImagePayload })
-  //bannerImageUrl.value = `http://localhost:8080/api/images/${imageId}`;
-  
+  const bannerImagePayload: UserUpdateDTO = {
+      bannerImage: imageId as any,
+    };
+  UserService.update({ requestBody: bannerImagePayload })
+  if (imageId != 0) {
+    bannerImageUrl.value = `${apiUrl}/api/images/${imageId}`;
+  }
+  } catch (error) {
+    handleUnknownError(error)
+    console.error(error)
+  }
 }
 
 onMounted(() => {
@@ -138,29 +148,32 @@ const toUpdateUserSettings = () => {
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col 12">
         <div class="card">
-          <div class="rounded-top text-white d-flex flex-row bg-primary" :style="{ height: '200px', backgroundImage: `url(${bannerImageUrl})` }">
-            <div class=" d-flex flex-column align-items-center justify-content-center">
+          <div class="rounded-top text-white d-flex flex-row bg-primary justify-content-between" :style="{ height: '200px', backgroundImage: `url(${bannerImageUrl})` }">
+            <div class=" text-white d-flex flex-row">
+              <div class=" d-flex flex-column align-items-center justify-content-center">
               <img :src="imageUrl" alt="Generisk plassholderbilde" class="img-fluid img-thumbnail"
                 style="width: 150px; height:150px; margin-left: 25px; margin-right: 15px;">
             </div>
               <h1 data-cy="firstname" style="display: flex; align-items: end; margin-bottom: 20px;">{{ firstname }} {{ lastname }}</h1>
+            </div>
+              <div class="d-flex align-items-end text-white my-3">
+                <div class="d-flex align-items-center flex-column">
+                  <p class="mb-1 h2 d-flex flex-column align-items-center" data-cy="points">{{ points }} <img src="@/assets/items/pigcoin.png" style="width: 60px; height: 60px"></p>
+                  <p class="small text-white mb-0">Poeng</p>
+                </div>
+                <div class="d-flex align-items-center flex-column px-3">
+                  <p class="mb-1 h2 d-flex flex-column align-items-center" data-cy="streak">{{ streak }} <img src="@/assets/icons/fire.png" style="width: 60px; height: 60px"></p>
+                  <p class="small text-white mb-0">Streak</p>
+                </div>
+              </div>
           </div>
           <div class="p-3 text-black" style="background-color: #f8f9fa;">
             <div class="d-flex justify-content-end text-center py-1">
               <div style="width: 100%; display: flex; justify-content: start">
-                <button  data-cy="toUpdate" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary"
+                <button  data-cy="toUpdate" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary classyButton"
                 data-mdb-ripple-color="dark" style="z-index: 1; height: 40px; margin-left: 17px" id="toUpdate" @click="toUpdateUserSettings">
                 Rediger profil
               </button>
-            
-              </div>
-              <div>
-                <p class="mb-1 h2" data-cy="points">{{ points }} <img src="@/assets/items/pigcoin.png" style="width: 4rem"></p>
-                <p class="small text-muted mb-0">Poeng</p>
-              </div>
-              <div class="px-3">
-                <p class="mb-1 h2" data-cy="streak">{{ streak }} <img src="@/assets/icons/fire.png" style="width: 4rem"></p>
-                <p class="small text-muted mb-0">Streak</p>
               </div>
             </div>
           </div>
@@ -314,60 +327,18 @@ const toUpdateUserSettings = () => {
   background-image: url('/src/assets/banners/stacked.svg');
 }
 
-.card-1 {
-  background-color: #4158D0;
-  background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
-}
-
-.card-2 {
-  background-color: #0093E9;
-  background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
-}
-
-.card-3 {
-  background-color: #00DBDE;
-  background-image: linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%);
-}
-
-.card-4 {
-  background-color: #FBAB7E;
-  background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);
-}
-
-.card-5 {
-  background-color: #85FFBD;
-  background-image: linear-gradient(45deg, #85FFBD 0%, #FFFB7D 100%);
-}
-
-.card-6 {
-  background-color: #FA8BFF;
-  background-image: linear-gradient(45deg, #FA8BFF 0%, #2BD2FF 52%, #2BFF88 90%);
-}
-
-.card-7 {
-  background-color: #FA8BFF;
-  background-image: linear-gradient(45deg, #FA8BFF 0%, #2BD2FF 52%, #2BFF88 90%);
-}
-
-.card-8 {
-  background-color: #FBDA61;
-  background-image: linear-gradient(45deg, #FBDA61 0%, #FF5ACD 100%);
-}
-
-.card-9 {
-  background-color: #4158D0;
-  background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
-}
-
-.card-10 {
-  background-color: #FF3CAC;
-  background-image: linear-gradient(225deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);
-
-}
-
-
 /*-------*/
 .rounded-top {
   background-color: #00DBDE;
 }
+
+  .classyButton:hover {
+    background-color: #003b58ec;
+    border: #003A58;
+  }
+
+  .classyButton:active {
+    background-color: #003b58d6;
+    border: #003A58;
+  }
 </style>
