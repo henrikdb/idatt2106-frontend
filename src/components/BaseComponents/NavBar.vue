@@ -36,7 +36,7 @@
                          :to="toBudget()"
                          exact-active-class="active-nav"
                          @click="toggleDropdown">
-              <img src="@/assets/icons/budget.svg">Budjsett
+              <img src="@/assets/icons/budget.svg">Budsjett
             </router-link>
           </li>
           <li class="nav-item">
