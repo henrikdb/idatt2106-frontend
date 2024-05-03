@@ -5,7 +5,7 @@ import BaseButton from '@/components/BaseComponents/Buttons/BaseButton.vue'
 import { ref } from 'vue'
 import { useConfigurationStore } from '@/stores/ConfigurationStore'
 import { useUserInfoStore } from '@/stores/UserStore'
-import { AuthenticationService, type BankAccountDTO, OpenAPI, type SignUpRequest, UserService } from '@/api'
+import { AuthenticationService, OpenAPI, type SignUpRequest, UserService } from '@/api'
 import handleUnknownError from '@/components/Exceptions/unkownErrorHandler'
 
 const router = useRouter();
@@ -68,7 +68,9 @@ const signUpUser = async () => {
       commitment: useConfigurationStore().getCommitment,
       experience: useConfigurationStore().getExperience,
       challengeTypes: useConfigurationStore().getChallenges
-    }
+    },
+    checkingAccountBBAN: useConfigurationStore().getCheckingAccountBBAN,
+    savingsAccountBBAN: useConfigurationStore().getSavingsAccountBBAN,
   };
 
   let response = await AuthenticationService.signup({ requestBody: signUpPayLoad });
@@ -81,28 +83,6 @@ const signUpUser = async () => {
     accessToken: response.token,
     role: response.role,
   });
-}
-
-
-/**
- * Updates the bank accounts for the user.
- *
- * @throws {Error} Throws an error if selectBankAccount fails.
- */
-const updateBankAccounts = async () => {
-
-  // Request payload for spending account
-  const spendingRequest: BankAccountDTO = {
-    bban: useConfigurationStore().getSpendingAccount,
-    bankAccountType: "CHECKING_ACCOUNT"
-  }
-  // Request payload for saving account
-  const savingRequest: BankAccountDTO = {
-    bban: useConfigurationStore().getSavingsAccount,
-    bankAccountType: "SAVING_ACCOUNT"
-  }
-  await UserService.selectBankAccount({requestBody: spendingRequest})
-  await UserService.selectBankAccount({requestBody: savingRequest})
 }
 
 /**
@@ -119,7 +99,6 @@ const handleSubmit = async () => {
   useConfigurationStore().setChallenges(chosenChallenges.value)
   try {
     await signUpUser();
-    await updateBankAccounts();
 
     useUserInfoStore().resetPassword()
     await router.push("/first-saving-goal")

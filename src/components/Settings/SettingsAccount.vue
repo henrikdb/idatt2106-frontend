@@ -5,10 +5,12 @@ import { useUserInfoStore } from "@/stores/UserStore";
 import { UserService } from '@/api';
 import type { UserUpdateDTO } from '@/api';
 import handleUnknownError from '@/components/Exceptions/unkownErrorHandler';
+import router from '@/router'
 
 const emailRef = ref('')
 const errorMsg = ref('')
 const confirmationMsg = ref('')
+const errorMsg2 = ref('')
 
 /**
  * Handles the email input event by updating the email reference value.
@@ -33,8 +35,7 @@ async function setupForm() {
     confirmationMsg.value = '';
     errorMsg.value = '';
   } catch (err) {
-    handleUnknownError(err);
-    errorMsg.value = 'Error fetching email, try again!'
+    errorMsg.value = handleUnknownError(err);
     confirmationMsg.value = ''
   }
 }
@@ -64,6 +65,18 @@ const handleSubmit = async () => {
     confirmationMsg.value = ''
   }
 }
+
+const handleSubmit2 = async () => {
+  try {
+    console.log("test")
+    UserService.deleteUser();
+    console.log("test")
+    useUserInfoStore().clearUserInfo();
+    await router.push("/login");
+  } catch (err) {
+    errorMsg2.value = handleUnknownError(err);
+  }
+}
 onMounted(() => {
   setupForm()
 })
@@ -71,9 +84,9 @@ onMounted(() => {
 
 <template>
   <div class="tab-pane active" id="account">
-      <h6>KONTO INNSTILLINGER</h6>
+      <h6>KONTO</h6>
       <hr>
-      <form  @submit.prevent="handleSubmit">
+      <form @submit.prevent="handleSubmit">
           <div class="form-group">
               <BaseInput data-cy="email-input" :model-value="emailRef"
                          @input-change-event="handleEmailInputEvent" id="emailInput-change"
@@ -85,12 +98,14 @@ onMounted(() => {
           <br>
           <button data-cy="change-email-btn" type="submit" class="btn btn-primary classyButton">Endre
             Informasjon</button>
-          <hr>
-          <div class="form-group">
-              <label class="d-block text-danger">Slett Bruker</label>
-              <p class="text-muted font-size-sm">Når du først har slettet kontoen din, er det ingen vei tilbake. Vennligst vær sikker.</p>
-          </div>
-          <button class="btn btn-danger" type="button">Slett Bruker</button>
+      </form>
+      <form @submit.prevent="handleSubmit2" style="margin-top: 20px;">
+        <div class="form-group">
+          <label class="d-block text-danger">Slett Bruker</label>
+          <p class="text-muted font-size-sm">Obs: Når du først har slettet kontoen din, er det ingen vei tilbake.</p>
+        </div>
+        <p data-cy="delete-user-msg-error" class="text-danger">{{ errorMsg2 }}</p>
+        <button class="btn btn-danger" type="submit">Slett Bruker</button>
       </form>
   </div>
 </template>

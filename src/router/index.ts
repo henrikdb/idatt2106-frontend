@@ -49,11 +49,6 @@ const routes = [
             component: () => import('@/components/Settings/SettingsSecurity.vue'),
           },
           {
-            path: '/settings/notification',
-            name: 'notification',
-            component: () => import('@/components/Settings/SettingsNotification.vue'),
-          },
-          {
             path: '/settings/bank',
             name: 'bank',
             component: () => import('@/components/Settings/SettingsBank.vue'),

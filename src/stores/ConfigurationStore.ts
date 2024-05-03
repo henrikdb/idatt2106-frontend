@@ -5,10 +5,10 @@ import { defineStore } from 'pinia'
  */
 export const useConfigurationStore = defineStore('ConfigurationStore', {
   state: () => ({
-    /** The amount in the spending account. */
-    spendingAccount: 0,
-    /** The amount in the savings account. */
-    savingsAccount: 0,
+    /** The Basic Bank Account Number in the checking account. */
+    chekingAccountBBAN: 0,
+    /** The Basic Bank Account Number in the savings account. */
+    savingsAccountBBAN: 0,
     /** The user's commitment. */
     commitment: '',
     /** The user's experience. */
@@ -18,20 +18,20 @@ export const useConfigurationStore = defineStore('ConfigurationStore', {
   }),
   actions: {
     /**
-     * Sets the amount in the spending account.
-     *
-     * @param {number} newValue - The new value for the spending account.
+     * Sets the Basic Bank Account Number of the cheking account.
+     * 
+     * @param {number} newValue - The new Basic Bank Account Number of the cheking account.
      */
-    setSpendingAccount(newValue: number) {
-      this.spendingAccount = newValue;
+    setChekingAccountBBAN(newValue: number) {
+      this.chekingAccountBBAN = newValue;
     },
     /**
-     * Sets the amount in the savings account.
-     *
-     * @param {number} newValue - The new value for the savings account.
+     * Sets the Basic Bank Account Number of the savings account.
+     * 
+     * @param {number} newValue - The new Basic Bank Account Number of the savings account.
      */
-    setSavingsAccount(newValue: number) {
-      this.savingsAccount = newValue
+    setSavingsAccountBBAN(newValue: number) {
+      this.savingsAccountBBAN = newValue
     },
     /**
      * Sets the user's commitment.
@@ -68,20 +68,20 @@ export const useConfigurationStore = defineStore('ConfigurationStore', {
   },
   getters: {
     /**
-     * Retrieves the amount in the spending account.
-     *
-     * @returns {number} The amount in the spending account.
+     * Retrieves the Basic Bank Account Number of the cheking account.
+     * 
+     * @returns {number} The amount in the cheking account.
      */
-    getSpendingAccount(): number {
-      return this.spendingAccount
+    getCheckingAccountBBAN(): number {
+      return this.chekingAccountBBAN
     },
     /**
-     * Retrieves the amount in the savings account.
-     *
+     * Retrieves the Basic Bank Account Number of the savings account.
+     * 
      * @returns {number} The amount in the savings account.
      */
-    getSavingsAccount(): number {
-      return this.savingsAccount
+    getSavingsAccountBBAN(): number {
+      return this.savingsAccountBBAN
     },
     /**
      * Retrieves the user's commitment.

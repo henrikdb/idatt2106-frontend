@@ -8,6 +8,8 @@ export type SignUpRequest = {
     lastName?: string;
     email?: string;
     password?: string;
+    checkingAccountBBAN?: number;
+    savingsAccountBBAN?: number;
     configuration: ConfigurationDTO;
 };
 
