@@ -157,7 +157,7 @@ import handleUnknownError from '@/components/Exceptions/unkownErrorHandler';
 
 let apiUrl = import.meta.env.VITE_APP_API_URL;
 const products = ref([] as any);
-const points = ref();
+const points = ref(0 as any);
 
 /**
  * Retrieves the store's products and updates the products list.
@@ -178,7 +178,9 @@ const getStore = async () => {
 const getPoints = async () => {
   try {
     const response = await UserService.getUser();
-    points.value = response.point?.currentPoints;
+    if (response.point?.currentPoints !== null) {
+      points.value = response.point?.currentPoints;
+    }
   } catch (error) {
     handleUnknownError(error);
     console.log(error);
