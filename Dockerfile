@@ -5,8 +5,6 @@ COPY package*.json ./
 RUN npm install
 COPY . .
 #ENV API_URL=http://backend:8080
-ARG VUE_APP_API_URL
-ENV VUE_APP_API_URL $VUE_APP_API_URL
 RUN npm run build
 
 # Step 2: Setup the server with Nginx
