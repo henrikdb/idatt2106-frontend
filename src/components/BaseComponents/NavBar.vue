@@ -36,7 +36,7 @@
               <img src="@/assets/icons/storefront.svg">Butikk
             </router-link>
           </li>
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown d-flex flex-column">
                         <a data-mdb-dropdown-init class=" nav-link dropdown-toggle hidden-arrow notification" href="#" id="navbarDropdownMenuLink"
                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
                           <img src="/src/assets/icons/bell-white.svg">
@@ -51,7 +51,7 @@
                                 <img :src="notificationImageMapper[String(item.notificationType)]" alt="Varslingsikon"          class="notification-icon">
                               </div>
                               <div class="flex-grow-1 ms-3">
-                                <div class="not-item dropdown-item">{{item.message}}</div>
+                                <div class="not-item dropdown-item text-wrap">{{item.message}}</div>
                               </div>
                             </router-link>
                           </li>
@@ -60,7 +60,7 @@
                           <li>Ingen varslinger</li>
                         </ul>
                     </li>
-          <li v-if="userStore.isLoggedIn" class="nav-item dropdown">
+          <li v-if="userStore.isLoggedIn" class="nav-item dropdown d-flex flex-column">
             <a
               data-cy="user"
               :class="['nav-link', 'dropdown-toggle', 'username-text', 'text-white', { 'underline-active': !isAnyActivePage() }]"
@@ -461,6 +461,12 @@ onMounted(() => {
 .container-fluid {
     font-size: 1.7rem;
   margin: 0 140px;
+}
+
+@media (max-width: 768px) {
+    .container-fluid {
+        margin: 0 20px;
+    }
 }
 
 #logo {
