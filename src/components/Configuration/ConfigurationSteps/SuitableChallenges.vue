@@ -39,7 +39,13 @@ const onChangedChallengeEvent = (value: never) => {
   console.log(chosenChallenges.value)
 }
 
-const convertEnumToText = (enumValue: String) => {
+/**
+ * Converts the given enum value to a formatted text representation.
+ *
+ * @param {string} enumValue the enum value to be converted
+ * @return {string} The formatted text representation of the enum value
+ */
+const convertEnumToText = (enumValue: String): string => {
   return enumValue.charAt(0).toUpperCase() + enumValue.slice(1).replace(/_/g, ' ').toLowerCase();
 }
 
@@ -52,6 +58,7 @@ const signUpUser = async () => {
   // Saves the chosen challenges to the configuration store
   useConfigurationStore().setChallenges(chosenChallenges.value)
 
+  // Declares the request payload
   const signUpPayLoad: SignUpRequest  = {
     firstName: useUserInfoStore().getFirstName,
     lastName: useUserInfoStore().getLastname,
@@ -66,8 +73,6 @@ const signUpUser = async () => {
     savingsAccountBBAN: useConfigurationStore().getSavingsAccountBBAN,
   };
 
-  console.log(signUpPayLoad)
-
   let response = await AuthenticationService.signup({ requestBody: signUpPayLoad });
   if (response.token == null) {
     errorMsg.value = 'A valid token could not be created';
@@ -80,12 +85,18 @@ const signUpUser = async () => {
   });
 }
 
+/**
+ * Handles form submission by signing up the user,
+ * updating bank accounts, and navigating to the next configuration step.
+ * If an error occur, an error message will be displayed.
+ */
 const handleSubmit = async () => {
+  // Check if there are no chosen challenges
   if (chosenChallenges.value.length === 0) {
+    // if so sets chosen challenges to all, so a goal can be created.
     chosenChallenges.value = challenges
   }
   useConfigurationStore().setChallenges(chosenChallenges.value)
-
   try {
     await signUpUser();
 

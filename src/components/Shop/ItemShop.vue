@@ -109,7 +109,10 @@
   let apiUrl = import.meta.env.VITE_APP_API_URL;
   const products = ref([] as any);
   const points = ref();
-  
+
+  /**
+   * Retrieves the store's products and updates the products list.
+   */
   const getStore = async () => {
     try {
       const response = await ItemService.getStore();
@@ -119,7 +122,10 @@
       console.log(error);
     }
   }
-  
+
+  /**
+   * Retrieves the user's current points and updates the points reference.
+   */
   const getPoints = async () => {
     try {
       const response = await UserService.getUser();
@@ -129,22 +135,32 @@
       console.log(error);
     }
   }
-  
+
+  /**
+   * Buys an item with the specified item ID.
+   * Sends a request to buy the item, then refreshes the store and points information.
+   *
+   * @param {number} itemId - The ID of the item to buy.
+   */
   const buyItem = async (itemId: number) => {
     try {
-      const response = await ItemService.buyItem({ itemId: itemId });
-      console.log(response);
-      getStore();
-      getPoints();
+      await ItemService.buyItem({ itemId: itemId });
+      await getStore();
+      await getPoints();
     } catch (error) {
       handleUnknownError(error);
       console.log(error);
     }
   }
-  
+
+  /**
+   * Buys a premium subscription for the user.
+   * Sends a request to update the user's subscription level to 'PREMIUM'.
+   * Updates the user's subscription level in the store.
+   */
   const buyPremium = async () => {
     try {
-      const response = await UserService.updateSubscriptionLevel({ subscriptionLevel: 'PREMIUM' });
+      await UserService.updateSubscriptionLevel({ subscriptionLevel: 'PREMIUM' });
       useUserInfoStore().setUserInfo({
         subscriptionLevel: 'PREMIUM',
       })
@@ -153,10 +169,15 @@
       console.log(error);
     }
   }
-  
+
+  /**
+   * Buys a subscription to remove ads for the user.
+   * Sends a request to update the user's subscription level to 'NO_ADS'.
+   * Updates the user's subscription level in the store.
+   */
   const buyNoAds = async () => {
     try {
-      const response = await UserService.updateSubscriptionLevel({ subscriptionLevel: 'NO_ADS' });
+      await UserService.updateSubscriptionLevel({ subscriptionLevel: 'NO_ADS' });
       useUserInfoStore().setUserInfo({
         subscriptionLevel: 'NO_ADS',
       })
@@ -166,8 +187,13 @@
     }
   }
 
-  //Just a random code generator for the feature's sake
-  function generateRandomCode(length = 8) {
+/**
+ * Generates a random code of the specified length.
+ *
+ * @param length - The length of the random code. Default is 8.
+ * @returns A randomly generated code.
+ */
+function generateRandomCode(length = 8) {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   let result = '';
   for (let i = 0; i < length; i++) {
@@ -176,21 +202,25 @@
   return result;
 }
 
-  const buySomething = async () => {
-    try {
-      const randomCode = generateRandomCode();
-      alert(`Thank you for your purchase! Your code is: ${randomCode}`);
-    } catch (error) {
-      handleUnknownError(error);
-      console.log(error);
-    }
+/**
+ * Buys something (dummy functionality for demonstration purposes).
+ * Generates a random code and alerts the user with the code as a confirmation message.
+ */
+const buySomething = async () => {
+  try {
+    const randomCode = generateRandomCode();
+    alert(`Thank you for your purchase! Your code is: ${randomCode}`);
+  } catch (error) {
+    handleUnknownError(error);
+    console.log(error);
   }
-  
-  onMounted(() => {
-    getStore();
-    getPoints();
-  })
-  </script>
+}
+
+onMounted(() => {
+  getStore();
+  getPoints();
+})
+</script>
 
 <style scoped>
 .card {

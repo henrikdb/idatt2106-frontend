@@ -23,25 +23,52 @@ const selectedBanner = ref()
 const iconSrc = ref('../src/assets/userprofile.png');
 const fileInputRef = ref();
 
+/**
+ * Handles the event when the first name input changes.
+ * Updates the first name reference value.
+ *
+ * @param {any} newValue - The new value of the first name input.
+ */
 const handleFirstNameInputEvent = (newValue: any) => {
   firstNameRef.value = newValue
 }
 
-
+/**
+ * Handles the event when the surname input changes.
+ * Updates the surname reference value.
+ *
+ * @param {any} newValue - The new value of the surname input.
+ */
 const handleSurnameInputEvent = (newValue: any) => {
   surnameRef.value = newValue
 }
 
+/**
+ * Triggers the file upload dialog.
+ */
 const triggerFileUpload = () => {
   fileInputRef.value.click();
 };
 
+/**
+ * Handles the file change event.
+ * Uploads the selected image file.
+ *
+ * @param {any} event - The file change event.
+ */
 const handleFileChange = (event: any) => {
   const file = event.target.files[0];
   if (file) {
     uploadImage(file);
   }
 };
+
+/**
+ * Uploads the image file to the server.
+ * Updates user profile information upon successful image upload.
+ *
+ * @param {any} file - The image file to upload.
+ */
 
 const uploadImage = async (file: any) => {
   const formData = { file: new Blob([file]) }
@@ -76,7 +103,6 @@ const getInventory = async () => {
 };
 
 const selectItem = async (bannerId: any) => {
-  console.log(bannerId)
   try {
     const bannerImagePayload: UserUpdateDTO = {
       bannerImage: bannerId,
@@ -89,6 +115,10 @@ const selectItem = async (bannerId: any) => {
   }
 }
 
+/**
+ * Sets up the user profile form.
+ * Fetches user data and populates the form fields.
+ */
 async function setupForm() {
   try {
     const response = await UserService.getUser();
@@ -102,21 +132,27 @@ async function setupForm() {
     } else {
       iconSrc.value = "../src/assets/userprofile.png";
     }
-    selectedBanner.value = response.bannerImage;
-    console.log(response.bannerImage)
+    if (response.bannerImage != null) {
+      selectedBanner.value = response.bannerImage;
+    }
   } catch (err) {
     handleUnknownError(err);
     console.error(err)
   }
 }
 
+
+/**
+ * Handles form submission.
+ * Updates user profile information with the provided first name and surname.
+ */
 const handleSubmit = async () => {
   const updateUserPayload: UserUpdateDTO = {
     firstName: firstNameRef.value,
     lastName: surnameRef.value,
   };
   try {
-    await UserService.update({ requestBody: updateUserPayload })
+    UserService.update({ requestBody: updateUserPayload })
     useUserInfoStore().setUserInfo({
       firstname: firstNameRef.value,
       lastname: surnameRef.value,
@@ -168,10 +204,11 @@ onMounted(() => {
     <div>
       <h6>Banners</h6>
       <div v-if="hasBanners" class="scrolling-wrapper-badges row flex-row flex-wrap mt-2 pb-2 pt-2">
-        <div v-for="banner in banners" :key="banner.id" class="card text-center banner justify-content-center d-flex align-items-center"
-           data-bs-toggle="tooltip"
+        <div v-for="banner in banners" :key="banner.id" class="card text-center banner justify-content-center d-flex align-items-center" @click="selectItem(banner.id)"
+          :class="{ 'selected-banner': banner.id === selectedBannerId }" data-bs-toggle="tooltip"
           data-bs-placement="top" data-bs-custom-class="custom-tooltip" :data-bs-title="banner.criteria">
-          <img :src="apiUrl + `/api/images/${banner.imageId}`" class="card-img-top" :class="{ 'selected-banner': banner.id === selectedBanner }" alt="Banner" style="width: 200px; height: 100px" @click="selectItem(banner.imageId)" />
+          <img :src="apiUrl + `/api/images/${banner.imageId}`" class="card-img-top" alt="Banner" style="width: 100px; height: 100px" />
+            <h5 class="card-title">{{ selectedBanner }}</h5>
         </div>
       </div>
       <div v-else>
@@ -214,7 +251,7 @@ onMounted(() => {
 }
 
 .selected-banner {
-  border: 5px solid #1cd516;
+  border: 2px solid #1a81b5;
   display: flex;
 }
 

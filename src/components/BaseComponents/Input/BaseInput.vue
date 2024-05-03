@@ -52,8 +52,16 @@ const props = defineProps({
   }
 });
 
+// Form reference in order to display validations input
 const formRef = ref();
 
+
+/**
+ * Adds the "was-validated" class to the input element, and emits
+ * an 'inputChangeEvent' to parent component.
+ *
+ * @param event The input event object
+ */
 const onInputEvent = (event: any) => {
   formRef.value.classList.add("was-validated")
   emit('inputChangeEvent', event.target.value)

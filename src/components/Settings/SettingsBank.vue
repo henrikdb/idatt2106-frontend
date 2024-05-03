@@ -64,17 +64,28 @@ const savingsAccountBalance = ref(0 as any)
 const errorMsg = ref('')
 const confirmationMsg = ref('')
 
-
+/**
+ * Handles the event when spending input changes by updating the spending account value.
+ *
+ * @param {any} newValue - The new value of the spending input.
+ */
 const handleSpendingInputEvent = (newValue: any) => {
   spendingAccount.value = newValue
 }
 
-
+/**
+ * Handles the event when saving input changes by updating the saving account value.
+ *
+ * @param {any} newValue - The new value of the saving input.
+ */
 const handleSavingInputEvent = (newValue: any) => {
   savingsAccount.value = newValue
 }
 
-
+/**
+ * Submits the updated saving account information to the UserService.
+ * Handles errors by calling the handleUnknownError function.
+ */
 const handleSavingSubmit = async () => {
     try {
       const updateUserPayload: UserUpdateDTO = {
@@ -89,6 +100,10 @@ const handleSavingSubmit = async () => {
     }
 }
 
+/**
+ * Submits the updated spending account information to the UserService.
+ * Handles errors by calling the handleUnknownError function.
+ */
 const handleSpendingSubmit = async () => {
     try {
       const updateUserPayload: UserUpdateDTO = {
@@ -104,6 +119,11 @@ const handleSpendingSubmit = async () => {
 }
 
 onMounted(getAccountInfo)
+
+/**
+ * Retrieves account information for the user upon component mounting.
+ * Handles errors by calling the handleUnknownError function.
+ */
 async function getAccountInfo() {
   try {
     let response = await UserService.getUser();

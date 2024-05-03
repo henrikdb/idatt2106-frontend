@@ -33,36 +33,57 @@
 
 
 <script setup lang="ts">
-    import { ref } from 'vue'
-    import BaseInput from '@/components/BaseComponents/Input/BaseInput.vue'
-    import { type PasswordUpdateDTO, UserService } from '@/api'
-    import handleUnknownError from '@/components/Exceptions/unkownErrorHandler';
+import { ref } from 'vue'
+import BaseInput from '@/components/BaseComponents/Input/BaseInput.vue'
+import { type PasswordUpdateDTO, UserService } from '@/api'
+import handleUnknownError from '@/components/Exceptions/unkownErrorHandler';
 
-    const oldPasswordRef = ref('');
-    const newPasswordRef = ref('');
-    const confirmPasswordRef = ref('');
-    let errorMsg = ref('');
+const oldPasswordRef = ref('');
+const newPasswordRef = ref('');
+const confirmPasswordRef = ref('');
+let errorMsg = ref('');
 
-    const handleOldPasswordInputEvent = (newValue: any) => {
-        oldPasswordRef.value = newValue
+
+/**
+ * Handles the event when the old password input changes.
+ * Updates the old password reference value.
+ *
+ * @param {any} newValue - The new value of the old password input.
+ */
+const handleOldPasswordInputEvent = (newValue: any) => {
+    oldPasswordRef.value = newValue
 }
 
-    const handleNewPasswordInputEvent = (newValue: any) => {
-        newPasswordRef.value = newValue
+/**
+ * Handles the event when the new password input changes.
+ * Updates the new password reference value.
+ *
+ * @param {any} newValue - The new value of the new password input.
+ */
+const handleNewPasswordInputEvent = (newValue: any) => {
+    newPasswordRef.value = newValue
 }
 
-    const handleConfirmPasswordInputEvent = (newValue: any) => {
-        confirmPasswordRef.value = newValue
+/**
+ * Handles the event when the confirm-password input changes.
+ * Updates the confirm-password reference value.
+ *
+ * @param {any} newValue - The new value of the confirm-password input.
+ */
+const handleConfirmPasswordInputEvent = (newValue: any) => {
+    confirmPasswordRef.value = newValue
 }
 
+/**
+ * Handles form submission for password update.
+ * Validates if the new password matches the confirm-password.
+ */
 const handleSubmit = async () => {
     if (newPasswordRef.value.length === 0 || newPasswordRef.value !== confirmPasswordRef.value) {
         errorMsg.value = "Passordene er ikke identiske";
         return
     }
-
     errorMsg.value = '';
-
     try {
       const updateUserPayload: PasswordUpdateDTO = {
         oldPassword: oldPasswordRef.value,

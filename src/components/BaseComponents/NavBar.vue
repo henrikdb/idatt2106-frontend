@@ -159,21 +159,37 @@ import {onMounted, ref} from "vue";
 import { BadgeService, type NotificationDTO, NotificationService } from '@/api'
 import handleUnknownError from '@/components/Exceptions/unkownErrorHandler';
 
+// Declaring router, route and userStore variables
 const router = useRouter();
 const route = useRoute();
-
 const userStore: any = useUserInfoStore();
 
-let path = ref('#');
+// Declaring profile image
+let profileImage: any = ref('');
+if (useUserInfoStore().profileImage !== 0) {
+    profileImage.value = 'http://localhost:80/api/images/' + useUserInfoStore().profileImage;
+} else {
+    profileImage.value = 'src/assets/userprofile.png';
+}
 
+// Declaring reactive notification list for displaying notification
 let notificationListRef = ref<NotificationDTO[]>([]);
 
-
- function isAnyActivePage() {
-  const activeRoutes = ['/roadmap', '/leaderboard', '/news', '/shop']; // Add other pages here
+/**
+ * Checks if the current route is any of the active pages.
+ *
+ * @returns {boolean} True if the current route is one of the active pages, otherwise false.
+ */
+ function isAnyActivePage(): boolean {
+  const activeRoutes = ['/roadmap', '/leaderboard', '/news', '/shop'];
   return activeRoutes.includes(route.path);
 }
 
+/**
+ * Toggles the visibility of the dropdown menu based on the event target.
+ *
+ * @param {Event} event The event object.
+ */
 function toggleDropdown(event: any) {
   const dropdownMenu = event.target.closest('.dropdown-menu');
   if (dropdownMenu) {
@@ -181,19 +197,30 @@ function toggleDropdown(event: any) {
   }
 }
 
-
+/**
+ * Maps notification types to their respective image paths.
+ */
 const notificationImageMapper: any = {
   "FRIEND_REQUEST": "/src/assets/userprofile.png",
   "BADGE": "/src/assets/icons/medal.png",
   "COMPLETED_GOAL": "/src/assets/icons/piggybank.svg"
 }
 
+/**
+ * Maps notification types to their respective paths.
+ */
 const notificationPathMapper: any = {
   "FRIEND_REQUEST": "/friends",
   "BADGE": "/profile",
   "COMPLETED_GOAL": "/roadmap"
 }
 
+/**
+ * Retrieves the list of notifications for the current user.
+ * This function updates the list of unread notifications by fetching them from the NotificationService.
+ * If successful, it updates the notificationListRef.value with the retrieved notifications.
+ * If an error occurs during the process, it catches the error, it sets the notificationListRef.value to an empty array.
+ */
 const getNotifications = async () => {
   try {
     await BadgeService.updateUnlockedBadges();
@@ -204,6 +231,15 @@ const getNotifications = async () => {
   }
 }
 
+/**
+ * Marks a notification as read.
+ * This function updates the unread status of the provided notification to false,
+ * then sends a request to the NotificationService to update the notification in the database.
+ * If successful, it updates the notificationListRef.value with the updated list of unread notifications.
+ * If an error occurs during the process, it catches the error, it sets the notificationListRef.value to an empty array.
+ *
+ * @param {NotificationDTO} notification The notification to mark as read.
+ */
 const readNotification = async (notification: NotificationDTO) => {
   try {
     notification.unread = false;
@@ -214,82 +250,101 @@ const readNotification = async (notification: NotificationDTO) => {
     notificationListRef.value = [];
   }
 }
-
-function toBadges(){
-
+/**
+ * Redirects to the budget overview page.
+ *
+ * @returns {string} The URL for the budget overview page.
+ */
+function toBudget(): string {
+  return '/budget-overview';
 }
 
-function getPath(id : string){
-  if(id === '1'){
-    return path.value = '/profile'
-  }
-  if(id === '2'){
-    return path.value = '/friends'
-  }
-  if(id === '3'){
-    return path.value = '/roadmap'
-  }
-
-  return '#';
+/**
+ * Redirects to the saving goals page.
+ *
+ * @returns {string} The URL for the saving goals page.
+ */
+function toSavingGoals(): string {
+  return '/roadmap';
 }
 
-function updateNotification(){
-  //Axios get request to the getFunction
+/**
+ * Redirects to the leaderboard page.
+ *
+ * @returns {string} The URL for the leaderboard page.
+ */
+function toLeaderboard(): string {
+  return '/leaderboard';
 }
 
-function removeNotification() {
-
+/**
+ * Redirects to the news page.
+ *
+ * @returns {string} The URL for the news page.
+ */
+function toNews(): string {
+  return '/news';
 }
 
-
-function toHome() {
-    return '/'
+/**
+ * Redirects to the store page.
+ *
+ * @returns {string} The URL for the store page.
+ */
+function toStore(): string {
+  return '/shop';
 }
 
-function toBudget() {
-    return '/budget-overview'
+/**
+ * Redirects to the user settings page.
+ *
+ * @returns {string} The URL for the user settings page.
+ */
+function toSetting(): string {
+  return '/settings/profile';
 }
 
-function toSavingGoals() {
-    return '/roadmap'
+/**
+ * Redirects to the feedback page.
+ *
+ * @returns {string} The URL for the feedback page.
+ */
+function toFeedback(): string {
+  return '/feedback';
 }
 
-function toLeaderboard() {
-    return '/leaderboard'
+/**
+ * Redirects to the friends page.
+ *
+ * @returns {string} The URL for the friends page.
+ */
+function toFriends(): string {
+  return '/friends';
 }
 
-function toNews() {
-    return '/news'
+/**
+ * Redirects to the user profile page.
+ *
+ * @returns {string} The URL for the user profile page.
+ */
+function toUserProfile(): string {
+  return '/profile';
 }
 
-function toStore() {
-    return '/shop'
-}
-
-function toSetting() {
-    return '/settings/profile'
-}
-
-function toFeedback() {
-    return '/feedback'
-}
-
-function toFriends() {
-    return '/friends'
-}
-
-function toUserProfile() {
-    return '/profile'
-}
-
+/**
+ * Logs out the user by clearing user info and redirecting to the login page.
+ */
 function toLogout() {
-    userStore.clearUserInfo();
-    router.push('login')
+  userStore.clearUserInfo();
+  router.push('login');
 }
+
+/**
+ * Calls the getNotifications function when the component is mounted.
+ */
 onMounted(() => {
   getNotifications()
 })
-
 </script>
 <style scoped>
 .navbar-brand {

@@ -20,6 +20,8 @@ const props = defineProps({
     default: 0
   }
 })
+
+// Calculated balance from props attribute
 const balance = ref<number>(props.budgetAmount - props.expenseAmount);
 
 /**
