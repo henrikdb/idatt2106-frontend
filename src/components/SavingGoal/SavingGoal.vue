@@ -60,6 +60,15 @@ export default {
         this.savingGoalClicked = true;
         this.keyForList++
       }, 100);
+    },
+    async refreshSpareSti() {
+      try {
+        this.selectedGoal = await GoalService.getGoal({id: this.selectedGoal.id as number})
+        console.log("yessir")
+        this.key++;
+      } catch (error) {
+        console.log(error)
+      }
     }
   },
 };
@@ -82,7 +91,7 @@ export default {
         </div>
       </div>
       <saving-goal-create @createGoalClicked="handleCreateGoalClicked" v-if="createClicked"></saving-goal-create>
-      <saving-goal-roadmap :key="key" :selected-goal="selectedGoal" v-else-if="savingGoalClicked"></saving-goal-roadmap>
+      <saving-goal-roadmap @refreshSavingGoal="refreshSpareSti" :key="key" :selected-goal="selectedGoal" v-else-if="savingGoalClicked"></saving-goal-roadmap>
       <saving-goal-default v-else></saving-goal-default>
     </div>
   </div>
