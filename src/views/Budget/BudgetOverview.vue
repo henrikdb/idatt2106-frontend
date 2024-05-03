@@ -82,7 +82,9 @@ const goToBudget = (id: number) => {
       </div>
     </div>
     <p class="text-danger">{{ errorMsg }}</p>
-    <ul class="budgetContainer" :key="budgetListKey">
+    <hr>
+    <h5 v-if="budgetList.length === 0" class="text-center">Du har ingen budsjetter</h5>
+    <ul v-else class="budgetContainer" :key="budgetListKey">
       <li v-for="(item, index) in budgetList">
         <budget-box
           :key="index"
@@ -96,23 +98,7 @@ const goToBudget = (id: number) => {
         ></budget-box>
       </li>
     </ul>
-    <nav id="navbar" aria-label="Sidenavigasjon eksempel">
-      <ul class="pagination">
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Forrige">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Neste">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
+
   </div>
 </template>
 

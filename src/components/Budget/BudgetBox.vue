@@ -57,7 +57,6 @@ const onBudgetContainerPressed = () => {
 const onBudgetDeleted = () => {
   emit('deletedBudgetEvent');
 }
-
 </script>
 
 <template>
@@ -115,7 +114,7 @@ const onBudgetDeleted = () => {
 }
 
 .container-fluid {
-  border: 4px solid #5959ea;
+  border: 4px solid #003A58;
   min-height: 90px;
   border-radius: 15px;
   transition: transform 150ms ease-in-out, border 200ms ease-in-out;
@@ -123,7 +122,7 @@ const onBudgetDeleted = () => {
 }
 
 .container-fluid:hover {
-  border: 4px solid #0000f1;
+  border: 4px solid #01476b;
   transform: scale(1.03);
 }
 
@@ -174,5 +173,16 @@ div.col-12 p {
   z-index: 999;
   align-self: center;
   justify-self: right;
+}
+
+div.container-fluid.row {
+  display: flex;
+}
+
+@media (max-width: 405px) {
+  .col-4 {
+    width: 100%; /* Make each column take up full width */
+    margin-bottom: 10px; /* Add some spacing between columns */
+  }
 }
 </style>

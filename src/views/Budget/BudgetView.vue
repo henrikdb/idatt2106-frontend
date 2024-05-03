@@ -225,7 +225,7 @@ const importBudget = async (budgetId: number) => {
     <h1 class="text-center">{{ title }}</h1>
 
     <div class="button-container">
-      <BaseButton id="goBack" @click="router.push('/budsjett-oversikt')" button-text="Gå tilbake"/>
+      <BaseButton id="goBack" @click="router.push('/budget-overview')" button-text="Gå tilbake"/>
       <BaseButton id="optionButton" button-text="Alternativer" data-bs-toggle="modal" data-bs-target="#modal"/>
     </div>
 
@@ -260,7 +260,7 @@ const importBudget = async (budgetId: number) => {
     <confirm-delete-modal :budget-id="useBudgetStore().getActiveBudgetId"
                           modal-id="confirm-modal"
                           :budgetTitle="title"
-                          @deletedEvent="router.push('/budsjett-oversikt')"/>
+                          @deletedEvent="router.push('/budget-overview')"/>
 
     <import-budget-modal modal-id="import-modal"
                          :listOfBudgetResponseDTO="budgetDTOList"
@@ -298,7 +298,7 @@ const importBudget = async (budgetId: number) => {
         <div class="input-group">
           <span class="input-group-text">Ditt budsjett </span>
           <input type="text" class="form-control" placeholder="Skriv inn ditt budsjett" required v-model="budgetValue">
-          <button type="submit" class="btn btn-primary">Beregn</button>
+          <BaseButton id="calculate-budget" type="submit" class="btn" button-text="Beregn"></BaseButton>
         </div>
       </form>
 
@@ -307,7 +307,7 @@ const importBudget = async (budgetId: number) => {
           <span class="input-group-text">Legg til ny utgift </span>
           <input type="text" class="form-control" placeholder="Navn på utgift" required v-model="expenseDescription">
           <input type="number" min="0" class="form-control" placeholder="Beløp (kr)" required v-model="expenseAmount">
-          <button type="submit" class="btn btn-primary">Beregn</button>
+          <BaseButton id="calculate-expense" type="submit" class="btn" button-text="Beregn"></BaseButton>
         </div>
       </form>
     </div>
@@ -325,6 +325,7 @@ const importBudget = async (budgetId: number) => {
                      @editEvent="editExpense"/>
       </div>
     </div>
+    <h5 v-else class="text-center">Du har ingen utgifter</h5>
 
   </div>
 </template>
@@ -422,4 +423,27 @@ div.info:hover {
   max-height: 100vh;
 }
 
+@media (max-width: 550px) {
+  div.budget-info-container {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 400px) {
+  div.budget-info-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .input-group {
+    display: block; /* Change display to block to stack vertically */
+    margin-bottom: 10px; /* Add some spacing between stacked input groups */
+    gap: 5px;
+  }
+
+  .input-group input {
+    min-width: 100%;
+  }
+}
 </style>
