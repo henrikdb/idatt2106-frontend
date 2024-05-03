@@ -10,8 +10,52 @@ cache:
     - build/
 
 stages:
+  - install
+  - build
+  - test
+  - lint
   - docker_build_and_push
   - deploy_docker
+
+install_dependencies:
+  stage: install
+  script:
+    - npm ci
+
+build_project:
+  stage: build
+  script:
+    - npm ci
+    - npm run build
+  dependencies:
+    - install_dependencies
+
+vitest_unit-tests:
+  stage: test
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - node_modules/
+    policy: pull
+  script:
+    - npm ci
+    - npm run test:unit
+  dependencies:
+    - install_dependencies
+
+eslint_run-lint:
+  stage: lint
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - node_modules/
+    policy: pull
+  script:
+    - npm ci
+    - npm run lint
+  dependencies:
+    - install_dependencies
+  allow_failure: true
 
 docker_build_and_push:
   stage: docker_build_and_push
