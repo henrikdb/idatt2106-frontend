@@ -2,7 +2,7 @@
 import { RouterView } from 'vue-router'
 import ErrorBoundaryCatcher from '@/components/Exceptions/ErrorBoundaryCatcher.vue';
 console.log("TEST!");
-let apiUrl = import.meta.env.VUE_APP_API_URL;
+let apiUrl = import.meta.env.VITE_APP_API_URL;
 console.log("apiUrl: ", apiUrl);
 </script>
 
