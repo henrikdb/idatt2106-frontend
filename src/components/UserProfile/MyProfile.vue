@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import {ref, onMounted} from "vue";
-import { useRouter } from "vue-router";
-import { useUserInfoStore } from "@/stores/UserStore";
-import {UserService, BadgeService, GoalService, type GoalDTO, type BadgeDTO} from "@/api";
-import { ItemService, type UserUpdateDTO } from "@/api";
+import { onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { type BadgeDTO, BadgeService, type GoalDTO, GoalService, ItemService, UserService } from '@/api'
 import handleUnknownError from '@/components/Exceptions/unkownErrorHandler'
-import bannerImage from '@/assets/banners/stacked.svg';
+import bannerImage from '@/assets/banners/stacked.svg'
 
 let numberOfHistory = 6;
 let cardTitles = ["Spain tour", "Food waste", "Coffee", "Concert", "New book", "Pretty clothes"]
@@ -28,23 +26,27 @@ const streak = ref(0 as any);
 
 let goals = ref<GoalDTO[]>([])
 
+/**
+ * Retrieves the user's goals from the server.
+ * Updates the goals value with the retrieved data.
+ * Sets the hasHistory value based on whether goals are present or not.
+ */
 async function getGoals() {
   try {
     goals.value = await GoalService.getGoals();
-    console.log("number of goals: ", goals.value.length)
-    console.log('The id of a goal: ', goals.value[0])
-    if (goals.value.length > 0) {
-      hasHistory.value = true
-    } else {
-      hasHistory.value = false
-      console.log('No history')
-    }
+    hasHistory.value = goals.value.length > 0;
   }catch (error){
     handleUnknownError(error)
     console.error("Something went wrong", error)
   }
 }
 
+/**
+ * Sets up the form for displaying user profile information.
+ * Retrieves user profile data including first name, last name, points, streak, profile image, inventory, and badges.
+ * Populates the form fields with the retrieved data.
+ * Fetches the user's inventory and badges.
+ */
 async function setupForm() {
   try {
     const response = await UserService.getUser();
@@ -69,38 +71,43 @@ async function setupForm() {
   }
 }
 
+/**
+ * Retrieves the user's inventory from the server.
+ * Updates the inventory value with the retrieved data.
+ * Sets the hasInventory value based on whether inventory items are present or not.
+ */
 const getInventory = async () => {
   try {
-    const response = await ItemService.getInventory();
-    inventory.value = response;
-    if (inventory.value.length > 0) {
-      hasInventory.value = true
-    } else {
-      hasInventory.value = false
-      console.log('No history')
-    }
+    inventory.value = await ItemService.getInventory();
+    hasInventory.value = inventory.value.length > 0;
   } catch (error) {
     handleUnknownError(error)
     console.log(error);
   }
 }
 
+
+/**
+ * Retrieves the badges unlocked by the active user.
+ * Updates the badges value with the retrieved data.
+ * Sets the hasBadges value based on whether badges are present or not.
+ */
 const getBadges = async () => {
   try {
-    const responseBadge = await BadgeService.getBadgesUnlockedByActiveUser();
-    badges.value = responseBadge;
-    if (badges.value.length > 0) {
-      hasBadges.value = true
-    } else {
-      hasBadges.value = false
-      console.log('No history')
-    }
+    badges.value = await BadgeService.getBadgesUnlockedByActiveUser();
+    hasBadges.value = badges.value.length > 0;
   } catch (error) {
     handleUnknownError(error)
     console.log(error);
   }
 }
 
+/**
+ * Updates the selected item in the UI.
+ * Sets the backgroundName value with the item's name.
+ *
+ * @param {any} item - The selected item object.
+ */
 const selectItem = (item: any) => {
   backgroundName.value = item.itemName;
   let imageId = item.imageId;
@@ -112,24 +119,29 @@ const selectItem = (item: any) => {
   
 }
 
+/**
+ * Sets up the profile form and retrieves user goals upon component mounting.
+ */
 onMounted(() => {
   setupForm()
   getGoals()
 })
 
+/**
+ * Redirects the user to the roadmap page.
+ */
 const toRoadmap = () => {
   router.push('/');
 };
 
 
 
-// Function to navigate to update user settings
+/**
+ * Redirects the user to the update user settings page.
+ */
 const toUpdateUserSettings = () => {
   router.push('/settings/profile');
 };
-
-
-
 </script>
 
 <template>

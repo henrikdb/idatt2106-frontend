@@ -7,22 +7,39 @@ import { useConfigurationStore } from '@/stores/ConfigurationStore'
 
 const router = useRouter();
 
+// Declaring reactive variables
 const formRef = ref();
 const spendingAccount = ref<string>('');
 const savingsAccount = ref<string>('');
-let errorMsg = ref('');
+let errorMsg = ref<string>('');
 
 // Updates progress bar in the parent Configuration component.
 const emit = defineEmits(['changeRouterEvent'])
 emit('changeRouterEvent', '/bank-account')
 
+/**
+ * Handles the input event for spending account.
+ *
+ * @param {any} newValue - The new value of the spending account.
+ */
 const handleSpendingInputEvent = (newValue: any) => {
   spendingAccount.value = newValue
 }
 
+/**
+ * Handles the input event for saving account.
+ *
+ * @param {any} newValue - The new value of the saving account.
+ */
 const handleSavingInputEvent = (newValue: any) => {
   savingsAccount.value = newValue
 }
+
+/**
+ * Adds the "was-validated" class to the form element and then checks if the form is valid.
+ * If the form is valid, it updates the spending and savings account values in the configuration store
+ * and navigates the user to the "/commitment" route.
+ */
 const handleSubmit = () => {
   formRef.value.classList.add("was-validated")
   const form = formRef.value;

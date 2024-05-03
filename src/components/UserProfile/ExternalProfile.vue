@@ -24,6 +24,12 @@ const streak = ref(0 as any);
 const isFriend = ref(false);
 const isRequestSent = ref(false);
 
+/**
+ * Sets up the form for displaying user profile information.
+ * Retrieves user profile data including first name, last name, points, streak, profile image, inventory, and badges.
+ * Populates the form fields with the retrieved data.
+ * Fetches the user's inventory and badges.
+ */
 async function setupForm() {
   try {
     let id = route.params.id as any;
@@ -50,6 +56,10 @@ async function setupForm() {
   }
 }
 
+/**
+ * Checks if the current user is a friend of the user whose profile is being viewed.
+ * Fetches the user's friends list and sets the isFriend value accordingly.
+ */
 const checkIfFriend = async () => {
   let id = route.params.id as any;
   const response = await FriendService.getFriends();
@@ -60,6 +70,10 @@ const checkIfFriend = async () => {
   });
 };
 
+/**
+ * Retrieves the user's inventory by user ID.
+ * Updates the inventory value and sets the hasInventory value based on the retrieved inventory data.
+ */
 const getInventory = async () => {
   try {
     let id = route.params.id as any
@@ -77,6 +91,10 @@ const getInventory = async () => {
   }
 }
 
+/**
+ * Retrieves the badges unlocked by the user.
+ * Updates the badges value and sets the hasBadges value based on the retrieved badge data.
+ */
 const getBadges = async () => {
   try {
     let id = route.params.id as any

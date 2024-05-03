@@ -7,9 +7,12 @@ import {type CreateGoalDTO, GoalService} from "@/api";
 import handleUnknownError from '@/components/Exceptions/unkownErrorHandler';
 
 const router = useRouter();
+
+// Updates progress bar in the parent Configuration component
 const emit = defineEmits(['changeRouterEvent'])
 emit('changeRouterEvent', '/first-saving-goal')
 
+// Declaration of reactive variables for the form
 const formRef = ref<any>()
 const titleRef = ref<string>()
 let descriptionRef = ref<string>()
@@ -17,14 +20,20 @@ const sumRef = ref<number>()
 const dateRef = ref<string>()
 const errorMessage = ref("")
 
+/**
+ * Adds the "was-validated" class to the form element, validates the form,
+ * creates a payload for creating a goal, and then attempts to create the goal using GoalService.
+ * If successful, it navigates the user to the home page ("/"), otherwise it handles any errors.
+ */
 const handleSubmit = async () => {
+  // Check form validation
   formRef.value.classList.add("was-validated")
   const form = formRef.value
   if (!form.checkValidity()) {
     return;
   }
 
-  // TODO integrate user creation and goal creation with backend.
+  // Declares the goal payload
   const createGoalPayload: CreateGoalDTO = {
     name: titleRef.value,
     description: descriptionRef.value,
@@ -33,15 +42,20 @@ const handleSubmit = async () => {
   };
 
   try {
+    // Creates new goal with the payload
     await GoalService.createGoal({ requestBody: createGoalPayload });
     await router.push("/")
   } catch (error: any) {
     handleUnknownError(error);
-    console.log(error.message);
     errorMessage.value = error.message;
   }
 }
 
+/**
+ * Gets today's date in the format "YYYY-MM-DD".
+ *
+ * @returns Today's date in "YYYY-MM-DD" format.
+ */
 const getTodayDate = () => {
   const today = new Date();
   const year = today.getFullYear();
@@ -53,14 +67,29 @@ const getTodayDate = () => {
   return `${year}-${month}-${day}`;
 };
 
+/**
+ * Handles the input event for the goal title.
+ *
+ * @param newTitle The new title value entered by the user.
+ */
 const handleTitleInputEvent = (newTitle: string) => {
   titleRef.value = newTitle;
 }
 
+/**
+ * Handles the input event for the goal date.
+ *
+ * @param newDate The new date value entered by the user.
+ */
 const handleDateInputEvent = (newDate: string) => {
   dateRef.value = newDate;
 }
 
+/**
+ * Handles the input event for the goal sum.
+ *
+ * @param newSum The new sum value entered by the user.
+ */
 const handleSumInputEvent = (newSum: number) => {
   sumRef.value = newSum;
 }

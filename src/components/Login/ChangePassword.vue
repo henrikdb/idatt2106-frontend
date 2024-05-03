@@ -93,18 +93,32 @@ let samePasswords = ref(true)
 let errorMsg = ref('');
 const isSubmitting = ref(false);
 
+/**
+ * Handles password input event by updating the value of the newPassword reactive variable.
+ *
+ * @param {any} newValue The new value of the password input.
+ */
 const handlePasswordInputEvent = (newValue: any) => {
   newPassword.value = newValue
 }
 
+/**
+ * Handles confirm password input event by updating the value of the confirmPassword reactive variable.
+ *
+ * @param {any} newValue The new value of the confirm password input.
+ */
 const handleConfirmPasswordInputEvent = (newValue: any) => {
   confirmPassword.value = newValue
 }
 
+/**
+ * Handles form submission by validating the form, checking password equality,
+ * and submitting the password reset request if validation passes.
+ */
 const handleSubmit = async () => {
+  // Validates the form
   if (isSubmitting.value) return;
   isSubmitting.value = true;
-
   samePasswords.value = (newPassword.value === confirmPassword.value)
   formRef.value.classList.add("was-validated")
 

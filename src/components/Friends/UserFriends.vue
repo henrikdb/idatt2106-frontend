@@ -121,10 +121,11 @@
 import { type Ref, ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { FriendService, UserService } from '@/api';
-import type { UserDTO } from '@/api';
 import handleUnknownError from '@/components/Exceptions/unkownErrorHandler';
 
 const router = useRouter();
+
+// Declaring reactive variables
 const friends = ref();
 const showFriends = ref(true);
 const showRequests = ref(false);
@@ -134,16 +135,26 @@ const addFriends = ref([] as any);
 const searchedUsers = ref([] as any);
 
 const friendRequestsSent: Ref<Record<number, boolean>> = ref({});
-
 const searchWord = ref("");
 
 const elementsInFriendRequest = ref(false);
 const elementsInFriends = ref(false);
 
+/**
+ * Navigates to the user profile page based on the given user ID.
+ *
+ * @param {number} userId The ID of the user whose profile will be navigated to.
+ */
 const toUserProfile = (userId: number) => {
     router.push('/profile/' + userId);
 };
 
+
+/**
+ * Searches for user profiles based on the provided search term.
+ *
+ * @param {string} searchTerm The term to be used for searching user profiles.
+ */
 const searchProfile = async (searchTerm: string) => {
     const userPayload = {
         searchTerm: searchTerm as string,
@@ -159,6 +170,9 @@ const searchProfile = async (searchTerm: string) => {
     }
 };
 
+/**
+ * Adds new friends to the user's friend list.
+ */
 const addNewFriends = async () => {
     const userPayload = {
         amount: 6 as number,
@@ -174,6 +188,11 @@ const addNewFriends = async () => {
     }
 };
 
+/**
+ * Sends a friend request to the specified user.
+ *
+ * @param {number} friendID The ID of the user to whom the friend request will be sent.
+ */
 async function addFriend(friendID: number) {
     try {
         await FriendService.addFriendRequest({ userId: friendID });
@@ -185,6 +204,9 @@ async function addFriend(friendID: number) {
     }
 }
 
+/**
+ * Fetches friend requests and updates the state accordingly.
+ */
 async function requestFriend() {
     showRequests.value = true;
     showFriends.value = false;
@@ -199,10 +221,20 @@ async function requestFriend() {
     }
 }
 
+/**
+ * Navigates to the profile page of the specified friend.
+ *
+ * @param friendID The ID of the friend whose profile will be navigated to.
+ */
 const navigateToFriend = (friendID: number) => {
     router.push('/profile/' + friendID);
 };
 
+/**
+ * Removes the specified friend from the user's friend list.
+ *
+ * @param friendID The ID of the friend to be removed.
+ */
 const removeFriend = async (friendID: number) => {
     try {
         await FriendService.deleteFriendOrFriendRequest({ friendId: friendID });
@@ -214,6 +246,9 @@ const removeFriend = async (friendID: number) => {
     }
 };
 
+/**
+ * Sets up the user's friends by fetching and updating the friends list.
+ */
 const setupFriends = async () => {
     showFriends.value = true;
     showRequests.value = false;
@@ -228,6 +263,12 @@ const setupFriends = async () => {
     }
 };
 
+
+/**
+ * Accepts a friend request with the specified request ID.
+ *
+ * @param {number} requestID The ID of the friend request to be accepted.
+ */
 const acceptRequest = async (requestID: number) => {
     try {
         await FriendService.acceptFriendRequest({ friendId: requestID });
@@ -241,6 +282,11 @@ const acceptRequest = async (requestID: number) => {
     }
 };
 
+/**
+ * Rejects a friend request with the specified request ID.
+ *
+ * @param {number} requestID The ID of the friend request to be rejected.
+ */
 const rejectRequest = async (requestID: number) => {
     try {
         await FriendService.deleteFriendOrFriendRequest({ friendId: requestID });
@@ -252,6 +298,9 @@ const rejectRequest = async (requestID: number) => {
     }
 };
 
+/**
+ * Initializes the component by setting up the user's friends.
+ */
 onMounted(() => {
     setupFriends();
 });

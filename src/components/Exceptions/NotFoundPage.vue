@@ -26,8 +26,11 @@ import BaseButton from '@/components/BaseComponents/Buttons/BaseButton.vue';
 
 const router = useRouter();
 
+/**
+ * Navigates to home page.
+ */
 const home = () => {
-    router.push('/');  // Assuming the root URL '/' is your home route
+    router.push('/');
 };
 </script>
 
