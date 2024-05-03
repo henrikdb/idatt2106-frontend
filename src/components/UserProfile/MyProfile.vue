@@ -148,12 +148,24 @@ const toUpdateUserSettings = () => {
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col 12">
         <div class="card">
-          <div class="rounded-top text-white d-flex flex-row bg-primary" :style="{ height: '200px', backgroundImage: `url(${bannerImageUrl})` }">
-            <div class=" d-flex flex-column align-items-center justify-content-center">
+          <div class="rounded-top text-white d-flex flex-row bg-primary justify-content-between" :style="{ height: '200px', backgroundImage: `url(${bannerImageUrl})` }">
+            <div class=" text-white d-flex flex-row">
+              <div class=" d-flex flex-column align-items-center justify-content-center">
               <img :src="imageUrl" alt="Generisk plassholderbilde" class="img-fluid img-thumbnail"
                 style="width: 150px; height:150px; margin-left: 25px; margin-right: 15px;">
             </div>
               <h1 data-cy="firstname" style="display: flex; align-items: end; margin-bottom: 20px;">{{ firstname }} {{ lastname }}</h1>
+            </div>
+              <div class="d-flex align-items-end text-white my-3">
+                <div class="d-flex align-items-center flex-column">
+                  <p class="mb-1 h2 d-flex flex-column align-items-center" data-cy="points">{{ points }} <img src="@/assets/items/pigcoin.png" style="width: 60px; height: 60px"></p>
+                  <p class="small text-white mb-0">Poeng</p>
+                </div>
+                <div class="d-flex align-items-center flex-column px-3">
+                  <p class="mb-1 h2 d-flex flex-column align-items-center" data-cy="streak">{{ streak }} <img src="@/assets/icons/fire.png" style="width: 60px; height: 60px"></p>
+                  <p class="small text-white mb-0">Streak</p>
+                </div>
+              </div>
           </div>
           <div class="p-3 text-black" style="background-color: #f8f9fa;">
             <div class="d-flex justify-content-end text-center py-1">
@@ -162,15 +174,6 @@ const toUpdateUserSettings = () => {
                 data-mdb-ripple-color="dark" style="z-index: 1; height: 40px; margin-left: 17px" id="toUpdate" @click="toUpdateUserSettings">
                 Rediger profil
               </button>
-            
-              </div>
-              <div>
-                <p class="mb-1 h2" data-cy="points">{{ points }} <img src="@/assets/items/pigcoin.png" style="width: 4rem"></p>
-                <p class="small text-muted mb-0">Poeng</p>
-              </div>
-              <div class="px-3">
-                <p class="mb-1 h2" data-cy="streak">{{ streak }} <img src="@/assets/icons/fire.png" style="width: 4rem"></p>
-                <p class="small text-muted mb-0">Streak</p>
               </div>
             </div>
           </div>
