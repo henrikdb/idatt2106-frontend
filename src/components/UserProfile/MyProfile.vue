@@ -62,6 +62,10 @@ async function setupForm() {
     if (response.profileImage) {
       imageUrl.value = apiUrl + "/api/images/" + response.profileImage;
     }
+    if (response.bannerImage != 0 && response.bannerImage !== null) {
+      console.log(response.bannerImage)
+      bannerImageUrl.value = apiUrl + "/api/images/" + response.bannerImage;
+    }
     getInventory();
     getBadges();
   } catch (err) {
@@ -103,14 +107,20 @@ const getBadges = async () => {
 }
 
 const selectItem = (item: any) => {
+  try {
   backgroundName.value = item.itemName;
   let imageId = item.imageId;
-  //const bannerImagePayload: UserUpdateDTO = {
-   //   bannerImage: imageId as any,
-   // };
-  //UserService.update({ requestBody: bannerImagePayload })
-  //bannerImageUrl.value = `http://localhost:8080/api/images/${imageId}`;
-  
+  const bannerImagePayload: UserUpdateDTO = {
+      bannerImage: imageId as any,
+    };
+  UserService.update({ requestBody: bannerImagePayload })
+  if (imageId != 0) {
+    bannerImageUrl.value = `${apiUrl}/api/images/${imageId}`;
+  }
+  } catch (error) {
+    handleUnknownError(error)
+    console.error(error)
+  }
 }
 
 onMounted(() => {
