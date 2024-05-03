@@ -51,7 +51,7 @@
                                 <img :src="notificationImageMapper[String(item.notificationType)]" alt="Varslingsikon"          class="notification-icon">
                               </div>
                               <div class="flex-grow-1 ms-3">
-                                <div class="not-item dropdown-item text-wrap">{{item.message}}</div>
+                                <div class="not-item dropdown-item" id="notificationText">{{item.message}}</div>
                               </div>
                             </router-link>
                           </li>
@@ -491,5 +491,14 @@ onMounted(() => {
   display: none;
 }
 
+#notificationText {
+  text-wrap: nowrap;
+}
+
+@media (max-width: 768px) {
+  #notificationText {
+    text-wrap: wrap;
+  }
+}
 
 </style>

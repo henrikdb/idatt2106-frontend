@@ -345,6 +345,12 @@ const toUpdateUserSettings = () => {
   background-color: #00DBDE;
 }
 
+.classyButton {
+  background-color: #003A58;
+  border: #003A58;
+  color: white;
+}
+
 .classyButton:hover {
   background-color: #003b58ec;
   border: #003A58;
