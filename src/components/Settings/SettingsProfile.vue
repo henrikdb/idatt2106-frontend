@@ -179,7 +179,7 @@ onMounted(() => {
   <div class="tab-pane active" id="profile">
     <h6>DIN PROFILINFORMASJON</h6>
     <hr>
-    <form @submit.prevent="handleSubmit" novalidate class="d-flex">
+    <form @submit.prevent="handleSubmit" novalidate class="d-flex infoHolder">
       <div>
         <div class="user-avatar">
           <input type="file" ref="fileInputRef" @change="handleFileChange" accept=".jpg, .jpeg, .png"
@@ -195,15 +195,14 @@ onMounted(() => {
         <div class="form-group">
           <BaseInput data-cy="first-name" :model-value="firstNameRef" @input-change-event="handleFirstNameInputEvent"
             id="firstNameInputChange" input-id="first-name-new" type="text" label="Fornavn"
-            placeholder="Skriv inn ditt fornavn" invalid-message="Vennligst skriv inn ditt fornavn"
-            style="max-width: 400px" />
+            placeholder="Skriv inn ditt fornavn" invalid-message="Vennligst skriv inn ditt fornavn" class="inputDynamic" />
         </div>
         <br>
         <div class="form-group">
           <BaseInput data-cy="last-name" :model-value="surnameRef" @input-change-event="handleSurnameInputEvent"
             id="surnameInput-change" input-id="surname-new" type="text" label="Etternavn"
             placeholder="Skriv inn ditt etternavn" invalid-message="Vennligst skriv inn ditt etternavn"
-            style="max-width: 400px; width: 400px;" />
+             class="inputDynamic"/>
         </div>
         <br>
         <div class="d-flex">
@@ -275,5 +274,27 @@ onMounted(() => {
   margin: 10px;
   cursor: pointer;
   width: 200px;
+}
+
+.infoHolder {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+@media (max-width: 1252px) {
+  .infoHolder {
+    flex-direction: column;
+  }
+}
+
+.inputDynamic {
+  width: 340px;
+}
+
+@media (max-width: 960px) {
+  .inputDynamic {
+    width: 200px;
+  }
 }
 </style>
