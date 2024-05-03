@@ -108,7 +108,7 @@ export class GoalService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/goals/{id}',
-            query: {
+            path: {
                 'id': id,
             },
         });

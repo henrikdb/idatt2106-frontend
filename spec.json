@@ -867,8 +867,8 @@
               }
             }
           },
-          "404": {
-            "description": "User not found",
+          "401": {
+            "description": "Invalid credentials",
             "content": {
               "application/json": {
                 "schema": {
@@ -877,8 +877,8 @@
               }
             }
           },
-          "401": {
-            "description": "Invalid credentials",
+          "404": {
+            "description": "User not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -1013,6 +1013,37 @@
               "*/*": {
                 "schema": {
                   "$ref": "#/components/schemas/UserDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/goals/challenge/{id}": {
+      "patch": {
+        "tags": [
+          "Goal"
+        ],
+        "operationId": "regenerateChallenge",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChallengeDTO"
                 }
               }
             }
@@ -1550,9 +1581,45 @@
         "tags": [
           "Item"
         ],
+        "summary": "Get the active user's inventory items",
+        "description": "Retrieves a list of all items currently in the inventory of the active user.",
+        "operationId": "getInventory",
+        "responses": {
+          "200": {
+            "description": "List of inventory items fetched successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InventoryDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/item/inventory/{userId}": {
+      "get": {
+        "tags": [
+          "Item"
+        ],
         "summary": "Get user inventory items",
         "description": "Retrieves a list of all items currently in the inventory of the user.",
-        "operationId": "getInventory",
+        "operationId": "getInventoryByUserId",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "List of inventory items fetched successfully",
@@ -1624,7 +1691,7 @@
         "parameters": [
           {
             "name": "id",
-            "in": "query",
+            "in": "path",
             "required": true,
             "schema": {
               "type": "integer",
@@ -2026,7 +2093,43 @@
         ],
         "summary": "Get the list of badges",
         "description": "Get all badges unlocked by the user",
+        "operationId": "getBadgesUnlockedByActiveUser",
+        "responses": {
+          "200": {
+            "description": "Successfully got badges",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BadgeDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/badge/unlocked/{userId}": {
+      "get": {
+        "tags": [
+          "Badge"
+        ],
+        "summary": "Get the list of badges",
+        "description": "Get all badges unlocked by the user",
         "operationId": "getBadgesUnlockedByUser",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successfully got badges",
@@ -2051,7 +2154,7 @@
         ],
         "summary": "Get the list of badges",
         "description": "Get all badges not unlocked by the user",
-        "operationId": "getBadgesNotUnlockedByUser",
+        "operationId": "getBadgesNotUnlockedByActiveUser",
         "responses": {
           "200": {
             "description": "Successfully got badges",
@@ -2295,6 +2398,9 @@
           "id": {
             "type": "integer",
             "format": "int64"
+          },
+          "templateName": {
+            "type": "string"
           },
           "text": {
             "type": "string"
