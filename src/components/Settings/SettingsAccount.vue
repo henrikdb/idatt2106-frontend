@@ -141,24 +141,6 @@ const onChangedChallengeEvent = (value: string) => {
       <button data-cy="change-email-btn" type="submit" class="btn btn-primary classyButton">Oppdater</button>
     </form>
     <hr>
-    <form @submit.prevent="handleSubmitConfig">
-      <p>Grad av villighet til å gjøre endringer</p>
-      <select v-model="commitmentRef" class="form-select" aria-label="Default select example">
-        <option value="LITTLE">Lav</option>
-        <option value="SOME">Middels</option>
-        <option value="MUCH">Høy</option>
-      </select>
-      <p>Hvilke utfordringer passer deg?</p>
-      <button v-for="challenge in challenges" :key="challenge"
-        :class="['btn', challengesRef.includes(challenge) ? 'btn-primary' : 'btn-secondary']"
-        @click="onChangedChallengeEvent(challenge)" type="button">
-        {{ challengeMapper[challenge] }}
-      </button>
-      <p data-cy="change-email-msg-error" class="text-danger">{{ errorMsg3 }}</p>
-      <p data-cy="change-email-msg-confirm" class="text-success">{{ confirmationMsg2 }}</p>
-      <br>
-      <button data-cy="change-email-btn" type="submit" class="btn btn-primary classyButton">Oppdater</button>
-    </form>
     <form @submit.prevent="handleSubmit2" style="margin-top: 20px;">
       <div class="form-group">
         <label class="d-block text-danger">Slett Bruker</label>
