@@ -71,9 +71,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Legg til venn</h5>
-                        <button type="button" class="close" @click="showAddFriend = false">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                        <button type="button" class="close btn-close" @click="showAddFriend = false" aria-label="Close"></button>
                     </div>
                     <div class="modal-body d-flex justify-content-center align-items-center flex-column">
                         <form class="col-md-10 d-flex justify-content-center align-items-center flex-row my-4"
@@ -124,6 +122,7 @@ import { type Ref, ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { FriendService, UserService } from '@/api';
 import type { UserDTO } from '@/api';
+import handleUnknownError from '@/components/Exceptions/unkownErrorHandler';
 
 const router = useRouter();
 const friends = ref();
@@ -155,6 +154,7 @@ const searchProfile = async (searchTerm: string) => {
         searchedUsers.value = response;
         console.log(response);
     } catch (error) {
+        handleUnknownError(error);
         console.error('Failed to search for profile', error);
     }
 };
@@ -169,6 +169,7 @@ const addNewFriends = async () => {
         searchedUsers.value = response;
         showAddFriend.value = true;
     } catch (error) {
+        handleUnknownError(error);
         console.error('Failed to add friend', error);
     }
 };
@@ -179,6 +180,7 @@ async function addFriend(friendID: number) {
         // Use a spread to update the state and keep immutability
         friendRequestsSent.value = { ...friendRequestsSent.value, [friendID]: true };
     } catch (error) {
+        handleUnknownError(error);
         console.error('Failed to send friend request', error);
     }
 }
@@ -192,6 +194,7 @@ async function requestFriend() {
         elementsInFriendRequest.value = response.length > 0;
         console.log("Friend requests: " + response);
     } catch (error) {
+        handleUnknownError(error);
         console.error('Failed to fetch friend requests', error);
     }
 }
@@ -206,6 +209,7 @@ const removeFriend = async (friendID: number) => {
         const responseFriends = await FriendService.getFriends();
         friends.value = responseFriends;
     } catch (error) {
+        handleUnknownError(error);
         console.error('Failed to remove friend', error);
     }
 };
@@ -219,6 +223,7 @@ const setupFriends = async () => {
         elementsInFriends.value = response.length > 0;
         console.log(response);
     } catch (error) {
+        handleUnknownError(error);
         console.error('Failed to fetch friends', error);
     }
 };
@@ -231,6 +236,7 @@ const acceptRequest = async (requestID: number) => {
         const responseFriends = await FriendService.getFriends();
         friends.value = responseFriends;
     } catch (error) {
+        handleUnknownError(error);
         console.error('Failed to accept friend request', error);
     }
 };
@@ -241,6 +247,7 @@ const rejectRequest = async (requestID: number) => {
         const response = await FriendService.getFriendRequests();
         friendRequests.value = response;
     } catch (error) {
+        handleUnknownError(error);
         console.error('Failed to reject friend request', error);
     }
 };

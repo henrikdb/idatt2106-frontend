@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import {ref, onMounted} from "vue";
 import { useRouter } from "vue-router";
-import { useUserInfoStore } from "../../stores/UserStore";
-import { UserService, BadgeService } from "@/api";
+import { useUserInfoStore } from "@/stores/UserStore";
+import {UserService, BadgeService, GoalService, type GoalDTO, type BadgeDTO} from "@/api";
 import { ItemService } from "@/api";
+import handleUnknownError from '@/components/Exceptions/unkownErrorHandler'
 
 let numberOfHistory = 6;
 let cardTitles = ["Spain tour", "Food waste", "Coffee", "Concert", "New book", "Pretty clothes"]
@@ -11,10 +12,41 @@ let firstname = ref();
 let lastname = ref();
 const imageUrl = ref(`../src/assets/userprofile.png`);
 
+let hasHistory = ref(true)
+let hasBadges = ref(false)
+let hasInventory = ref(false)
+
 const router = useRouter();
 const inventory = ref([] as any);
-const badges = ref([] as any);
+const badges = ref<BadgeDTO[]>([]);
 const backgroundName = ref("");
+const points = ref(0 as any);
+const streak = ref(0 as any);
+
+
+let goalName = ref('');
+let goalDescription = ref('');
+let targetAmount = ref('');
+let targetDate = ref('');
+let createdAt = ref('');
+let goals = ref<GoalDTO[]>([])
+
+async function getGoals() {
+  try {
+    goals.value = await GoalService.getGoals();
+    console.log("number of goals: ", goals.value.length)
+    console.log('The id of a goal: ', goals.value[0])
+    if (goals.value.length > 0) {
+      hasHistory.value = true
+    } else {
+      hasHistory.value = false
+      console.log('No history')
+    }
+  }catch (error){
+    handleUnknownError(error)
+    console.error("Something went wrong", error)
+  }
+}
 
 async function setupForm() {
   try {
@@ -23,12 +55,19 @@ async function setupForm() {
 
     firstname.value = response.firstName;
     lastname.value = response.lastName;
+    if (response.point?.currentPoints) {
+      points.value = response.point?.currentPoints;
+    }
+    if (response.streak?.currentStreak) {
+      streak.value = response.streak?.currentStreak;
+    }
     if (response.profileImage) {
       imageUrl.value = "http://localhost:8080/api/images/" + response.profileImage;
     }
     getInventory();
     getBadges();
   } catch (err) {
+    handleUnknownError(err)
     console.error(err)
   }
 }
@@ -37,7 +76,14 @@ const getInventory = async () => {
   try {
     const response = await ItemService.getInventory();
     inventory.value = response;
+    if (inventory.value.length > 0) {
+      hasInventory.value = true
+    } else {
+      hasInventory.value = false
+      console.log('No history')
+    }
   } catch (error) {
+    handleUnknownError(error)
     console.log(error);
   }
 }
@@ -46,7 +92,14 @@ const getBadges = async () => {
   try {
     const responseBadge = await BadgeService.getBadgesUnlockedByUser();
     badges.value = responseBadge;
+    if (badges.value.length > 0) {
+      hasBadges.value = true
+    } else {
+      hasBadges.value = false
+      console.log('No history')
+    }
   } catch (error) {
+    handleUnknownError(error)
     console.log(error);
   }
 }
@@ -60,6 +113,7 @@ const selectItem = (item: any) => {
 
 onMounted(() => {
   setupForm()
+  getGoals()
 })
 
 const toRoadmap = () => {
@@ -72,6 +126,9 @@ const toRoadmap = () => {
 const toUpdateUserSettings = () => {
   router.push('/settings/profile');
 };
+
+
+
 </script>
 
 <template>
@@ -96,11 +153,11 @@ const toUpdateUserSettings = () => {
             
               </div>
               <div>
-                <p class="mb-1 h2" data-cy="points">253 <img src="@/assets/items/pigcoin.png" style="width: 4rem"></p>
+                <p class="mb-1 h2" data-cy="points">{{ points }} <img src="@/assets/items/pigcoin.png" style="width: 4rem"></p>
                 <p class="small text-muted mb-0">Poeng</p>
               </div>
               <div class="px-3">
-                <p class="mb-1 h2" data-cy="streak">1026 <img src="@/assets/icons/fire.png" style="width: 4rem"></p>
+                <p class="mb-1 h2" data-cy="streak">{{ streak }} <img src="@/assets/icons/fire.png" style="width: 4rem"></p>
                 <p class="small text-muted mb-0">Streak</p>
               </div>
             </div>
@@ -111,7 +168,7 @@ const toUpdateUserSettings = () => {
               <div class="col">
                 <div class="container-fluid">
                   <h1 class="mt-1 text-start badges-text">Lageret ditt</h1>
-                  <div class="scrolling-wrapper-badges row flex-row flex-nowrap mt-2 pb-2 pt-2">
+                  <div v-if="hasInventory" class="scrolling-wrapper-badges row flex-row flex-nowrap mt-2 pb-2 pt-2">
                     <div v-for="product in inventory" :key="product.id" class="card text-center"
                         style="width: 12rem; border: none; cursor: pointer; margin: 1rem; border: 2px solid black" @click="selectItem(product)">
                         <img :src="`http://localhost:8080/api/images/${product.imageId}`" class="card-img-top"
@@ -121,6 +178,7 @@ const toUpdateUserSettings = () => {
                         </div>
                     </div>
                   </div>
+                  <div v-else>Du har ingen ting på lageret ditt, gå til butikken for å kjøpe!</div>
                   <div v-if="backgroundName" class="text-success">You selected the background: <strong>{{ backgroundName }}!</strong></div>
                 </div>
               </div>
@@ -132,7 +190,7 @@ const toUpdateUserSettings = () => {
               <div class="col">
                 <div class="container-fluid">
                   <h1 class="mt-1 text-start badges-text">Merker</h1>
-                  <div class="scrolling-wrapper-badges row flex-row flex-nowrap mt-2 pb-2 pt-2">
+                  <div v-if="hasBadges" class="scrolling-wrapper-badges row flex-row flex-nowrap mt-2 pb-2 pt-2">
 
                     <div v-for="badge in badges" :key="badge.id" class="card text-center"
                         style="width: 12rem; border: none; cursor: pointer; margin: 1rem; 
@@ -146,6 +204,9 @@ const toUpdateUserSettings = () => {
                     </div>
 
                   </div>
+                  <div v-else>
+                    Ingen merker
+                  </div>
                 </div>
               </div>
             </div>
@@ -155,9 +216,9 @@ const toUpdateUserSettings = () => {
                 <!-- Her er historikken over lagrede mål -->
                 <div class="container-fluid mb-5">
                   <h1 class="mt-1 text-start history-text">Historie</h1>
-                  <div class="row scrolling-wrapper-history">
-                    <div v-for="index in numberOfHistory" :key="index"
-                      class="col-md-4 col-sm-4 col-lg-4 col-xs-4 col-xl-4 control-label">
+                  <div v-if="hasHistory" class="row scrolling-wrapper-history">
+                    <div v-for="(item, index) in goals" :key="index"
+                         class="col-md-4 col-sm-4 col-lg-4 col-xs-4 col-xl-4 control-label">
                       <div class="card history-block">
                         <div class="card mb-3" style="max-width: 540px;">
                           <div class="row g-0">
@@ -167,10 +228,9 @@ const toUpdateUserSettings = () => {
                             </div>
                             <div class="col-md-8">
                               <div class="card-body">
-                                <h5 class="card-title">{{ cardTitles[index - 1] }}</h5>
-                                <p class="card-text">Penger spart: 200 <br />Du har fullført en utfordring: 21</p>
-                                <p class="card-text"><small class="text-muted">Sist oppdatert for 3 minutter
-                                    siden</small></p>
+                                <h5 class="card-title">{{ goals[index]['name'] }}</h5>
+                                <p class="card-text">{{goals[index]['description']}}</p>
+                                <p class="card-text"><small class="text-muted">{{goals[index]['targetAmount']}}</small></p>
                                 <a href="#" class="btn  stretched-link" @click="toRoadmap"></a>
                               </div>
                             </div>
@@ -178,6 +238,9 @@ const toUpdateUserSettings = () => {
                         </div>
                       </div>
                     </div>
+                  </div>
+                  <div v-if="!hasHistory">
+                    Ingen sparemål
                   </div>
 
                 </div>
@@ -246,7 +309,7 @@ const toUpdateUserSettings = () => {
 }
 
 #banner {
-  background-image: url('../src/assets/banners/stacked.svg');
+  background-image: url('/src/assets/banners/stacked.svg');
 }
 
 .card-1 {

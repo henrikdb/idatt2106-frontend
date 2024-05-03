@@ -411,6 +411,14 @@
           }
         ],
         "responses": {
+          "201": {
+            "description": "Item purchased and added to inventory successfully",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          },
           "403": {
             "description": "Insufficient points to purchase the item",
             "content": {
@@ -418,14 +426,6 @@
                 "schema": {
                   "type": "string"
                 }
-              }
-            }
-          },
-          "201": {
-            "description": "Item purchased and added to inventory successfully",
-            "content": {
-              "application/json": {
-
               }
             }
           }
@@ -867,8 +867,8 @@
               }
             }
           },
-          "401": {
-            "description": "Invalid credentials",
+          "404": {
+            "description": "User not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -877,8 +877,8 @@
               }
             }
           },
-          "404": {
-            "description": "User not found",
+          "401": {
+            "description": "Invalid credentials",
             "content": {
               "application/json": {
                 "schema": {
@@ -1590,6 +1590,16 @@
           }
         ],
         "responses": {
+          "404": {
+            "description": "Image not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Successfully retrieved the image",
             "content": {
@@ -1597,16 +1607,6 @@
                 "schema": {
                   "type": "string",
                   "format": "binary"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Image not found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExceptionResponse"
                 }
               }
             }
@@ -2456,10 +2456,10 @@
           "subscriptionLevel": {
             "type": "string"
           },
-          "checkingAccountBBAN": {
+          "checkingAccount": {
             "$ref": "#/components/schemas/BankAccountResponseDTO"
           },
-          "savingsAccountBBAN": {
+          "savingsAccount": {
             "$ref": "#/components/schemas/BankAccountResponseDTO"
           },
           "point": {

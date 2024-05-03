@@ -1,7 +1,14 @@
 <script lang="ts">
 import {CategoryScale, Chart as ChartJS, Legend, LinearScale, LineElement, PointElement, Title, Tooltip} from 'chart.js'
 import {Line} from 'vue-chartjs'
-import type {ChallengeDTO, CreateGoalDTO, GoalDTO, MarkChallengeDTO} from "@/api";
+import {
+  type ChallengeDTO,
+  type CreateGoalDTO,
+  type GoalDTO,
+  type MarkChallengeDTO,
+  TransactionControllerService, type TransactionDTO,
+  UserService
+} from "@/api";
 import {GoalService} from '@/api'
 import {useUserInfoStore} from "@/stores/UserStore";
 
@@ -171,6 +178,7 @@ export default {
         }
 
         this.addDataToChart(amount, dateString);
+        await this.transferMoney(amount)
         this.calculateSavedSoFar();
       } catch (error: any) {
         console.log(error.message);
@@ -334,8 +342,18 @@ export default {
       }
     },
 
-    transferMoney(amount: number) {
-      //need users bank accounts
+    async transferMoney(amount: number) {
+      let response = await UserService.getUser()
+      let spendingAccount = response.checkingAccount?.bban
+      let savingAccount = response.savingsAccount?.bban
+
+      const transactionPayload: TransactionDTO = {
+        debtorBBAN: spendingAccount,
+        creditorBBAN: savingAccount,
+        amount: amount,
+      }
+
+      await TransactionControllerService.transferToSelf({requestBody: transactionPayload})
     },
   },
 };

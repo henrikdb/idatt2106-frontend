@@ -157,6 +157,7 @@ import { useRouter, useRoute } from "vue-router";
 import { useUserInfoStore } from '@/stores/UserStore';
 import {onMounted, ref} from "vue";
 import { BadgeService, type NotificationDTO, NotificationService } from '@/api'
+import handleUnknownError from '@/components/Exceptions/unkownErrorHandler';
 
 const router = useRouter();
 const route = useRoute();
@@ -207,6 +208,7 @@ const getNotifications = async () => {
     await BadgeService.updateUnlockedBadges();
     notificationListRef.value = await NotificationService.getUnreadNotificationByUser()
   } catch (error) {
+    handleUnknownError(error);
     notificationListRef.value = []
   }
 }
@@ -217,6 +219,7 @@ const readNotification = async (notification: NotificationDTO) => {
     await NotificationService.updateNotification({requestBody: notification});
     notificationListRef.value = await NotificationService.getUnreadNotificationByUser()
   } catch (error) {
+    handleUnknownError(error);
     notificationListRef.value = [];
   }
 }
