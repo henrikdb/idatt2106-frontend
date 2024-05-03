@@ -12,7 +12,7 @@ export const useConfigurationStore = defineStore('ConfigurationStore', {
     /** The user's commitment. */
     commitment: '',
     /** The user's experience. */
-    experience: '',
+    experience: 'NONE',
     /** The challenges the user is facing. */
     challenges: [] as Array<string>,
   }),
