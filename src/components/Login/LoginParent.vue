@@ -31,6 +31,12 @@ import LoginForm from '@/components/Login/LoginForm.vue'
     box-shadow: rgba(57, 57, 63, 0.5) 0px 1px 20px 0px;
   }
 
+  @media (max-width: 600px){
+   .box {
+    padding: 0;
+  }
+  }
+
   .title {
     font-size: 60px;
     color: white;

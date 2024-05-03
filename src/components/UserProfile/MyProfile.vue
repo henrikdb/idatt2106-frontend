@@ -168,8 +168,8 @@ const toUpdateUserSettings = () => {
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col 12">
         <div class="card">
-          <div class="rounded-top text-white d-flex flex-row bg-primary justify-content-between" :style="{
-            height: '200px',
+          <div class="rounded-top text-white d-flex flex-row bg-primary justify-content-between flex-wrap" id="banner" :style="{
+      
             backgroundImage: `url(${bannerImageUrl})`,
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat'
@@ -180,7 +180,7 @@ const toUpdateUserSettings = () => {
                   style="width: 150px; height:150px; margin-left: 25px; margin-right: 15px;">
               </div>
               <h1 data-cy="firstname" style="display: flex; align-items: end; margin-bottom: 20px;">{{ firstname }} {{
-            lastname }}</h1>
+              lastname }}</h1>
             </div>
             <div class="d-flex align-items-end text-white my-3 mx-5">
               <div class="d-flex align-items-center flex-column">
@@ -250,7 +250,8 @@ const toUpdateUserSettings = () => {
                               <div class="card-body">
                                 <h5 class="card-title">{{ goals[index]['name'] }}</h5>
                                 <p class="card-text">{{ goals[index]['description'] }}</p>
-                                <p class="card-text"><small class="text-muted">{{ goals[index]['targetAmount'] }}</small>
+                                <p class="card-text"><small class="text-muted">{{ goals[index]['targetAmount']
+                                    }}</small>
                                 </p>
                                 <a href="#" class="btn  stretched-link" @click="toRoadmap"></a>
                               </div>
@@ -330,12 +331,24 @@ const toUpdateUserSettings = () => {
 }
 
 #banner {
-  background-image: url('/src/assets/banners/stacked.svg');
+  height: 200px;
+}
+
+@media (max-width: 940px) {
+  #banner {
+  height: 320px;
+}
 }
 
 /*-------*/
 .rounded-top {
   background-color: #00DBDE;
+}
+
+.classyButton {
+  background-color: #003A58;
+  border: #003A58;
+  color: white;
 }
 
 .classyButton:hover {

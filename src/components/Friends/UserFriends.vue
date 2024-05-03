@@ -15,7 +15,7 @@
         <div v-if="showFriends">
             <div v-if="elementsInFriends">
                 <div class="row">
-                    <div class="col-lg-3" v-for="friend in friends" :key="friend.id">
+                    <div class="friendBox d-flex flex-wrap" v-for="friend in friends" :key="friend.id">
                         <div class="card card-one">
                             <div class="header">
                                 <div v-if="friend.profileImage" class="avatar">
@@ -27,7 +27,7 @@
                             </div>
                             <h3><router-link to="" data-cy="navigateToFriend" href="#" class="btn stretched-link"
                                     id="profileName" @click="navigateToFriend(friend.id)">{{
-                friend.firstName }} {{ friend.lastName }}</router-link></h3>
+                                friend.firstName }} {{ friend.lastName }}</router-link></h3>
                             <div class="desc">{{ friend.firstName }} {{ friend.lastName }}</div>
                             <div class="contacts">
                                 <a class="text removeFriend" data-bs-toggle="collapse"
@@ -71,7 +71,8 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Legg til venn</h5>
-                        <button type="button" class="close btn-close" @click="showAddFriend = false" aria-label="Close"></button>
+                        <button type="button" class="close btn-close" @click="showAddFriend = false"
+                            aria-label="Close"></button>
                     </div>
                     <div class="modal-body d-flex justify-content-center align-items-center flex-column">
                         <form class="col-md-10 d-flex justify-content-center align-items-center flex-row my-4"
@@ -86,8 +87,8 @@
                                     <div class="row d-flex align-items-center">
                                         <div class="col-md-2 col-sm-2">
                                             <div v-if="user.profileImage !== null"><img id="profilePicture"
-                                                    :src="apiUrl + '/api/images/' + user.profileImage"
-                                                    alt="bruker" class="profile-photo-lg"></div>
+                                                    :src="apiUrl + '/api/images/' + user.profileImage" alt="bruker"
+                                                    class="profile-photo-lg"></div>
                                             <div v-else><img id="profilePicture" :src="'../src/assets/userprofile.png'"
                                                     alt="bruker" class="profile-photo-lg"></div>
                                         </div>
@@ -319,7 +320,7 @@ body {
 /*social */
 .card-one {
     position: relative;
-    width: 300px;
+    width: 200px;
     background: #fff;
     box-shadow: 0 10px 7px -5px rgba(0, 0, 0, 0.4);
 }
@@ -659,5 +660,9 @@ ul.friend-list .right p {
 
 #addFriend:hover {
     background-color: #003b58f5;
+}
+
+.friendBox {
+    width: 250px;
 }
 </style>

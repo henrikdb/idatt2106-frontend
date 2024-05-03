@@ -5,12 +5,15 @@ import { useUserInfoStore } from "@/stores/UserStore";
 import {UserService, BadgeService, GoalService, type GoalDTO, type BadgeDTO, FriendService} from "@/api";
 import { ItemService } from "@/api";
 import handleUnknownError from '@/components/Exceptions/unkownErrorHandler'
+import bannerImage from '@/assets/banners/stacked.svg'
 
 let apiUrl = import.meta.env.VITE_APP_API_URL;
 
 let firstname = ref();
 let lastname = ref();
 const imageUrl = ref(`../src/assets/userprofile.png`);
+
+const bannerImageUrl = ref(bannerImage);
 
 let hasBadges = ref(false)
 let hasInventory = ref(false)
@@ -25,6 +28,8 @@ const streak = ref(0 as any);
 
 const isFriend = ref(false);
 const isRequestSent = ref(false);
+
+const isMe = ref(false);
 
 /**
  * Sets up the form for displaying user profile information.
@@ -50,7 +55,12 @@ async function setupForm() {
     if (response.profileImage) {
       imageUrl.value = apiUrl + "/api/images/" + response.profileImage;
     }
-    getInventory();
+    if (response.bannerImage != 0 && response.bannerImage !== null) {
+      console.log(response.bannerImage)
+      bannerImageUrl.value = apiUrl + "/api/images/" + response.bannerImage;
+    }
+    let userId = route.params.id;
+    isMe.value = String(userId) !== String(useUserInfoStore().id);
     getBadges();
   } catch (err) {
     handleUnknownError(err)
@@ -143,14 +153,34 @@ const removeFriend = () => {
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col 12">
         <div class="card">
-          <div class="rounded-top text-white d-flex flex-row bg-primary" style="height:200px;" id="banner">
-            <div class=" d-flex flex-column align-items-center justify-content-center">
-              <img :src="imageUrl" alt="Generisk plassholderbilde" class="img-fluid img-thumbnail"
-                style="width: 150px; height:150px; margin-left: 25px; margin-right: 15px;">
+          <div class="rounded-top text-white d-flex flex-row bg-primary justify-content-between" :style="{
+            height: '200px',
+            backgroundImage: `url(${bannerImageUrl})`,
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat'
+          }">
+            <div class=" text-white d-flex flex-row">
+              <div class=" d-flex flex-column align-items-center justify-content-center">
+                <img :src="imageUrl" alt="Generisk plassholderbilde" class="img-fluid img-thumbnail"
+                  style="width: 150px; height:150px; margin-left: 25px; margin-right: 15px;">
+              </div>
+              <h1 data-cy="firstname" style="display: flex; align-items: end; margin-bottom: 20px;">{{ firstname }} {{
+            lastname }}</h1>
             </div>
-              <h1 data-cy="firstname" style="display: flex; align-items: end; margin-bottom: 20px;">{{ firstname }} {{ lastname }}</h1>
+            <div class="d-flex align-items-end text-white my-3 mx-5">
+              <div class="d-flex align-items-center flex-column">
+                <p class="mb-1 h2 d-flex flex-column align-items-center" data-cy="points"><img
+                    src="@/assets/items/pigcoin.png" style="width: 80px; height: 80px" data-toggle="tooltip"
+                    title="Points"> {{ points }}</p>
+              </div>
+              <div class="d-flex align-items-center flex-column px-3">
+                <p class="mb-1 h2 d-flex flex-column align-items-center" data-cy="streak"><img
+                    src="@/assets/icons/fire.png" style="width: 80px; height: 80px" data-toggle="tooltip"
+                    title="Points"> {{ streak }}</p>
+              </div>
+            </div>
           </div>
-          <div class="p-3 text-black" style="background-color: #f8f9fa;">
+          <div v-if="isMe" class="p-3 text-black" style="background-color: #f8f9fa;">
             <div class="d-flex justify-content-end text-center py-1">
               <div style="width: 100%; display: flex; justify-content: start">
                 <button
@@ -177,35 +207,6 @@ const removeFriend = () => {
                 >
                   Fjern venn
                 </button>
-              </div>
-              <div>
-                <p class="mb-1 h2" data-cy="points">{{ points }} <img src="@/assets/items/pigcoin.png" style="width: 4rem"></p>
-                <p class="small text-muted mb-0">Poeng</p>
-              </div>
-              <div class="px-3">
-                <p class="mb-1 h2" data-cy="streak">{{ streak }} <img src="@/assets/icons/fire.png" style="width: 4rem"></p>
-                <p class="small text-muted mb-0">Streak</p>
-              </div>
-            </div>
-          </div>
-          <hr>
-          <div class="card-body p-1 text-black">
-            <div class="row">
-              <div class="col">
-                <div class="container-fluid">
-                  <h1 class="mt-1 text-start badges-text">Lageret ditt</h1>
-                  <div v-if="hasInventory" class="scrolling-wrapper-badges row flex-row flex-nowrap mt-2 pb-2 pt-2">
-                    <div v-for="product in inventory" :key="product.id" class="card text-center"
-                        style="width: 12rem; border: none; cursor: pointer; margin: 1rem; border: 2px solid black">
-                        <img :src="apiUrl + `/api/images/${product.imageId}`" class="card-img-top"
-                            alt="..." />
-                        <div class="card-body">
-                            <h5 class="card-title">{{ product.itemName }}</h5>
-                        </div>
-                    </div>
-                  </div>
-                  <div v-else>Ingen gjenstander</div>
-                </div>
               </div>
             </div>
           </div>

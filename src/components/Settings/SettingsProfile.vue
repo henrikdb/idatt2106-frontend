@@ -19,6 +19,8 @@ let banners = ref([] as any)
 let hasBanners = ref(false);
 let selectedBannerId = ref(0);
 const selectedBanner = ref()
+const errorMsg = ref('');
+const successMsg = ref('');
 
 const iconSrc = ref('../src/assets/userprofile.png');
 const fileInputRef = ref();
@@ -152,13 +154,16 @@ const handleSubmit = async () => {
     lastName: surnameRef.value,
   };
   try {
-    UserService.update({ requestBody: updateUserPayload })
+    await UserService.update({ requestBody: updateUserPayload })
     useUserInfoStore().setUserInfo({
       firstname: firstNameRef.value,
       lastname: surnameRef.value,
     })
+    errorMsg.value = '';
+    successMsg.value = 'Profilen ble oppdatert!';
   } catch (err) {
-    handleUnknownError(err);
+    errorMsg.value = handleUnknownError(err);
+    successMsg.value = '';
     console.error(err)
   }
 }
@@ -174,40 +179,51 @@ onMounted(() => {
   <div class="tab-pane active" id="profile">
     <h6>DIN PROFILINFORMASJON</h6>
     <hr>
-    <form @submit.prevent="handleSubmit" novalidate>
-      <div class="user-avatar">
-        <input type="file" ref="fileInputRef" @change="handleFileChange" accept=".jpg, .jpeg, .png"
-          style="display: none" />
-        <img :src="iconSrc" alt="Brukeravatar" style="width: 200px; height: 200px;">
-        <div class="mt-2">
-          <button type="button" class="btn btn-primary classyButton" @click="triggerFileUpload"><img
-              src="../../assets/icons/download.svg"> Last opp bilde</button>
+    <form @submit.prevent="handleSubmit" novalidate class="d-flex infoHolder">
+      <div>
+        <div class="user-avatar">
+          <input type="file" ref="fileInputRef" @change="handleFileChange" accept=".jpg, .jpeg, .png"
+            style="display: none" />
+          <img :src="iconSrc" alt="Brukeravatar" style="width: 200px; height: 200px;">
+          <div class="mt-2">
+            <button type="button" class="btn btn-primary classyButton" @click="triggerFileUpload"><img
+                src="../../assets/icons/download.svg"> Last opp bilde</button>
+          </div>
         </div>
       </div>
-      <div class="form-group">
-        <BaseInput data-cy="first-name" :model-value="firstNameRef" @input-change-event="handleFirstNameInputEvent"
-          id="firstNameInputChange" input-id="first-name-new" type="text" label="Fornavn"
-          placeholder="Skriv inn ditt fornavn" invalid-message="Vennligst skriv inn ditt fornavn"
-          style="max-width: 300px" />
+      <div class="mx-5">
+        <div class="form-group">
+          <BaseInput data-cy="first-name" :model-value="firstNameRef" @input-change-event="handleFirstNameInputEvent"
+            id="firstNameInputChange" input-id="first-name-new" type="text" label="Fornavn"
+            placeholder="Skriv inn ditt fornavn" invalid-message="Vennligst skriv inn ditt fornavn" class="inputDynamic" />
+        </div>
+        <br>
+        <div class="form-group">
+          <BaseInput data-cy="last-name" :model-value="surnameRef" @input-change-event="handleSurnameInputEvent"
+            id="surnameInput-change" input-id="surname-new" type="text" label="Etternavn"
+            placeholder="Skriv inn ditt etternavn" invalid-message="Vennligst skriv inn ditt etternavn"
+             class="inputDynamic"/>
+        </div>
+        <br>
+        <div class="d-flex">
+          <p class="text-danger"> {{ errorMsg }}</p>
+          <p class="text-success"> {{ successMsg }}</p>
+        </div>
+        <button data-cy="profile-submit-btn" type="submit" class="btn btn-primary classyButton">Oppdater profil</button>
       </div>
-      <br>
-      <div class="form-group">
-        <BaseInput data-cy="last-name" :model-value="surnameRef" @input-change-event="handleSurnameInputEvent"
-          id="surnameInput-change" input-id="surname-new" type="text" label="Etternavn"
-          placeholder="Skriv inn ditt etternavn" invalid-message="Vennligst skriv inn ditt etternavn"
-          style="max-width: 300px" />
-      </div>
-      <br>
-      <button data-cy="profile-submit-btn" type="submit" class="btn btn-primary classyButton">Oppdater profil</button>
     </form>
     <hr>
     <div>
       <h6>Banners</h6>
       <div v-if="hasBanners" class="scrolling-wrapper-badges row flex-row flex-wrap mt-2 pb-2 pt-2">
-        <div v-for="banner in banners" :key="banner.id" class="card text-center banner justify-content-center d-flex align-items-center" @click="selectItem(banner.id)"
-          :class="{ 'selected-banner': banner.id === selectedBannerId }" data-bs-toggle="tooltip"
-          data-bs-placement="top" data-bs-custom-class="custom-tooltip" :data-bs-title="banner.criteria">
-          <img :src="apiUrl + `/api/images/${banner.imageId}`" class="card-img-top" :class="{ 'selected-banner': banner.id === selectedBanner }" alt="Banner" style="width: 200px; height: 100px" @click="selectItem(banner.imageId)" />
+        <div v-for="banner in banners" :key="banner.id"
+          class="card text-center banner justify-content-center d-flex align-items-center"
+          @click="selectItem(banner.id)" :class="{ 'selected-banner': banner.id === selectedBannerId }"
+          data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+          :data-bs-title="banner.criteria">
+          <img :src="apiUrl + `/api/images/${banner.imageId}`" class="card-img-top"
+            :class="{ 'selected-banner': banner.id === selectedBanner }" alt="Banner"
+            style="width: 200px; height: 100px" @click="selectItem(banner.imageId)" />
         </div>
       </div>
       <div v-else>
@@ -258,5 +274,27 @@ onMounted(() => {
   margin: 10px;
   cursor: pointer;
   width: 200px;
+}
+
+.infoHolder {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+@media (max-width: 1252px) {
+  .infoHolder {
+    flex-direction: column;
+  }
+}
+
+.inputDynamic {
+  width: 340px;
+}
+
+@media (max-width: 960px) {
+  .inputDynamic {
+    width: 200px;
+  }
 }
 </style>
