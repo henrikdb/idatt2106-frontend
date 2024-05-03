@@ -12,8 +12,6 @@ export type { AccountRequestDTO } from './models/AccountRequestDTO';
 export type { AccountResponseDTO } from './models/AccountResponseDTO';
 export type { AuthenticationResponse } from './models/AuthenticationResponse';
 export type { BadgeDTO } from './models/BadgeDTO';
-export type { BankAccountDTO } from './models/BankAccountDTO';
-export type { BankAccountResponseDTO } from './models/BankAccountResponseDTO';
 export type { BankIDRequest } from './models/BankIDRequest';
 export type { BankProfile } from './models/BankProfile';
 export type { BankProfileDTO } from './models/BankProfileDTO';
