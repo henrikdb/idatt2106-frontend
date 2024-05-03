@@ -31,7 +31,7 @@ const handleSubmit = () => {
     else if (mediumRef.value.checked) choice = 'SOME'
     else if (highRef.value.checked) choice = 'MUCH'
     useConfigurationStore().setCommitment(choice)
-    router.push('/experience')
+    router.push('/suitable-challenges')
   }
   else {
     errorMsg.value = 'Please select an option before continuing'

@@ -36,7 +36,7 @@
                          :to="toBudget()"
                          exact-active-class="active-nav"
                          @click="toggleDropdown">
-              <img src="@/assets/icons/budget.svg">Budjsett
+              <img src="@/assets/icons/budget.svg">Budsjett
             </router-link>
           </li>
           <li class="nav-item">
@@ -119,7 +119,7 @@
                   <img src="@/assets/icons/feedback.svg">Tilbakemelding
                 </router-link>
               </li>
-              <li>
+              <li v-if="useUserInfoStore().role === 'ADMIN'">
                 <router-link data-cy="admin"
                   class="dropdown-item dropdown-username-link"
                   :to="toAdmin()"
