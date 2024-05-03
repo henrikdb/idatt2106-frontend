@@ -156,13 +156,13 @@ const toUpdateUserSettings = () => {
             </div>
               <h1 data-cy="firstname" style="display: flex; align-items: end; margin-bottom: 20px;">{{ firstname }} {{ lastname }}</h1>
             </div>
-              <div class="d-flex align-items-end text-white my-3">
+              <div class="d-flex align-items-end text-white my-3 mx-5">
                 <div class="d-flex align-items-center flex-column">
-                  <p class="mb-1 h2 d-flex flex-column align-items-center" data-cy="points">{{ points }} <img src="@/assets/items/pigcoin.png" style="width: 60px; height: 60px"></p>
+                  <p class="mb-1 h2 d-flex flex-column align-items-center" data-cy="points">{{ points }} <img src="@/assets/items/pigcoin.png" style="width: 80px; height: 80px"></p>
                   <p class="small text-white mb-0">Poeng</p>
                 </div>
                 <div class="d-flex align-items-center flex-column px-3">
-                  <p class="mb-1 h2 d-flex flex-column align-items-center" data-cy="streak">{{ streak }} <img src="@/assets/icons/fire.png" style="width: 60px; height: 60px"></p>
+                  <p class="mb-1 h2 d-flex flex-column align-items-center" data-cy="streak">{{ streak }} <img src="@/assets/icons/fire.png" style="width: 80px; height: 80px"></p>
                   <p class="small text-white mb-0">Streak</p>
                 </div>
               </div>
