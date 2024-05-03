@@ -30,6 +30,15 @@
               <img src="@/assets/icons/newsletter.svg">Nyheter
             </router-link>
           </li>
+          <li class="nav-item" v-if="useUserInfoStore().isPremium">
+            <router-link data-cy="budget"
+                         class="nav-link text-white"
+                         :to="toBudget()"
+                         exact-active-class="active-nav"
+                         @click="toggleDropdown">
+              <img src="@/assets/icons/budget.svg">Budjsett
+            </router-link>
+          </li>
           <li class="nav-item">
             <router-link data-cy="store" class="nav-link text-white"
               :to="toStore()" exact-active-class="active-nav">
@@ -81,15 +90,6 @@
                   exact-active-class="active-link"
                   @click="toggleDropdown">
                   <img src="@/assets/icons/black_person.svg">Min profil
-                </router-link>
-              </li>
-              <li v-if="useUserInfoStore().isPremium">
-                <router-link data-cy="budget"
-                  class="dropdown-item dropdown-username-link"
-                  :to="toBudget()"
-                  exact-active-class="active-link"
-                  @click="toggleDropdown">
-                  <img src="@/assets/icons/budget.svg">Budjsett
                 </router-link>
               </li>
               <li>
@@ -181,7 +181,7 @@ let notificationListRef = ref<NotificationDTO[]>([]);
  * @returns {boolean} True if the current route is one of the active pages, otherwise false.
  */
  function isAnyActivePage(): boolean {
-  const activeRoutes = ['/roadmap', '/leaderboard', '/news', '/shop'];
+  const activeRoutes = ['/roadmap', '/leaderboard', '/news', '/budget-overview', '/shop'];
   return activeRoutes.includes(route.path);
 }
 
