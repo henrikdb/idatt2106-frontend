@@ -122,7 +122,7 @@
               <li>
                 <router-link data-cy="admin"
                   class="dropdown-item dropdown-username-link"
-                  :to="toSetting()"
+                  :to="toAdmin()"
                   exact-active-class="active-link"
                   @click="toggleDropdown">
                   <img src="@/assets/icons/admin.svg">Admin
@@ -311,6 +311,15 @@ function toSetting(): string {
  */
 function toFeedback(): string {
   return '/feedback';
+}
+
+/**
+ * Redirects to the admin page.
+ *
+ * @returns {string} The URL for the admin page.
+ */
+function toAdmin(): string {
+  return '/admin';
 }
 
 /**

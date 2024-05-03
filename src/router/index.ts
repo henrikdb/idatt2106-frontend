@@ -29,6 +29,12 @@ const routes = [
         component: () => import('@/views/User/MyProfileView.vue'),
       },
       {
+        path: 'admin',
+        name: 'admin',
+        component: () => import('@/views/Admin/AdminDashboardView.vue'),
+        meta: { requiresAdmin: true }
+      },
+      {
         path: '/settings',
         name: 'settings',
         component: () => import('@/views/User/UserSettingsView.vue'),
@@ -186,7 +192,7 @@ router.beforeEach((to, from, next) => {
 
   if (requiresAuth && !isAuthenticated) {
     next({ name: 'login', query: { redirect: to.fullPath } });
-  } else if (requiresAdmin && userRole !== 'admin') {
+  } else if (requiresAdmin && userRole !== 'ADMIN') {
     next({ name: 'unauthorized' });
   } else if (requiresPremium && userSubscription !== 'PREMIUM') {
     next({ name: 'home' });
