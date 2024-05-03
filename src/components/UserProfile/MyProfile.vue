@@ -1,7 +1,15 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { type BadgeDTO, BadgeService, type GoalDTO, GoalService, ItemService, UserService } from '@/api'
+import {
+  type BadgeDTO,
+  BadgeService,
+  type GoalDTO,
+  GoalService,
+  ItemService,
+  UserService,
+  type UserUpdateDTO
+} from '@/api'
 import handleUnknownError from '@/components/Exceptions/unkownErrorHandler'
 import bannerImage from '@/assets/banners/stacked.svg'
 
