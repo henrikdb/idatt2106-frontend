@@ -10,7 +10,7 @@ import {
   UserService
 } from "@/api";
 import {GoalService} from '@/api'
-import {useUserInfoStore} from "@/stores/UserStore";
+import handleUnknownError from '@/components/Exceptions/unkownErrorHandler'
 
 ChartJS.register(
     CategoryScale,
@@ -181,6 +181,7 @@ export default {
         await this.transferMoney(amount)
         this.calculateSavedSoFar();
       } catch (error: any) {
+        handleUnknownError(error)
         console.log(error.message);
       }
     },
@@ -306,7 +307,9 @@ export default {
       };
       try {
         await GoalService.updateChallengeAmount({requestBody: createGoalPayload})
+        this.$emit('refreshSavingGoal');
       } catch (e: any) {
+        handleUnknownError(e)
         console.log(e.message)
       }
     },
@@ -355,6 +358,17 @@ export default {
 
       await TransactionControllerService.transferToSelf({requestBody: transactionPayload})
     },
+
+    async regenerateChallenge(challenge: ChallengeDTO) {
+      let challengeId = challenge.id as number
+      try {
+        let response = await GoalService.regenerateChallenge({id: challengeId})
+        console.log(response)
+        this.$emit('refreshSavingGoal');
+      } catch (e) {
+        handleUnknownError(e)
+      }
+    },
   },
 };
 </script>
@@ -383,8 +397,15 @@ export default {
           </div>
           <div class="timeline-panel z-3" :id="'panel-' + index" v-show="challenge.showPanel">
             <div class="timeline-heading">
-              <h5 style="margin-top: 12px">{{challenge.points}}<img src="../../assets/items/pigcoin.png" alt="pig coint" style="width: 2rem"></h5>
-              <h4>Utfordring {{ index +1 }}</h4>
+              <div class="coinAndRegen">
+                <div class="coinCoin">
+                  <h5 style="margin-top: 12px">{{challenge.points}}<img src="../../assets/items/pigcoin.png" alt="pig coin" style="width: 2rem"></h5>
+                </div>
+                <div class="coinButton">
+                  <a @click="regenerateChallenge(challenge)" style="cursor: pointer"><img src="../../assets/icons/refresh.svg"/> Regenerer</a>
+                </div>
+              </div>
+              <h4>{{ challenge.challengeTemplate.templateName}}</h4>
               <p style="font-size: 12px">{{formatDate(challenge.startDate)}} til {{formatDate(challenge.endDate)}}</p>
               <h4 class="subheading">{{convertTemplateTextToChallengeText(challenge)}}</h4>
             </div>
@@ -799,5 +820,29 @@ export default {
   margin-bottom: 40px;
   margin-top: 10px;
   padding: 12px;
+}
+
+.timeline .coinAndRegen {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.timeline-inverted .coinAndRegen {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: row;
+}
+
+.coinCoin {
+  width: 40%;
+}
+
+.coinButton {
+  width: 60%;
+  color: white;
+  align-content: center;
+  align-items: center;
+  text-align: center;
 }
 </style>
