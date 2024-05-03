@@ -45,7 +45,7 @@
               <img src="@/assets/icons/storefront.svg">Butikk
             </router-link>
           </li>
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown d-flex flex-column">
                         <a data-mdb-dropdown-init class=" nav-link dropdown-toggle hidden-arrow notification" href="#" id="navbarDropdownMenuLink"
                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
                           <img src="/src/assets/icons/bell-white.svg">
@@ -60,7 +60,7 @@
                                 <img :src="notificationImageMapper[String(item.notificationType)]" alt="Varslingsikon"          class="notification-icon">
                               </div>
                               <div class="flex-grow-1 ms-3">
-                                <div class="not-item dropdown-item">{{item.message}}</div>
+                                <div class="not-item dropdown-item" id="notificationText">{{item.message}}</div>
                               </div>
                             </router-link>
                           </li>
@@ -69,7 +69,7 @@
                           <li>Ingen varslinger</li>
                         </ul>
                     </li>
-          <li v-if="userStore.isLoggedIn" class="nav-item dropdown">
+          <li v-if="userStore.isLoggedIn" class="nav-item dropdown d-flex flex-column">
             <a
               data-cy="user"
               :class="['nav-link', 'dropdown-toggle', 'username-text', 'text-white', { 'underline-active': !isAnyActivePage() }]"
@@ -122,7 +122,7 @@
               <li>
                 <router-link data-cy="admin"
                   class="dropdown-item dropdown-username-link"
-                  :to="toSetting()"
+                  :to="toAdmin()"
                   exact-active-class="active-link"
                   @click="toggleDropdown">
                   <img src="@/assets/icons/admin.svg">Admin
@@ -314,6 +314,15 @@ function toFeedback(): string {
 }
 
 /**
+ * Redirects to the admin page.
+ *
+ * @returns {string} The URL for the admin page.
+ */
+function toAdmin(): string {
+  return '/admin';
+}
+
+/**
  * Redirects to the friends page.
  *
  * @returns {string} The URL for the friends page.
@@ -463,6 +472,12 @@ onMounted(() => {
   margin: 0 140px;
 }
 
+@media (max-width: 768px) {
+    .container-fluid {
+        margin: 0 20px;
+    }
+}
+
 #logo {
     font-size: 2.5rem;
     height: 100%;
@@ -485,5 +500,14 @@ onMounted(() => {
   display: none;
 }
 
+#notificationText {
+  text-wrap: nowrap;
+}
+
+@media (max-width: 768px) {
+  #notificationText {
+    text-wrap: wrap;
+  }
+}
 
 </style>

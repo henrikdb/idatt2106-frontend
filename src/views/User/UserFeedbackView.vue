@@ -2,15 +2,25 @@
     <main>
       <div class="wrapper">
       <div id="formFrame">
-          <h1>TIlbakemelding</h1>
-      <form @submit.prevent="submitForm">
-        <BaseInput v-model="email" label="Email" type="email" placeholder="Enter your email" inputId="email" required />
+          <h1>Tilbakemelding</h1>
+      <form  ref="formRef" id="loginForm" @submit.prevent="submitForm" novalidate>
+        <BaseInput :model-value="emailRef"
+                   @input-change-event="handleEmailInputEvent"
+                   id="emailInput"
+                   input-id="email"
+                   type="email"
+                   label="E-post"
+                   placeholder="Skriv inn din e-post"
+                   invalid-message="Ugyldig e-post"
+        />
+
         <br>
         <label for="feedback">Din tilbakemelding:</label>
-        <textarea v-model="message" placeholder="Write here" rows="5" name="comment[text]" id="comment_text" cols="33"
+        <textarea v-model="messageRef" placeholder="Skriv meldingen din her" rows="5" name="comment[text]" id="comment_text" cols="33"
           required></textarea>
-        <BaseButton button-text="Send" @click="submitForm">Send inn</BaseButton>
-        <p v-if="submissionStatus">{{ submissionStatus }}</p>
+        <p data-cy="change-email-msg-error" class="text-danger">{{ errorMsg }}</p>
+        <BaseButton button-text="Send" @click="submitForm" style="padding: 10px 30px; font-size: 18px; font-weight: normal;">Send inn</BaseButton>
+        <p data-cy="change-email-msg-confirm" class="text-success">{{ confirmationMsg }}</p>
       </form>
     </div>
     </div>
@@ -21,13 +31,33 @@
 import { ref } from 'vue';
 import BaseInput from '@/components/BaseComponents/Input/BaseInput.vue';
 import BaseButton from '@/components/BaseComponents/Buttons/BaseButton.vue';
+import { type FeedbackRequestDTO, UserService } from '@/api'
+import handleUnknownError from '@/components/Exceptions/unkownErrorHandler'
 
-const email = ref("");
-const message = ref("");
-const submissionStatus = ref("");
+const emailRef = ref("");
+const messageRef = ref("");
+const errorMsg = ref('')
+const confirmationMsg = ref('')
+
+const handleEmailInputEvent = (newValue: any) => {
+  emailRef.value = newValue
+}
 
 const submitForm = async () => {
-  
+  try {
+    const feedbackRequest: FeedbackRequestDTO = {
+      email: emailRef.value,
+      message: messageRef.value
+    };
+    console.log("feedbackRequest", feedbackRequest);
+    UserService.sendFeedback({ requestBody: feedbackRequest });
+    messageRef.value = ''
+    errorMsg.value = ''
+    confirmationMsg.value = 'Tilbakemeldingen ble sendt!'
+  } catch (err) {
+    errorMsg.value = handleUnknownError(err);
+    confirmationMsg.value = ''
+  }
 };
 </script>
 

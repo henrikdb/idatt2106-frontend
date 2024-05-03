@@ -107,7 +107,8 @@ function toBilling() {
                     <div class="card-header border-bottom mb-3 d-flex d-md-none">
                         <ul class="nav nav-tabs card-header-tabs nav-gap-x-1" role="tablist">
                             <li class="nav-item">
-                                <a href="#" data-toggle="tab" class="nav-link has-icon active"><svg
+                                <a @click.prevent="setActive('/settings/profile')" @click="toProfile"
+                                :class="['nav-item nav-link has-icon', { 'nav-link-faded': useRoute().path !== '/settings/profile', 'active': useRoute().path === '/settings/profile' }]"><svg
                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round" class="feather feather-user">
@@ -116,7 +117,8 @@ function toBilling() {
                                     </svg></a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" data-toggle="tab" class="nav-link has-icon"><svg
+                                <a @click.prevent="setActive('/settings/account')" @click="toAccount"
+                                :class="['nav-item nav-link has-icon', { 'nav-link-faded': useRoute().path !== '/settings/account', 'active': useRoute().path === '/settings/account' }]"><svg
                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round" class="feather feather-settings">
@@ -127,7 +129,8 @@ function toBilling() {
                                     </svg></a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" data-toggle="tab" class="nav-link has-icon"><svg
+                                <a @click.prevent="setActive('/settings/security')" @click="toSecurity"
+                                :class="['nav-item nav-link has-icon', { 'nav-link-faded': useRoute().path !== '/settings/security', 'active': useRoute().path === '/settings/security' }]"><svg
                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round" class="feather feather-shield">
@@ -135,16 +138,8 @@ function toBilling() {
                                     </svg></a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" data-toggle="tab" class="nav-link has-icon"><svg
-                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" class="feather feather-bell">
-                                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                                    </svg></a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" data-toggle="tab" class="nav-link has-icon"><svg
+                                <a @click.prevent="setActive('/settings/bank')" @click="toBilling"
+                                    :class="['nav-item nav-link has-icon', { 'nav-link-faded': useRoute().path !== '/settings/bank', 'active': useRoute().path === '/settings/bank' }]"><svg
                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round" class="feather feather-credit-card">

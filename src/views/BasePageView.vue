@@ -18,4 +18,10 @@ import { useUserInfoStore } from '@/stores/UserStore';
   min-height: 700px;
   margin: 0 140px;
 }
+
+@media (max-width: 768px) {
+  #minHeight {
+    margin: 0 20px;
+  }
+}
 </style>
