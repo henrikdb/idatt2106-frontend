@@ -101,10 +101,10 @@ const handleSumInputEvent = (newSum: number) => {
   <div class="container">
     <div>
       <h3 class="d-flex align-items-center justify-content-center">
-        Now it remains only one step
+        Nå gjenstår det kun ett steg
       </h3>
       <h5 class="d-flex align-items-center justify-content-center">
-        Create your first saving goal
+        Lag ditt første sparemål
       </h5>
     </div>
 
@@ -113,15 +113,15 @@ const handleSumInputEvent = (newSum: number) => {
                  @input-change-event="handleTitleInputEvent"
                  id="titleInput"
                  input-id="title"
-                 label="Title"
-                 placeholder="Enter the title of the saving goal"/>
+                 label="Navn"
+                 placeholder="Oppgi navnet på sparemålet"/>
       <div>
         <label for="description">Description</label>
         <textarea v-model="descriptionRef"
                   type="text"
                   maxlength="150"
                   class="form-control"
-                  placeholder="Enter description of the saving goal here (optional)"
+                  placeholder="Oppgi en beskrivelse på sparemålet her (valgfritt)"
                   id="description"/>
       </div>
       <BaseInput :model-value="dateRef"
@@ -130,19 +130,19 @@ const handleSumInputEvent = (newSum: number) => {
                  input-id="dueDate"
                  type="date"
                  :min="getTodayDate()"
-                 label="Due date"/>
+                 label="Utløpsdato"/>
       <BaseInput :model-value="sumRef"
                  @input-change-event="handleSumInputEvent"
                  id="sumToSaveInput"
                  input-id="sumToSpareInput"
                  type="number"
-                 label="Sum to save"
+                 label="Sum"
                  min="0"
-                 placeholder="Enter the sum you would like to spare (kr)"/>
+                 placeholder="Oppgi summen du ønsker å spare (kr)"/>
     </form>
 
     <div class="confirm-button-container">
-      <BaseButton id="confirmButton" @click="handleSubmit" button-text="Continue"></BaseButton>
+      <BaseButton id="confirmButton" @click="handleSubmit" button-text="Fortsett"></BaseButton>
     </div>
     <div style="color: red">
       {{ errorMessage }}
@@ -152,6 +152,10 @@ const handleSumInputEvent = (newSum: number) => {
 </template>
 
 <style scoped>
+
+#titleInput, #description, #dueDateInput, #sumToSaveInput {
+  margin-top: 5px;
+}
 
 #description {
   resize: none;

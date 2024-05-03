@@ -46,15 +46,22 @@ const handleSubmit = async () => {
   formRef.value.classList.add("was-validated")
   const form = formRef.value;
   if (form.checkValidity()) {
+    errorMsg.value = '';
     try {
       await AccountControllerService.getAccountsByBban({bban: Number(checkingAccount.value)})
-      await AccountControllerService.getAccountsByBban({bban: Number(savingsAccount.value)})
-      useConfigurationStore().setChekingAccountBBAN(Number(checkingAccount.value))
-      useConfigurationStore().setSavingsAccountBBAN(Number(savingsAccount.value))
-      await router.push("/commitment")
     } catch (error) {
-      errorMsg.value = handleUnknownError(error)
+      errorMsg.value = "Fant ikke forbrukskonto"
+      return
     }
+    try {
+      await AccountControllerService.getAccountsByBban({bban: Number(savingsAccount.value)})
+    } catch (error) {
+      errorMsg.value = "Fant ikke sparekonto"
+      return
+    }
+    useConfigurationStore().setChekingAccountBBAN(Number(checkingAccount.value))
+    useConfigurationStore().setSavingsAccountBBAN(Number(savingsAccount.value))
+    await router.push("/commitment")
   }
 }
 </script>
@@ -73,7 +80,7 @@ const handleSubmit = async () => {
                  type="number"
                  min="10000000000"
                  max="99999999999"
-                 label="Brukskonto"
+                 label="Forbrukskonto"
                  placeholder="Skriv inn din brukskonto"
                  invalid-message="Vennligst skriv inn din brukskonto (11 siffer)"/>
 
