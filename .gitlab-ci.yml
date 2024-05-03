@@ -17,15 +17,15 @@ stages:
   - docker_build_and_push
   - deploy_docker
 
-install_dependencies:
-  stage: install
-  script:
-    - npm ci
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-      - node_modules/
-    policy: push
+# install_dependencies:
+#   stage: install
+#   script:
+#     - npm ci
+#   cache:
+#     key: ${CI_COMMIT_REF_SLUG}
+#     paths:
+#       - node_modules/
+#     policy: push
 
 # build_project:
 #   stage: build
