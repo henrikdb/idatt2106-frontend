@@ -5,7 +5,6 @@ import { ref } from 'vue'
 import BaseInput from '@/components/BaseComponents/Input/BaseInput.vue'
 import { useConfigurationStore } from '@/stores/ConfigurationStore'
 import { AccountControllerService } from '@/api'
-import handleUnknownError from '@/components/Exceptions/unkownErrorHandler'
 
 const router = useRouter();
 
