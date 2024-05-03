@@ -5,7 +5,7 @@ import BaseButton from '@/components/BaseComponents/Buttons/BaseButton.vue'
 import { ref } from 'vue'
 import { useConfigurationStore } from '@/stores/ConfigurationStore'
 import { useUserInfoStore } from '@/stores/UserStore'
-import { AuthenticationService, OpenAPI, type SignUpRequest } from '@/api'
+import { AuthenticationService, type BankAccountDTO, OpenAPI, type SignUpRequest, UserService } from '@/api'
 import handleUnknownError from '@/components/Exceptions/unkownErrorHandler'
 
 const router = useRouter();
@@ -49,50 +49,66 @@ const convertEnumToText = (enumValue: String) => {
  * @throws {Error} Throws an error if signup fails.
  */
 const signUpUser = async () => {
-  try {
-    // Saves the chosen challenges to the configuration store
-    useConfigurationStore().setChallenges(chosenChallenges.value)
+  // Saves the chosen challenges to the configuration store
+  useConfigurationStore().setChallenges(chosenChallenges.value)
 
-    const signUpPayLoad: SignUpRequest  = {
-      firstName: useUserInfoStore().getFirstName,
-      lastName: useUserInfoStore().getLastname,
-      email: useUserInfoStore().getEmail,
-      password: useUserInfoStore().getPassword,
-      configuration: {
-        commitment: useConfigurationStore().getCommitment,
-        experience: useConfigurationStore().getExperience,
-        challengeTypes: useConfigurationStore().getChallenges
-      }
-    };
-
-    let response = await AuthenticationService.signup({ requestBody: signUpPayLoad });
-    if (response.token == null) {
-      errorMsg.value = 'A valid token could not be created';
-      return;
+  const signUpPayLoad: SignUpRequest  = {
+    firstName: useUserInfoStore().getFirstName,
+    lastName: useUserInfoStore().getLastname,
+    email: useUserInfoStore().getEmail,
+    password: useUserInfoStore().getPassword,
+    configuration: {
+      commitment: useConfigurationStore().getCommitment,
+      experience: useConfigurationStore().getExperience,
+      challengeTypes: useConfigurationStore().getChallenges
     }
-    OpenAPI.TOKEN = response.token;
-    useUserInfoStore().setUserInfo({
-      accessToken: response.token,
-      role: response.role,
-    });
-    useUserInfoStore().resetPassword()
-    await router.push("/first-saving-goal")
+  };
+
+  console.log(signUpPayLoad)
+
+  let response = await AuthenticationService.signup({ requestBody: signUpPayLoad });
+  if (response.token == null) {
+    errorMsg.value = 'A valid token could not be created';
+    return;
   }
-  catch (error) {
-    errorMsg.value = handleUnknownError(error);
-  }
+  OpenAPI.TOKEN = response.token;
+  useUserInfoStore().setUserInfo({
+    accessToken: response.token,
+    role: response.role,
+  });
 }
 
-const handleSubmit = () => {
+const updateBankAccounts = async () => {
+
+  const spendingRequest: BankAccountDTO = {
+    bban: useConfigurationStore().getSpendingAccount,
+    bankAccountType: "CHECKING_ACCOUNT"
+  }
+
+  const savingRequest: BankAccountDTO = {
+    bban: useConfigurationStore().getSavingsAccount,
+    bankAccountType: "SAVING_ACCOUNT"
+  }
+
+  await UserService.selectBankAccount({requestBody: spendingRequest})
+  await UserService.selectBankAccount({requestBody: savingRequest})
+}
+
+const handleSubmit = async () => {
   if (chosenChallenges.value.length === 0) {
     chosenChallenges.value = challenges
   }
   useConfigurationStore().setChallenges(chosenChallenges.value)
-  console.log(useConfigurationStore().getChallenges)
+
   try {
-    signUpUser()
-  } catch (e) {
-    console.log(e)
+    await signUpUser();
+    await updateBankAccounts();
+
+    useUserInfoStore().resetPassword()
+    await router.push("/first-saving-goal")
+
+  } catch (error) {
+    errorMsg.value = handleUnknownError(error);
   }
 }
 
