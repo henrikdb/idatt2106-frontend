@@ -6,13 +6,10 @@ import {UserService, BadgeService, GoalService, type GoalDTO, type BadgeDTO, Fri
 import { ItemService } from "@/api";
 import handleUnknownError from '@/components/Exceptions/unkownErrorHandler'
 
-let numberOfHistory = 6;
-let cardTitles = ["Spain tour", "Food waste", "Coffee", "Concert", "New book", "Pretty clothes"]
 let firstname = ref();
 let lastname = ref();
 const imageUrl = ref(`../src/assets/userprofile.png`);
 
-let hasHistory = ref(true)
 let hasBadges = ref(false)
 let hasInventory = ref(false)
 
@@ -24,30 +21,8 @@ const backgroundName = ref("");
 const points = ref(0 as any);
 const streak = ref(0 as any);
 
-
-let goalName = ref('');
-let goalDescription = ref('');
-let targetAmount = ref('');
-let targetDate = ref('');
-let createdAt = ref('');
-let goals = ref<GoalDTO[]>([])
-
-async function getGoals() {
-  try {
-    goals.value = await GoalService.getGoals();
-    console.log("number of goals: ", goals.value.length)
-    console.log('The id of a goal: ', goals.value[0])
-    if (goals.value.length > 0) {
-      hasHistory.value = true
-    } else {
-      hasHistory.value = false
-      console.log('No history')
-    }
-  }catch (error){
-    handleUnknownError(error)
-    console.error("Something went wrong", error)
-  }
-}
+const isFriend = ref(false);
+const isRequestSent = ref(false);
 
 async function setupForm() {
   try {
@@ -75,9 +50,20 @@ async function setupForm() {
   }
 }
 
+const checkIfFriend = async () => {
+  let id = route.params.id as any;
+  const response = await FriendService.getFriends();
+  response.forEach((friend) => {
+    if (friend.id == id) {
+      isFriend.value = true;
+    }
+  });
+};
+
 const getInventory = async () => {
   try {
-    const response = await ItemService.getInventory();
+    let id = route.params.id as any
+    const response = await ItemService.getInventoryByUserId({ userId: id });
     inventory.value = response;
     if (inventory.value.length > 0) {
       hasInventory.value = true
@@ -93,7 +79,8 @@ const getInventory = async () => {
 
 const getBadges = async () => {
   try {
-    const responseBadge = await BadgeService.getBadgesUnlockedByUser();
+    let id = route.params.id as any
+    const responseBadge = await BadgeService.getBadgesUnlockedByUser({ userId: id });
     badges.value = responseBadge;
     if (badges.value.length > 0) {
       hasBadges.value = true
@@ -107,16 +94,9 @@ const getBadges = async () => {
   }
 }
 
-const selectItem = (item: any) => {
-  backgroundName.value = item.itemName;
-  useUserInfoStore().setUserInfo({
-    roadBackground: item.imageId,
-  })
-}
-
 onMounted(() => {
   setupForm()
-  getGoals()
+  checkIfFriend()
 })
 
 const toRoadmap = () => {
@@ -126,6 +106,7 @@ const toRoadmap = () => {
 const addFriend = () => {
   let id = route.params.id as any;
   const response = FriendService.addFriendRequest({ userId: id });
+  isRequestSent.value = true;
 };
 
 const removeFriend = () => {
@@ -152,11 +133,30 @@ const removeFriend = () => {
           <div class="p-3 text-black" style="background-color: #f8f9fa;">
             <div class="d-flex justify-content-end text-center py-1">
               <div style="width: 100%; display: flex; justify-content: start">
-                <button  data-cy="toUpdate" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary"
-                data-mdb-ripple-color="dark" style="z-index: 1; height: 40px; margin-left: 17px" id="toUpdate" @click="addFriend">
-                Rediger profil
-              </button>
-            
+                <button
+                  v-if="!isFriend && !isRequestSent"
+                  @click="addFriend"
+                  class="btn btn-success mx-3"
+                  style="height: 40px;"
+                >
+                  Legg til venn
+                </button>
+                <button
+                  v-else-if="isRequestSent"
+                  class="btn btn-secondary mx-2"
+                  style="height: 40px;"
+                  disabled
+                >
+                  Forespørsel sendt
+                </button>
+                <button
+                  v-else
+                  @click="removeFriend"
+                  class="btn btn-danger mx-3"
+                  style="height: 40px;"
+                >
+                  Fjern venn
+                </button>
               </div>
               <div>
                 <p class="mb-1 h2" data-cy="points">{{ points }} <img src="@/assets/items/pigcoin.png" style="width: 4rem"></p>
@@ -176,7 +176,7 @@ const removeFriend = () => {
                   <h1 class="mt-1 text-start badges-text">Lageret ditt</h1>
                   <div v-if="hasInventory" class="scrolling-wrapper-badges row flex-row flex-nowrap mt-2 pb-2 pt-2">
                     <div v-for="product in inventory" :key="product.id" class="card text-center"
-                        style="width: 12rem; border: none; cursor: pointer; margin: 1rem; border: 2px solid black" @click="selectItem(product)">
+                        style="width: 12rem; border: none; cursor: pointer; margin: 1rem; border: 2px solid black">
                         <img :src="`http://localhost:8080/api/images/${product.imageId}`" class="card-img-top"
                             alt="..." />
                         <div class="card-body">
@@ -184,8 +184,7 @@ const removeFriend = () => {
                         </div>
                     </div>
                   </div>
-                  <div v-else>Du har ingen ting på lageret ditt, gå til butikken for å kjøpe!</div>
-                  <div v-if="backgroundName" class="text-success">You selected the background: <strong>{{ backgroundName }}!</strong></div>
+                  <div v-else>Ingen gjenstander</div>
                 </div>
               </div>
             </div>

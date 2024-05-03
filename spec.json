@@ -411,14 +411,6 @@
           }
         ],
         "responses": {
-          "201": {
-            "description": "Item purchased and added to inventory successfully",
-            "content": {
-              "application/json": {
-
-              }
-            }
-          },
           "403": {
             "description": "Insufficient points to purchase the item",
             "content": {
@@ -426,6 +418,14 @@
                 "schema": {
                   "type": "string"
                 }
+              }
+            }
+          },
+          "201": {
+            "description": "Item purchased and added to inventory successfully",
+            "content": {
+              "application/json": {
+
               }
             }
           }
@@ -814,22 +814,22 @@
           "required": true
         },
         "responses": {
-          "409": {
-            "description": "Email already exists",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExceptionResponse"
-                }
-              }
-            }
-          },
           "201": {
             "description": "Successfully signed up",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/AuthenticationResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Email already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResponse"
                 }
               }
             }
