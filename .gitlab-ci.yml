@@ -61,7 +61,11 @@ cypress_e2e-tests:
   tags:
     - dind
   before_script:
-    - apk add --update npm
+    - apk update
+    - apk add --no-cache npm
+    - apk add --no-cache xvfb dbus gtk+3.0 libxss
+    - Xvfb :99 -ac &
+    - export DISPLAY=:99
   script:
     - docker login -u $DOCKER_USER -p $DOCKER_PAT registry.gitlab.com
     - docker pull registry.gitlab.com/$DOCKER_USER/sparesti-registry:frontend && docker run -d -p 81:80 --name frontend registry.gitlab.com/$DOCKER_USER/sparesti-registry:frontend
@@ -73,6 +77,7 @@ cypress_e2e-tests:
     paths:
         - node_modules/
     policy: pull
+
 
 # eslint_run-lint:
 #   stage: lint
