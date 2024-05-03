@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { ConfigurationDTO } from './ConfigurationDTO';
 import type { PointDTO } from './PointDTO';
 import type { StreakDTO } from './StreakDTO';
 export type UserDTO = {
@@ -18,5 +19,6 @@ export type UserDTO = {
     savingsAccountBBAN?: number;
     point?: PointDTO;
     streak?: StreakDTO;
+    configuration?: ConfigurationDTO;
 };
 

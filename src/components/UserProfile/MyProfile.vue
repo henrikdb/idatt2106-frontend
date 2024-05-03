@@ -334,7 +334,7 @@ const toUpdateUserSettings = () => {
   height: 200px;
 }
 
-@media (max-width: 940px) {
+@media (max-width: 980px) {
   #banner {
   height: 320px;
 }

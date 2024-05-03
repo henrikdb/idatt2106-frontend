@@ -101,8 +101,15 @@ export default {
 .cont {
   padding-left: 10px;
   margin: 0;
+  margin-left: -140px;
   width: 98%;
   box-sizing: unset;
+}
+
+@media (max-width: 768px) {
+  .cont {
+    margin-left: -20px;
+  }
 }
 
 .blue-background {

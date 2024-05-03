@@ -33,7 +33,7 @@ export default {
     async fetchFinanceNews() {
       try {
         const response = await fetch(
-            'https://newsapi.org/v2/everything?q=saving%20money&pageSize=10&apiKey=f092756b3b6b41369b047cb7ae980db5'
+          'https://newsapi.org/v2/everything?q=spare%20penger&pageSize=10&language=no&apiKey=f092756b3b6b41369b047cb7ae980db5'
         );
         const data = await response.json();
 
