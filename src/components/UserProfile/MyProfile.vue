@@ -250,7 +250,8 @@ const toUpdateUserSettings = () => {
                               <div class="card-body">
                                 <h5 class="card-title">{{ goals[index]['name'] }}</h5>
                                 <p class="card-text">{{ goals[index]['description'] }}</p>
-                                <p class="card-text"><small class="text-muted">{{ goals[index]['targetAmount'] }}</small>
+                                <p class="card-text"><small class="text-muted">{{ goals[index]['targetAmount']
+                                    }}</small>
                                 </p>
                                 <a href="#" class="btn  stretched-link" @click="toRoadmap"></a>
                               </div>
