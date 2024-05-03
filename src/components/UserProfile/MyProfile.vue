@@ -182,12 +182,12 @@ const toUpdateUserSettings = () => {
                 <div class="container-fluid">
                   <h1 class="mt-1 text-start badges-text">Merker</h1>
                   <div v-if="hasBadges" class="scrolling-wrapper-badges row flex-row flex-nowrap mt-2 pb-2 pt-2">
-                    <div v-for="badge in badges" :key="badge.id" class="card text-center"
+                    <div v-for="badge in badges" :key="badge.id" class="card text-center d-flex align-items-center justify-content-center"
                         style="width: 12rem; border: none; cursor: pointer; margin: 1rem; 
                         border: 2px solid black" data-bs-toggle="tooltip" data-bs-placement="top" 
                         data-bs-custom-class="custom-tooltip" :data-bs-title="badge.criteria">
-                        <img :src="apiUrl + `/api/images/${badge.imageId}`" class="card-img-top"
-                            alt="..." />
+                        <img :src="apiUrl + `/api/images/${badge.imageId}`" class="card-img-top mt-2"
+                            alt="..." style="width: 150px; height: 150px;"/>
                         <div class="card-body">
                             <h5 class="card-title">{{ badge.badgeName }}</h5>
                         </div>

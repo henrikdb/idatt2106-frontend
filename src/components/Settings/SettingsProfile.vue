@@ -76,6 +76,7 @@ const getInventory = async () => {
 };
 
 const selectItem = async (bannerId: any) => {
+  console.log(bannerId)
   try {
     const bannerImagePayload: UserUpdateDTO = {
       bannerImage: bannerId,
@@ -101,9 +102,8 @@ async function setupForm() {
     } else {
       iconSrc.value = "../src/assets/userprofile.png";
     }
-    if (response.bannerImage != null) {
-      selectedBanner.value = response.bannerImage;
-    }
+    selectedBanner.value = response.bannerImage;
+    console.log(response.bannerImage)
   } catch (err) {
     handleUnknownError(err);
     console.error(err)
@@ -116,7 +116,7 @@ const handleSubmit = async () => {
     lastName: surnameRef.value,
   };
   try {
-    UserService.update({ requestBody: updateUserPayload })
+    await UserService.update({ requestBody: updateUserPayload })
     useUserInfoStore().setUserInfo({
       firstname: firstNameRef.value,
       lastname: surnameRef.value,
@@ -168,11 +168,10 @@ onMounted(() => {
     <div>
       <h6>Banners</h6>
       <div v-if="hasBanners" class="scrolling-wrapper-badges row flex-row flex-wrap mt-2 pb-2 pt-2">
-        <div v-for="banner in banners" :key="banner.id" class="card text-center banner justify-content-center d-flex align-items-center" @click="selectItem(banner.id)"
-          :class="{ 'selected-banner': banner.id === selectedBannerId }" data-bs-toggle="tooltip"
+        <div v-for="banner in banners" :key="banner.id" class="card text-center banner justify-content-center d-flex align-items-center"
+           data-bs-toggle="tooltip"
           data-bs-placement="top" data-bs-custom-class="custom-tooltip" :data-bs-title="banner.criteria">
-          <img :src="apiUrl + `/api/images/${banner.imageId}`" class="card-img-top" alt="Banner" style="width: 100px; height: 100px" />
-            <h5 class="card-title">{{ selectedBanner }}</h5>
+          <img :src="apiUrl + `/api/images/${banner.imageId}`" class="card-img-top" :class="{ 'selected-banner': banner.id === selectedBanner }" alt="Banner" style="width: 200px; height: 100px" @click="selectItem(banner.imageId)" />
         </div>
       </div>
       <div v-else>
@@ -215,7 +214,7 @@ onMounted(() => {
 }
 
 .selected-banner {
-  border: 2px solid #1a81b5;
+  border: 5px solid #1cd516;
   display: flex;
 }
 
