@@ -9,6 +9,8 @@ export type UserUpdateDTO = {
     email?: string;
     profileImage?: number;
     bannerImage?: number;
+    savingsAccountBBAN?: number;
+    checkingAccountBBAN?: number;
     configuration?: ConfigurationDTO;
 };
 

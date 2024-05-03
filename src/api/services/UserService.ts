@@ -2,8 +2,6 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { Account } from '../models/Account';
-import type { BankAccountDTO } from '../models/BankAccountDTO';
 import type { FeedbackRequestDTO } from '../models/FeedbackRequestDTO';
 import type { FeedbackResponseDTO } from '../models/FeedbackResponseDTO';
 import type { PasswordResetDTO } from '../models/PasswordResetDTO';
@@ -110,24 +108,6 @@ export class UserService {
         });
     }
     /**
-     * Update a user's bank account
-     * Changes either a user's checking account or savings account
-     * @returns Account OK
-     * @throws ApiError
-     */
-    public static selectBankAccount({
-        requestBody,
-    }: {
-        requestBody: BankAccountDTO,
-    }): CancelablePromise<Account> {
-        return __request(OpenAPI, {
-            method: 'PATCH',
-            url: '/api/users/update-account',
-            body: requestBody,
-            mediaType: 'application/json',
-        });
-    }
-    /**
      * Update a password
      * Update the password of the authenticated user
      * @returns UserDTO Successfully updated password
@@ -217,6 +197,18 @@ export class UserService {
     public static getUser(): CancelablePromise<UserDTO> {
         return __request(OpenAPI, {
             method: 'GET',
+            url: '/api/users/me',
+        });
+    }
+    /**
+     * Delete the authenticated user
+     * Delete the authenticated user
+     * @returns any Successfully deleted user
+     * @throws ApiError
+     */
+    public static deleteUser(): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
             url: '/api/users/me',
         });
     }

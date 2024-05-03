@@ -44,7 +44,7 @@ async function getGoals() {
   try {
     goals.value = await GoalService.getGoals();
     hasHistory.value = goals.value.length > 0;
-  }catch (error){
+  } catch (error) {
     handleUnknownError(error)
     console.error("Something went wrong", error)
   }
@@ -123,15 +123,15 @@ const getBadges = async () => {
  */
 const selectItem = (item: any) => {
   try {
-  backgroundName.value = item.itemName;
-  let imageId = item.imageId;
-  const bannerImagePayload: UserUpdateDTO = {
+    backgroundName.value = item.itemName;
+    let imageId = item.imageId;
+    const bannerImagePayload: UserUpdateDTO = {
       bannerImage: imageId as any,
     };
-  UserService.update({ requestBody: bannerImagePayload })
-  if (imageId != 0) {
-    bannerImageUrl.value = `${apiUrl}/api/images/${imageId}`;
-  }
+    UserService.update({ requestBody: bannerImagePayload })
+    if (imageId != 0) {
+      bannerImageUrl.value = `${apiUrl}/api/images/${imageId}`;
+    }
   } catch (error) {
     handleUnknownError(error)
     console.error(error)
@@ -168,54 +168,41 @@ const toUpdateUserSettings = () => {
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col 12">
         <div class="card">
-          <div class="rounded-top text-white d-flex flex-row bg-primary justify-content-between" :style="{ height: '200px', backgroundImage: `url(${bannerImageUrl})` }">
+          <div class="rounded-top text-white d-flex flex-row bg-primary justify-content-between" :style="{
+            height: '200px',
+            backgroundImage: `url(${bannerImageUrl})`,
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat'
+          }">
             <div class=" text-white d-flex flex-row">
               <div class=" d-flex flex-column align-items-center justify-content-center">
-              <img :src="imageUrl" alt="Generisk plassholderbilde" class="img-fluid img-thumbnail"
-                style="width: 150px; height:150px; margin-left: 25px; margin-right: 15px;">
-            </div>
-              <h1 data-cy="firstname" style="display: flex; align-items: end; margin-bottom: 20px;">{{ firstname }} {{ lastname }}</h1>
-            </div>
-              <div class="d-flex align-items-end text-white my-3 mx-5">
-                <div class="d-flex align-items-center flex-column">
-                  <p class="mb-1 h2 d-flex flex-column align-items-center" data-cy="points">{{ points }} <img src="@/assets/items/pigcoin.png" style="width: 80px; height: 80px"></p>
-                  <p class="small text-white mb-0">Poeng</p>
-                </div>
-                <div class="d-flex align-items-center flex-column px-3">
-                  <p class="mb-1 h2 d-flex flex-column align-items-center" data-cy="streak">{{ streak }} <img src="@/assets/icons/fire.png" style="width: 80px; height: 80px"></p>
-                  <p class="small text-white mb-0">Streak</p>
-                </div>
+                <img :src="imageUrl" alt="Generisk plassholderbilde" class="img-fluid img-thumbnail"
+                  style="width: 150px; height:150px; margin-left: 25px; margin-right: 15px;">
               </div>
+              <h1 data-cy="firstname" style="display: flex; align-items: end; margin-bottom: 20px;">{{ firstname }} {{
+            lastname }}</h1>
+            </div>
+            <div class="d-flex align-items-end text-white my-3 mx-5">
+              <div class="d-flex align-items-center flex-column">
+                <p class="mb-1 h2 d-flex flex-column align-items-center" data-cy="points"><img
+                    src="@/assets/items/pigcoin.png" style="width: 80px; height: 80px" data-toggle="tooltip"
+                    title="Points"> {{ points }}</p>
+              </div>
+              <div class="d-flex align-items-center flex-column px-3">
+                <p class="mb-1 h2 d-flex flex-column align-items-center" data-cy="streak"><img
+                    src="@/assets/icons/fire.png" style="width: 80px; height: 80px" data-toggle="tooltip"
+                    title="Points"> {{ streak }}</p>
+              </div>
+            </div>
           </div>
           <div class="p-3 text-black" style="background-color: #f8f9fa;">
             <div class="d-flex justify-content-end text-center py-1">
               <div style="width: 100%; display: flex; justify-content: start">
-                <button  data-cy="toUpdate" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary classyButton"
-                data-mdb-ripple-color="dark" style="z-index: 1; height: 40px; margin-left: 17px" id="toUpdate" @click="toUpdateUserSettings">
-                Rediger profil
-              </button>
-              </div>
-            </div>
-          </div>
-          <hr>
-          <div class="card-body p-1 text-black">
-            <div class="row">
-              <div class="col">
-                <div class="container-fluid">
-                  <h1 class="mt-1 text-start badges-text">Lageret ditt</h1>
-                  <div v-if="hasInventory" class="scrolling-wrapper-badges row flex-row flex-nowrap mt-2 pb-2 pt-2">
-                    <div v-for="product in inventory" :key="product.id" class="card text-center"
-                        style="width: 12rem; border: none; cursor: pointer; margin: 1rem; border: 2px solid black" @click="selectItem(product)">
-                        <img :src="apiUrl + `/api/images/${product.imageId}`" class="card-img-top"
-                            alt="..." />
-                        <div class="card-body">
-                            <h5 class="card-title">{{ product.itemName }}</h5>
-                        </div>
-                    </div>
-                  </div>
-                  <div v-else>Du har ingen ting på lageret ditt, gå til butikken for å kjøpe!</div>
-                  <div v-if="backgroundName" class="text-success">You selected the background: <strong>{{ backgroundName }}!</strong></div>
-                </div>
+                <button data-cy="toUpdate" type="button" data-mdb-button-init data-mdb-ripple-init
+                  class="btn btn-outline-primary classyButton" data-mdb-ripple-color="dark"
+                  style="z-index: 1; height: 40px; margin-left: 17px" id="toUpdate" @click="toUpdateUserSettings">
+                  Rediger profil
+                </button>
               </div>
             </div>
           </div>
@@ -226,18 +213,16 @@ const toUpdateUserSettings = () => {
                 <div class="container-fluid">
                   <h1 class="mt-1 text-start badges-text">Merker</h1>
                   <div v-if="hasBadges" class="scrolling-wrapper-badges row flex-row flex-nowrap mt-2 pb-2 pt-2">
-
-                    <div v-for="badge in badges" :key="badge.id" class="card text-center"
-                        style="width: 12rem; border: none; cursor: pointer; margin: 1rem; 
-                        border: 2px solid black" data-bs-toggle="tooltip" data-bs-placement="top" 
-                        data-bs-custom-class="custom-tooltip" :data-bs-title="badge.criteria">
-                        <img :src="apiUrl + `/api/images/${badge.imageId}`" class="card-img-top"
-                            alt="..." />
-                        <div class="card-body">
-                            <h5 class="card-title">{{ badge.badgeName }}</h5>
-                        </div>
+                    <div v-for="badge in badges" :key="badge.id"
+                      class="card text-center d-flex align-items-center justify-content-center" style="width: 12rem; border: none; cursor: pointer; margin: 1rem; 
+                        border: 2px solid black" data-bs-toggle="tooltip" data-bs-placement="top"
+                      data-bs-custom-class="custom-tooltip" :data-bs-title="badge.criteria">
+                      <img :src="apiUrl + `/api/images/${badge.imageId}`" class="card-img-top mt-2" alt="..."
+                        style="width: 150px; height: 150px;" />
+                      <div class="card-body">
+                        <h5 class="card-title">{{ badge.badgeName }}</h5>
+                      </div>
                     </div>
-
                   </div>
                   <div v-else>
                     Ingen merker
@@ -253,7 +238,7 @@ const toUpdateUserSettings = () => {
                   <h1 class="mt-1 text-start history-text">Historie</h1>
                   <div v-if="hasHistory" class="row scrolling-wrapper-history">
                     <div v-for="(item, index) in goals" :key="index"
-                         class="col-md-4 col-sm-4 col-lg-4 col-xs-4 col-xl-4 control-label">
+                      class="col-md-4 col-sm-4 col-lg-4 col-xs-4 col-xl-4 control-label">
                       <div class="card history-block">
                         <div class="card mb-3" style="max-width: 540px;">
                           <div class="row g-0">
@@ -264,8 +249,9 @@ const toUpdateUserSettings = () => {
                             <div class="col-md-8">
                               <div class="card-body">
                                 <h5 class="card-title">{{ goals[index]['name'] }}</h5>
-                                <p class="card-text">{{goals[index]['description']}}</p>
-                                <p class="card-text"><small class="text-muted">{{goals[index]['targetAmount']}}</small></p>
+                                <p class="card-text">{{ goals[index]['description'] }}</p>
+                                <p class="card-text"><small class="text-muted">{{ goals[index]['targetAmount'] }}</small>
+                                </p>
                                 <a href="#" class="btn  stretched-link" @click="toRoadmap"></a>
                               </div>
                             </div>
@@ -352,13 +338,13 @@ const toUpdateUserSettings = () => {
   background-color: #00DBDE;
 }
 
-  .classyButton:hover {
-    background-color: #003b58ec;
-    border: #003A58;
-  }
+.classyButton:hover {
+  background-color: #003b58ec;
+  border: #003A58;
+}
 
-  .classyButton:active {
-    background-color: #003b58d6;
-    border: #003A58;
-  }
+.classyButton:active {
+  background-color: #003b58d6;
+  border: #003A58;
+}
 </style>

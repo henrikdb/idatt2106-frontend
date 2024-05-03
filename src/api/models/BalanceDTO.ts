@@ -2,8 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type BankAccountDTO = {
+export type BalanceDTO = {
     bban?: number;
-    bankAccountType?: string;
+    balance?: number;
 };
 

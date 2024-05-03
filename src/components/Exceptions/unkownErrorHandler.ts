@@ -1,6 +1,7 @@
 import { ApiError as BackendApiError } from '@/api';
 import { AxiosError } from 'axios';
 import router from '@/router'
+import { useUserInfoStore } from '@/stores/UserStore'
 
 /**
  * Finds the correct error message for the given error
@@ -14,6 +15,7 @@ const handleUnknownError = (error: any): string => {
   } else if (error instanceof BackendApiError) {
     if (error.body.status == 403) {
       router.push("/login");
+      useUserInfoStore().clearUserInfo();
     } else if (error.body.status == 401) {
       router.push("/roadmap");
     }

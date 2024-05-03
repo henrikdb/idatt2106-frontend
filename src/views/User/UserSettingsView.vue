@@ -80,16 +80,6 @@ function toBilling() {
                                 Sikkerhet
                             </a>
 
-
-                            <a @click.prevent="setActive('/settings/notification')" @click="toNotification"
-                                :class="['nav-item nav-link has-icon', { 'nav-link-faded': useRoute().path !== '/settings/notification', 'active': useRoute().path === '/settings/notification' }]">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-bell mr-2">
-                                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                                </svg>Varsel
-                            </a>
                             <a>
                                 <a @click.prevent="setActive('/settings/bank')" @click="toBilling"
                                     :class="['nav-item nav-link has-icon', { 'nav-link-faded': useRoute().path !== '/settings/bank', 'active': useRoute().path === '/settings/bank' }]">
@@ -102,8 +92,6 @@ function toBilling() {
                                     Bank
                                 </a>
                             </a>
-
-
 
                         </nav>
                     </div>
@@ -209,10 +197,15 @@ function toBilling() {
     border-radius: .25rem;
 }
 
+
 .card-body {
     flex: 1 1 auto;
     min-height: 1px;
     padding: 1rem;
+}
+
+.nav-pills {
+  cursor: pointer;
 }
 
 .gutters-sm {

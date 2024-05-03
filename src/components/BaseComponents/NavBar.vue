@@ -460,6 +460,7 @@ onMounted(() => {
 
 .container-fluid {
     font-size: 1.7rem;
+  margin: 0 140px;
 }
 
 #logo {

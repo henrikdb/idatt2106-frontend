@@ -1,10 +1,10 @@
 <template>
     <div class="tab-pane active" id="security">
-        <h6>SIKKERHETSINNSTILLINGER</h6>
+        <h6>SIKKERHET</h6>
         <hr>
-        <form @submit.prevent="handleSubmit" novalidate>
+        <form @submit.prevent="handleSubmit" >
             <div class="form-group">
-                <label class="d-block">Endre passord</label>
+                <h5 class="d-block">Endre passord</h5>
                 <BaseInput data-cy="old-password-input" :model-value="oldPasswordRef"
                             @input-change-event="handleOldPasswordInputEvent"
                     id="passwordInput-change" input-id="password-old" type="password"
@@ -23,10 +23,9 @@
                     pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,16}" label="Bekreft nytt passord" placeholder="Skriv inn passord"
                     invalid-message="Passordet må være mellom 4 og 16 tegn og inneholde en stor bokstav, en liten bokstav og et tall" />
             </div>
+            <p class="text-danger" data-cy="error">{{ errorMsg }}</p>
             <button data-cy="update-password-btn" type="submit" class="btn btn-primary classyButton">Oppdater
               passord</button>
-            <button data-cy="reset-fields-btn" type="reset" class="btn btn-light">Tilbakestill
-              endringer</button>
         </form>
         <hr>
     </div>
@@ -42,6 +41,8 @@ import handleUnknownError from '@/components/Exceptions/unkownErrorHandler';
 const oldPasswordRef = ref('');
 const newPasswordRef = ref('');
 const confirmPasswordRef = ref('');
+let errorMsg = ref('');
+
 
 /**
  * Handles the event when the old password input changes.
@@ -78,23 +79,21 @@ const handleConfirmPasswordInputEvent = (newValue: any) => {
  * Validates if the new password matches the confirm-password.
  */
 const handleSubmit = async () => {
-  if (newPasswordRef.value !== confirmPasswordRef.value) {
-      console.error('Passwords do not match')
-      return
-  }
-
-  const updateUserPayload: PasswordUpdateDTO = {
-      oldPassword: oldPasswordRef.value,
-      newPassword: newPasswordRef.value,
-  };
-
-  try {
-      const response = UserService.updatePassword({ requestBody: updateUserPayload })
-      console.log(response)
-  } catch (err) {
-      handleUnknownError(err);
-      console.error(err)
-  }
+    if (newPasswordRef.value.length === 0 || newPasswordRef.value !== confirmPasswordRef.value) {
+        errorMsg.value = "Passordene er ikke identiske";
+        return
+    }
+    errorMsg.value = '';
+    try {
+      const updateUserPayload: PasswordUpdateDTO = {
+        oldPassword: oldPasswordRef.value,
+        newPassword: newPasswordRef.value,
+      };
+        await UserService.updatePassword({ requestBody: updateUserPayload });
+        errorMsg.value = '';
+    } catch (err: any) {
+        errorMsg.value = err.body.message;
+    }
 }
 </script>
 
@@ -112,5 +111,9 @@ const handleSubmit = async () => {
   .classyButton:active {
     background-color: #003b58d6;
     border: #003A58;
+  }
+
+  #passwordInput-change {
+    margin-bottom: 15px;
   }
 </style>
