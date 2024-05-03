@@ -38,7 +38,7 @@ const deleteBudget = async () => {
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h3>Er du sikker på at du vil slette dette budgettet <i>{{ budgetTitle }}?</i></h3>
+          <h3>Er du sikker på at du vil slette dette budgettet {{ budgetTitle }}?</h3>
           <button class="btn btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
