@@ -5,6 +5,7 @@ The frontend of sparesti.app. SpareSti is designed to make saving fun. The app i
 
 ## Links
 
+- **Website**: [https://sparesti.org/](https://sparesti.org/login)
 - **Backend**: [https://gitlab.stud.idi.ntnu.no/idatt2106-2024-07/backend](https://gitlab.stud.idi.ntnu.no/idatt2106-2024-07/backend)
 
 ## Recommended IDE Setup
