@@ -207,8 +207,7 @@ onMounted(() => {
         <div v-for="banner in banners" :key="banner.id" class="card text-center banner justify-content-center d-flex align-items-center" @click="selectItem(banner.id)"
           :class="{ 'selected-banner': banner.id === selectedBannerId }" data-bs-toggle="tooltip"
           data-bs-placement="top" data-bs-custom-class="custom-tooltip" :data-bs-title="banner.criteria">
-          <img :src="apiUrl + `/api/images/${banner.imageId}`" class="card-img-top" alt="Banner" style="width: 100px; height: 100px" />
-            <h5 class="card-title">{{ selectedBanner }}</h5>
+          <img :src="apiUrl + `/api/images/${banner.imageId}`" class="card-img-top" :class="{ 'selected-banner': banner.id === selectedBanner }" alt="Banner" style="width: 200px; height: 100px" @click="selectItem(banner.imageId)" />
         </div>
       </div>
       <div v-else>
@@ -251,7 +250,7 @@ onMounted(() => {
 }
 
 .selected-banner {
-  border: 2px solid #1a81b5;
+  border: 4px solid #27da47;
   display: flex;
 }
 
