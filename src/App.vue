@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
 import ErrorBoundaryCatcher from '@/components/Exceptions/ErrorBoundaryCatcher.vue';
+console.log("TEST!");
+console.log("env: ", process.env.API_URL);
 </script>
 
 <template>
