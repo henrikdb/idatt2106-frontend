@@ -3,8 +3,9 @@ import {ref, onMounted} from "vue";
 import { useRouter } from "vue-router";
 import { useUserInfoStore } from "@/stores/UserStore";
 import {UserService, BadgeService, GoalService, type GoalDTO, type BadgeDTO} from "@/api";
-import { ItemService } from "@/api";
+import { ItemService, type UserUpdateDTO } from "@/api";
 import handleUnknownError from '@/components/Exceptions/unkownErrorHandler'
+import bannerImage from '@/assets/banners/stacked.svg';
 
 let apiUrl = import.meta.env.VITE_APP_API_URL;
 let numberOfHistory = 6;
@@ -12,6 +13,8 @@ let cardTitles = ["Spain tour", "Food waste", "Coffee", "Concert", "New book", "
 let firstname = ref();
 let lastname = ref();
 const imageUrl = ref(`../src/assets/userprofile.png`);
+const bannerImageUrl = ref(bannerImage);
+
 
 let hasHistory = ref(true)
 let hasBadges = ref(false)
@@ -24,12 +27,6 @@ const backgroundName = ref("");
 const points = ref(0 as any);
 const streak = ref(0 as any);
 
-
-let goalName = ref('');
-let goalDescription = ref('');
-let targetAmount = ref('');
-let targetDate = ref('');
-let createdAt = ref('');
 let goals = ref<GoalDTO[]>([])
 
 async function getGoals() {
@@ -91,7 +88,7 @@ const getInventory = async () => {
 
 const getBadges = async () => {
   try {
-    const responseBadge = await BadgeService.getBadgesUnlockedByUser();
+    const responseBadge = await BadgeService.getBadgesUnlockedByActiveUser();
     badges.value = responseBadge;
     if (badges.value.length > 0) {
       hasBadges.value = true
@@ -107,9 +104,13 @@ const getBadges = async () => {
 
 const selectItem = (item: any) => {
   backgroundName.value = item.itemName;
-  useUserInfoStore().setUserInfo({
-    roadBackground: item.imageId,
-  })
+  let imageId = item.imageId;
+  //const bannerImagePayload: UserUpdateDTO = {
+   //   bannerImage: imageId as any,
+   // };
+  //UserService.update({ requestBody: bannerImagePayload })
+  //bannerImageUrl.value = `http://localhost:8080/api/images/${imageId}`;
+  
 }
 
 onMounted(() => {
@@ -137,7 +138,7 @@ const toUpdateUserSettings = () => {
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col 12">
         <div class="card">
-          <div class="rounded-top text-white d-flex flex-row bg-primary" style="height:200px;" id="banner">
+          <div class="rounded-top text-white d-flex flex-row bg-primary" :style="{ height: '200px', backgroundImage: `url(${bannerImageUrl})` }">
             <div class=" d-flex flex-column align-items-center justify-content-center">
               <img :src="imageUrl" alt="Generisk plassholderbilde" class="img-fluid img-thumbnail"
                 style="width: 150px; height:150px; margin-left: 25px; margin-right: 15px;">
