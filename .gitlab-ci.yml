@@ -17,18 +17,18 @@ stages:
   - docker_build_and_push
   - deploy_docker
 
-install_dependencies:
-  stage: install
-  script:
-    - npm ci
+# install_dependencies:
+#   stage: install
+#   script:
+#     - npm ci
 
-build_project:
-  stage: build
-  script:
-    - npm ci
-    - npm run build
-  dependencies:
-    - install_dependencies
+# build_project:
+#   stage: build
+#   script:
+#     - npm ci
+#     - npm run build
+#   dependencies:
+#     - install_dependencies
 
 # vitest_unit-tests:
 #   stage: test
