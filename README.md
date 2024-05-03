@@ -108,23 +108,23 @@ The current application uses mocked bank data to transfer money between savings 
     ```sh
     12073650567
     ```
-    Account 1 balance: ``100``
+    Account 1 balance: ``100 kr``
 - **Account 2**
     ```sh
     12097256355
     ```
-    Account 2 balance: ``500000``
+    Account 2 balance: ``500000 kr``
 
 - **Account 3**
     ```sh
     12032202452
     ```
-    Account 3 balance: ``13000``
+    Account 3 balance: ``13000 kr``
 - **Account 4**
     ```sh
     12041281683
     ```
-    Account 4 balance: ``19372``
+    Account 4 balance: ``19372 kr``
 
 ## Contributors
 The individuals who contributed to the project:
