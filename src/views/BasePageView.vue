@@ -16,5 +16,6 @@ import { useUserInfoStore } from '@/stores/UserStore';
 <style scoped>
 #minHeight {
   min-height: 700px;
+  margin: 0 140px;
 }
 </style>
