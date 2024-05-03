@@ -10,13 +10,13 @@
     <div class="container d-flex justify-content-center">
       <div class="row col-md-10">
         <div class="col-md-12">
-          <h1>Stash</h1>
+          <h1>Utvidelser</h1>
           <div class="category row mb-2 m-2">
             <div class="card text-center justify-content-center align-items-center" style="width: 8rem; border: none">
               <img src="../../assets/items/adfree.png" class="card-img-top" alt="..."
                 style="width: 100px; height: 100px;" />
               <div class="card-body">
-                <h5 class="card-title">Adfree</h5>
+                <h5 class="card-title">Reklamefri</h5>
                 <button type="button" class="btn btn-primary" id="buttonStyle" data-toggle="modal"
                   data-target="#adfreeModal">
                   +35kr
@@ -37,7 +37,7 @@
           </div>
         </div>
         <div class="col-md-12">
-          <h1>Items</h1>
+          <h1>Banner</h1>
           <div class="category row mb-2 m-2">
             <div v-for="product in products" :key="product.id"
               class="card text-center d-flex justify-content-center align-items-center"
@@ -47,24 +47,24 @@
               <div class="card-body">
                 <h5 class="card-title">{{ product.itemName }}</h5>
                 <h6>{{ product.price }}<img src="../../assets/items/pigcoin.png" style="width: 2rem" /></h6>
-                <ShopButton v-if="!product.alreadyBought" button-text="Buy item" :disabled="product.price > points"
+                <ShopButton v-if="!product.alreadyBought" button-text="Kjøp gjennstand" :disabled="product.price > points"
                   @click="buyItem(product.id)" />
-                <p v-else>Owned</p>
+                <p v-else>Eid</p>
               </div>
             </div>
           </div>
         </div>
         <div class="col-md-12">
-          <h1>Cool items</h1>
+          <h1>Tjenester</h1>
           <div class="category row mb-2 m-2">
             <div class="card text-center d-flex justify-content-center align-items-center"
               style="width: 8rem; border: none">
               <img src="../../assets/items/coffee.jpg" class="card-img-top" alt="..."
                 style="width: 100px; height: 100px;">
               <div class="card-body">
-                <h5 class="card-title">Free Coffee</h5>
+                <h5 class="card-title">Gratis kaffe</h5>
                 <h6>500<img src="../../assets/items/pigcoin.png" style="width: 2rem"></h6>
-                <ShopButton button-text="Buy item" :disabled="500 > points" @click="buySomething()" />
+                <ShopButton button-text="Kjøp gjennstand" :disabled="500 > points" @click="buySomething()" />
               </div>
             </div>
             <div class="card text-center d-flex justify-content-center align-items-center"
@@ -72,9 +72,9 @@
               <img src="../../assets/items/viaplay.jpg" class="card-img-top" alt="..."
                 style="width: 100px; height: 100px;">
               <div class="card-body">
-                <h5 class="card-title">1 Month</h5>
+                <h5 class="card-title">1 Måned</h5>
                 <h6>10 000<img src="../../assets/items/pigcoin.png" style="width: 2rem"></h6>
-                <ShopButton button-text="Buy item" :disabled="10000 > points" @click="buySomething()" />
+                <ShopButton button-text="Kjøp gjennstand" :disabled="10000 > points" @click="buySomething()" />
               </div>
             </div>
             <div class="card text-center d-flex justify-content-center align-items-center"
@@ -84,7 +84,7 @@
               <div class="card-body">
                 <h5 class="card-title">-10% rabatt</h5>
                 <h6>1000<img src="../../assets/items/pigcoin.png" style="width: 2rem"></h6>
-                <ShopButton button-text="Buy item" :disabled="1000 > points" @click="buySomething()" />
+                <ShopButton button-text="Kjøp gjennstand" :disabled="1000 > points" @click="buySomething()" />
               </div>
             </div>
           </div>
