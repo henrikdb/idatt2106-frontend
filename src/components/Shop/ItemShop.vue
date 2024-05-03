@@ -36,8 +36,8 @@
             <h1>Items</h1>
             <div class="category row mb-2 m-2">
               <div v-for="product in products" :key="product.id" class="card text-center d-flex justify-content-center align-items-center"
-                   style="width: 8rem; border: none">
-                <img :src="apiUrl + `/api/images/${product.imageId}`" style="width: 100px; height: 100px;" class="card-img-top" alt="..." />
+                   style="width: 16rem; border: none">
+                <img :src="apiUrl + `/api/images/${product.imageId}`" style="width: 200px; height: 100px;" class="card-img-top" alt="..." />
                 <div class="card-body">
                   <h5 class="card-title">{{ product.itemName }}</h5>
                   <h6>{{ product.price }}<img src="../../assets/items/pigcoin.png" style="width: 2rem" /></h6>
