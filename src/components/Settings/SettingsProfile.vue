@@ -167,7 +167,7 @@ onMounted(() => {
     <hr>
     <div>
       <h6>Banners</h6>
-      <div v-if="hasBanners" class="scrolling-wrapper-badges row flex-row flex-nowrap mt-2 pb-2 pt-2">
+      <div v-if="hasBanners" class="scrolling-wrapper-badges row flex-row flex-wrap mt-2 pb-2 pt-2">
         <div v-for="banner in banners" :key="banner.id" class="card text-center banner justify-content-center d-flex align-items-center" @click="selectItem(banner.id)"
           :class="{ 'selected-banner': banner.id === selectedBannerId }" data-bs-toggle="tooltip"
           data-bs-placement="top" data-bs-custom-class="custom-tooltip" :data-bs-title="banner.criteria">
