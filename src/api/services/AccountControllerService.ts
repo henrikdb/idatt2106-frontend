@@ -5,6 +5,7 @@
 import type { Account } from '../models/Account';
 import type { AccountRequestDTO } from '../models/AccountRequestDTO';
 import type { AccountResponseDTO } from '../models/AccountResponseDTO';
+import type { BalanceDTO } from '../models/BalanceDTO';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
@@ -27,6 +28,28 @@ export class AccountControllerService {
             mediaType: 'application/json',
             errors: {
                 404: `Provided bank profile id could not be found`,
+            },
+        });
+    }
+    /**
+     * Create account
+     * Create account with random balance
+     * @returns BalanceDTO Successfully created account
+     * @throws ApiError
+     */
+    public static getAccountsByBban({
+        bban,
+    }: {
+        bban: number,
+    }): CancelablePromise<BalanceDTO> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/bank/v1/account/balance/{bban}',
+            path: {
+                'bban': bban,
+            },
+            errors: {
+                404: `Provided bban could not be found`,
             },
         });
     }
