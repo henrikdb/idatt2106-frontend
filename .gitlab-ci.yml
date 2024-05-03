@@ -48,8 +48,6 @@ cypress_e2e-tests:
   script:
     - npm ci
     - npm run RunTCOnChrome
-  dependencies:
-    - install_dependencies
   cache:
     key: ${CI_COMMIT_REF_SLUG}
     paths:
