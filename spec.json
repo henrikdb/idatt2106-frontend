@@ -547,6 +547,9 @@
           "required": true
         },
         "responses": {
+          "200": {
+            "description": "Successfully updated the challenge"
+          },
           "401": {
             "description": "Day is already completed or day outside of range",
             "content": {
@@ -556,9 +559,6 @@
                 }
               }
             }
-          },
-          "200": {
-            "description": "Successfully updated the challenge"
           }
         }
       }
@@ -857,6 +857,16 @@
           "required": true
         },
         "responses": {
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExceptionResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Successfully logged in",
             "content": {
@@ -869,16 +879,6 @@
           },
           "401": {
             "description": "Invalid credentials",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExceptionResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "User not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -2736,6 +2736,10 @@
             "type": "string"
           },
           "profileImage": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "bannerImage": {
             "type": "integer",
             "format": "int64"
           },
