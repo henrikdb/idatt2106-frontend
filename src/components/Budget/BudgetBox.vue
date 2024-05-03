@@ -29,7 +29,7 @@ const props = defineProps({
 // Calculated balance variable
 let balance = props.budget - props.expenses
 // Reactive variable for determining background color
-const iRef = ref<Element | null>(null);
+const iRef = ref<Element | null>(null)
 
 /**
  * Checks if the balance is positive, and depending on the value
@@ -38,11 +38,10 @@ const iRef = ref<Element | null>(null);
 onMounted(() => {
   if (iRef.value !== null && balance >= 0) {
     // By default, the background is set to red
-    const element = iRef.value as HTMLElement;
-    element.style.backgroundColor = 'rgba(34, 231, 50, 0.43)';
+    const element = iRef.value as HTMLElement
+    element.style.backgroundColor = 'rgba(34, 231, 50, 0.43)'
   }
 })
-
 
 /**
  * Navigates to the pressed budget with its id.
@@ -55,51 +54,61 @@ const onBudgetContainerPressed = () => {
  * Emits an event to tell parent component to delete budget with its id.
  */
 const onBudgetDeleted = () => {
-  emit('deletedBudgetEvent');
+  emit('deletedBudgetEvent')
 }
 </script>
 
 <template>
-  <confirm-delete-modal :budget-id="id"
-                        :modal-id="String(id)"
-                        :budgetTitle="title"
-                        @deletedEvent="onBudgetDeleted"/>
+  <confirm-delete-modal
+    :budget-id="id"
+    :modal-id="String(id)"
+    :budgetTitle="title"
+    @deletedEvent="onBudgetDeleted"
+  />
 
   <div class="container-fluid row" @click="onBudgetContainerPressed">
     <div class="col-12">
       <div class="title-container">
-        <h2>{{title}}</h2>
-        <p>Created {{createdAt.substring(0, 10).replace(/-/g, "/")}}</p>
+        <h2>{{ title }}</h2>
+        <p>Created {{ createdAt.substring(0, 10).replace(/-/g, '/') }}</p>
       </div>
-      <button id="deleteButton" class="btn btn-danger" data-bs-toggle="modal" :data-bs-target="'#' + id" @click.stop=";"><img src="../../assets/icons/trash-can.svg" height="20" width="20" alt="picture">Delete</button>
+      <button
+        id="deleteButton"
+        class="btn btn-danger"
+        data-bs-toggle="modal"
+        :data-bs-target="'#' + id"
+        @click.stop=""
+      >
+        <img src="../../assets/icons/trash-can.svg" height="20" width="20" alt="picture" />Delete
+      </button>
     </div>
 
     <div class="col-4 budget">
       <i>
-        <img src="../../assets/icons/money2.svg" width="48px" height="48px">
+        <img src="../../assets/icons/money2.svg" width="48px" height="48px" />
       </i>
       <div class="budget-container">
-        <h5>{{budget}} kr</h5>
+        <h5>{{ budget }} kr</h5>
         <p>Budget</p>
       </div>
     </div>
 
     <div class="col-4 expenses">
       <i>
-        <img src="../../assets/icons/credit-card.svg" width="48px" height="48px">
+        <img src="../../assets/icons/credit-card.svg" width="48px" height="48px" />
       </i>
       <div class="expenses-container">
-        <h5>{{expenses}} kr</h5>
+        <h5>{{ expenses }} kr</h5>
         <p>Utgifter</p>
       </div>
     </div>
 
     <div class="col-4 balance">
       <i ref="iRef">
-        <img src="../../assets/icons/scale.svg" width="48px" height="48px">
+        <img src="../../assets/icons/scale.svg" width="48px" height="48px" />
       </i>
       <div class="balance-container">
-        <h5>{{balance}} kr</h5>
+        <h5>{{ balance }} kr</h5>
         <p>Saldo</p>
       </div>
     </div>
@@ -107,17 +116,21 @@ const onBudgetDeleted = () => {
 </template>
 
 <style scoped>
-
-.title-container, .budget-container, .expenses-container, .balance-container {
+.title-container,
+.budget-container,
+.expenses-container,
+.balance-container {
   display: grid;
   align-self: center;
 }
 
 .container-fluid {
-  border: 4px solid #003A58;
+  border: 4px solid #003a58;
   min-height: 90px;
   border-radius: 15px;
-  transition: transform 150ms ease-in-out, border 200ms ease-in-out;
+  transition:
+    transform 150ms ease-in-out,
+    border 200ms ease-in-out;
   cursor: pointer;
 }
 
@@ -126,7 +139,9 @@ const onBudgetDeleted = () => {
   transform: scale(1.03);
 }
 
-h2, h5, p {
+h2,
+h5,
+p {
   color: black;
   align-self: center;
 }
@@ -138,7 +153,6 @@ i {
   margin: 5px;
   border-radius: 7px;
 }
-
 
 .budget i {
   background-color: rgba(78, 107, 239, 0.43);

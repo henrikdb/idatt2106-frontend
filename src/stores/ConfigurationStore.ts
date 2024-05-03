@@ -14,20 +14,20 @@ export const useConfigurationStore = defineStore('ConfigurationStore', {
     /** The user's experience. */
     experience: '',
     /** The challenges the user is facing. */
-    challenges: [] as Array<string>,
+    challenges: [] as Array<string>
   }),
   actions: {
     /**
      * Sets the Basic Bank Account Number of the cheking account.
-     * 
+     *
      * @param {number} newValue - The new Basic Bank Account Number of the cheking account.
      */
     setChekingAccountBBAN(newValue: number) {
-      this.chekingAccountBBAN = newValue;
+      this.chekingAccountBBAN = newValue
     },
     /**
      * Sets the Basic Bank Account Number of the savings account.
-     * 
+     *
      * @param {number} newValue - The new Basic Bank Account Number of the savings account.
      */
     setSavingsAccountBBAN(newValue: number) {
@@ -69,7 +69,7 @@ export const useConfigurationStore = defineStore('ConfigurationStore', {
   getters: {
     /**
      * Retrieves the Basic Bank Account Number of the cheking account.
-     * 
+     *
      * @returns {number} The amount in the cheking account.
      */
     getCheckingAccountBBAN(): number {
@@ -77,7 +77,7 @@ export const useConfigurationStore = defineStore('ConfigurationStore', {
     },
     /**
      * Retrieves the Basic Bank Account Number of the savings account.
-     * 
+     *
      * @returns {number} The amount in the savings account.
      */
     getSavingsAccountBBAN(): number {
@@ -107,6 +107,5 @@ export const useConfigurationStore = defineStore('ConfigurationStore', {
     getChallenges(): Array<string> {
       return this.challenges
     }
-  },
-
-});
+  }
+})

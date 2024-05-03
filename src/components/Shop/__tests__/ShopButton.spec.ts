@@ -12,8 +12,8 @@ describe('ImageButtonComponent', () => {
       global: {
         stubs: {
           // This stubs out all <router-link> and <router-view> components used in the app.
-          'RouterLink': true,
-          'RouterView': true
+          RouterLink: true,
+          RouterView: true
         }
       }
     })

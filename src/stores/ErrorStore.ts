@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia';
+import { defineStore } from 'pinia'
 
 /**
  * Representing the store for managing error-related state.
@@ -6,7 +6,7 @@ import { defineStore } from 'pinia';
 export const useErrorStore = defineStore('ErrorStore', {
   state: () => ({
     /** Array containing multiple error messages. */
-    errors: [] as string[],
+    errors: [] as string[]
   }),
   actions: {
     /**
@@ -16,17 +16,17 @@ export const useErrorStore = defineStore('ErrorStore', {
      * @param {string} error - The error message to add.
      */
     addError(error: string) {
-      console.log(error);
-      this.errors = [error];
+      console.log(error)
+      this.errors = [error]
     },
     /**
      * Removes the first error from the error array.
      */
     removeCurrentError() {
       if (this.errors.length > 0) {
-        this.errors.shift();
+        this.errors.shift()
       }
-    },
+    }
   },
   getters: {
     /**
@@ -36,9 +36,9 @@ export const useErrorStore = defineStore('ErrorStore', {
      */
     getFirstError(): string {
       if (this.errors.length > 0) {
-        return `Exceptions.${this.errors[0]}`;
+        return `Exceptions.${this.errors[0]}`
       }
-      return '';
+      return ''
     },
     /**
      * Retrieves the last error message in the error array.
@@ -47,9 +47,9 @@ export const useErrorStore = defineStore('ErrorStore', {
      */
     getLastError(): string {
       if (this.errors.length > 0) {
-        return `Exceptions.${this.errors[this.errors.length - 1]}`;
+        return `Exceptions.${this.errors[this.errors.length - 1]}`
       }
-      return '';
-    },
-  },
-});
+      return ''
+    }
+  }
+})

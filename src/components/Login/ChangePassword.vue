@@ -1,42 +1,51 @@
 <template>
-    <div class="containers">
-      <div class="box">
-        <div class="container-fluid">
-          <div class="container-fluid d-flex justify-content-center align-items-center flex-column mt-5">
-            <h1>Opprett nytt passord</h1>
-          </div>
-          <form ref="formRef" id="loginForm" @submit.prevent="handleSubmit" novalidate>
-
-            <BaseInput :model-value="newPassword"
-                       @input-change-event="handlePasswordInputEvent"
-                       id="passwordInput"
-                       input-id="password"
-                       type="password"
-                       pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,16}"
-                       label="Passord"
-                       placeholder="Skriv inn ditt passord"
-                       invalid-message="Passordet må være mellom 4 og 16 tegn og inneholde én stor bokstav, liten bokstav og et tall"
-            />
-
-            <BaseInput :model-value="confirmPassword"
-                       @input-change-event="handleConfirmPasswordInputEvent"
-                       id="confirmPasswordInput"
-                       input-id="password"
-                       type="password"
-                       pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,16}"
-                       label="Bekreft Passord"
-                       placeholder="Skriv inn ditt passord"
-                       invalid-message="Passordet må være mellom 4 og 16 tegn og inneholde én stor bokstav, liten bokstav og et tall"
-            />
-
-            <p class="text-danger" data-cy="error">{{ errorMsg }}</p>
-            <p v-if="!samePasswords" class="text-danger">Passordene er ikke like</p>
-            <BaseButton id="confirmButton" type="submit" @click="handleSubmit" :disabled="isSubmitting" button-text="Oppdater passordet"></BaseButton>
-
-            <SignUpLink/>
-          </form>
+  <div class="containers">
+    <div class="box">
+      <div class="container-fluid">
+        <div
+          class="container-fluid d-flex justify-content-center align-items-center flex-column mt-5"
+        >
+          <h1>Opprett nytt passord</h1>
         </div>
-          <!--<div class="row justify-content-center">
+        <form ref="formRef" id="loginForm" @submit.prevent="handleSubmit" novalidate>
+          <BaseInput
+            :model-value="newPassword"
+            @input-change-event="handlePasswordInputEvent"
+            id="passwordInput"
+            input-id="password"
+            type="password"
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,16}"
+            label="Passord"
+            placeholder="Skriv inn ditt passord"
+            invalid-message="Passordet må være mellom 4 og 16 tegn og inneholde én stor bokstav, liten bokstav og et tall"
+          />
+
+          <BaseInput
+            :model-value="confirmPassword"
+            @input-change-event="handleConfirmPasswordInputEvent"
+            id="confirmPasswordInput"
+            input-id="password"
+            type="password"
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,16}"
+            label="Bekreft Passord"
+            placeholder="Skriv inn ditt passord"
+            invalid-message="Passordet må være mellom 4 og 16 tegn og inneholde én stor bokstav, liten bokstav og et tall"
+          />
+
+          <p class="text-danger" data-cy="error">{{ errorMsg }}</p>
+          <p v-if="!samePasswords" class="text-danger">Passordene er ikke like</p>
+          <BaseButton
+            id="confirmButton"
+            type="submit"
+            @click="handleSubmit"
+            :disabled="isSubmitting"
+            button-text="Oppdater passordet"
+          ></BaseButton>
+
+          <SignUpLink />
+        </form>
+      </div>
+      <!--<div class="row justify-content-center">
               <div class="col-lg-5">
                   <div class="card shadow-lg border-0 rounded-lg mt-5">
                       <div class="card-header">
@@ -68,30 +77,30 @@
                   </div>
               </div>
           </div>-->
-      </div>
     </div>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
-import { UserService } from '@/api';
+import { ref } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import { UserService } from '@/api'
 import SignUpLink from '@/components/SignUp/SignUpLink.vue'
 import BaseButton from '@/components/BaseComponents/Buttons/BaseButton.vue'
 import BaseInput from '@/components/BaseComponents/Input/BaseInput.vue'
 import handleUnknownError from '@/components/Exceptions/unkownErrorHandler'
 
-const router = useRouter();
-const route = useRoute();
+const router = useRouter()
+const route = useRoute()
 
-const token = route.params.token;
+const token = route.params.token
 
-const newPassword = ref('');
-const confirmPassword = ref('');
+const newPassword = ref('')
+const confirmPassword = ref('')
 const formRef = ref()
 let samePasswords = ref(true)
-let errorMsg = ref('');
-const isSubmitting = ref(false);
+let errorMsg = ref('')
+const isSubmitting = ref(false)
 
 /**
  * Handles password input event by updating the value of the newPassword reactive variable.
@@ -117,29 +126,28 @@ const handleConfirmPasswordInputEvent = (newValue: any) => {
  */
 const handleSubmit = async () => {
   // Validates the form
-  if (isSubmitting.value) return;
-  isSubmitting.value = true;
-  samePasswords.value = (newPassword.value === confirmPassword.value)
-  formRef.value.classList.add("was-validated")
+  if (isSubmitting.value) return
+  isSubmitting.value = true
+  samePasswords.value = newPassword.value === confirmPassword.value
+  formRef.value.classList.add('was-validated')
 
-  const form = formRef.value;
+  const form = formRef.value
   if (form.checkValidity()) {
     if (samePasswords.value) {
       try {
         const resetPassword = {
           password: newPassword.value,
-          token: token as string,
-        };
-        await UserService.confirmPasswordReset({ requestBody: resetPassword });
-        router.push('/login');
+          token: token as string
+        }
+        await UserService.confirmPasswordReset({ requestBody: resetPassword })
+        router.push('/login')
       } catch (error) {
-        errorMsg.value = handleUnknownError(error);
+        errorMsg.value = handleUnknownError(error)
       }
     }
   }
-  isSubmitting.value = false;
-};
-
+  isSubmitting.value = false
+}
 </script>
 
 <style scoped>

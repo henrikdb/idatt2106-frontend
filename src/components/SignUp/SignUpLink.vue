@@ -1,9 +1,9 @@
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <p id="signupText">Ingen bruker? <RouterLink to="/sign-up" id="signup">Registrer deg</RouterLink></p>
+  <p id="signupText">
+    Ingen bruker? <RouterLink to="/sign-up" id="signup">Registrer deg</RouterLink>
+  </p>
 </template>
 
 <style scoped>

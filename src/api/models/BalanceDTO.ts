@@ -3,7 +3,6 @@
 /* tslint:disable */
 /* eslint-disable */
 export type BalanceDTO = {
-    bban?: number;
-    balance?: number;
-};
-
+  bban?: number
+  balance?: number
+}

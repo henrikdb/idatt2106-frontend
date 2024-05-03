@@ -3,10 +3,10 @@ import BaseInput from '@/components/BaseComponents/Input/BaseInput.vue'
 import { ref } from 'vue'
 import BaseButton from '@/components/BaseComponents/Buttons/BaseButton.vue'
 import { useRouter } from 'vue-router'
-import {type CreateGoalDTO, GoalService} from "@/api";
-import handleUnknownError from '@/components/Exceptions/unkownErrorHandler';
+import { type CreateGoalDTO, GoalService } from '@/api'
+import handleUnknownError from '@/components/Exceptions/unkownErrorHandler'
 
-const router = useRouter();
+const router = useRouter()
 
 // Updates progress bar in the parent Configuration component
 const emit = defineEmits(['changeRouterEvent'])
@@ -18,7 +18,7 @@ const titleRef = ref<string>()
 let descriptionRef = ref<string>()
 const sumRef = ref<number>()
 const dateRef = ref<string>()
-const errorMessage = ref("")
+const errorMessage = ref('')
 
 /**
  * Adds the "was-validated" class to the form element, validates the form,
@@ -27,10 +27,10 @@ const errorMessage = ref("")
  */
 const handleSubmit = async () => {
   // Check form validation
-  formRef.value.classList.add("was-validated")
+  formRef.value.classList.add('was-validated')
   const form = formRef.value
   if (!form.checkValidity()) {
-    return;
+    return
   }
 
   // Declares the goal payload
@@ -38,16 +38,16 @@ const handleSubmit = async () => {
     name: titleRef.value,
     description: descriptionRef.value,
     targetAmount: sumRef.value,
-    targetDate: dateRef.value + " 00:00:00.000000000",
-  };
+    targetDate: dateRef.value + ' 00:00:00.000000000'
+  }
 
   try {
     // Creates new goal with the payload
-    await GoalService.createGoal({ requestBody: createGoalPayload });
-    await router.push("/")
+    await GoalService.createGoal({ requestBody: createGoalPayload })
+    await router.push('/')
   } catch (error: any) {
-    handleUnknownError(error);
-    errorMessage.value = error.message;
+    handleUnknownError(error)
+    errorMessage.value = error.message
   }
 }
 
@@ -57,15 +57,15 @@ const handleSubmit = async () => {
  * @returns Today's date in "YYYY-MM-DD" format.
  */
 const getTodayDate = () => {
-  const today = new Date();
-  const year = today.getFullYear();
-  let month: string | number = today.getMonth() + 1;
-  let day: string | number = today.getDate();
+  const today = new Date()
+  const year = today.getFullYear()
+  let month: string | number = today.getMonth() + 1
+  let day: string | number = today.getDate()
   // Ensure month and day are in double digits
-  month = month < 10 ? `0${month}` : month;
-  day = day < 10 ? `0${day}` : day;
-  return `${year}-${month}-${day}`;
-};
+  month = month < 10 ? `0${month}` : month
+  day = day < 10 ? `0${day}` : day
+  return `${year}-${month}-${day}`
+}
 
 /**
  * Handles the input event for the goal title.
@@ -73,7 +73,7 @@ const getTodayDate = () => {
  * @param newTitle The new title value entered by the user.
  */
 const handleTitleInputEvent = (newTitle: string) => {
-  titleRef.value = newTitle;
+  titleRef.value = newTitle
 }
 
 /**
@@ -82,7 +82,7 @@ const handleTitleInputEvent = (newTitle: string) => {
  * @param newDate The new date value entered by the user.
  */
 const handleDateInputEvent = (newDate: string) => {
-  dateRef.value = newDate;
+  dateRef.value = newDate
 }
 
 /**
@@ -91,54 +91,56 @@ const handleDateInputEvent = (newDate: string) => {
  * @param newSum The new sum value entered by the user.
  */
 const handleSumInputEvent = (newSum: number) => {
-  sumRef.value = newSum;
+  sumRef.value = newSum
 }
-
 </script>
 
 <template>
-
   <div class="container">
     <div>
-      <h3 class="d-flex align-items-center justify-content-center">
-        Nå gjenstår det kun ett steg
-      </h3>
-      <h5 class="d-flex align-items-center justify-content-center">
-        Lag ditt første sparemål
-      </h5>
+      <h3 class="d-flex align-items-center justify-content-center">Nå gjenstår det kun ett steg</h3>
+      <h5 class="d-flex align-items-center justify-content-center">Lag ditt første sparemål</h5>
     </div>
 
     <form ref="formRef" id="loginForm">
-      <BaseInput :model-value="titleRef"
-                 @input-change-event="handleTitleInputEvent"
-                 id="titleInput"
-                 input-id="title"
-                 label="Navn"
-                 placeholder="Oppgi navnet på sparemålet"/>
+      <BaseInput
+        :model-value="titleRef"
+        @input-change-event="handleTitleInputEvent"
+        id="titleInput"
+        input-id="title"
+        label="Navn"
+        placeholder="Oppgi navnet på sparemålet"
+      />
       <div>
         <label for="description">Description</label>
-        <textarea v-model="descriptionRef"
-                  type="text"
-                  maxlength="150"
-                  class="form-control"
-                  placeholder="Oppgi en beskrivelse på sparemålet her (valgfritt)"
-                  id="description"/>
+        <textarea
+          v-model="descriptionRef"
+          type="text"
+          maxlength="150"
+          class="form-control"
+          placeholder="Oppgi en beskrivelse på sparemålet her (valgfritt)"
+          id="description"
+        />
       </div>
-      <BaseInput :model-value="dateRef"
-                 @input-change-event="handleDateInputEvent"
-                 id="dueDateInput"
-                 input-id="dueDate"
-                 type="date"
-                 :min="getTodayDate()"
-                 label="Utløpsdato"/>
-      <BaseInput :model-value="sumRef"
-                 @input-change-event="handleSumInputEvent"
-                 id="sumToSaveInput"
-                 input-id="sumToSpareInput"
-                 type="number"
-                 label="Sum"
-                 min="0"
-                 placeholder="Oppgi summen du ønsker å spare (kr)"/>
+      <BaseInput
+        :model-value="dateRef"
+        @input-change-event="handleDateInputEvent"
+        id="dueDateInput"
+        input-id="dueDate"
+        type="date"
+        :min="getTodayDate()"
+        label="Utløpsdato"
+      />
+      <BaseInput
+        :model-value="sumRef"
+        @input-change-event="handleSumInputEvent"
+        id="sumToSaveInput"
+        input-id="sumToSpareInput"
+        type="number"
+        label="Sum"
+        min="0"
+        placeholder="Oppgi summen du ønsker å spare (kr)"
+      />
     </form>
 
     <div class="confirm-button-container">
@@ -148,12 +150,13 @@ const handleSumInputEvent = (newSum: number) => {
       {{ errorMessage }}
     </div>
   </div>
-
 </template>
 
 <style scoped>
-
-#titleInput, #description, #dueDateInput, #sumToSaveInput {
+#titleInput,
+#description,
+#dueDateInput,
+#sumToSaveInput {
   margin-top: 5px;
 }
 
@@ -172,5 +175,4 @@ const handleSumInputEvent = (newSum: number) => {
   display: flex;
   justify-content: center;
 }
-
 </style>

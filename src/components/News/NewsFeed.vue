@@ -1,13 +1,12 @@
 <script lang="ts">
-
 /**
  * Interface representing a news article.
  */
 interface news {
-  urlToImage: string;
-  title: string;
-  description: string;
-  url: string;
+  urlToImage: string
+  title: string
+  description: string
+  url: string
 }
 
 /**
@@ -17,14 +16,14 @@ export default {
   data() {
     return {
       articles: [] as news[]
-    };
+    }
   },
   mounted() {
-    this.fetchFinanceNews();
+    this.fetchFinanceNews()
     // Call fetchFinanceNews() every 5 minutes (300,000 milliseconds)
     // Done so the user does not need to refresh for news to be updated
     // Might remove for consistent reading
-    setInterval(this.fetchFinanceNews, 300000);
+    setInterval(this.fetchFinanceNews, 300000)
   },
   methods: {
     /**
@@ -33,28 +32,26 @@ export default {
     async fetchFinanceNews() {
       try {
         const response = await fetch(
-            'https://newsapi.org/v2/everything?q=saving%20money&pageSize=10&apiKey=f092756b3b6b41369b047cb7ae980db5'
-        );
-        const data = await response.json();
+          'https://newsapi.org/v2/everything?q=saving%20money&pageSize=10&apiKey=f092756b3b6b41369b047cb7ae980db5'
+        )
+        const data = await response.json()
 
         //English articles, might want to translate to norwegian
-        this.articles = data.articles;
-
+        this.articles = data.articles
       } catch (error) {
-        console.error('Error fetching saving money news:', error);
+        console.error('Error fetching saving money news:', error)
       }
     }
   }
-};
+}
 </script>
-
 
 <template>
   <div class="center-box">
     <div class="box">
-      <br>
+      <br />
       <h1>Nyheter</h1>
-      <br>
+      <br />
       <div v-for="(article, index) in articles" :key="index" class="article-container">
         <div class="content">
           <h3>{{ article.title }}</h3>
@@ -62,7 +59,7 @@ export default {
           <a :href="article.url" target="_blank">Les mer</a>
         </div>
         <div class="image">
-          <img :src="article.urlToImage" alt="Article Image"/>
+          <img :src="article.urlToImage" alt="Article Image" />
         </div>
       </div>
     </div>
@@ -77,7 +74,7 @@ export default {
 }
 
 .box {
-  width:90%;
+  width: 90%;
 }
 
 .article-container {
@@ -118,5 +115,4 @@ export default {
 .content a:hover {
   background-color: #0056b3;
 }
-
 </style>

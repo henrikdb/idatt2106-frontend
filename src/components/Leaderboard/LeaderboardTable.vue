@@ -1,26 +1,39 @@
 <template>
   <div id="leaderboard">
-
     <table>
       <tbody data-cy="top-leaderboard-table">
-        <tr data-cy="top-leaderboard-tablerow" v-for="(entry, index) in leaderboard" :key="entry.user?.id" :class="{
-          'is-user-5':
-            entry.user?.id === userStore.id
-        }">
+        <tr
+          data-cy="top-leaderboard-tablerow"
+          v-for="(entry, index) in leaderboard"
+          :key="entry.user?.id"
+          :class="{
+            'is-user-5': entry.user?.id === userStore.id
+          }"
+        >
           <td class="number">{{ entry.rank }}</td>
-          <td class="name" @click="navigateToUserProfile(entry.user?.id ?? 0)">{{ entry.user?.firstName }}</td>
+          <td class="name" @click="navigateToUserProfile(entry.user?.id ?? 0)">
+            {{ entry.user?.firstName }}
+          </td>
           <td class="points" v-if="index === 0">
             {{ entry.score }}
           </td>
           <td v-else class="points">{{ entry.score }}</td>
         </tr>
       </tbody>
-      <tbody id="line">`</tbody>
+      <tbody id="line">
+        `
+      </tbody>
       <tbody data-cy="surrounding-user-leaderboard-table" v-if="!userInLeaderboard">
-        <tr data-cy="surrounding-user-leaderboard-tablerow" v-for="(entry, index) in leaderboardExtra" :key="entry.user?.id"
-          :class="{ 'is-user-5': entry.user?.id === userStore.id }">
+        <tr
+          data-cy="surrounding-user-leaderboard-tablerow"
+          v-for="(entry, index) in leaderboardExtra"
+          :key="entry.user?.id"
+          :class="{ 'is-user-5': entry.user?.id === userStore.id }"
+        >
           <td class="number">{{ entry.rank }}</td>
-          <td class="name" @click="navigateToUserProfile(entry.user?.id ?? 0)">{{ entry.user?.firstName }}</td>
+          <td class="name" @click="navigateToUserProfile(entry.user?.id ?? 0)">
+            {{ entry.user?.firstName }}
+          </td>
           <td class="points">{{ entry.score }}</td>
         </tr>
       </tbody>
@@ -29,16 +42,15 @@
   </div>
 </template>
 
-
 <script setup lang="ts">
-import { computed } from 'vue';
-import { useRouter } from 'vue-router';
-import { useUserInfoStore } from '@/stores/UserStore';
-import type { LeaderboardEntryDTO } from '@/api/models/LeaderboardEntryDTO';
-import type { PropType } from 'vue';
+import { computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { useUserInfoStore } from '@/stores/UserStore'
+import type { LeaderboardEntryDTO } from '@/api/models/LeaderboardEntryDTO'
+import type { PropType } from 'vue'
 
-const router = useRouter();
-const userStore = useUserInfoStore();
+const router = useRouter()
+const userStore = useUserInfoStore()
 
 const props = defineProps({
   leaderboard: {
@@ -49,14 +61,16 @@ const props = defineProps({
     type: Array as PropType<LeaderboardEntryDTO[]>,
     required: true
   }
-});
+})
 
 /**
  * Checks if the current user is in the leaderboard.
  *
  * @returns {boolean} Returns true if the current user is in the leaderboard, false otherwise.
  */
-const userInLeaderboard = computed(() => props.leaderboard.some(entry => entry.user && entry.user.email === userStore.email));
+const userInLeaderboard = computed(() =>
+  props.leaderboard.some((entry) => entry.user && entry.user.email === userStore.email)
+)
 
 /**
  * Navigates to the user profile page based on the given user ID.
@@ -64,15 +78,17 @@ const userInLeaderboard = computed(() => props.leaderboard.some(entry => entry.u
  * @param {number} id The ID of the user whose profile will be navigated to.
  */
 const navigateToUserProfile = (id: number) => {
-  router.push(`/profile/${id}`);
-};
+  router.push(`/profile/${id}`)
+}
 </script>
 
 <style scoped>
 #leaderboard {
   max-width: 80%;
   position: relative;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  box-shadow:
+    rgba(0, 0, 0, 0.16) 0px 3px 6px,
+    rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
 table {
@@ -105,7 +121,7 @@ tr:nth-child(even) {
 
 td {
   height: 2rem;
-  font-family: "Rubik", sans-serif;
+  font-family: 'Rubik', sans-serif;
   font-size: 1.4rem;
   padding: 1rem 2rem;
   position: relative;
@@ -145,7 +161,6 @@ td {
   }
 }
 
-
 .points:first-child {
   width: 10rem;
 }
@@ -159,32 +174,32 @@ td {
   width: 106%;
   height: 4.5rem;
   top: -0.5rem;
-  background-color: #003A58;
+  background-color: #003a58;
   position: absolute;
   /**left: -1rem;*/
   box-shadow: 0px 15px 11px -6px #7a7a7d;
 }
 
 .ribbon::before {
-  content: "";
+  content: '';
   height: 1.5rem;
   width: 1.5rem;
   bottom: -0.8rem;
   left: 0.35rem;
   transform: rotate(45deg);
-  background-color: #003A58;
+  background-color: #003a58;
   position: absolute;
   z-index: -1;
 }
 
 .ribbon::after {
-  content: "";
+  content: '';
   height: 1.5rem;
   width: 1.5rem;
   bottom: -0.8rem;
   right: 0.35rem;
   transform: rotate(45deg);
-  background-color: #003A58;
+  background-color: #003a58;
   position: absolute;
   z-index: -1;
 }
@@ -192,7 +207,7 @@ td {
 #line {
   width: 100%;
   height: 0.01rem;
-  border-top: 8px solid #003A58
+  border-top: 8px solid #003a58;
 }
 
 tr.is-user-5 {

@@ -3,7 +3,6 @@
 /* tslint:disable */
 /* eslint-disable */
 export type AccountResponseDTO = {
-    bankProfileId?: number;
-    balance?: number;
-};
-
+  bankProfileId?: number
+  balance?: number
+}

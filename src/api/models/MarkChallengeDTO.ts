@@ -3,8 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type MarkChallengeDTO = {
-    id?: number;
-    day?: number;
-    amount?: number;
-};
-
+  id?: number
+  day?: number
+  amount?: number
+}

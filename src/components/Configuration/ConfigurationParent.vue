@@ -7,15 +7,22 @@ import { useRoute } from 'vue-router'
 const router = useRouter()
 
 // The configuration steps with path and order value.
-const configurationSteps = {'/bank-account': 1,'/commitment': 2, '/experience': 3, '/suitable-challenges': 4, '/first-saving-goal': 5, '/finished-configuration': 6}
+const configurationSteps = {
+  '/bank-account': 1,
+  '/commitment': 2,
+  '/experience': 3,
+  '/suitable-challenges': 4,
+  '/first-saving-goal': 5,
+  '/finished-configuration': 6
+}
 const length = Object.keys(configurationSteps).length
-let percentage = ref(1/length);
+let percentage = ref(1 / length)
 
 // Initially pushes to the commitment-RouterView and sets current path to this path.
 router.push(Object.keys(configurationSteps)[0])
 let currentRoute = useRoute()
 let currentPath = currentRoute.fullPath
-type ConfigurationStepPath = keyof typeof configurationSteps;
+type ConfigurationStepPath = keyof typeof configurationSteps
 
 /**
  * Sets the current path variable to the child component's route path.
@@ -25,18 +32,17 @@ type ConfigurationStepPath = keyof typeof configurationSteps;
  */
 const onNewRouteEvent = (path: ConfigurationStepPath) => {
   currentPath = path
-  percentage.value = (1/length) * configurationSteps[path]
+  percentage.value = (1 / length) * configurationSteps[path]
 }
-
 </script>
 
 <template>
   <div class="container">
     <div class="progress-bar-container">
-      <ProgressBar id="progressbar" :percentage="percentage"/>
+      <ProgressBar id="progressbar" :percentage="percentage" />
     </div>
     <div class="configuration-container">
-      <RouterView @changeRouterEvent="onNewRouteEvent"/>
+      <RouterView @changeRouterEvent="onNewRouteEvent" />
     </div>
   </div>
 </template>

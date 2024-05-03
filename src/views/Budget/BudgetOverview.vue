@@ -7,14 +7,14 @@ import { useBudgetStore } from '@/stores/BudgetStore'
 import { type BudgetRequestDTO, type BudgetResponseDTO, BudgetService } from '@/api'
 import { useRouter } from 'vue-router'
 
-const router = useRouter();
+const router = useRouter()
 
 // Reactive list of budget responses
-const budgetList = ref<BudgetResponseDTO[]>([]);
+const budgetList = ref<BudgetResponseDTO[]>([])
 // Reactive variables for input value, error message, modal, and budgetList key
 let budgetNameInput = ref('')
-let errorMsg = ref('');
-let budgetListKey = ref(0);
+let errorMsg = ref('')
+let budgetListKey = ref(0)
 
 /**
  * Attempts to retrieve budgets for the user asynchronously and updates
@@ -26,14 +26,14 @@ onMounted(async () => {
     budgetList.value = await BudgetService.getBudgetsByUser()
     console.log(budgetList.value)
   } catch (error) {
-    errorMsg.value = handleUnknownError(error);
+    errorMsg.value = handleUnknownError(error)
   }
 })
 
 /**
  * Creates a new budget to the database and updates the displayed budget list.
  */
-const createNewBudget = async() => {
+const createNewBudget = async () => {
   try {
     // Prepare request body for creating budget
     const request: BudgetRequestDTO = {
@@ -42,11 +42,11 @@ const createNewBudget = async() => {
       expenseAmount: 0
     }
     // Creates new budget with the budget request body
-    await BudgetService.createBudget({requestBody: request})
+    await BudgetService.createBudget({ requestBody: request })
     // Updates displayed budget list after creation
     await updateBudgetList()
   } catch (error) {
-    errorMsg.value = handleUnknownError(error);
+    errorMsg.value = handleUnknownError(error)
   }
 }
 
@@ -64,25 +64,45 @@ const updateBudgetList = async () => {
  * @param {number} id The ID of the budget to navigate to.
  */
 const goToBudget = (id: number) => {
-  useBudgetStore().setActiveBudgetId(id);
-  router.push("/budget")
+  useBudgetStore().setActiveBudgetId(id)
+  router.push('/budget')
 }
 </script>
 
 <template>
   <div class="container">
     <h1 class="text-center">Dine Budsjetter</h1>
-    <BaseButton id="createBudgetButton" button-text="Opprett nytt budsjett" class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"/>
+    <BaseButton
+      id="createBudgetButton"
+      button-text="Opprett nytt budsjett"
+      class="btn btn-primary"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#collapseExample"
+      aria-expanded="false"
+      aria-controls="collapseExample"
+    />
     <div class="collapse" id="collapseExample">
       <div class="container collapse-container">
         <div class="input-group">
-          <input id="collapseInput" class="form-control" type="text" placeholder="Skriv inn navn på budsjettet" v-model="budgetNameInput">
-          <BaseButton id="collapseButton" button-text="Opprett" data-bs-dismiss="modal" @click="createNewBudget"/>
+          <input
+            id="collapseInput"
+            class="form-control"
+            type="text"
+            placeholder="Skriv inn navn på budsjettet"
+            v-model="budgetNameInput"
+          />
+          <BaseButton
+            id="collapseButton"
+            button-text="Opprett"
+            data-bs-dismiss="modal"
+            @click="createNewBudget"
+          />
         </div>
       </div>
     </div>
     <p class="text-danger">{{ errorMsg }}</p>
-    <hr>
+    <hr />
     <h5 v-if="budgetList.length === 0" class="text-center">Du har ingen budsjetter</h5>
     <ul v-else class="budgetContainer" :key="budgetListKey">
       <li v-for="(item, index) in budgetList">
@@ -98,10 +118,8 @@ const goToBudget = (id: number) => {
         ></budget-box>
       </li>
     </ul>
-
   </div>
 </template>
-
 
 <style scoped>
 .collapse-container {

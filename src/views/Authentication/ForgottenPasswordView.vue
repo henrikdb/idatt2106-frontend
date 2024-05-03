@@ -1,5 +1,5 @@
 <template>
-  <ForgottenPassword/>
+  <ForgottenPassword />
 </template>
 
 <script setup lang="ts">

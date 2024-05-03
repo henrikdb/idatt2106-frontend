@@ -2,10 +2,9 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { BankProfile } from './BankProfile';
+import type { BankProfile } from './BankProfile'
 export type Account = {
-    bban?: number;
-    balance?: number;
-    bankProfile?: BankProfile;
-};
-
+  bban?: number
+  balance?: number
+  bankProfile?: BankProfile
+}

@@ -3,7 +3,6 @@
 /* tslint:disable */
 /* eslint-disable */
 export type ExceptionResponse = {
-    status?: number;
-    message?: string;
-};
-
+  status?: number
+  message?: string
+}

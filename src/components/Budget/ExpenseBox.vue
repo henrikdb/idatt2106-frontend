@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const emit = defineEmits(['deleteEvent', 'editEvent']);
+const emit = defineEmits(['deleteEvent', 'editEvent'])
 const props = defineProps({
   id: {
     type: Number,
@@ -45,27 +45,53 @@ const emitEditEvent = () => {
 
 <template>
   <div class="expense-container">
-    <p>{{index + 1}}</p>
-    <p>{{description}}</p>
-    <p>{{amount}} kr</p>
-    <button class="btn btn-success" data-bs-toggle="collapse" :data-bs-target="'#' + index" aria-expanded="false" aria-controls="editBudgetCollapse">
-      <img src="../../assets/icons/edit-button.svg" alt="Edit" height="18" width="18">
+    <p>{{ index + 1 }}</p>
+    <p>{{ description }}</p>
+    <p>{{ amount }} kr</p>
+    <button
+      class="btn btn-success"
+      data-bs-toggle="collapse"
+      :data-bs-target="'#' + index"
+      aria-expanded="false"
+      aria-controls="editBudgetCollapse"
+    >
+      <img src="../../assets/icons/edit-button.svg" alt="Edit" height="18" width="18" />
       Endre
     </button>
     <button class="btn btn-danger" @click="emitDeleteEvent">
-      <img src="../../assets/icons/trash-can.svg" alt="Edit" height="18" width="18">
+      <img src="../../assets/icons/trash-can.svg" alt="Edit" height="18" width="18" />
       Slett
     </button>
   </div>
 
-  <div class="collapse" :id=String(index)>
+  <div class="collapse" :id="String(index)">
     <div class="container collapse-container">
       <form @submit.prevent="emitEditEvent">
         <div class="input-group">
-          <span class="input-group-text">Endre utgift {{ index+1 }} </span>
-          <input type="text" class="form-control" placeholder="Utgift beskrivelse" required v-model="editDescription">
-          <input type="number" min="0" class="form-control" placeholder="Amount (kr)" required v-model="editAmount">
-          <button type="submit" class="btn btn-primary" data-bs-toggle="collapse" :data-bs-target="'#' + index">Bekreft</button>
+          <span class="input-group-text">Endre utgift {{ index + 1 }} </span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Utgift beskrivelse"
+            required
+            v-model="editDescription"
+          />
+          <input
+            type="number"
+            min="0"
+            class="form-control"
+            placeholder="Amount (kr)"
+            required
+            v-model="editAmount"
+          />
+          <button
+            type="submit"
+            class="btn btn-primary"
+            data-bs-toggle="collapse"
+            :data-bs-target="'#' + index"
+          >
+            Bekreft
+          </button>
         </div>
       </form>
     </div>
@@ -80,7 +106,7 @@ div.collapse {
 .expense-container {
   padding: 0 10px;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr .6fr .6fr;
+  grid-template-columns: 1fr 1fr 1fr 0.6fr 0.6fr;
   border-radius: 10px;
   background-color: #2a2a34;
   align-content: center;

@@ -3,7 +3,6 @@
 /* tslint:disable */
 /* eslint-disable */
 export type PasswordResetDTO = {
-    token: string;
-    password?: string;
-};
-
+  token: string
+  password?: string
+}

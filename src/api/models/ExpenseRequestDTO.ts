@@ -3,8 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type ExpenseRequestDTO = {
-    expenseId?: number;
-    description?: string;
-    amount?: number;
-};
-
+  expenseId?: number
+  description?: string
+  amount?: number
+}

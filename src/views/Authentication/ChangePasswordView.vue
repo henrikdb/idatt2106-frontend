@@ -1,5 +1,5 @@
 <template>
-  <ChangePassword/>
+  <ChangePassword />
 </template>
 
 <script setup lang="ts">

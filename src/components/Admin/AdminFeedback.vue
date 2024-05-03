@@ -3,21 +3,21 @@ import { onMounted, ref } from 'vue'
 import { type FeedbackResponseDTO, UserService } from '@/api'
 import handleUnknownError from '@/components/Exceptions/unkownErrorHandler'
 
-const feedbacks = ref<FeedbackResponseDTO[]>([]);
+const feedbacks = ref<FeedbackResponseDTO[]>([])
 
 onMounted(async () => {
   try {
-    feedbacks.value = await UserService.getFeedback();
+    feedbacks.value = await UserService.getFeedback()
     console.log(feedbacks.value)
   } catch (error) {
-    handleUnknownError(error);
+    handleUnknownError(error)
   }
 })
 
 const formattedDate = (dateStr?: string): string => {
-  if (!dateStr) return '';
-  return new Date(dateStr).toLocaleString();
-};
+  if (!dateStr) return ''
+  return new Date(dateStr).toLocaleString()
+}
 </script>
 
 <template>
@@ -51,7 +51,9 @@ const formattedDate = (dateStr?: string): string => {
   border-bottom: 1px solid #ccc;
 }
 
-.email, .message, .created-at {
+.email,
+.message,
+.created-at {
   padding: 5px 0;
 }
 

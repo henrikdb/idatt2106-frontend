@@ -11,14 +11,14 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue';
+import { defineProps, defineEmits } from 'vue'
 
 const props = defineProps({
   buttonText: String,
-  disabled: Boolean,
-});
+  disabled: Boolean
+})
 
-const emit = defineEmits(['click']);
+const emit = defineEmits(['click'])
 
 /**
  * Handles the click event for a button component.
@@ -27,9 +27,9 @@ const emit = defineEmits(['click']);
 
 const handleClick = () => {
   if (!props.disabled) {
-    emit('click');
+    emit('click')
   }
-};
+}
 </script>
 
 <style scoped>

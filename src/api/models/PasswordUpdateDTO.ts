@@ -3,7 +3,6 @@
 /* tslint:disable */
 /* eslint-disable */
 export type PasswordUpdateDTO = {
-    oldPassword?: string;
-    newPassword?: string;
-};
-
+  oldPassword?: string
+  newPassword?: string
+}

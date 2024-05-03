@@ -3,10 +3,9 @@
 /* tslint:disable */
 /* eslint-disable */
 export type BudgetResponseDTO = {
-    id?: number;
-    budgetName?: string;
-    budgetAmount?: number;
-    expenseAmount?: number;
-    createdAt?: string;
-};
-
+  id?: number
+  budgetName?: string
+  budgetAmount?: number
+  expenseAmount?: number
+  createdAt?: string
+}

@@ -3,8 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type BudgetRequestDTO = {
-    budgetName?: string;
-    budgetAmount?: number;
-    expenseAmount?: number;
-};
-
+  budgetName?: string
+  budgetAmount?: number
+  expenseAmount?: number
+}

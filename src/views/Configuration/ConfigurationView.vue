@@ -3,5 +3,5 @@ import Configuration from '@/components/Configuration/ConfigurationParent.vue'
 </script>
 
 <template>
-  <Configuration/>
+  <Configuration />
 </template>

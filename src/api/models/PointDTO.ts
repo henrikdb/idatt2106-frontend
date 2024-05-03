@@ -3,7 +3,6 @@
 /* tslint:disable */
 /* eslint-disable */
 export type PointDTO = {
-    currentPoints?: number;
-    totalEarnedPoints?: number;
-};
-
+  currentPoints?: number
+  totalEarnedPoints?: number
+}

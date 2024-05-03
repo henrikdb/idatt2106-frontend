@@ -2,10 +2,9 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { Account } from './Account';
+import type { Account } from './Account'
 export type BankProfile = {
-    id?: number;
-    ssn?: number;
-    accounts?: Array<Account>;
-};
-
+  id?: number
+  ssn?: number
+  accounts?: Array<Account>
+}

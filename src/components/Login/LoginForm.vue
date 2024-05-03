@@ -2,22 +2,22 @@
 import BaseInput from '@/components/BaseComponents/Input/BaseInput.vue'
 import BaseButton from '@/components/BaseComponents/Buttons/BaseButton.vue'
 import { ref } from 'vue'
-import { useUserInfoStore } from '@/stores/UserStore';
-import { AuthenticationService, OpenAPI, type LoginRequest } from '@/api';
-import { useRouter } from 'vue-router';
-import handleUnknownError from '@/components/Exceptions/unkownErrorHandler';
-import { useErrorStore } from '@/stores/ErrorStore';
+import { useUserInfoStore } from '@/stores/UserStore'
+import { AuthenticationService, OpenAPI, type LoginRequest } from '@/api'
+import { useRouter } from 'vue-router'
+import handleUnknownError from '@/components/Exceptions/unkownErrorHandler'
+import { useErrorStore } from '@/stores/ErrorStore'
 import SignUpLink from '@/components/SignUp/SignUpLink.vue'
 
-const errorStore = useErrorStore();
-const router = useRouter();
-const userStore = useUserInfoStore();
+const errorStore = useErrorStore()
+const router = useRouter()
+const userStore = useUserInfoStore()
 
 const emailRef = ref('')
 const passwordRef = ref('')
 const formRef = ref()
-let errorMsg = ref('');
-const isSubmitting = ref(false);
+let errorMsg = ref('')
+const isSubmitting = ref(false)
 
 /**
  * Handles email input event by updating the value of the emailRef reactive variable.
@@ -44,31 +44,31 @@ const handlePasswordInputEvent = (newValue: any) => {
 const handleSubmit = async () => {
   console.log(emailRef.value)
   console.log(passwordRef.value)
-  if (isSubmitting.value) return;
-  isSubmitting.value = true;
+  if (isSubmitting.value) return
+  isSubmitting.value = true
 
-  formRef.value.classList.add("was-validated")
+  formRef.value.classList.add('was-validated')
 
-  const form = formRef.value;
+  const form = formRef.value
   if (!form.checkValidity()) {
-    isSubmitting.value = false;
-    return;
+    isSubmitting.value = false
+    return
   }
 
   const loginUserPayload: LoginRequest = {
     email: emailRef.value,
     password: passwordRef.value
-  };
+  }
 
   try {
-    let response = await AuthenticationService.login({ requestBody: loginUserPayload });
+    let response = await AuthenticationService.login({ requestBody: loginUserPayload })
     if (response.token == null || response.token == undefined) {
-      errorMsg.value = 'A valid token could not be created';
-      isSubmitting.value = false;
-      return;
+      errorMsg.value = 'A valid token could not be created'
+      isSubmitting.value = false
+      return
     }
 
-    OpenAPI.TOKEN = response.token;
+    OpenAPI.TOKEN = response.token
 
     userStore.setUserInfo({
       id: response.userId,
@@ -79,17 +79,16 @@ const handleSubmit = async () => {
       role: response.role,
       subscriptionLevel: response.subscriptionLevel,
       profileImage: response.profileImage
-    });
+    })
 
     console.log(response.token)
 
-    await router.push({ name: 'roadmap' });
+    await router.push({ name: 'roadmap' })
   } catch (error: any) {
-    errorMsg.value = handleUnknownError(error);
-    isSubmitting.value = false;
+    errorMsg.value = handleUnknownError(error)
+    isSubmitting.value = false
   }
 }
-
 </script>
 
 <template>
@@ -98,26 +97,27 @@ const handleSubmit = async () => {
       <h1>Logg inn</h1>
     </div>
     <form ref="formRef" id="loginForm" @submit.prevent="handleSubmit" novalidate>
-
-      <BaseInput :model-value="emailRef"
-                 @input-change-event="handleEmailInputEvent"
-                 id="emailInput"
-                 input-id="email"
-                 type="email"
-                 label="E-post"
-                 placeholder="Skriv inn din e-post"
-                 invalid-message="Ugyldig e-post"
+      <BaseInput
+        :model-value="emailRef"
+        @input-change-event="handleEmailInputEvent"
+        id="emailInput"
+        input-id="email"
+        type="email"
+        label="E-post"
+        placeholder="Skriv inn din e-post"
+        invalid-message="Ugyldig e-post"
       />
 
-      <BaseInput :model-value="passwordRef"
-                 @input-change-event="handlePasswordInputEvent"
-                 id="passwordInput"
-                 input-id="password"
-                 type="password"
-                 pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,16}"
-                 label="Passord"
-                 placeholder="Skriv inn ditt passord"
-                 invalid-message="Passordet må være mellom 4 og 16 tegn og inneholde én stor bokstav, liten bokstav og et tall"
+      <BaseInput
+        :model-value="passwordRef"
+        @input-change-event="handlePasswordInputEvent"
+        id="passwordInput"
+        input-id="password"
+        type="password"
+        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,16}"
+        label="Passord"
+        placeholder="Skriv inn ditt passord"
+        invalid-message="Passordet må være mellom 4 og 16 tegn og inneholde én stor bokstav, liten bokstav og et tall"
       />
 
       <div class="password-reset-link">
@@ -125,14 +125,23 @@ const handleSubmit = async () => {
       </div>
 
       <p class="text-danger" data-cy="error">{{ errorMsg }}</p>
-      <BaseButton id="confirmButton" type="submit" @click="handleSubmit" :disabled="isSubmitting" button-text="Logg inn"></BaseButton>
+      <BaseButton
+        id="confirmButton"
+        type="submit"
+        @click="handleSubmit"
+        :disabled="isSubmitting"
+        button-text="Logg inn"
+      ></BaseButton>
 
-      <a class="btn bankid-btn" href="https://preprod.signicat.com/oidc/authorize?response_type=code&scope=openid+profile+signicat.national_id&client_id=demo-preprod&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fredirect&acr_values=urn:signicat:oidc:method:nbid&state=nbid:auth_demo_bankid:123456789">
-        <img src="/src/assets/bankid.svg" width="26" height="26">
+      <a
+        class="btn bankid-btn"
+        href="https://preprod.signicat.com/oidc/authorize?response_type=code&scope=openid+profile+signicat.national_id&client_id=demo-preprod&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fredirect&acr_values=urn:signicat:oidc:method:nbid&state=nbid:auth_demo_bankid:123456789"
+      >
+        <img src="/src/assets/bankid.svg" width="26" height="26" />
         Fortsett med BankID
       </a>
 
-      <SignUpLink/>
+      <SignUpLink />
     </form>
   </div>
 </template>

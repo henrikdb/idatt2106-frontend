@@ -22,7 +22,7 @@ const props = defineProps({
 })
 
 // Calculated balance from props attribute
-const balance = ref<number>(props.budgetAmount - props.expenseAmount);
+const balance = ref<number>(props.budgetAmount - props.expenseAmount)
 
 /**
  * Emits an importBudgetEvent to the parent in order to signalize that
@@ -31,40 +31,38 @@ const balance = ref<number>(props.budgetAmount - props.expenseAmount);
 const emitImportBudgetEvent = () => {
   emit('importBudgetEvent', props.budgetId)
 }
-
 </script>
 
 <template>
   <div class="container-fluid" @click="emitImportBudgetEvent">
-    <h3>{{budgetTitle}}</h3>
+    <h3>{{ budgetTitle }}</h3>
 
     <div class="info budget">
       <i>
-        <img src="../../../assets/icons/money2.svg" width="30px" height="30px">
+        <img src="../../../assets/icons/money2.svg" width="30px" height="30px" />
       </i>
       <div class="amount budget-container">
-        <h5>{{budgetAmount}} kr</h5>
+        <h5>{{ budgetAmount }} kr</h5>
       </div>
     </div>
 
     <div class="info expenses">
       <i>
-        <img src="../../../assets/icons/credit-card.svg" width="30px" height="30px">
+        <img src="../../../assets/icons/credit-card.svg" width="30px" height="30px" />
       </i>
       <div class="amount expenses-container">
-        <h5>{{expenseAmount}} kr</h5>
+        <h5>{{ expenseAmount }} kr</h5>
       </div>
     </div>
 
     <div class="info balance">
       <i ref="iRef">
-        <img src="../../../assets/icons/scale.svg" width="30px" height="30px">
+        <img src="../../../assets/icons/scale.svg" width="30px" height="30px" />
       </i>
       <div class="amount balance-container">
-        <h5>{{balance}} kr</h5>
+        <h5>{{ balance }} kr</h5>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -92,7 +90,8 @@ div.amount {
   align-content: center;
 }
 
-h3, h5 {
+h3,
+h5 {
   color: white;
   margin-bottom: 0;
   align-self: center;

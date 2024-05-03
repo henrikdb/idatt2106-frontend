@@ -8,8 +8,8 @@ import handleUnknownError from '@/components/Exceptions/unkownErrorHandler'
 import { useUserInfoStore } from '@/stores/UserStore'
 import LoginLink from '@/components/Login/LoginLink.vue'
 
-const router = useRouter();
-const userStore = useUserInfoStore();
+const router = useRouter()
+const userStore = useUserInfoStore()
 
 // Reactive variables for the form
 const firstNameRef = ref('')
@@ -19,8 +19,8 @@ const passwordRef = ref('')
 const confirmPasswordRef = ref('')
 const formRef = ref()
 let samePasswords = ref(true)
-let errorMsg = ref('');
-const isSubmitting = ref(false);
+let errorMsg = ref('')
+const isSubmitting = ref(false)
 
 /**
  * Handles the event when the first name input changes.
@@ -79,36 +79,35 @@ const handleConfirmPasswordInputEvent = (newValue: any) => {
  * Redirects the user to the configuration page after registration.
  */
 const handleSubmit = async () => {
-  if (isSubmitting.value) return;
-  isSubmitting.value = true;
+  if (isSubmitting.value) return
+  isSubmitting.value = true
 
   // Validates form and displays validation
-  samePasswords.value = (passwordRef.value === confirmPasswordRef.value)
-  formRef.value.classList.add("was-validated")
+  samePasswords.value = passwordRef.value === confirmPasswordRef.value
+  formRef.value.classList.add('was-validated')
 
-  const form = formRef.value;
+  const form = formRef.value
   if (form.checkValidity()) {
     if (samePasswords.value) {
       try {
         // Validates email
-        await AuthenticationService.validateEmail({email: emailRef.value});
+        await AuthenticationService.validateEmail({ email: emailRef.value })
         // Set userInfo details in user store
         userStore.setUserInfo({
           firstname: firstNameRef.value,
           lastname: surnameRef.value,
-          email: emailRef.value,
-        });
+          email: emailRef.value
+        })
         userStore.setPassword(passwordRef.value)
         await router.push('/configuration')
       } catch (error) {
-        errorMsg.value = handleUnknownError(error);
+        errorMsg.value = handleUnknownError(error)
         console.log(error)
       }
     }
   }
-  isSubmitting.value = false;
+  isSubmitting.value = false
 }
-
 </script>
 
 <template>
@@ -119,66 +118,78 @@ const handleSubmit = async () => {
     <form ref="formRef" id="signUpForm" @submit.prevent="handleSubmit" novalidate>
       <div class="row">
         <div class="col-sm">
-          <BaseInput :model-value=firstNameRef
-                     @input-change-event="handleFirstNameInputEvent"
-                     id="firstNameInput"
-                     input-id="first-name"
-                     type="text"
-                     pattern="^(?=.{4,16}$)[^\d]+$"
-                     label="Fornavn"
-                     placeholder="Skriv inn ditt fornavn"
-                     invalid-message="Ugyldig fornavn, husk ingen tall, må være mellom 4 og 16 bokstaver"/>
-          <BaseInput :model-value="surnameRef"
-                     @input-change-event="handleSurnameInputEvent"
-                     id="surnameInput"
-                     input-id="surname"
-                     type="text"
-                     pattern="^(?=.{4,16}$)[^\d]+$"
-                     label="Etternavn"
-                     placeholder="Skriv inn ditt etternavn"
-                     invalid-message="Ugyldig etternavn, må være mellom 4 og 16 bokstaver"/>
-          <BaseInput :model-value="emailRef"
-                     @input-change-event="handleEmailInputEvent"
-                     id="emailInput"
-                     input-id="email"
-                     type="email"
-                     label="E-post"
-                     placeholder="Skriv inn din e-post"
-                     invalid-message="Ugyldig e-post"/>
+          <BaseInput
+            :model-value="firstNameRef"
+            @input-change-event="handleFirstNameInputEvent"
+            id="firstNameInput"
+            input-id="first-name"
+            type="text"
+            pattern="^(?=.{4,16}$)[^\d]+$"
+            label="Fornavn"
+            placeholder="Skriv inn ditt fornavn"
+            invalid-message="Ugyldig fornavn, husk ingen tall, må være mellom 4 og 16 bokstaver"
+          />
+          <BaseInput
+            :model-value="surnameRef"
+            @input-change-event="handleSurnameInputEvent"
+            id="surnameInput"
+            input-id="surname"
+            type="text"
+            pattern="^(?=.{4,16}$)[^\d]+$"
+            label="Etternavn"
+            placeholder="Skriv inn ditt etternavn"
+            invalid-message="Ugyldig etternavn, må være mellom 4 og 16 bokstaver"
+          />
+          <BaseInput
+            :model-value="emailRef"
+            @input-change-event="handleEmailInputEvent"
+            id="emailInput"
+            input-id="email"
+            type="email"
+            label="E-post"
+            placeholder="Skriv inn din e-post"
+            invalid-message="Ugyldig e-post"
+          />
         </div>
         <div class="col-sm">
-          <BaseInput :model-value="passwordRef"
-                     @input-change-event="handlePasswordInputEvent"
-                     id="passwordInput"
-                     input-id="password"
-                     type="password"
-                     pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,16}"
-                     label="Passord"
-                     placeholder="Skriv inn passord"
-                     invalid-message="Passordet må være mellom 4 og 16 tegn og inneholde én stor bokstav, liten bokstav og et tall"/>
-          <BaseInput :modelValue="confirmPasswordRef"
-                     @input-change-event="handleConfirmPasswordInputEvent"
-                     id="confirmPasswordInput"
-                     input-id="confirmPassword"
-                     type="password"
-                     pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,16}"
-                     label="Bekreft Passord"
-                     placeholder="Bekreft passord"
-                     invalid-message="Passordet må være mellom 4 og 16 tegn og inneholde én stor bokstav, liten bokstav og et tall"
+          <BaseInput
+            :model-value="passwordRef"
+            @input-change-event="handlePasswordInputEvent"
+            id="passwordInput"
+            input-id="password"
+            type="password"
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,16}"
+            label="Passord"
+            placeholder="Skriv inn passord"
+            invalid-message="Passordet må være mellom 4 og 16 tegn og inneholde én stor bokstav, liten bokstav og et tall"
+          />
+          <BaseInput
+            :modelValue="confirmPasswordRef"
+            @input-change-event="handleConfirmPasswordInputEvent"
+            id="confirmPasswordInput"
+            input-id="confirmPassword"
+            type="password"
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,16}"
+            label="Bekreft Passord"
+            placeholder="Bekreft passord"
+            invalid-message="Passordet må være mellom 4 og 16 tegn og inneholde én stor bokstav, liten bokstav og et tall"
           />
         </div>
       </div>
       <p class="text-danger">{{ errorMsg }}</p>
       <p v-if="!samePasswords" class="text-danger">Passordene er ikke like</p>
-      <BaseButton id="confirmButton" @click="handleSubmit" :disabled="isSubmitting" button-text="Registrer deg"></BaseButton>
-      <LoginLink/>
+      <BaseButton
+        id="confirmButton"
+        @click="handleSubmit"
+        :disabled="isSubmitting"
+        button-text="Registrer deg"
+      ></BaseButton>
+      <LoginLink />
     </form>
   </div>
-
 </template>
 
 <style scoped>
-
 .container-fluid {
   max-width: 950px;
 }
@@ -190,7 +201,12 @@ const handleSubmit = async () => {
   width: 100%;
 }
 
-#firstNameInput, #surnameInput, #emailInput, #passwordInput, #confirmButton, #confirmPasswordInput {
+#firstNameInput,
+#surnameInput,
+#emailInput,
+#passwordInput,
+#confirmButton,
+#confirmPasswordInput {
   margin: 1rem 0;
 }
 

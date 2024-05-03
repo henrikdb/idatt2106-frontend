@@ -3,6 +3,5 @@
 /* tslint:disable */
 /* eslint-disable */
 export type AccountRequestDTO = {
-    ssn?: number;
-};
-
+  ssn?: number
+}

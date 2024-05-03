@@ -1,27 +1,25 @@
 <script setup lang="ts">
-
 import { ref } from 'vue'
 
-const emit = defineEmits(['inputChangeEvent']);
+const emit = defineEmits(['inputChangeEvent'])
 const props = defineProps({
   label: {
     type: String,
-    default: ""
+    default: ''
   },
   type: {
     type: String,
-    default: "text"
+    default: 'text'
   },
   placeholder: {
     type: String,
-    default: ""
+    default: ''
   },
   inputId: {
     type: String,
     required: true
   },
-  modelValue: {
-  },
+  modelValue: {},
   min: {
     type: String,
     required: false
@@ -48,13 +46,12 @@ const props = defineProps({
   },
   inputClass: {
     type: String,
-    default: "form-control"
+    default: 'form-control'
   }
-});
+})
 
 // Form reference in order to display validations input
-const formRef = ref();
-
+const formRef = ref()
 
 /**
  * Adds the "was-validated" class to the input element, and emits
@@ -63,7 +60,7 @@ const formRef = ref();
  * @param event The input event object
  */
 const onInputEvent = (event: any) => {
-  formRef.value.classList.add("was-validated")
+  formRef.value.classList.add('was-validated')
   emit('inputChangeEvent', event.target.value)
 }
 </script>
@@ -71,23 +68,22 @@ const onInputEvent = (event: any) => {
 <template>
   <div ref="formRef">
     <label :for="inputId" data-cy="bi-label">{{ label }}</label>
-    <input :value="modelValue"
-           @input="onInputEvent"
-           :type="type"
-           :class="inputClass"
-           :placeholder="placeholder"
-           :id="inputId"
-           :min="min"
-           :max="max"
-           :pattern="pattern"
-           :required="required"
-           data-cy="bi-input"
+    <input
+      :value="modelValue"
+      @input="onInputEvent"
+      :type="type"
+      :class="inputClass"
+      :placeholder="placeholder"
+      :id="inputId"
+      :min="min"
+      :max="max"
+      :pattern="pattern"
+      :required="required"
+      data-cy="bi-input"
     />
     <div data-cy="bi-valid-msg" class="valid-feedback">{{ validMessage }}</div>
     <div data-cy="bi-invalid-msg" class="invalid-feedback" id="invalid">{{ invalidMessage }}</div>
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

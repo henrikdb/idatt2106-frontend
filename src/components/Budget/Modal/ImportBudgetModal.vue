@@ -34,16 +34,20 @@ const emitImportBudgetEvent = (budgetId: number) => {
           <button class="btn btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
-          <h6 v-if="listOfBudgetResponseDTO.length === 0" class="text-center">Du har ingen budsjetter du kan importere</h6>
+          <h6 v-if="listOfBudgetResponseDTO.length === 0" class="text-center">
+            Du har ingen budsjetter du kan importere
+          </h6>
           <div v-else>
-            <MiniBudgetBox v-for="(item, index) in listOfBudgetResponseDTO"
-                           :key="index"
-                           :budget-id="Number(item.id) || 0"
-                           :budget-title="item.budgetName"
-                           :budget-amount="Number(item.budgetAmount)"
-                           :expense-amount="Number(item.expenseAmount)"
-                           @importBudgetEvent="emitImportBudgetEvent"
-                           data-bs-dismiss="modal">
+            <MiniBudgetBox
+              v-for="(item, index) in listOfBudgetResponseDTO"
+              :key="index"
+              :budget-id="Number(item.id) || 0"
+              :budget-title="item.budgetName"
+              :budget-amount="Number(item.budgetAmount)"
+              :expense-amount="Number(item.expenseAmount)"
+              @importBudgetEvent="emitImportBudgetEvent"
+              data-bs-dismiss="modal"
+            >
             </MiniBudgetBox>
           </div>
         </div>
@@ -53,9 +57,7 @@ const emitImportBudgetEvent = (budgetId: number) => {
 </template>
 
 <style scoped>
-
 div.modal-body {
   padding-left: 0;
 }
-
 </style>

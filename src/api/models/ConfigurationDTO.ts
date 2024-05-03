@@ -3,8 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type ConfigurationDTO = {
-    commitment?: string;
-    experience?: string;
-    challengeTypes?: Array<string>;
-};
-
+  commitment?: string
+  experience?: string
+  challengeTypes?: Array<string>
+}

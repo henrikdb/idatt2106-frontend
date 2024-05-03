@@ -3,7 +3,6 @@
 /* tslint:disable */
 /* eslint-disable */
 export type FeedbackRequestDTO = {
-    email?: string;
-    message?: string;
-};
-
+  email?: string
+  message?: string
+}

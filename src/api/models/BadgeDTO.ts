@@ -3,9 +3,8 @@
 /* tslint:disable */
 /* eslint-disable */
 export type BadgeDTO = {
-    id?: number;
-    badgeName?: string;
-    criteria?: number;
-    imageId?: number;
-};
-
+  id?: number
+  badgeName?: string
+  criteria?: number
+  imageId?: number
+}

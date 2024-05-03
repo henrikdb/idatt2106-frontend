@@ -1,7 +1,7 @@
 <template>
-    <ItemShop/>
+  <ItemShop />
 </template>
 
 <script setup lang="ts">
-    import ItemShop from '@/components/Shop/ItemShop.vue';
+import ItemShop from '@/components/Shop/ItemShop.vue'
 </script>

@@ -3,8 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type TransactionDTO = {
-    debtorBBAN?: number;
-    creditorBBAN?: number;
-    amount?: number;
-};
-
+  debtorBBAN?: number
+  creditorBBAN?: number
+  amount?: number
+}

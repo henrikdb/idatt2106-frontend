@@ -6,7 +6,7 @@ import { defineStore } from 'pinia'
 export const useBudgetStore = defineStore('BudgetStore', {
   state: () => ({
     /** The ID of the active budget. */
-    activeBudgetId: 0,
+    activeBudgetId: 0
   }),
   actions: {
     /**
@@ -30,4 +30,4 @@ export const useBudgetStore = defineStore('BudgetStore', {
   persist: {
     storage: sessionStorage
   }
-});
+})

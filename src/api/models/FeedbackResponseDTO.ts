@@ -3,9 +3,8 @@
 /* tslint:disable */
 /* eslint-disable */
 export type FeedbackResponseDTO = {
-    id?: string;
-    email?: string;
-    message?: string;
-    createdAt?: string;
-};
-
+  id?: string
+  email?: string
+  message?: string
+  createdAt?: string
+}

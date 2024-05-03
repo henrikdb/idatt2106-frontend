@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-import ErrorBoundaryCatcher from '@/components/Exceptions/ErrorBoundaryCatcher.vue';
+import ErrorBoundaryCatcher from '@/components/Exceptions/ErrorBoundaryCatcher.vue'
 </script>
 
 <template>
@@ -12,8 +12,8 @@ import ErrorBoundaryCatcher from '@/components/Exceptions/ErrorBoundaryCatcher.v
 </template>
 
 <style>
-  main {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-weight: 600;
-  }
+main {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 600;
+}
 </style>

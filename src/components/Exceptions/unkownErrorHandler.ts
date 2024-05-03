@@ -1,5 +1,5 @@
-import { ApiError as BackendApiError } from '@/api';
-import { AxiosError } from 'axios';
+import { ApiError as BackendApiError } from '@/api'
+import { AxiosError } from 'axios'
 import router from '@/router'
 import { useUserInfoStore } from '@/stores/UserStore'
 
@@ -11,17 +11,17 @@ import { useUserInfoStore } from '@/stores/UserStore'
  */
 const handleUnknownError = (error: any): string => {
   if (error instanceof AxiosError) {
-    return error.code!!;
+    return error.code!!
   } else if (error instanceof BackendApiError) {
     if (error.body.status == 403) {
-      router.push("/login");
-      useUserInfoStore().clearUserInfo();
+      router.push('/login')
+      useUserInfoStore().clearUserInfo()
     } else if (error.body.status == 401) {
-      router.push("/roadmap");
+      router.push('/roadmap')
     }
-    return error.body.message ?? error.body;
+    return error.body.message ?? error.body
   }
-  return error;
-};
+  return error
+}
 
-export default handleUnknownError;
+export default handleUnknownError

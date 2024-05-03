@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 const emit = defineEmits(['challengeChangedEvent'])
 const props = defineProps({
   id: {
@@ -32,19 +31,28 @@ const onChallengeChanged = (event: any) => {
   const data = [props.enumValue, value]
   emit('challengeChangedEvent', data)
 }
-
 </script>
 
 <template>
   <div class="col-auto">
-    <input @change="onChallengeChanged" type="checkbox" class="btn-check" :id="props.id" autocomplete="off">
-    <label class="btn btn-outline-primary align-items-center justify-content-center" :for="props.id">{{ props.text }}</label>
+    <input
+      @change="onChallengeChanged"
+      type="checkbox"
+      class="btn-check"
+      :id="props.id"
+      autocomplete="off"
+    />
+    <label
+      class="btn btn-outline-primary align-items-center justify-content-center"
+      :for="props.id"
+      >{{ props.text }}</label
+    >
   </div>
 </template>
 
 <style scoped>
 label {
-  margin: 5px
+  margin: 5px;
 }
 div.col-auto {
   padding: 0;

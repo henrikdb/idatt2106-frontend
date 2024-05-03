@@ -3,6 +3,5 @@
 /* tslint:disable */
 /* eslint-disable */
 export type BankProfileDTO = {
-    ssn?: number;
-};
-
+  ssn?: number
+}

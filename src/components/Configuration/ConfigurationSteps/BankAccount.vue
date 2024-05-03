@@ -6,13 +6,13 @@ import BaseInput from '@/components/BaseComponents/Input/BaseInput.vue'
 import { useConfigurationStore } from '@/stores/ConfigurationStore'
 import { AccountControllerService } from '@/api'
 
-const router = useRouter();
+const router = useRouter()
 
 // Declaring reactive variables
-const formRef = ref();
-const checkingAccount = ref<string>('');
-const savingsAccount = ref<string>('');
-let errorMsg = ref<string>('');
+const formRef = ref()
+const checkingAccount = ref<string>('')
+const savingsAccount = ref<string>('')
+let errorMsg = ref<string>('')
 
 // Updates progress bar in the parent Configuration component.
 const emit = defineEmits(['changeRouterEvent'])
@@ -42,25 +42,25 @@ const handleSavingInputEvent = (newValue: any) => {
  * and navigates the user to the "/commitment" route.
  */
 const handleSubmit = async () => {
-  formRef.value.classList.add("was-validated")
-  const form = formRef.value;
+  formRef.value.classList.add('was-validated')
+  const form = formRef.value
   if (form.checkValidity()) {
-    errorMsg.value = '';
+    errorMsg.value = ''
     try {
-      await AccountControllerService.getAccountsByBban({bban: Number(checkingAccount.value)})
+      await AccountControllerService.getAccountsByBban({ bban: Number(checkingAccount.value) })
     } catch (error) {
-      errorMsg.value = "Fant ikke forbrukskonto"
+      errorMsg.value = 'Fant ikke forbrukskonto'
       return
     }
     try {
-      await AccountControllerService.getAccountsByBban({bban: Number(savingsAccount.value)})
+      await AccountControllerService.getAccountsByBban({ bban: Number(savingsAccount.value) })
     } catch (error) {
-      errorMsg.value = "Fant ikke sparekonto"
+      errorMsg.value = 'Fant ikke sparekonto'
       return
     }
     useConfigurationStore().setChekingAccountBBAN(Number(checkingAccount.value))
     useConfigurationStore().setSavingsAccountBBAN(Number(savingsAccount.value))
-    await router.push("/commitment")
+    await router.push('/commitment')
   }
 }
 </script>
@@ -71,29 +71,33 @@ const handleSubmit = async () => {
       Velg forburkskonto og sparekonto
     </h3>
     <form ref="formRef">
-      <BaseInput data-cy="spending-account-input"
-                 :model-value="checkingAccount"
-                 @input-change-event="handleSpendingInputEvent"
-                 id="spending-account-base-input"
-                 input-id="spending-account-input"
-                 type="number"
-                 min="10000000000"
-                 max="99999999999"
-                 label="Forbrukskonto"
-                 placeholder="Skriv inn din brukskonto"
-                 invalid-message="Vennligst skriv inn din brukskonto (11 siffer)"/>
+      <BaseInput
+        data-cy="spending-account-input"
+        :model-value="checkingAccount"
+        @input-change-event="handleSpendingInputEvent"
+        id="spending-account-base-input"
+        input-id="spending-account-input"
+        type="number"
+        min="10000000000"
+        max="99999999999"
+        label="Forbrukskonto"
+        placeholder="Skriv inn din brukskonto"
+        invalid-message="Vennligst skriv inn din brukskonto (11 siffer)"
+      />
 
-      <BaseInput data-cy="savings-account-input"
-                 :model-value="savingsAccount"
-                 @input-change-event="handleSavingInputEvent"
-                 id="saving-account-base-input"
-                 input-id="savings-account-input"
-                 type="number"
-                 min="10000000000"
-                 max="99999999999"
-                 label="Sparekonto"
-                 placeholder="Skriv inn din sparekonto"
-                 invalid-message="Vennligst skriv inn din sparekonto (11 siffer)"/>
+      <BaseInput
+        data-cy="savings-account-input"
+        :model-value="savingsAccount"
+        @input-change-event="handleSavingInputEvent"
+        id="saving-account-base-input"
+        input-id="savings-account-input"
+        type="number"
+        min="10000000000"
+        max="99999999999"
+        label="Sparekonto"
+        placeholder="Skriv inn din sparekonto"
+        invalid-message="Vennligst skriv inn din sparekonto (11 siffer)"
+      />
     </form>
     <div style="color: red">{{ errorMsg }}</div>
     <div class="confirm-button-container">
@@ -104,12 +108,13 @@ const handleSubmit = async () => {
 
 <style scoped>
 #confirmButton {
-  margin: 2rem 0 ;
+  margin: 2rem 0;
   height: 38px;
   width: 300px;
 }
 
-#spending-account-base-input, #spending-account-base-input {
+#spending-account-base-input,
+#spending-account-base-input {
   margin: 1rem 0;
 }
 

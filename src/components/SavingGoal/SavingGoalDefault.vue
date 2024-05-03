@@ -1,6 +1,4 @@
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <section id="hero" class="hero section">
@@ -8,8 +6,10 @@
       <div class="container text-center">
         <div class="d-flex flex-column justify-content-center align-items-center">
           <h1>Velkommen til <span>SpareSti</span></h1>
-          <p style="margin-top: 32px">Kom i økonomisk form: Ta på deg våre spareutfordringer!<br></p>
-          <img src="../../assets/savingPigRun.png" alt="SpareSti-logo">
+          <p style="margin-top: 32px">
+            Kom i økonomisk form: Ta på deg våre spareutfordringer!<br />
+          </p>
+          <img src="../../assets/savingPigRun.png" alt="SpareSti-logo" />
         </div>
       </div>
     </div>
@@ -53,21 +53,20 @@
 
 .hero h1 span {
   color: white;
-  background-color: #003A58;
+  background-color: #003a58;
   padding: 4px 24px 14px 24px;
   border-radius: 6px;
 }
 
-
 .hero p {
-  color: #003A58;
+  color: #003a58;
   margin: 5px 0 30px 0;
   font-size: 28px;
   font-weight: 400;
 }
 
 .hero .btn-watch-video i {
-  color: #003A58;
+  color: #003a58;
   font-size: 32px;
   transition: 0.3s;
   line-height: 0;
@@ -75,7 +74,7 @@
 }
 
 .hero .btn-watch-video:hover i {
-  color: #003A58;
+  color: #003a58;
 }
 
 @media (max-width: 640px) {

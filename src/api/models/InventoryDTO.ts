@@ -3,9 +3,8 @@
 /* tslint:disable */
 /* eslint-disable */
 export type InventoryDTO = {
-    id?: number;
-    itemName?: string;
-    imageId?: number;
-    boughtAt?: string;
-};
-
+  id?: number
+  itemName?: string
+  imageId?: number
+  boughtAt?: string
+}

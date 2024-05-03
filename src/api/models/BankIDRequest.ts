@@ -3,7 +3,6 @@
 /* tslint:disable */
 /* eslint-disable */
 export type BankIDRequest = {
-    code?: string;
-    state?: string;
-};
-
+  code?: string
+  state?: string
+}

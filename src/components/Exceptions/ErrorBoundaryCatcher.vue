@@ -1,15 +1,18 @@
 <template>
-  <error-box :error-message="errorStore.getFirstError" @update:errorMessage="errorStore.removeCurrentError" />
+  <error-box
+    :error-message="errorStore.getFirstError"
+    @update:errorMessage="errorStore.removeCurrentError"
+  />
   <slot></slot>
 </template>
 
 <script setup lang="ts">
-import { onErrorCaptured } from 'vue';
-import { useErrorStore } from '@/stores/ErrorStore';
-import ErrorBox from '@/components/Exceptions/ErrorBox.vue';
-import handleUnknownError from '@/components/Exceptions/unkownErrorHandler';
+import { onErrorCaptured } from 'vue'
+import { useErrorStore } from '@/stores/ErrorStore'
+import ErrorBox from '@/components/Exceptions/ErrorBox.vue'
+import handleUnknownError from '@/components/Exceptions/unkownErrorHandler'
 
-const errorStore = useErrorStore();
+const errorStore = useErrorStore()
 
 /**
  * Handles errors captured during component lifecycle hooks or during component rendering.
@@ -20,8 +23,8 @@ const errorStore = useErrorStore();
  * @return {boolean} Returns false to indicate that the error has been handled.
  */
 onErrorCaptured((err, _vm, _info): boolean => {
-  const message = handleUnknownError(err);
-  errorStore.addError(message);
-  return false;
-});
+  const message = handleUnknownError(err)
+  errorStore.addError(message)
+  return false
+})
 </script>

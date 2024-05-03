@@ -3,10 +3,9 @@
 /* tslint:disable */
 /* eslint-disable */
 export type ItemDTO = {
-    id?: number;
-    itemName?: string;
-    price?: number;
-    imageId?: number;
-    alreadyBought?: boolean;
-};
-
+  id?: number
+  itemName?: string
+  price?: number
+  imageId?: number
+  alreadyBought?: boolean
+}

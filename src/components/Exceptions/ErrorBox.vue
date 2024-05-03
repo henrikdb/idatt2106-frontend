@@ -5,7 +5,11 @@
       <button @click="wrapText = !wrapText" class="error-message-button">
         <h4>{{ errorMessage }}</h4>
       </button>
-      <button class="error-remove-button" @click="$emit('update:errorMessage', '')" data-testid="hide-button">
+      <button
+        class="error-remove-button"
+        @click="$emit('update:errorMessage', '')"
+        data-testid="hide-button"
+      >
         <v-icon scale="2" name="bi-dash" />
       </button>
     </span>
@@ -13,28 +17,28 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { OhVueIcon, addIcons } from 'oh-vue-icons';
-import { BiDash, BiExclamationTriangle } from 'oh-vue-icons/icons';
+import { defineComponent } from 'vue'
+import { OhVueIcon, addIcons } from 'oh-vue-icons'
+import { BiDash, BiExclamationTriangle } from 'oh-vue-icons/icons'
 
-addIcons(BiDash, BiExclamationTriangle);
+addIcons(BiDash, BiExclamationTriangle)
 
 export default defineComponent({
   components: {
-    'v-icon': OhVueIcon,
+    'v-icon': OhVueIcon
   },
   props: {
     errorMessage: {
       type: String,
-      default: '',
-    },
+      default: ''
+    }
   },
   data() {
     return {
-      wrapText: false,
-    };
-  },
-});
+      wrapText: false
+    }
+  }
+})
 </script>
 
 <style scoped>
@@ -44,7 +48,7 @@ export default defineComponent({
   left: 50%;
   transform: translate(-50%, 0);
   width: min(100%, 700px);
-  background-color: red ;   /*var(--red-color);*/
+  background-color: red; /*var(--red-color);*/
   padding: 7px;
   border-radius: 5px;
   z-index: 1000;

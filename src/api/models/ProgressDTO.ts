@@ -3,9 +3,8 @@
 /* tslint:disable */
 /* eslint-disable */
 export type ProgressDTO = {
-    id?: number;
-    day?: number;
-    amount?: number;
-    completedAt?: string;
-};
-
+  id?: number
+  day?: number
+  amount?: number
+  completedAt?: string
+}
