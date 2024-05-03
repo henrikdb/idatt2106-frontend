@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
 import ErrorBoundaryCatcher from '@/components/Exceptions/ErrorBoundaryCatcher.vue';
-let apiUrl = import.meta.env.VITE_APP_API_URL;
-console.log("apiUrl: ", apiUrl);
 </script>
 
 <template>

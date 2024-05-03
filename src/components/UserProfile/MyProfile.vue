@@ -6,6 +6,7 @@ import {UserService, BadgeService, GoalService, type GoalDTO, type BadgeDTO} fro
 import { ItemService } from "@/api";
 import handleUnknownError from '@/components/Exceptions/unkownErrorHandler'
 
+let apiUrl = import.meta.env.VITE_APP_API_URL;
 let numberOfHistory = 6;
 let cardTitles = ["Spain tour", "Food waste", "Coffee", "Concert", "New book", "Pretty clothes"]
 let firstname = ref();
@@ -62,7 +63,7 @@ async function setupForm() {
       streak.value = response.streak?.currentStreak;
     }
     if (response.profileImage) {
-      imageUrl.value = "http://localhost:8080/api/images/" + response.profileImage;
+      imageUrl.value = apiUrl + "/api/images/" + response.profileImage;
     }
     getInventory();
     getBadges();
@@ -171,7 +172,7 @@ const toUpdateUserSettings = () => {
                   <div v-if="hasInventory" class="scrolling-wrapper-badges row flex-row flex-nowrap mt-2 pb-2 pt-2">
                     <div v-for="product in inventory" :key="product.id" class="card text-center"
                         style="width: 12rem; border: none; cursor: pointer; margin: 1rem; border: 2px solid black" @click="selectItem(product)">
-                        <img :src="`http://localhost:8080/api/images/${product.imageId}`" class="card-img-top"
+                        <img :src="apiUrl + `/api/images/${product.imageId}`" class="card-img-top"
                             alt="..." />
                         <div class="card-body">
                             <h5 class="card-title">{{ product.itemName }}</h5>
@@ -196,7 +197,7 @@ const toUpdateUserSettings = () => {
                         style="width: 12rem; border: none; cursor: pointer; margin: 1rem; 
                         border: 2px solid black" data-bs-toggle="tooltip" data-bs-placement="top" 
                         data-bs-custom-class="custom-tooltip" :data-bs-title="badge.criteria">
-                        <img :src="`http://localhost:8080/api/images/${badge.imageId}`" class="card-img-top"
+                        <img :src="apiUrl + `/api/images/${badge.imageId}`" class="card-img-top"
                             alt="..." />
                         <div class="card-body">
                             <h5 class="card-title">{{ badge.badgeName }}</h5>

@@ -164,15 +164,6 @@ const route = useRoute();
 
 const userStore: any = useUserInfoStore();
 
-let profileImage: any = ref('');
-
-if (useUserInfoStore().profileImage !== 0) {
-    profileImage = 'http://localhost:8080/api/images/' + useUserInfoStore().profileImage;
-} else {
-    profileImage = 'src/assets/userprofile.png';
-}
-
-
 let path = ref('#');
 
 let notificationListRef = ref<NotificationDTO[]>([]);

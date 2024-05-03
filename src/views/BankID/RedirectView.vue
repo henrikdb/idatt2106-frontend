@@ -5,6 +5,7 @@ import { useUserInfoStore } from '@/stores/UserStore'
 import axios from 'axios'
 import router from '@/router'
 
+let apiUrl = import.meta.env.VITE_APP_API_URL;
 onMounted(() => {
   const query = new URLSearchParams(window.location.search);
   const code = query.get('code');
@@ -18,7 +19,7 @@ onMounted(() => {
 });
 
 async function exchangeCodeForToken(code: string, state: string) {
-  axios.post<AuthenticationResponse>('http://localhost:8080/api/auth/bank-id', { code: code, state: state })
+  axios.post<AuthenticationResponse>(apiUrl + '/api/auth/bank-id', { code: code, state: state })
     .then(response => {
       OpenAPI.TOKEN = response.data.token;
       useUserInfoStore().setUserInfo({

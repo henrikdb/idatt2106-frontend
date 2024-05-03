@@ -37,7 +37,7 @@
             <div class="category row mb-2 m-2">
               <div v-for="product in products" :key="product.id" class="card text-center d-flex justify-content-center align-items-center"
                    style="width: 8rem; border: none">
-                <img :src="`http://localhost:8080/api/images/${product.imageId}`" style="width: 100px; height: 100px;" class="card-img-top" alt="..." />
+                <img :src="apiUrl + `/api/images/${product.imageId}`" style="width: 100px; height: 100px;" class="card-img-top" alt="..." />
                 <div class="card-body">
                   <h5 class="card-title">{{ product.itemName }}</h5>
                   <h6>{{ product.price }}<img src="../../assets/items/pigcoin.png" style="width: 2rem" /></h6>
@@ -105,7 +105,8 @@
   import { useUserInfoStore } from '@/stores/UserStore';
   import { ItemService } from '@/api';
   import handleUnknownError from '@/components/Exceptions/unkownErrorHandler';
-  
+
+  let apiUrl = import.meta.env.VITE_APP_API_URL;
   const products = ref([] as any);
   const points = ref();
   
