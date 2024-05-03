@@ -37,7 +37,7 @@
             <div class="category row mb-2 m-2">
               <div v-for="product in products" :key="product.id" class="card text-center d-flex justify-content-center align-items-center"
                    style="width: 8rem; border: none">
-                <img :src="`http://localhost:8080/api/images/${product.imageId}`" style="width: 100px; height: 100px;" class="card-img-top" alt="..." />
+                <img :src="apiUrl + `/api/images/${product.imageId}`" style="width: 100px; height: 100px;" class="card-img-top" alt="..." />
                 <div class="card-body">
                   <h5 class="card-title">{{ product.itemName }}</h5>
                   <h6>{{ product.price }}<img src="../../assets/items/pigcoin.png" style="width: 2rem" /></h6>
@@ -98,88 +98,94 @@
     </div>
   </template>
   
-<script setup lang="ts">
-import ShopButton from '@/components/Shop/ShopButton.vue';
-import { ref, onMounted } from 'vue';
-import { UserService } from '@/api';
-import { useUserInfoStore } from '@/stores/UserStore';
-import { ItemService } from '@/api';
-import handleUnknownError from '@/components/Exceptions/unkownErrorHandler';
+  <script setup lang="ts">
+  import ShopButton from '@/components/Shop/ShopButton.vue';
+  import { ref, onMounted } from 'vue';
+  import { UserService } from '@/api';
+  import { useUserInfoStore } from '@/stores/UserStore';
+  import { ItemService } from '@/api';
+  import handleUnknownError from '@/components/Exceptions/unkownErrorHandler';
 
-const products = ref([] as any);
-const points = ref();
+  let apiUrl = import.meta.env.VITE_APP_API_URL;
+  const products = ref([] as any);
+  const points = ref();
 
-/**
- * Retrieves the store's products and updates the products list.
- */
-const getStore = async () => {
-  try {
-    const response = await ItemService.getStore();
-    products.value = response;
-  } catch (error) {
-    handleUnknownError(error);
+  /**
+   * Retrieves the store's products and updates the products list.
+   */
+  const getStore = async () => {
+    try {
+      const response = await ItemService.getStore();
+      products.value = response;
+    } catch (error) {
+      handleUnknownError(error);
+      console.log(error);
+    }
   }
-}
 
-/**
- * Retrieves the user's current points and updates the points reference.
- */
-const getPoints = async () => {
-  try {
-    const response = await UserService.getUser();
-    points.value = response.point?.currentPoints;
-  } catch (error) {
-    handleUnknownError(error);
+  /**
+   * Retrieves the user's current points and updates the points reference.
+   */
+  const getPoints = async () => {
+    try {
+      const response = await UserService.getUser();
+      points.value = response.point?.currentPoints;
+    } catch (error) {
+      handleUnknownError(error);
+      console.log(error);
+    }
   }
-}
 
-/**
- * Buys an item with the specified item ID.
- * Sends a request to buy the item, then refreshes the store and points information.
- *
- * @param {number} itemId - The ID of the item to buy.
- */
-const buyItem = async (itemId: number) => {
-  try {
-    const response = await ItemService.buyItem({ itemId: itemId });
-    await getStore();
-    await getPoints();
-  } catch (error) {
-    handleUnknownError(error);
+  /**
+   * Buys an item with the specified item ID.
+   * Sends a request to buy the item, then refreshes the store and points information.
+   *
+   * @param {number} itemId - The ID of the item to buy.
+   */
+  const buyItem = async (itemId: number) => {
+    try {
+      await ItemService.buyItem({ itemId: itemId });
+      await getStore();
+      await getPoints();
+    } catch (error) {
+      handleUnknownError(error);
+      console.log(error);
+    }
   }
-}
 
-/**
- * Buys a premium subscription for the user.
- * Sends a request to update the user's subscription level to 'PREMIUM'.
- * Updates the user's subscription level in the store.
- */
-const buyPremium = async () => {
-  try {
-    await UserService.updateSubscriptionLevel({ subscriptionLevel: 'PREMIUM' });
-    useUserInfoStore().setUserInfo({
-      subscriptionLevel: 'PREMIUM',
-    })
-  } catch (error) {
-    handleUnknownError(error);
+  /**
+   * Buys a premium subscription for the user.
+   * Sends a request to update the user's subscription level to 'PREMIUM'.
+   * Updates the user's subscription level in the store.
+   */
+  const buyPremium = async () => {
+    try {
+      await UserService.updateSubscriptionLevel({ subscriptionLevel: 'PREMIUM' });
+      useUserInfoStore().setUserInfo({
+        subscriptionLevel: 'PREMIUM',
+      })
+    } catch (error) {
+      handleUnknownError(error);
+      console.log(error);
+    }
   }
-}
 
-/**
- * Buys a subscription to remove ads for the user.
- * Sends a request to update the user's subscription level to 'NO_ADS'.
- * Updates the user's subscription level in the store.
- */
-const buyNoAds = async () => {
-  try {
-    await UserService.updateSubscriptionLevel({ subscriptionLevel: 'NO_ADS' });
-    useUserInfoStore().setUserInfo({
-      subscriptionLevel: 'NO_ADS',
-    })
-  } catch (error) {
-    handleUnknownError(error);
+  /**
+   * Buys a subscription to remove ads for the user.
+   * Sends a request to update the user's subscription level to 'NO_ADS'.
+   * Updates the user's subscription level in the store.
+   */
+  const buyNoAds = async () => {
+    try {
+      await UserService.updateSubscriptionLevel({ subscriptionLevel: 'NO_ADS' });
+      useUserInfoStore().setUserInfo({
+        subscriptionLevel: 'NO_ADS',
+      })
+    } catch (error) {
+      handleUnknownError(error);
+      console.log(error);
+    }
   }
-}
 
 /**
  * Generates a random code of the specified length.

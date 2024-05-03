@@ -343,10 +343,8 @@ function toLogout() {
  * Calls the getNotifications function when the component is mounted.
  */
 onMounted(() => {
-  getNotifications();
+  getNotifications()
 })
-
-
 </script>
 <style scoped>
 .navbar-brand {

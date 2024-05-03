@@ -5,6 +5,8 @@ import { useUserInfoStore } from '@/stores/UserStore'
 import axios from 'axios'
 import router from '@/router'
 
+let apiUrl = import.meta.env.VITE_APP_API_URL;
+
 /**
  * Retrieves the authorization code and state from the URL parameters,
  * then calls the 'exchangeCodeForToken' function with the code and state if they are present.
@@ -31,7 +33,7 @@ onMounted(() => {
  * @param {string} state - The state parameter received from the OAuth2 authorization server.
  */
 async function exchangeCodeForToken(code: string, state: string) {
-  axios.post<AuthenticationResponse>('http://localhost:8080/api/auth/bank-id', { code: code, state: state })
+  axios.post<AuthenticationResponse>(apiUrl + '/api/auth/bank-id', { code: code, state: state })
     .then(response => {
       OpenAPI.TOKEN = response.data.token;
       useUserInfoStore().setUserInfo({
