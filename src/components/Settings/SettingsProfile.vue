@@ -5,6 +5,8 @@ import { useUserInfoStore } from "@/stores/UserStore";
 import { UserService, ImageService } from '@/api';
 import type { UserUpdateDTO } from '@/api';
 
+let apiUrl = import.meta.env.VITE_APP_API_URL;
+
 const firstNameRef = ref()
 const surnameRef = ref('')
 const emailRef = ref('')
@@ -42,7 +44,7 @@ const uploadImage = async (file: any) => {
 
   try {
     const response = await ImageService.uploadImage({ formData });
-    iconSrc.value = "http://localhost:8080/api/images/" + response;
+    iconSrc.value = apiUrl + "/api/images/" + response;
 
     const updateUserPayload: UserUpdateDTO = {
       profileImage: response,
@@ -65,7 +67,7 @@ async function setupForm() {
       surnameRef.value = response.lastName;
     }
     if (response.profileImage != null) {
-      iconSrc.value = "http://localhost:8080/api/images/" + response.profileImage;
+      iconSrc.value = apiUrl + "/api/images/" + response.profileImage;
     } else {
       iconSrc.value = "../src/assets/userprofile.png";
     }
@@ -133,7 +135,7 @@ onMounted(() => {
       <h6>Stilsett din profil banner</h6>
       <div class="bannerHolder">
         <div v-for="x in imageRange" :key="x">
-          <img :src="'http://localhost:8080/api/images/' + x" style="width: 400px; height: 40px; margin: 10px">
+          <img :src="apiUrl + '/api/images/' + x" style="width: 400px; height: 40px; margin: 10px">
         </div>
       </div>
     </div>
