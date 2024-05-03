@@ -55,6 +55,7 @@ install_dependencies:
 
 cypress_e2e-tests:
   stage: test
+  image: ubuntu:latest
   script:
     - npm ci
     - docker pull registry.gitlab.com/$DOCKER_USER/sparesti-registry:frontend && docker run -d -p 81:80 --name frontend registry.gitlab.com/$DOCKER_USER/sparesti-registry:frontend
