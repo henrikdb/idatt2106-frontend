@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { ChallengeDTO } from '../models/ChallengeDTO';
 import type { CreateGoalDTO } from '../models/CreateGoalDTO';
 import type { GoalDTO } from '../models/GoalDTO';
 import type { MarkChallengeDTO } from '../models/MarkChallengeDTO';
@@ -76,6 +77,23 @@ export class GoalService {
             url: '/api/goals/update-challenge-amount',
             body: requestBody,
             mediaType: 'application/json',
+        });
+    }
+    /**
+     * @returns ChallengeDTO OK
+     * @throws ApiError
+     */
+    public static regenerateChallenge({
+        id,
+    }: {
+        id: number,
+    }): CancelablePromise<ChallengeDTO> {
+        return __request(OpenAPI, {
+            method: 'PATCH',
+            url: '/api/goals/challenge/{id}',
+            path: {
+                'id': id,
+            },
         });
     }
     /**
