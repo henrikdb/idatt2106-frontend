@@ -1,7 +1,11 @@
 # SpareSti
 
 ## Description
-The frontend of sparesti.app. SpareSti is designed to make saving fun. The app is integrated with your online bank, therefore it has an overview of what your money is being spent on and can provide you with personalized saving tips based on this information. The app is suitable for all saving goals and offers motivation and tips tailored to your desires. Since we know that saving money can be difficult, SpareSti automatically deposits money into your savings account when you complete challenges. Based on your saved funds, the feed will give you personalized tips on how your money can be invested, and you will be able to set up a budget that provides you with the overview you need to make informed choices.
+The frontend of sparesti.app. SpareSti is designed to make saving fun. The app is suitable for all saving goals and offers motivation and tips tailored to your desires. 
+
+Since we know that saving money can be difficult, SpareSti automatically transfers money into your savings account when you complete a challenge. 
+
+We provide a set purchasable tires, either Ad-Free or Premium. By purchasing Ad-Free you remove all ads present ont the site. Premium lets you create saving goals with groups and gives you access to budgeting tools
 
 ## Links
 
@@ -125,6 +129,15 @@ The current application uses mocked bank data to transfer money between savings 
     12041281683
     ```
     Account 4 balance: ``19372 kr``
+
+## Notes
+#### Website limitations
+
+The [sparesti.org](https://sparesti.org/login) website has certain limitations.
+
+ We use the free plan provided by [News API](https://newsapi.org/) for accessing the current finacial news that are displayed on our news page. This plan cannot be used on published websites, only localhost. The result of this is an empty news page at [sparesti.org](https://sparesti.org/login).
+
+---
 
 ## Contributors
 The individuals who contributed to the project:
