@@ -22,7 +22,7 @@ docker_build_and_push:
     - dind
   script:
     - docker login -u $DOCKER_USER -p $DOCKER_PAT registry.gitlab.com
-    - docker build -t registry.gitlab.com/$DOCKER_USER/sparesti-registry:frontend .
+    - docker build --build-arg VUE_APP_API_URL=http://backend:8080/ -t registry.gitlab.com/$DOCKER_USER/sparesti-registry:frontend .
     - docker push registry.gitlab.com/$DOCKER_USER/sparesti-registry:frontend
   when: manual
 
@@ -36,5 +36,5 @@ deploy_docker:
     - apt-get -yqq install ssh
     - apt-get install sshpass
   script:
-    - sshpass -p sParest1en ssh -v -o StrictHostKeyChecking=no root@128.199.53.153 "docker rm -f frontend || true; docker pull registry.gitlab.com/$DOCKER_USER/sparesti-registry:frontend && docker run -d -p 81:80 --build-arg VUE_APP_API_URL=http://backend:8080/ --name frontend registry.gitlab.com/$DOCKER_USER/sparesti-registry:frontend"
+    - sshpass -p sParest1en ssh -v -o StrictHostKeyChecking=no root@128.199.53.153 "docker rm -f frontend || true; docker pull registry.gitlab.com/$DOCKER_USER/sparesti-registry:frontend && docker run -d -p 81:80 --name frontend registry.gitlab.com/$DOCKER_USER/sparesti-registry:frontend"
   when: manual
