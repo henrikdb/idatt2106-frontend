@@ -1,10 +1,18 @@
 <script lang="ts">
+
+/**
+ * Interface representing a news article.
+ */
 interface news {
   urlToImage: string;
   title: string;
   description: string;
   url: string;
 }
+
+/**
+ * Component to fetch and display finance news.
+ */
 export default {
   data() {
     return {
@@ -19,6 +27,9 @@ export default {
     setInterval(this.fetchFinanceNews, 300000);
   },
   methods: {
+    /**
+     * Fetches finance news articles from the NewsAPI.
+     */
     async fetchFinanceNews() {
       try {
         const response = await fetch(
@@ -28,7 +39,6 @@ export default {
 
         //English articles, might want to translate to norwegian
         this.articles = data.articles;
-
 
       } catch (error) {
         console.error('Error fetching saving money news:', error);

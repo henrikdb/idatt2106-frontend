@@ -17,7 +17,12 @@ let currentRoute = useRoute()
 let currentPath = currentRoute.fullPath
 type ConfigurationStepPath = keyof typeof configurationSteps;
 
-// Sets the current path to a new path and updates progressbar
+/**
+ * Sets the current path variable to the child component's route path.
+ * Maps the path with its value and updates the percentage value for the progressbar.
+ *
+ * @param path The path of the newly navigated route.
+ */
 const onNewRouteEvent = (path: ConfigurationStepPath) => {
   currentPath = path
   percentage.value = (1/length) * configurationSteps[path]

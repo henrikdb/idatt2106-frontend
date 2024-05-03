@@ -49,6 +49,8 @@ import Leaderboard from '@/components/Leaderboard/LeaderboardTable.vue';
 import handleUnknownError from '@/components/Exceptions/unkownErrorHandler';
 import { LeaderboardService } from '@/api';
 
+const router = useRouter();
+
 let streakLeaderboardData = ref([] as  any);
 let currentLeaderboardData = ref([] as any);
 let pointsLeaderboardData = ref([] as any);
@@ -59,8 +61,9 @@ let pointsLeaderboardDataExtra = ref([] as any);
 
 let communityPoints = ref(0);
 
-const router = useRouter();
-
+/**
+ * Fetches quiz data including community points.
+ */
 async function fetchQuizData() {
     await global();
 
@@ -72,6 +75,10 @@ onMounted(() => {
     fetchQuizData();
 });
 
+
+/**
+ * Retrieves global leaderboard data.
+ */
 async function global() {
     try {
         let globalPoints = await LeaderboardService.getLeaderboard({
@@ -114,6 +121,9 @@ async function global() {
     }
 }
 
+/**
+ * Retrieves friends leaderboard data.
+ */
 async function friends() {
     try {
     let friendsPoints = await LeaderboardService.getLeaderboard({
@@ -156,6 +166,11 @@ async function friends() {
     }
 }
 
+/**
+ * Navigates to the user profile page based on the given user ID.
+ *
+ * @param {number} userId The ID of the user whose profile will be navigated to.
+ */
 const navigateToUserProfile = (userId: number) => {
     router.push({ name: 'user', params: { id: userId } });
 };

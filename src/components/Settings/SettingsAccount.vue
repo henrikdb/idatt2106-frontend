@@ -10,10 +10,20 @@ const emailRef = ref('')
 const errorMsg = ref('')
 const confirmationMsg = ref('')
 
+/**
+ * Handles the email input event by updating the email reference value.
+ *
+ * @param {any} newValue - The new value of the email input.
+ */
 const handleEmailInputEvent = (newValue: any) => {
   emailRef.value = newValue
 }
 
+/**
+ * Sets up the form by fetching user data and populating the email field if available.
+ * Clears confirmation and error messages.
+ * Handles errors by displaying a generic error message and updating the error message field.
+ */
 async function setupForm() {
   try {
     let response = await UserService.getUser();
@@ -29,13 +39,20 @@ async function setupForm() {
   }
 }
 
+/**
+ * Handles form submission by updating the user's email.
+ * Updates the confirmation message upon successful email update.
+ * Handles errors and updates the error message accordingly.
+ */
 const handleSubmit = async () => {
-  console.log('Yoooo')
+  // Construct payload for updating user email
   const updateUserPayload: UserUpdateDTO = {
     email: emailRef.value,
   };
   try {
+    // Send request to update user email
     UserService.update({ requestBody: updateUserPayload })
+    // Update user info in the store
     useUserInfoStore().setUserInfo({
         email: emailRef.value,
     })

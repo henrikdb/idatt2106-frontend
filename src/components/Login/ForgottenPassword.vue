@@ -38,11 +38,14 @@
   const confirmationMessage = ref('');
   const errorMessage = ref('');
   const isSubmitting = ref(false);
-  
+
+  /**
+   * Submits the form for resetting the password.
+   */
   const submitForm = async () => {
+    // Validates the form
     if (isSubmitting.value) return;
     isSubmitting.value = true;
-  
     formRef.value.classList.add("was-validated")
   
     try {

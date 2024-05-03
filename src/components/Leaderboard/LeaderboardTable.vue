@@ -51,9 +51,18 @@ const props = defineProps({
   }
 });
 
-console.log(props.leaderboardExtra);
-
+/**
+ * Checks if the current user is in the leaderboard.
+ *
+ * @returns {boolean} Returns true if the current user is in the leaderboard, false otherwise.
+ */
 const userInLeaderboard = computed(() => props.leaderboard.some(entry => entry.user && entry.user.email === userStore.email));
+
+/**
+ * Navigates to the user profile page based on the given user ID.
+ *
+ * @param {number} id The ID of the user whose profile will be navigated to.
+ */
 const navigateToUserProfile = (id: number) => {
   router.push(`/profile/${id}`);
 };

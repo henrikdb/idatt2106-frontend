@@ -20,6 +20,11 @@ const props = defineProps({
 
 const emit = defineEmits(['click']);
 
+/**
+ * Handles the click event for a button component.
+ * Emits a 'click' event if the button is not disabled.
+ */
+
 const handleClick = () => {
   if (!props.disabled) {
     emit('click');

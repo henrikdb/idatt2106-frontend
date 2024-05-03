@@ -19,25 +19,52 @@ const imageRange = ref([10, 11, 12, 13, 14, 15]);
 const iconSrc = ref('../src/assets/userprofile.png');
 const fileInputRef = ref();
 
+/**
+ * Handles the event when the first name input changes.
+ * Updates the first name reference value.
+ *
+ * @param {any} newValue - The new value of the first name input.
+ */
 const handleFirstNameInputEvent = (newValue: any) => {
   firstNameRef.value = newValue
 }
 
-
+/**
+ * Handles the event when the surname input changes.
+ * Updates the surname reference value.
+ *
+ * @param {any} newValue - The new value of the surname input.
+ */
 const handleSurnameInputEvent = (newValue: any) => {
   surnameRef.value = newValue
 }
 
+/**
+ * Triggers the file upload dialog.
+ */
 const triggerFileUpload = () => {
   fileInputRef.value.click();
 };
 
+/**
+ * Handles the file change event.
+ * Uploads the selected image file.
+ *
+ * @param {any} event - The file change event.
+ */
 const handleFileChange = (event: any) => {
   const file = event.target.files[0];
   if (file) {
     uploadImage(file);
   }
 };
+
+/**
+ * Uploads the image file to the server.
+ * Updates user profile information upon successful image upload.
+ *
+ * @param {any} file - The image file to upload.
+ */
 
 const uploadImage = async (file: any) => {
   const formData = { file: new Blob([file]) }
@@ -58,6 +85,10 @@ const uploadImage = async (file: any) => {
   }
 };
 
+/**
+ * Sets up the user profile form.
+ * Fetches user data and populates the form fields.
+ */
 async function setupForm() {
   try {
     const response = await UserService.getUser();
@@ -76,6 +107,11 @@ async function setupForm() {
   }
 }
 
+
+/**
+ * Handles form submission.
+ * Updates user profile information with the provided first name and surname.
+ */
 const handleSubmit = async () => {
   console.log('Yoooo')
   const updateUserPayload: UserUpdateDTO = {

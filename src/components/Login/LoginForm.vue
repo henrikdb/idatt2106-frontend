@@ -4,10 +4,14 @@ import BaseButton from '@/components/BaseComponents/Buttons/BaseButton.vue'
 import { ref } from 'vue'
 import { useUserInfoStore } from '@/stores/UserStore';
 import { AuthenticationService, OpenAPI, type LoginRequest } from '@/api';
-import { useRouter, useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
 import handleUnknownError from '@/components/Exceptions/unkownErrorHandler';
 import { useErrorStore } from '@/stores/ErrorStore';
 import SignUpLink from '@/components/SignUp/SignUpLink.vue'
+
+const errorStore = useErrorStore();
+const router = useRouter();
+const userStore = useUserInfoStore();
 
 const emailRef = ref('')
 const passwordRef = ref('')
@@ -15,18 +19,28 @@ const formRef = ref()
 let errorMsg = ref('');
 const isSubmitting = ref(false);
 
-const errorStore = useErrorStore();
-const router = useRouter();
-const userStore = useUserInfoStore();
-
+/**
+ * Handles email input event by updating the value of the emailRef reactive variable.
+ *
+ * @param {any} newValue The new value of the email input.
+ */
 const handleEmailInputEvent = (newValue: any) => {
   emailRef.value = newValue
 }
 
+/**
+ * Handles password input event by updating the value of the passwordRef reactive variable.
+ *
+ * @param {any} newValue The new value of the password input.
+ */
 const handlePasswordInputEvent = (newValue: any) => {
   passwordRef.value = newValue
 }
 
+/**
+ * Handles form submission by validating the form, logging in the user,
+ * and navigating to the roadmap page upon successful login.
+ */
 const handleSubmit = async () => {
   console.log(emailRef.value)
   console.log(passwordRef.value)
