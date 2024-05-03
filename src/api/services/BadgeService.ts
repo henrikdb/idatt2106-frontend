@@ -59,10 +59,29 @@ export class BadgeService {
      * @returns BadgeDTO Successfully got badges
      * @throws ApiError
      */
-    public static getBadgesUnlockedByUser(): CancelablePromise<Array<BadgeDTO>> {
+    public static getBadgesUnlockedByActiveUser(): CancelablePromise<Array<BadgeDTO>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/badge/unlocked',
+        });
+    }
+    /**
+     * Get the list of badges
+     * Get all badges unlocked by the user
+     * @returns BadgeDTO Successfully got badges
+     * @throws ApiError
+     */
+    public static getBadgesUnlockedByUser({
+        userId,
+    }: {
+        userId: number,
+    }): CancelablePromise<Array<BadgeDTO>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/badge/unlocked/{userId}',
+            path: {
+                'userId': userId,
+            },
         });
     }
     /**
@@ -71,7 +90,7 @@ export class BadgeService {
      * @returns BadgeDTO Successfully got badges
      * @throws ApiError
      */
-    public static getBadgesNotUnlockedByUser(): CancelablePromise<Array<BadgeDTO>> {
+    public static getBadgesNotUnlockedByActiveUser(): CancelablePromise<Array<BadgeDTO>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/badge/locked',

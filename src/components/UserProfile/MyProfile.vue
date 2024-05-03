@@ -90,7 +90,7 @@ const getInventory = async () => {
 
 const getBadges = async () => {
   try {
-    const responseBadge = await BadgeService.getBadgesUnlockedByUser();
+    const responseBadge = await BadgeService.getBadgesUnlockedByActiveUser();
     badges.value = responseBadge;
     if (badges.value.length > 0) {
       hasBadges.value = true
@@ -106,9 +106,8 @@ const getBadges = async () => {
 
 const selectItem = (item: any) => {
   backgroundName.value = item.itemName;
-  useUserInfoStore().setUserInfo({
-    roadBackground: item.imageId,
-  })
+  let imageId = item.imageId;
+  
 }
 
 onMounted(() => {

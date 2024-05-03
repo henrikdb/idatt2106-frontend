@@ -4,6 +4,7 @@
 /* eslint-disable */
 export type ChallengeTemplateDTO = {
     id?: number;
+    templateName?: string;
     text?: string;
     amount?: number;
     type?: ChallengeTemplateDTO.type;
