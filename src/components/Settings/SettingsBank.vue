@@ -52,7 +52,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import BaseInput from '@/components/BaseComponents/Input/BaseInput.vue';
-import type { UserUpdateDTO } from '@/api'
+import { AccountControllerService, type BalanceDTO, BankProfileControllerService, type UserUpdateDTO } from '@/api'
 import { UserService } from '@/api';
 import  handleUnknownError from '@/components/Exceptions/unkownErrorHandler'
 
@@ -128,13 +128,16 @@ async function getAccountInfo() {
   try {
     let response = await UserService.getUser();
     savingsAccount.value = response.savingsAccountBBAN;
-    /*if (response.savingsAccount?.balance) {
-      savingsAccountBalance.value = response.savingsAccount?.balance
-    }*/
+    let bban1: any = response.savingsAccountBBAN;
+    AccountControllerService.getAccountsByBban({bban: bban1}).then((balance: BalanceDTO) => {
+      savingsAccountBalance.value = balance.balance;
+    })
+
     spendingAccount.value = response.checkingAccountBBAN;
-    /*if (response.checkingAccount?.balance) {
-      spendingAccountBalance.value = response.checkingAccountBBAN?.balance
-    }*/
+    let bban2: any = response.checkingAccountBBAN;
+    AccountControllerService.getAccountsByBban({bban: bban2}).then((balance: BalanceDTO) => {
+      spendingAccountBalance.value = balance.balance;
+    })
   } catch (err) {
     handleUnknownError(err)
   }
