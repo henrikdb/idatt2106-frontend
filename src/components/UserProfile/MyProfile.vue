@@ -158,12 +158,10 @@ const toUpdateUserSettings = () => {
             </div>
               <div class="d-flex align-items-end text-white my-3 mx-5">
                 <div class="d-flex align-items-center flex-column">
-                  <p class="mb-1 h2 d-flex flex-column align-items-center" data-cy="points">{{ points }} <img src="@/assets/items/pigcoin.png" style="width: 80px; height: 80px"></p>
-                  <p class="small text-white mb-0">Poeng</p>
+                  <p class="mb-1 h2 d-flex flex-column align-items-center" data-cy="points"><img src="@/assets/items/pigcoin.png" style="width: 80px; height: 80px" data-toggle="tooltip" title="Points"> {{ points }}</p>
                 </div>
                 <div class="d-flex align-items-center flex-column px-3">
-                  <p class="mb-1 h2 d-flex flex-column align-items-center" data-cy="streak">{{ streak }} <img src="@/assets/icons/fire.png" style="width: 80px; height: 80px"></p>
-                  <p class="small text-white mb-0">Streak</p>
+                  <p class="mb-1 h2 d-flex flex-column align-items-center" data-cy="streak"><img src="@/assets/icons/fire.png" style="width: 80px; height: 80px" data-toggle="tooltip" title="Points"> {{ streak }}</p>
                 </div>
               </div>
           </div>
@@ -182,31 +180,8 @@ const toUpdateUserSettings = () => {
             <div class="row">
               <div class="col">
                 <div class="container-fluid">
-                  <h1 class="mt-1 text-start badges-text">Lageret ditt</h1>
-                  <div v-if="hasInventory" class="scrolling-wrapper-badges row flex-row flex-nowrap mt-2 pb-2 pt-2">
-                    <div v-for="product in inventory" :key="product.id" class="card text-center"
-                        style="width: 12rem; border: none; cursor: pointer; margin: 1rem; border: 2px solid black" @click="selectItem(product)">
-                        <img :src="apiUrl + `/api/images/${product.imageId}`" class="card-img-top"
-                            alt="..." />
-                        <div class="card-body">
-                            <h5 class="card-title">{{ product.itemName }}</h5>
-                        </div>
-                    </div>
-                  </div>
-                  <div v-else>Du har ingen ting på lageret ditt, gå til butikken for å kjøpe!</div>
-                  <div v-if="backgroundName" class="text-success">You selected the background: <strong>{{ backgroundName }}!</strong></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <hr>
-          <div class="card-body p-1 text-black">
-            <div class="row">
-              <div class="col">
-                <div class="container-fluid">
                   <h1 class="mt-1 text-start badges-text">Merker</h1>
                   <div v-if="hasBadges" class="scrolling-wrapper-badges row flex-row flex-nowrap mt-2 pb-2 pt-2">
-
                     <div v-for="badge in badges" :key="badge.id" class="card text-center"
                         style="width: 12rem; border: none; cursor: pointer; margin: 1rem; 
                         border: 2px solid black" data-bs-toggle="tooltip" data-bs-placement="top" 
@@ -217,7 +192,6 @@ const toUpdateUserSettings = () => {
                             <h5 class="card-title">{{ badge.badgeName }}</h5>
                         </div>
                     </div>
-
                   </div>
                   <div v-else>
                     Ingen merker
