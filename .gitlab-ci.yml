@@ -1,4 +1,4 @@
-image: node:alpine # Much smaller than other variants, faster and more resource effective
+image: node:16.10.0-alpine3.13 # Much smaller than other variants, faster and more resource effective
 
 variables:
   DOCKER_TLS_CERTDIR: ""
