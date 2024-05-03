@@ -158,7 +158,7 @@ const toUpdateUserSettings = () => {
           <div class="p-3 text-black" style="background-color: #f8f9fa;">
             <div class="d-flex justify-content-end text-center py-1">
               <div style="width: 100%; display: flex; justify-content: start">
-                <button  data-cy="toUpdate" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary"
+                <button  data-cy="toUpdate" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary classyButton"
                 data-mdb-ripple-color="dark" style="z-index: 1; height: 40px; margin-left: 17px" id="toUpdate" @click="toUpdateUserSettings">
                 Rediger profil
               </button>
@@ -324,60 +324,18 @@ const toUpdateUserSettings = () => {
   background-image: url('/src/assets/banners/stacked.svg');
 }
 
-.card-1 {
-  background-color: #4158D0;
-  background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
-}
-
-.card-2 {
-  background-color: #0093E9;
-  background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
-}
-
-.card-3 {
-  background-color: #00DBDE;
-  background-image: linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%);
-}
-
-.card-4 {
-  background-color: #FBAB7E;
-  background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);
-}
-
-.card-5 {
-  background-color: #85FFBD;
-  background-image: linear-gradient(45deg, #85FFBD 0%, #FFFB7D 100%);
-}
-
-.card-6 {
-  background-color: #FA8BFF;
-  background-image: linear-gradient(45deg, #FA8BFF 0%, #2BD2FF 52%, #2BFF88 90%);
-}
-
-.card-7 {
-  background-color: #FA8BFF;
-  background-image: linear-gradient(45deg, #FA8BFF 0%, #2BD2FF 52%, #2BFF88 90%);
-}
-
-.card-8 {
-  background-color: #FBDA61;
-  background-image: linear-gradient(45deg, #FBDA61 0%, #FF5ACD 100%);
-}
-
-.card-9 {
-  background-color: #4158D0;
-  background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
-}
-
-.card-10 {
-  background-color: #FF3CAC;
-  background-image: linear-gradient(225deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);
-
-}
-
-
 /*-------*/
 .rounded-top {
   background-color: #00DBDE;
 }
+
+  .classyButton:hover {
+    background-color: #003b58ec;
+    border: #003A58;
+  }
+
+  .classyButton:active {
+    background-color: #003b58d6;
+    border: #003A58;
+  }
 </style>
