@@ -57,6 +57,9 @@ cypress_e2e-tests:
   stage: test
   script:
     - npm ci
+    - docker pull registry.gitlab.com/$DOCKER_USER/sparesti-registry:frontend && docker run -d -p 81:80 --name frontend registry.gitlab.com/$DOCKER_USER/sparesti-registry:frontend
+    - docker pull registry.gitlab.com/$DOCKER_USER/sparesti-registry:backend && docker run -p 8080:8080 -d --name backend registry.gitlab.com/$DOCKER_USER/sparesti-registry:backend
+    - sleep 30 seconds
     - npm run RunTCOnChrome
   cache:
     key: ${CI_COMMIT_REF_SLUG}
