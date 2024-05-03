@@ -89,7 +89,7 @@
                   :to="toBudget()"
                   exact-active-class="active-link"
                   @click="toggleDropdown">
-                  <img src="@/assets/icons/budget.svg">Budjsett
+                  <img src="@/assets/icons/budget.svg">Budsjett
                 </router-link>
               </li>
               <li>
